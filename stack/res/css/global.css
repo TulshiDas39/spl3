@@ -12,24 +12,90 @@ body{
 }
 
 #logo{
+    flex-basis:150px; 
+    border: 1px solid green;
+    display: inline-block;
+}
+
+#logo a{
+    display: inline-block;
+    height: 100%;
+    width: 100%;
     text-decoration: none;
-    min-width: 150px;
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
     color: black;
+    text-align: center;
 }
-#logo:hover{
-    background: gray;
+#logo a:hover{
+    background: #e4e6e8;
+}
+#logo p{
+    display: inline-block;
 }
 
 #product{
-    min-width: 50px;
+    margin: 0 5px;
     padding: 6px 12px;
 }
 
 #product:hover{
     border-radius: 25px;
-    background: lightgray;
+    background: #e4e6e8;
    
 }
 
+#search{
+    flex-grow: 9;
+}
+
+#search div{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#search input{
+    border:1px solid #bbc0c4;
+    padding: 8px 25px;
+    width: 100%;
+}
+
+#search input:focus{
+    border-color: #66bfff;
+    box-shadow:0 0 0 4px rgba(0,149,255,0.15);
+}
+#search span{
+    position: absolute;
+    left: 5px;
+    color: #bbc0c4;
+    z-index: 1;
+}
+#user{
+    height: 100%;
+    flex-basis: 150px;
+    flex-shrink: 0;
+    border: 1px solid green;
+    background: #66bfff;
+}
+
+#user:hover{
+    background: #e4e6e8;
+}
+
+#user img{
+    display: inline-block;
+    height: 100%;
+    width: 33%;
+}
+
+#user img:hover{
+    background: #e4e6e8;
+}
+
+#user p{
+    display: inline-block;
+    flex-grow:1;
+    height: 100%;
+    width: 100%;
+}
