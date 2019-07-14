@@ -1,0 +1,35 @@
+body{
+    margin: 0px;
+}
+
+#nav{
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    height: 30px;
+    border-bottom: 1px solid gray;
+    /* background: rebeccapurple; */
+}
+
+#logo{
+    text-decoration: none;
+    min-width: 150px;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+}
+#logo:hover{
+    background: gray;
+}
+
+#product{
+    min-width: 50px;
+    padding: 6px 12px;
+}
+
+#product:hover{
+    border-radius: 25px;
+    background: lightgray;
+   
+}
+
