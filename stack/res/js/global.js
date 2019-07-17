@@ -31,7 +31,7 @@ function tooglePopups(e) {
         }
 
         else if (e.target == clickRegisteredElements[i][1]) {
-            makeInvisible(i);
+            makeInvisible(clickRegisteredElements[i][1]);
             return;
         }
 
