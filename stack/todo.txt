@@ -1,0 +1,11 @@
+In progress
+    -nav for mobile for base url after log in
+
+To Do
+    
+    -left navigation
+    -right navigation
+    -middle place
+
+Done
+    -1.bangla in nav
