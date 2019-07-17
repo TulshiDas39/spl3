@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Index.html</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='res/css/global.css'>
@@ -26,11 +26,15 @@
         </div>
         <div id="search">
             <form action="/search" mathod="get">
-                <div>
-                    <span class="fa fa-search"></span>
-                    <input type="text" placeholder="Search...">
-                </div>
+                <span class="fa fa-search"></span>
+                <input id="searchBox" type="text" placeholder="Search...">
             </form>
+        </div>
+        <div id="search-sm">
+            <span id="search-sm-btn">
+                <span id="search-sm-icon" class="fa fa-search"></span>
+            </span>
+
         </div>
         <a href="#" id="user">
             <div>
@@ -56,9 +60,17 @@
         <div id="help">
             <span class="fa fa-question-circle"></span>
         </div>
-      
-
+        <div id="search-down" style="display: none;">
+            <form action="/search" mathod="get">
+                <span class="fa fa-search"></span>
+                <input type="text" placeholder="Search...">
+            </form>
+        </div>
     </div>
+    <!-- will be display:flex -->
+
+
+    <script src="res/js/global.js"> </script>
 </body>
 
 </html>
