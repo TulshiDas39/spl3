@@ -21,19 +21,18 @@ body {
 
 #nav {
     display: flex;
+    width: 100%;
     align-items: center;
-    /* padding: 10px 0; */
     position: relative;
-    height: 50px;
+    height: 3rem;
     border-bottom: 1px solid #d9d9d9;
     border-top: 3px solid #F48024;
     /* background: rebeccapurple; */
 }
 
 #logo {
-    flex-basis: 150px;
+    flex-basis: 6em;
     height: 100%;
-    flex-shrink: 0;
 }
 
 #logo a {
@@ -42,7 +41,7 @@ body {
     width: 100%;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 1.3em;
     color: black;
     align-items: center;
     justify-content: center;
@@ -52,24 +51,28 @@ body {
     background: #eff0f1;
 }
 
-#logo a span {
-    display: inline-block;
+#project {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   flex-basis: 4em;
 }
 
-#product {
-    margin: 10px 10px;
-    padding: 5px 12px;
+#project span{
+    padding: 5px 0.2em;
 }
 
-#product:hover {
+
+#project span:hover {
     border-radius: 25px;
     background: #eff0f1;
+    cursor: pointer;
 }
 
 #search {
     flex-grow: 9;
-    margin: 0px 5px;
-    height: 30px;
+    height: 2rem;
     box-sizing: border-box;
 }
 
@@ -101,14 +104,12 @@ body {
 }
 
 #user {
-    flex-basis: 100px;
+    justify-self: flex-end;
     height: 100%;
-    padding: 12px 0px;
     text-decoration: none;
-    flex-shrink: 0;
-    box-sizing: border-box;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 #user:hover {
@@ -116,28 +117,26 @@ body {
     cursor: pointer;
 }
 
-#user div {
-    height: 100%;
-    width: 33.33%;
+#user span:nth-child(3) {
+    font-size: 0.2em;
+    padding: 0px 3px;
 }
 
-#user span {
-    width: 33.33%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#user span:nth-child(4) {
+    padding-right: 2px;
 }
 
-#user div img {
-    display: inline-block;
-    height: 100%;
+#user img {
+    height: 1.3em;
     width: auto;
+    padding: 0px 5px;
+    border-radius: 3px;
 }
 
 #nofic {
     height: 100%;
-    flex-basis: 50px;
-    flex-shrink: 0;
+    /* padding: 0px 0.2em; */
+    flex-basis: 1.3em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,13 +148,11 @@ body {
 }
 
 #nofic span {
-    font-size: 20px;
+    font-size: 1.3rem;
 }
 
 #achieve {
     height: 100%;
-    flex-basis: 50px;
-    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -167,16 +164,16 @@ body {
 }
 
 #achieve span {
-    font-size: 20px;
+    font-size: 1.3rem;
+    padding: 0px 10px;
 }
 
 #help {
     height: 100%;
-    flex-basis: 50px;
-    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-basis: 2em;
 }
 
 #help:hover {
@@ -185,88 +182,52 @@ body {
 }
 
 #help span {
-    font-size: 20px;
-}
-
-#search-down {
-    position: absolute;
-    height: 30px;
-    width: 100%;
-    top: 45px; /* will be display:flex */
-    z-index: 1;
-    align-items: center;
-    box-sizing: border-box;
-}
-#search-down form{
-    flex-basis: 100%;
-    height: 100%;
-    display: flex;
-    
-}
-
-#search-down input {
-    height: 100%;
-    flex-basis: 100%;
-    padding-left: 30px;
-    border-color: #66bfff;
-    box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
-}
-
-#search-down span {
-    position: absolute;
-    color: #bbc0c4;
-    left: 10px;
-    align-self: center;
-    z-index: 1;
+    font-size: 1.3rem;
+    /* padding: 0 10px; */
+    color: blue;
 }
 
 #search-sm{
-    min-width: 40px;
-    flex-grow: 9;
+    margin-left: auto;
+    padding: 0px 0.5em;
     height: 100%;
     display: none;/*it will be flex on small device*/
-    align-items: center;
     justify-content: flex-end;
-    box-sizing: border-box;
 }
 
-#search-sm > span{
-    height: 100%;
-    flex:0 0 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+#search-sm span{
+    align-self: center;
+    justify-self: center;
+    font-size: 1.3rem;
+    color: #bbc0c4;
+}
+
+#search-sm:hover{
+    background: #eff0f1;
     cursor: pointer;
 }
-#search-sm > span:hover{
-    background: #eff0f1;
-}
 
-@media ( max-width:790px) {
 
-    #search{
+
+@media (max-width:980px){
+    #user span{
         display: none;
     }
+}
+
+@media (max-width:790px){
     #search-sm{
-        display: flex !important;
+        display: flex;
     }
-    
+    #search{
+        /* display: none; */
+        position: absolute;
+        bottom: -1.3rem;
+        width: 100%;
+    }
 }
 
-@media (min-width:790px){
-    #search-down{
-        display: none !important;
-    }
-}
+@media (max-width:640px){
 
-@media (max-width:576px){
-    #product{
-        display: none;
-    }
-    #user{
-        display: none;
-    }
-    #help{
-        display: none;
-    }
 }
