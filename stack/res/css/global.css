@@ -242,11 +242,6 @@ body {
     }
 }
 
-@media (min-width:790px){
-    #search{
-        display: flex;
-    }
-}
 
 @media (max-width:640px){
     #help{
