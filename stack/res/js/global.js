@@ -1,9 +1,9 @@
 
 var clickRegisteredElements = [];
-clickRegisteredElements.push([document.getElementById('search-sm-btn'),
-    document.getElementById('search-down'), "flex"]);
-clickRegisteredElements.push([document.getElementById('search-sm-icon'),
-    document.getElementById('search-down'), "flex"]);
+clickRegisteredElements.push([document.getElementById('search-sm'),
+    document.getElementById('search'), "flex"]);
+// clickRegisteredElements.push([document.getElementById('search-sm-icon'),
+//     document.getElementById('search'), "flex"]);
 
 // document.getElementById('search-sm-btn').addEventListener('click',()=>{
 //     console.log('clicked');
@@ -24,13 +24,13 @@ document.onclick = function (e) {
 function tooglePopups(e) {
     //debugger;
     for (let i = 0; i < clickRegisteredElements.length; i++) {
-        if (e.target == clickRegisteredElements[i][0]) {
+        if (clickRegisteredElements[i][0].contains(e.target)) {
             toogle(clickRegisteredElements[i][1], clickRegisteredElements[i][2]);
             makeInvisible(clickRegisteredElements[i][1]);
             return;
         }
 
-        else if (e.target == clickRegisteredElements[i][1]) {
+        else if (clickRegisteredElements[i][1].contains(e.target)) {
             makeInvisible(clickRegisteredElements[i][1]);
             return;
         }
@@ -41,7 +41,7 @@ function tooglePopups(e) {
 }
 
 function toogle(elem, displayVal) {
-    if (elem.style.display == "none") elem.style.display = displayVal;
+    if (elem.style.display == "none" || elem.style.display == "") elem.style.display = displayVal;
     else elem.style.display = "none";
 }
 function makeInvisible(except) {

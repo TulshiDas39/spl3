@@ -30,6 +30,14 @@ body {
     /* background: rebeccapurple; */
 }
 
+#list-sm{
+    height: 100%;
+    flex-basis: 3rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
 #logo {
     flex-basis: 6em;
     height: 100%;
@@ -44,7 +52,7 @@ body {
     font-size: 1.3em;
     color: black;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 #logo a:hover {
@@ -81,6 +89,7 @@ body {
     display: flex;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 #search input {
@@ -217,7 +226,7 @@ body {
         display: none;
     }
     #user{
-        flex-basis: 1.8rem;
+        flex-basis: 3rem;
     }
 }
 
@@ -226,13 +235,31 @@ body {
         display: flex;
     }
     #search{
-        /* display: none; */
+        display: none;
         position: absolute;
-        bottom: -1.3rem;
+        bottom: -2rem;
         width: 100%;
     }
 }
 
-@media (max-width:640px){
+@media (min-width:790px){
+    #search{
+        display: flex;
+    }
+}
 
+@media (max-width:640px){
+    #help{
+        display: none;
+    }
+    #logo span:nth-child(2){
+        display: none;
+    }
+    #logo{
+        flex-basis: 3rem;
+    }
+
+    #list-sm{
+        display: flex;
+    }
 }
