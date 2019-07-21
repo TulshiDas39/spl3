@@ -219,8 +219,6 @@ body {
     cursor: pointer;
 }
 
-
-
 @media (max-width:980px){
     #user span{
         display: none;
