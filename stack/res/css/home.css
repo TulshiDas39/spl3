@@ -1,0 +1,120 @@
+#parentDiv{
+    text-align: left;
+    position: relative;
+    max-width: 1264px;
+    width: 100%;
+    background: none;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    flex: 1 0 auto;
+}
+
+#left{
+    width: 164px;
+    padding-top: 24px;
+    flex-shrink: 0;
+    z-index: 1000;
+    position: relative;
+    box-shadow: 0 0 0 rgba(12,13,14,0.05);
+    transition: box-shadow ease-in-out .1s,transform ease-in-out .1s;
+}
+
+#left > div{
+    position: sticky;
+    width: auto;
+    top: 24px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+#left > div > a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 6px 8px 8px;
+}
+
+#left > div > a:nth-child(1){
+    background: rgba(12,13,14,0.05);
+    font-weight: bold;
+    border-right: 4px solid #F48024;
+    padding: 8px 6px 8px 8px;
+}
+
+#homeBtn{
+    font-weight: bold;
+    background: rgba(12,13,14,0.05);
+    color: #0C0D0E;
+    border-right: 3px solid #F48024;
+}
+
+#right{
+    border:1px solid #F48024;
+    max-width: 1100px;
+    width: calc(100% - 164px);
+    background-color: #FFF;
+    border-radius: 0;
+    border: 1px solid #d6d9dc;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 1px;
+    border-right-width: 0;
+    padding-top: 24px;
+    box-sizing: border-box;
+}
+
+#questions{
+    border:1px solid green;
+    width: calc(100% - 300px - 24px);
+    float: left;
+    margin: 0;
+    padding: 0;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+#question_heading{
+    display: flex;
+    margin-bottom: 20px;
+}
+#ask{
+    background-color:#0095ff; float:right;
+     border-color: #07c;
+    box-shadow: inset 0 1px 0 0 rgba(102,191,255,0.75), 0 0 0 0 rgba(0,149,255,0);
+    color: #FFF; 
+    padding: 10.4px 20px;
+    cursor: pointer; 
+    margin-left: auto;
+    border-radius: 2px;
+}
+
+#ask:hover{
+    background-color: #0066cc;
+}
+#question_filter{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#question_filter>div{
+    border:1px solid rebeccapurple;
+    padding: 10.4px;
+}
+
+#question_filter>div:hover{
+    background: rgba(12,13,14,0.05);
+    cursor: pointer;
+}
+
+#hotbar{
+    margin-left: 24px;
+    float: right;
+    width: 300px;
+    margin: 0 0 15px;
+    height: 100px;
+    background: brown;
+}
+
