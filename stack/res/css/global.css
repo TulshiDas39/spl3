@@ -1,23 +1,28 @@
 
-@font-face {
-    font-family: "solaiman lipi";
+/* @font-face {
+    font-family: solaimanLipi;
     src: url("../fonts/solaimanlipi/SolaimanLipi.ttf");
 }
 
 @font-face {
-    font-family: "kiran";
+    font-family: kiran;
     src: url("../fonts/KF-Kiran/KF-Kiran.ttf")
 }
 
 @font-face {
-    font-family: "nikosh";
+    font-family: nikosh;
     src: url("../fonts/Nikosh/Nikosh.ttf");
-}
+} */
 
 body {
     margin: 0px;
-    font-family: "solaiman lipi","kiran","nikosh", Arial, Helvetica, sans-serif;
+    /* font-family: solaimanLipi, kiran, nikosh, Arial, Helvetica, sans-serif; */
+    font-family: SolaimanLipi,Arial,Vrinda,FallbackBengaliFont,Helvetica,sans-serif;
 }
+
+/* :lang(en){
+    font-family: 'Times New Roman', Times, serif;
+} */
 
 #nav {
     display: flex;
