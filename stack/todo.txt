@@ -1,5 +1,5 @@
 In progress
-    -nav for mobile for base url after log in
+    -ask page
 
 To Do
     
@@ -9,3 +9,9 @@ To Do
 
 Done
     -1.bangla in nav
+    -nav for mobile for base url after log in
+
+Bugs
+
+Can be improved later
+    -ask page ta improve kora jai

@@ -1,0 +1,169 @@
+#stages{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 48px;
+}
+
+#stages > span{
+    padding: 8px 16px;
+    color: #07C;
+    border-radius: 15px;
+    margin: 0 3px;
+}
+
+#stages > span:hover{
+    background: #E1F0FC;
+    cursor: pointer;
+}
+
+
+#stages > span:first-child {
+    background: #07C;
+    color: white;
+
+}
+
+#middle{
+    display: flex;
+    max-width: 700px;
+    margin: auto;
+}
+
+#image{
+    font-size: 15rem;
+    padding: 0 20px;
+    margin: 0 16px;
+    color: blueviolet;
+
+}
+
+#about_question{
+    display: flex;
+    flex-direction: column;
+    margin: 0 16px;
+}
+
+#type_options{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    border:none;
+}
+
+#steps{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+}
+
+#btnDiv{
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: flex-end;
+}
+
+#prevBtn{
+    padding: 5px 10px;
+    border: 1px solid green;
+    margin-right: 8px;
+    margin-top: 15px;
+    color: rgb(35, 160, 250);
+}
+
+#nextBtn{
+    padding: 5px 10px;
+    background: #07C;
+    border: none;
+    margin-top: 15px;
+    color: white;
+}
+
+#prevBtn:hover{
+    cursor: pointer;
+}
+
+#nextBtn:hover{
+    color: black;
+    cursor: pointer;
+    background: rgb(112, 190, 245);
+}
+
+#ask_tags{
+    display: flex;
+    flex-direction: column;
+}
+
+#ask_tags > span{
+    margin: 20px 0;
+}
+
+#ask_tags > h1{
+    margin-bottom: 0;
+}
+
+#titleDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+#titleDiv span{
+    margin-bottom: 10px;
+}
+
+#titleDiv h4{
+    margin-bottom: 0;
+}
+
+#titleDiv > input{
+    padding:  7px 0;
+}
+
+#similarityDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+#similarityDiv h4{
+    margin-bottom: 0;
+}
+
+#similarityDiv span{
+    margin-bottom: 10px;
+}
+
+
+#similar_questions{
+    border:1px solid #bbc0c4;
+    margin-top:24px;
+    display: flex;
+    flex-direction: column;
+}
+#similar_questions .head_space{
+    padding: 10px 0;
+    border-bottom: 1px solid #bbc0c4;
+    background: #fafafb;
+}
+
+#similar_questions .similar_question_list{
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    overflow-y:scroll;
+    overflow-x: auto;
+}
+
+#guid{
+    display: flex;
+    flex-direction: column;
+}
+
+#guid h1{
+    margin-bottom: 0;
+}
+
+#guidDiv{
+    display: flex;
+    flex-direction: column;
+}

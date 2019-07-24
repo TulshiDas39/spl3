@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title style="font-family: SolaimanLipi,Arial,Vrinda,FallbackBengaliFont,Helvetica,sans-serif;">প্রশ্ন করুন</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='res/css/global.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='res/css/ask.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='res/css/question_list.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='res/font-awesome-4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="res/css/jquery.tag-editor.css">
+
+</head>
+
+<body>
+    <div id="stages">
+        <span>প্রশ্নের ধরণ</span>
+        <span>ট্যাগ</span>
+        <span>শিরোনাম</span>
+        <span>বর্ণনা</span>
+        <span>পরিদর্শন</span>
+    </div>
+
+    <div id="middle">
+        <span id="image" class="fa fa-question-circle" style="display:none;"> </span>
+        <div id="steps">
+            <div id="about_question" style="display: none;">
+                <h1 id="type">আপনার কী ধরনের প্রশ্ন রয়েছে?</h1>
+                <span id="suggest">আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
+
+                <fieldset id="type_options">
+                    <div>
+                        <input type="radio" name="option" id="first_option">
+                        <label for="first_option">আমার নিজস্য কারিকুলাম সম্পর্কিত সমস্যা সমাধান করতে চাই</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="option" id="second_option">
+                        <label for="second_option">আমার বাড়ির কাজের সমস্যা সমাধান করতে চাই</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" name="option" id="third_option">
+                        <label for="second_option">শিক্ষা সম্পর্কিত তথ্য জানতে চাই</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="option" id="fourth_option">
+                        <label for="second_option">শিক্ষা সম্পর্কিত উপদেশ চাই</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" name="option" id="fifth_option">
+                        <label for="second_option">অন্যান্য</label>
+                    </div>
+                </fieldset>
+            </div>
+            <div id="ask_tags" style="display: none;">
+                <h1>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন করতে চান?</h1>
+                <span>
+                    ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
+                </span>
+                <span style="font-weight:bold;">ট্যাগ</span>
+                <div
+                    style="border-top: 1px solid #eee;border-bottom:1px solid #eee;background:#fafafa;padding:20px 5px">
+                    <div style="padding :0 7px 0 5px;max-width:900px;margin:auto">
+                        <textarea
+                            id="hero-demo">example tags, sortable, autocomplete, edit in place, tab/cursor navigation, duplicate check, callbacks, copy-paste, placeholder, public methods, custom delimiter, graceful degradation</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="titleDiv" style="display: none;">
+                <h1>আপনার প্রশ্নের শিরোনাম দিন</h1>
+                <span>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়, ফলে উত্তর প্রদান সহজ হয়</span>
+                <h4>শিরোনাম</h4>
+                <input type="text" name="" id="title">
+            </div>
+            <div id="similarityDiv" style="display: none;">
+                <h1>আপনার প্রশ্নের উত্তর কি এখানে আছে?</h1>
+                <span>এখানে আপনার প্রশ্নের সমতুল্য প্রশ্ন থাকতে পারে</span>
+            </div>
+            <div id="guid">
+                <h1>প্রশ্ন সম্পর্কে বিস্তারিত তথ্য দিন</h1>
+                <span>প্রশ্নের বর্ণনা উত্তর প্রদানে প্রয়োজনীয় তথ্য সর্বরাহ করে থাকে</span>
+                <div id="guidDiv">
+                    <div class="guidTitle">
+                        <div class="title">
+                            <span>১.প্রশ্নের বর্ণনা</span>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div id="question_description">
+                        <div class="title"></div>
+                        <div></div>
+                    </div>
+                    <div id="questionImage">
+                        <div class="title"></div>
+                        <div></div>
+                    </div>
+                    <div id="expectation">
+                        <div class="title"></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <div id="similar_questions">
+                <div class="head_space">
+                    <span style="padding: 0 5px;">Similar question</span>
+                </div>
+                <div class="similar_question_list">
+                    <div class="questions">
+                        <div class="question_status">
+                            <a href="" class="votes">
+                                <span class="vote_number">
+                                    ৫
+                                </span>
+                                <span class="vote_text">
+                                    ভোট
+                                </span>
+                            </a>
+                            <a href="" class="answered">
+                                <span class="answer_number">
+                                    ৬
+                                </span>
+                                <span class="answer_text">
+                                    উত্তর
+                                </span>
+                            </a>
+                            <a href="" class="views">
+                                <span class="view_number">
+                                    ৪০
+                                </span>
+                                <span class="view_text">
+                                    দেখা
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="question_text">
+                            <a class="question_title" href="">
+                                আমার একটা প্রশ্ন ছিল?
+                            </a>
+                            <div class="question_tags">
+                                <a href="">javascript</a>
+                                <a href="">jquery</a>
+                                <a href="">typescript</a>
+                                <a href="">electron</a>
+                            </div>
+                            <div class="question_time">
+                                <a href="">তিন ঘন্টা আগে প্রশ্ন করেছেন</a>
+                                <a href="">তুলশী দাস</a>
+                                <span>১০৩৯</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="questions">
+                        <div class="question_status">
+                            <a href="" class="votes">
+                                <span class="vote_number">
+                                    ৫
+                                </span>
+                                <span class="vote_text">
+                                    ভোট
+                                </span>
+                            </a>
+                            <a href="" class="answered">
+                                <span class="answer_number">
+                                    ৬
+                                </span>
+                                <span class="answer_text">
+                                    উত্তর
+                                </span>
+                            </a>
+                            <a href="" class="views">
+                                <span class="view_number">
+                                    ৪০
+                                </span>
+                                <span class="view_text">
+                                    দেখা
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="question_text">
+                            <a class="question_title" href="">
+                                কোথায় প্রশ্ন করা যায়?
+                            </a>
+                            <div class="question_tags">
+                                <a href="">javascript</a>
+                                <a href="">jquery</a>
+                                <a href="">typescript</a>
+                                <a href="">electron</a>
+                            </div>
+                            <div class="question_time">
+                                <a href="">তিন ঘন্টা আগে প্রশ্ন করেছেন</a>
+                                <a href="">তুলশী দাস</a>
+                                <span>১০৩৯</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="questions">
+                        <div class="question_status">
+                            <a href="" class="votes">
+                                <span class="vote_number">
+                                    ৫
+                                </span>
+                                <span class="vote_text">
+                                    ভোট
+                                </span>
+                            </a>
+                            <a href="" class="answered">
+                                <span class="answer_number">
+                                    ৬
+                                </span>
+                                <span class="answer_text">
+                                    উত্তর
+                                </span>
+                            </a>
+                            <a href="" class="views">
+                                <span class="view_number">
+                                    ৪০
+                                </span>
+                                <span class="view_text">
+                                    দেখা
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="question_text">
+                            <a class="question_title" href="">
+                                আমার একটা প্রশ্ন ছিল?
+                            </a>
+                            <div class="question_tags">
+                                <a href="">javascript</a>
+                                <a href="">jquery</a>
+                                <a href="">typescript</a>
+                                <a href="">electron</a>
+                            </div>
+                            <div class="question_time">
+                                <a href="">তিন ঘন্টা আগে প্রশ্ন করেছেন</a>
+                                <a href="">তুলশী দাস</a>
+                                <span>১০৩৯</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="questions">
+                        <div class="question_status">
+                            <a href="" class="votes">
+                                <span class="vote_number">
+                                    ৫
+                                </span>
+                                <span class="vote_text">
+                                    ভোট
+                                </span>
+                            </a>
+                            <a href="" class="answered">
+                                <span class="answer_number">
+                                    ৬
+                                </span>
+                                <span class="answer_text">
+                                    উত্তর
+                                </span>
+                            </a>
+                            <a href="" class="views">
+                                <span class="view_number">
+                                    ৪০
+                                </span>
+                                <span class="view_text">
+                                    দেখা
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="question_text">
+                            <a class="question_title" href="">
+                                কোথায় প্রশ্ন করা যায়?
+                            </a>
+                            <div class="question_tags">
+                                <a href="">javascript</a>
+                                <a href="">jquery</a>
+                                <a href="">typescript</a>
+                                <a href="">electron</a>
+                            </div>
+                            <div class="question_time">
+                                <a href="">তিন ঘন্টা আগে প্রশ্ন করেছেন</a>
+                                <a href="">তুলশী দাস</a>
+                                <span>১০৩৯</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="btnDiv" style="display: none;">
+                <button id="prevBtn" class="btns">পুর্ববর্তী ধাপ</button>
+                <button id="nextBtn" class="btns">পরবর্তী ধাপ</button>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+    <script src="res/js/jquery.caret.min.js"></script>
+    <script src="res/js/jquery.tag-editor.min.js"></script>
+    <script src="res/js/ask.js"></script>
+
+
+</body>
+
+</html>
