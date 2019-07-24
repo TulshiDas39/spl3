@@ -20,10 +20,6 @@ body {
     font-family: SolaimanLipi,Arial,Vrinda,FallbackBengaliFont,Helvetica,sans-serif;
 }
 
-/* :lang(en){
-    font-family: 'Times New Roman', Times, serif;
-} */
-
 #nav {
     display: flex;
     width: 100%;
@@ -32,7 +28,6 @@ body {
     height: 3rem;
     border-bottom: 1px solid #d9d9d9;
     border-top: 3px solid #F48024;
-    /* background: rebeccapurple; */
 }
 
 #list-sm{
@@ -149,7 +144,6 @@ body {
 
 #nofic {
     height: 100%;
-    /* padding: 0px 0.2em; */
     flex-basis: 3rem;
     display: flex;
     align-items: center;
