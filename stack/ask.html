@@ -24,86 +24,71 @@
     </div>
 
     <div id="middle">
-        <span id="image" class="fa fa-question-circle" style="display:none;"> </span>
+        <span id="image" class="fa fa-question-circle" style=""> </span>
         <div id="steps">
-            <div id="about_question" style="display: none;">
-                <h1 id="type">আপনার কী ধরনের প্রশ্ন রয়েছে?</h1>
-                <span id="suggest">আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
+            <h1 id="type" class="about_question">আপনার কী ধরনের প্রশ্ন রয়েছে?</h1>
+            <span id="suggest" class="about_question">আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
 
-                <fieldset id="type_options">
-                    <div>
-                        <input type="radio" name="option" id="first_option">
-                        <label for="first_option">আমার নিজস্য কারিকুলাম সম্পর্কিত সমস্যা সমাধান করতে চাই</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="option" id="second_option">
-                        <label for="second_option">আমার বাড়ির কাজের সমস্যা সমাধান করতে চাই</label>
-                    </div>
+            <fieldset id="type_options" class="about_question">
+                <div>
+                    <input type="radio" name="option" id="first_option">
+                    <label for="first_option">আমার নিজস্য কারিকুলাম সম্পর্কিত সমস্যা সমাধান করতে চাই</label>
+                </div>
+                <div>
+                    <input type="radio" name="option" id="second_option">
+                    <label for="second_option">আমার বাড়ির কাজের সমস্যা সমাধান করতে চাই</label>
+                </div>
 
-                    <div>
-                        <input type="radio" name="option" id="third_option">
-                        <label for="second_option">শিক্ষা সম্পর্কিত তথ্য জানতে চাই</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="option" id="fourth_option">
-                        <label for="second_option">শিক্ষা সম্পর্কিত উপদেশ চাই</label>
-                    </div>
+                <div>
+                    <input type="radio" name="option" id="third_option">
+                    <label for="second_option">শিক্ষা সম্পর্কিত তথ্য জানতে চাই</label>
+                </div>
+                <div>
+                    <input type="radio" name="option" id="fourth_option">
+                    <label for="second_option">শিক্ষা সম্পর্কিত উপদেশ চাই</label>
+                </div>
 
-                    <div>
-                        <input type="radio" name="option" id="fifth_option">
-                        <label for="second_option">অন্যান্য</label>
-                    </div>
-                </fieldset>
-            </div>
-            <div id="ask_tags" style="display: none;">
-                <h1>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন করতে চান?</h1>
-                <span>
-                    ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
-                </span>
-                <span style="font-weight:bold;">ট্যাগ</span>
-                <div
-                    style="border-top: 1px solid #eee;border-bottom:1px solid #eee;background:#fafafa;padding:20px 5px">
-                    <div style="padding :0 7px 0 5px;max-width:900px;margin:auto">
-                        <textarea
-                            id="hero-demo">example tags, sortable, autocomplete, edit in place, tab/cursor navigation, duplicate check, callbacks, copy-paste, placeholder, public methods, custom delimiter, graceful degradation</textarea>
-                    </div>
+                <div>
+                    <input type="radio" name="option" id="fifth_option">
+                    <label for="second_option">অন্যান্য</label>
+                </div>
+            </fieldset>
+
+            <h1 class="review" style="display: none;">আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
+            <span class="revew" style="display: none;">সবকিছু আরেক দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
+
+            <h1 class="titleDiv" style="display: none;">আপনার প্রশ্নের শিরোনাম দিন</h1>
+            <span class="titleDiv" style="display: none;">প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
+                ফলে উত্তর প্রদান সহজ হয়</span>
+            <h4  class="titleDiv review" style="display: none;">শিরোনাম</h4>
+            <input type="text" name="" class="titleField titleDiv review" style="display: none;">
+
+            <h1 class="ask_tags" style="display: none;">আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
+                করতে চান?</h1>
+            <span class="ask_tags">
+                ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
+            </span>
+            <span style="font-weight:bold;display: none;" class="ask_tags review">ট্যাগ</span>
+            <div style="border-top: 1px solid #eee;border-bottom:1px solid #eee;
+                    background:#fafafa;padding:20px 5px;display: none;" class="ask_tags review">
+                <div style="padding :0 7px 0 5px;max-width:900px;margin:auto">
+                    <textarea
+                        id="hero-demo">example tags, sortable, autocomplete, edit in place, tab/cursor navigation, duplicate check, callbacks, copy-paste, placeholder, public methods, custom delimiter, graceful degradation</textarea>
                 </div>
             </div>
-            <div id="titleDiv" style="display: none;">
-                <h1>আপনার প্রশ্নের শিরোনাম দিন</h1>
-                <span>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়, ফলে উত্তর প্রদান সহজ হয়</span>
-                <h4>শিরোনাম</h4>
-                <input type="text" name="" id="title">
-            </div>
-            <div id="similarityDiv" style="display: none;">
+
+            <!-- <div id="titleDiv" style="display: none;"> -->
+
+            <!-- </div> -->
+            <div id="similarityDiv" class="similarity_check" style="display: none;">
                 <h1>আপনার প্রশ্নের উত্তর কি এখানে আছে?</h1>
                 <span>এখানে আপনার প্রশ্নের সমতুল্য প্রশ্ন থাকতে পারে</span>
             </div>
-            <div id="guid">
+            <div id="guid" style="display: none;">
                 <h1>প্রশ্ন সম্পর্কে বিস্তারিত তথ্য দিন</h1>
                 <span>প্রশ্নের বর্ণনা উত্তর প্রদানে প্রয়োজনীয় তথ্য সর্বরাহ করে থাকে</span>
-                <div id="guidDiv">
-                    <div class="guidTitle">
-                        <div class="title">
-                            <span>১.প্রশ্নের বর্ণনা</span>
-                        </div>
-                        <div></div>
-                    </div>
-                    <div id="question_description">
-                        <div class="title"></div>
-                        <div></div>
-                    </div>
-                    <div id="questionImage">
-                        <div class="title"></div>
-                        <div></div>
-                    </div>
-                    <div id="expectation">
-                        <div class="title"></div>
-                        <div></div>
-                    </div>
-                </div>
             </div>
-            <div id="similar_questions">
+            <div class="similar_questions similarity_check" style="display: none;">
                 <div class="head_space">
                     <span style="padding: 0 5px;">Similar question</span>
                 </div>
@@ -293,8 +278,35 @@
                     </div>
                 </div>
             </div>
-            <div id="btnDiv" style="display: none;">
-                <button id="prevBtn" class="btns">পুর্ববর্তী ধাপ</button>
+            <div class="guidDiv review" style="display: none;">
+                <div class="questionPart">
+                    <div class="titleField">
+                        <span>১.প্রশ্নের বর্ণনা(আবশ্যক)</span>
+                    </div>
+                    <div class="inputField">
+                        <textarea name="" id="" cols="30" rows="8"></textarea>
+                    </div>
+                </div>
+                <div class="questionPart question_image">
+                    <div class="titleField">
+                        <span>২.ছবি(অনাবশ্যক)</span>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="questionPart expectation">
+                    <div class="titleField">
+                        <span>৩.উপসংহার দিন(আবশ্যক)</span>
+                    </div>
+                    <div class="inputField">
+                        <textarea name="" id="" cols="30" rows="8"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div id="btnDiv">
+                <button id="prevBtn" class="btns" style="display: none;">পুর্ববর্তী ধাপ</button>
                 <button id="nextBtn" class="btns">পরবর্তী ধাপ</button>
             </div>
 
@@ -307,6 +319,7 @@
     <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
     <script src="res/js/jquery.caret.min.js"></script>
     <script src="res/js/jquery.tag-editor.min.js"></script>
+    <script src="res/js/tag_editor.js"></script>
     <script src="res/js/ask.js"></script>
 
 

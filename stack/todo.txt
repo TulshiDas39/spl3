@@ -15,3 +15,4 @@ Bugs
 
 Can be improved later
     -ask page ta improve kora jai
+    -question field e formatting dewa
