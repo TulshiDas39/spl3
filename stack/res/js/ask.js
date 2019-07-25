@@ -76,7 +76,11 @@ class Ask {
     changeDisplayOfElementsByClass(className, displayVal) {
         let elements = document.getElementsByClassName(className);
         for (let i = 0; i < elements.length; i++) {
-            elements[i].style.display = displayVal;
+            //elements[i].style.display = displayVal;
+            if (displayVal == 'block')
+                elements[i].style.removeProperty('display');
+            else
+                elements[i].style.display = displayVal;
         }
     }
 }
