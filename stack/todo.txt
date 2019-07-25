@@ -1,16 +1,20 @@
 In progress
-    -ask page
+    -answer page
 
 To Do
+
+    -using react
+    -authentication
+    -integrating to backend
     
-    -left navigation
-    -right navigation
-    -middle place
 
 Done
     -1.bangla in nav
     -nav for mobile for base url after log in
-
+    -ask page
+    -left navigation
+    -right navigation
+    -middle place
 Bugs
 
 Can be improved later
