@@ -55,20 +55,20 @@
             </fieldset>
 
             <h1 class="review" style="display: none;">আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
-            <span class="revew" style="display: none;">সবকিছু আরেক দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
+            <span class="review" style="display: none;">সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
 
             <h1 class="titleDiv" style="display: none;">আপনার প্রশ্নের শিরোনাম দিন</h1>
-            <span class="titleDiv" style="display: none;">প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
+            <span id="title_tips" class="titleDiv" style="display: none;">প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
                 ফলে উত্তর প্রদান সহজ হয়</span>
-            <h4  class="titleDiv review" style="display: none;">শিরোনাম</h4>
-            <input type="text" name="" class="titleField titleDiv review" style="display: none;">
+            <h4  id="title_level" class="titleDiv review" style="display: none;">শিরোনাম</h4>
+            <input id="title_input" type="text" name="" class="titleDiv review" style="display: none;">
 
-            <h1 class="ask_tags" style="display: none;">আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
+            <h1 class="ask_tags" style="display: none;margin-bottom: 0;">আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
                 করতে চান?</h1>
-            <span class="ask_tags">
+            <span class="ask_tags" style="display: none; margin-top: 20px 0;">
                 ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
             </span>
-            <span style="font-weight:bold;display: none;" class="ask_tags review">ট্যাগ</span>
+            <span style="font-weight:bold;display: none;margin-top: 20px;" class="ask_tags review">ট্যাগ</span>
             <div style="border-top: 1px solid #eee;border-bottom:1px solid #eee;
                     background:#fafafa;padding:20px 5px;display: none;" class="ask_tags review">
                 <div style="padding :0 7px 0 5px;max-width:900px;margin:auto">
@@ -84,7 +84,7 @@
                 <h1>আপনার প্রশ্নের উত্তর কি এখানে আছে?</h1>
                 <span>এখানে আপনার প্রশ্নের সমতুল্য প্রশ্ন থাকতে পারে</span>
             </div>
-            <div id="guid" style="display: none;">
+            <div id="guid" class="description"  style="display: none;">
                 <h1>প্রশ্ন সম্পর্কে বিস্তারিত তথ্য দিন</h1>
                 <span>প্রশ্নের বর্ণনা উত্তর প্রদানে প্রয়োজনীয় তথ্য সর্বরাহ করে থাকে</span>
             </div>
@@ -278,7 +278,7 @@
                     </div>
                 </div>
             </div>
-            <div class="guidDiv review" style="display: none;">
+            <div class="guidDiv description review" style="display: none;">
                 <div class="questionPart">
                     <div class="titleField">
                         <span>১.প্রশ্নের বর্ণনা(আবশ্যক)</span>

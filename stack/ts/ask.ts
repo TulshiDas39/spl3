@@ -1,5 +1,5 @@
 class Ask{
-    private stages = ['about_question','ask_tags','titleDiv','similarity_check', 'guidDiv', 'review'];
+    private stages = ['about_question','ask_tags','titleDiv','similarity_check', 'description', 'review'];
     private currentStage = this.stages[0];
     
     public init(){
@@ -60,15 +60,14 @@ class Ask{
 
     private loadDescriptionView(){
         this.changeDisplayOfElementsByClass(this.currentStage,'none');
-        this.currentStage = 'guidDiv';
-        //document.getElementById('guidDiv').style.removeProperty('display');
+        this.currentStage = this.stages[4];
         this.changeDisplayOfElementsByClass(this.currentStage,'flex');
         
     }
 
     private loadReview(){
         this.changeDisplayOfElementsByClass(this.currentStage,'none');
-        this.currentStage = 'review';
+        this.currentStage = this.stages[5];
         this.changeDisplayOfElementsByClass(this.currentStage,'block');
     }
 

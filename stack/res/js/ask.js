@@ -1,7 +1,7 @@
 "use strict";
 class Ask {
     constructor() {
-        this.stages = ['about_question', 'ask_tags', 'titleDiv', 'similarity_check', 'guidDiv', 'review'];
+        this.stages = ['about_question', 'ask_tags', 'titleDiv', 'similarity_check', 'description', 'review'];
         this.currentStage = this.stages[0];
     }
     init() {
@@ -38,16 +38,6 @@ class Ask {
                 this.postQuestion();
         });
     }
-    // private removeCurrentView(){
-    //     if(this.currentStage == this.stages[0]){
-    //         this.changeDisplayOfElementsByClass()z
-    //     }
-    //         else if(this.currentStage == this.stages[1]) this.loadTitleView();
-    //         else if(this.currentStage == this.stages[2]) this.loadSimilarityCheck();
-    //         else if(this.currentStage == this.stages[3]) this.loadDescriptionView();
-    //         else if(this.currentStage == this.stages[4]) this.loadReview();
-    //         else if(this.currentStage == this.stages[5]) this.postQuestion();
-    // }
     loadSimilarityCheck() {
         this.changeDisplayOfElementsByClass(this.currentStage, 'none');
         this.currentStage = this.stages[3];
@@ -73,13 +63,12 @@ class Ask {
     }
     loadDescriptionView() {
         this.changeDisplayOfElementsByClass(this.currentStage, 'none');
-        this.currentStage = 'guidDiv';
-        //document.getElementById('guidDiv').style.removeProperty('display');
+        this.currentStage = this.stages[4];
         this.changeDisplayOfElementsByClass(this.currentStage, 'flex');
     }
     loadReview() {
         this.changeDisplayOfElementsByClass(this.currentStage, 'none');
-        this.currentStage = 'review';
+        this.currentStage = this.stages[5];
         this.changeDisplayOfElementsByClass(this.currentStage, 'block');
     }
     postQuestion() {
