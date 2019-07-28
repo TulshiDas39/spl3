@@ -127,19 +127,22 @@
     display: flex;
     flex-direction: column;
     border: 1px solid #d6d9dc;
+    position: relative;
 }
 
 .answer_editor_topbar{
     display: flex;
     border-bottom: 1px solid #d6d9dc;
     background: #fafafb;
-    padding: 10px 10px;
+    /* padding: 10px 10px; */
+    height: 40px;
+    align-items: center;
 }
 
 
 .answer_editor_topbar_bold{
     font-weight: bold;
-    padding: 0px 10px 0px 5px;
+    padding: 0px 10px 0px 15px;
 }
 
 .answer_editor_topbar_italic{
@@ -161,4 +164,34 @@
 .answer_editor_topbar_image{
     font-weight: bold;
     padding-right: 10px;
+}
+.answer_editor_topbar > span{
+    margin-right: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.answer_editor_topbar > span > span{
+    position: absolute;
+    display: none;
+    bottom: -40px;
+    border: 1px solid #bbc0c4;
+    background: #FFF;
+
+}
+
+.answer_editor_topbar > span:hover > span{
+    display: inline;    
+}
+
+.formated_output{
+    position: absolute;
+    top:32px;
+    width: 100%;
+    height: calc(100% - 40px);
+    z-index: -1;
+}
+.text_area_answer{
+    background: transparent;
+    caret-color: red;
 }
