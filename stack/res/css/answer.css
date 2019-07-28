@@ -10,6 +10,7 @@
     flex-shrink: 0;
     padding: 24px;
     box-sizing: border-box;
+    border-left: 1px solid rgb(211, 208, 205);
 }
 
 
@@ -120,4 +121,44 @@
 .answer_exact{
     display: flex;
     flex-direction: column;
+}
+
+.answer_editor{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #d6d9dc;
+}
+
+.answer_editor_topbar{
+    display: flex;
+    border-bottom: 1px solid #d6d9dc;
+    background: #fafafb;
+    padding: 10px 10px;
+}
+
+
+.answer_editor_topbar_bold{
+    font-weight: bold;
+    padding: 0px 10px 0px 5px;
+}
+
+.answer_editor_topbar_italic{
+    font-style: italic;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.answer_editor_topbar_hyperlink{
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.answer_editor_topbar_blockquote{
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.answer_editor_topbar_image{
+    font-weight: bold;
+    padding-right: 10px;
 }
