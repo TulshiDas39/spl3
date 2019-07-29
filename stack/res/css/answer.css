@@ -134,9 +134,8 @@
     display: flex;
     border-bottom: 1px solid #d6d9dc;
     background: #fafafb;
-    /* padding: 10px 10px; */
-    height: 40px;
-    align-items: center;
+    padding: 10px 10px; 
+    position: relative;
 }
 
 
@@ -168,30 +167,24 @@
 .answer_editor_topbar > span{
     margin-right: 20px;
     cursor: pointer;
-    position: relative;
 }
 
 .answer_editor_topbar > span > span{
     position: absolute;
     display: none;
-    bottom: -40px;
+    bottom: -20px;
     border: 1px solid #bbc0c4;
     background: #FFF;
+    z-index: -1;
 
 }
 
 .answer_editor_topbar > span:hover > span{
-    display: inline;    
+    display: inline; 
+    z-index: 1;
 }
 
-.formated_output{
-    position: absolute;
-    top:32px;
-    width: 100%;
-    height: calc(100% - 40px);
-    z-index: -1;
-}
-.text_area_answer{
-    background: transparent;
-    caret-color: red;
+#answer_display{
+    border: 1px dotted #0095ff;
+    margin-top: 20px;
 }
