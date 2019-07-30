@@ -1,15 +1,15 @@
 
 class Answer {
     private answerEditor = <HTMLInputElement>document.getElementById('answer_editor');
-    private answerInHtml: string;
-    private boldTags = ['<bold>', '</bold>'];
-    private italicTags = ['<italic>', '</italic>'];
-    private underLineTags = ['<underLine>', '</underLine>'];
-    private linkTags = ['<link url = "">','</link>'];
+    private boldTags = ['<bold>', '</bold>', '<b>', '</b>'];
+    private italicTags = ['<italic>', '</italic>', '<i>', '</i>'];
+    private underLineTags = ['<underLine>', '</underLine>', '<u>', '</u>'];
+    private linkTags = ['<a href = "">', '</a>'];
     private tabTag = '<tab>';
-    private unorderListTags = ['<unorder-list>','</unorder-list>'];
-    private orderListTags = ['<order-list>','</order-list>'];
-    private listItemTags = ['<list-item>','</list-item>'];
+    private unorderListTags = ['<unorder-list>', '</unorder-list>'];
+    private orderListTags = ['<order-list>', '</order-list>'];
+    private listItemTags = ['<list-item>', '</list-item>'];
+    private headingTags = ['<heading>', '</heading>'];
 
 
     public init() {
@@ -21,6 +21,7 @@ class Answer {
         this.addTabListener();
         this.addOrderListListener();
         this.addUnOrderListListener();
+        this.addHeadingListener();
 
     }
 
@@ -28,19 +29,12 @@ class Answer {
     private setInputListenerInAnswerEditor() {
         document.getElementById('answer_editor').oninput = () => {
             let text = this.answerEditor.value;
-            let html = this.replaceNewLineByBreakTag(text);
-            this.showFormatedAnswer(html);
+            this.showFormatedAnswer(text);
+            window.scrollTo(0, document.body.scrollHeight);
         }
     }
 
-    // private replaceUnnecessaryLineBreak(text:string):string{
-    //     let res = text.replace(this.orderListTags[0]+"\n\t"+"/g", this.orderListTags[0]);
-    //     //'\n'+this.orderListTags[1]
-    //     res = res.replace('\n'+this.orderListTags[1]+"/g", this.orderListTags[0]);
-    //     return res;
-    // }
-
-    private replaceNewLineByBreakTag(text: string):string {
+    private replaceNewLineByBreakTag(text: string): string {
         let res = text.replace(/\n/g, "<br>");
         return res;
     }
@@ -58,7 +52,7 @@ class Answer {
         });
     }
 
-    private addLinkListener(){
+    private addLinkListener() {
         document.getElementById('linkBtn').addEventListener('click', () => {
             this.toogleTag(this.linkTags);
         });
@@ -76,31 +70,37 @@ class Answer {
         });
     }
 
-    private addOrderListListener(){
+    private addOrderListListener() {
         document.getElementById('orderListBtn').addEventListener('click', () => {
             let startIndex = this.answerEditor.selectionStart;
-            this.insertTag(this.orderListTags[0]+"\n\t");
-            this.insertTag(this.listItemTags[0]+"write here"+this.listItemTags[1]);
-            this.insertTag('\n'+this.orderListTags[1]);
-            let selectionStart = startIndex+this.orderListTags[0].length+2+this.listItemTags[0].length;
+            this.insertTag("\n" + this.orderListTags[0] + "\n\t");
+            this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
+            this.insertTag('\n' + this.orderListTags[1] + "\n");
+            let selectionStart = startIndex + this.orderListTags[0].length + 3 + this.listItemTags[0].length;
 
-            this.selectText(selectionStart, selectionStart+ "write here".length);
+            this.selectText(selectionStart, selectionStart + "write here".length);
         });
     }
 
-    private addUnOrderListListener(){
+    private addUnOrderListListener() {
         document.getElementById('unorderListBtn').addEventListener('click', () => {
             let startIndex = this.answerEditor.selectionStart;
-            this.insertTag(this.unorderListTags[0]+"\n\t");
-            this.insertTag(this.listItemTags[0]+"write here"+this.listItemTags[1]);
-            this.insertTag('\n'+this.unorderListTags[1]);
-            let selectionStart = startIndex+this.unorderListTags[0].length+2+this.listItemTags[0].length;
+            this.insertTag("\n" + this.unorderListTags[0] + "\n\t");
+            this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
+            this.insertTag('\n' + this.unorderListTags[1] + "\n");
+            let selectionStart = startIndex + this.unorderListTags[0].length + 3 + this.listItemTags[0].length;
 
-            this.selectText(selectionStart, selectionStart+ "write here".length);
+            this.selectText(selectionStart, selectionStart + "write here".length);
         });
     }
 
-    private insertTag(tag:string){
+    private addHeadingListener() {
+        document.getElementById('headingBtn').addEventListener('click', () => {
+            this.toogleTag(this.headingTags);
+        })
+    }
+
+    private insertTag(tag: string) {
         let startIndex = this.answerEditor.selectionStart;
         let value = this.answerEditor.value;
         let first_part = value.substring(0, startIndex);
@@ -153,31 +153,94 @@ class Answer {
         return false;
     }
 
-    private addNewLineListener() {
-
-    }
-
-    private addUnorderListListener() {
-
-    }
-
     private addImageListener() {
 
     }
 
-    private addHeadingener() {
+    private replaceAnchors(parentNode: HTMLElement) {
+        let oldTags = parentNode.getElementsByTagName('link');
+        let urls = [];
+
+
+        for (let i = 0; i < oldTags.length; i++) {
+            urls.push(oldTags[i].getAttribute('url'));
+            console.log(oldTags[i]);
+        }
+
+        while (oldTags.length != 0) {
+            let oldTag = oldTags[0];
+            let newTag = document.createElement('a');
+            newTag.innerHTML = oldTag.innerHTML;
+            newTag.href = urls.shift();
+            console.log(newTag);
+            oldTag.parentNode.replaceChild(newTag, oldTag);
+
+        }
+
+        return parentNode;
+    }
+
+    private replaceTags(parentNode: HTMLElement, oldTagName: string, newTagName: string) {
+        let oldTags = parentNode.getElementsByTagName(oldTagName);
+
+        while (oldTags.length != 0) {
+            let oldTag = oldTags[0];
+            let newTag = document.createElement(newTagName);
+            newTag.innerHTML = oldTag.innerHTML;
+            console.log(newTag);
+            oldTag.parentNode.replaceChild(newTag, oldTag);
+
+        }
+
+        return parentNode;
+
+    }
+
+    // private repaireAnchor(html: HTMLElement) {
+    //     let anchors = html.getElementsByTagName('a');
+    //     for (let i = 0; i < anchors.length; i++) {
+    //         console.log(anchors[i]);
+    //         console.log(anchors[i].getAttribute('url'));
+    //         anchors[i].setAttribute('href', anchors[i].getAttribute('url'));
+    //         anchors[i].removeAttribute('url');
+    //     }
+    //     return html;
+    // }
+
+    private getHtml(text: string): string {
+        let html: HTMLElement = document.createElement('div');
+        html.innerHTML = text;
+        html = this.replaceTags(html, 'bold', 'b');
+        html = this.replaceTags(html, 'italic', 'i');
+        html = this.replaceTags(html, 'underLine', 'u');
+        //html = this.replaceTags(html, 'link', 'a');
+        html = this.replaceTags(html, 'unorder-list', 'ul');
+        html = this.replaceTags(html, 'order-list', 'ol');
+        html = this.replaceTags(html, 'list-item', 'li');
+        html = this.replaceTags(html, 'heading', 'h2');
+
+        //html = this.replaceAnchors(html);
+
+        return html.innerHTML;
+    }
+
+    private replaceAll(str: string, replacement: string, replaceBy: string): string {
+        let re = new RegExp(replacement, "g");
+        return str.replace(re, replaceBy);
 
     }
 
     private showFormatedAnswer(text: string) {
         let elem = document.getElementById('answer_display');
-        //elem.innerHTML = this.getHtml(text);
-        elem.innerHTML = text;
+        text = this.replaceAll(text, "\n" + this.orderListTags[0] + "\n", this.orderListTags[0]);
+        text = this.replaceAll(text, "\n" + this.orderListTags[0], this.orderListTags[0]);
+
+        text = this.replaceAll(text, "\n" + this.unorderListTags[0] + "\n", this.unorderListTags[0]);
+        text = this.replaceAll(text, '<tab/>', '&nbsp;&nbsp;&nbsp;&nbsp;');
+        text = this.replaceAll(text, '\n', '<br>');
+        elem.innerHTML = this.getHtml(text);
     }
 
-    private getHtml(text: string): string {
-        return "";
-    }
     private selectText(startPos: number, endPos: number) {
         const input = <HTMLInputElement>document.getElementById('answer_editor');
         input.focus();

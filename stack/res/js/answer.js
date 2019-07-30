@@ -2,14 +2,15 @@
 class Answer {
     constructor() {
         this.answerEditor = document.getElementById('answer_editor');
-        this.boldTags = ['<bold>', '</bold>'];
-        this.italicTags = ['<italic>', '</italic>'];
-        this.underLineTags = ['<underLine>', '</underLine>'];
-        this.linkTags = ['<link url = "">', '</link>'];
+        this.boldTags = ['<bold>', '</bold>', '<b>', '</b>'];
+        this.italicTags = ['<italic>', '</italic>', '<i>', '</i>'];
+        this.underLineTags = ['<underLine>', '</underLine>', '<u>', '</u>'];
+        this.linkTags = ['<a href = "">', '</a>'];
         this.tabTag = '<tab>';
         this.unorderListTags = ['<unorder-list>', '</unorder-list>'];
         this.orderListTags = ['<order-list>', '</order-list>'];
         this.listItemTags = ['<list-item>', '</list-item>'];
+        this.headingTags = ['<heading>', '</heading>'];
     }
     init() {
         this.setInputListenerInAnswerEditor();
@@ -20,20 +21,15 @@ class Answer {
         this.addTabListener();
         this.addOrderListListener();
         this.addUnOrderListListener();
+        this.addHeadingListener();
     }
     setInputListenerInAnswerEditor() {
         document.getElementById('answer_editor').oninput = () => {
             let text = this.answerEditor.value;
-            let html = this.replaceNewLineByBreakTag(text);
-            this.showFormatedAnswer(html);
+            this.showFormatedAnswer(text);
+            window.scrollTo(0, document.body.scrollHeight);
         };
     }
-    // private replaceUnnecessaryLineBreak(text:string):string{
-    //     let res = text.replace(this.orderListTags[0]+"\n\t"+"/g", this.orderListTags[0]);
-    //     //'\n'+this.orderListTags[1]
-    //     res = res.replace('\n'+this.orderListTags[1]+"/g", this.orderListTags[0]);
-    //     return res;
-    // }
     replaceNewLineByBreakTag(text) {
         let res = text.replace(/\n/g, "<br>");
         return res;
@@ -66,21 +62,26 @@ class Answer {
     addOrderListListener() {
         document.getElementById('orderListBtn').addEventListener('click', () => {
             let startIndex = this.answerEditor.selectionStart;
-            this.insertTag(this.orderListTags[0] + "\n\t");
+            this.insertTag("\n" + this.orderListTags[0] + "\n\t");
             this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
-            this.insertTag('\n' + this.orderListTags[1]);
-            let selectionStart = startIndex + this.orderListTags[0].length + 2 + this.listItemTags[0].length;
+            this.insertTag('\n' + this.orderListTags[1] + "\n");
+            let selectionStart = startIndex + this.orderListTags[0].length + 3 + this.listItemTags[0].length;
             this.selectText(selectionStart, selectionStart + "write here".length);
         });
     }
     addUnOrderListListener() {
         document.getElementById('unorderListBtn').addEventListener('click', () => {
             let startIndex = this.answerEditor.selectionStart;
-            this.insertTag(this.unorderListTags[0] + "\n\t");
+            this.insertTag("\n" + this.unorderListTags[0] + "\n\t");
             this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
-            this.insertTag('\n' + this.unorderListTags[1]);
-            let selectionStart = startIndex + this.unorderListTags[0].length + 2 + this.listItemTags[0].length;
+            this.insertTag('\n' + this.unorderListTags[1] + "\n");
+            let selectionStart = startIndex + this.unorderListTags[0].length + 3 + this.listItemTags[0].length;
             this.selectText(selectionStart, selectionStart + "write here".length);
+        });
+    }
+    addHeadingListener() {
+        document.getElementById('headingBtn').addEventListener('click', () => {
+            this.toogleTag(this.headingTags);
         });
     }
     insertTag(tag) {
@@ -129,21 +130,72 @@ class Answer {
             return true;
         return false;
     }
-    addNewLineListener() {
-    }
-    addUnorderListListener() {
-    }
     addImageListener() {
     }
-    addHeadingener() {
+    replaceAnchors(parentNode) {
+        let oldTags = parentNode.getElementsByTagName('link');
+        let urls = [];
+        for (let i = 0; i < oldTags.length; i++) {
+            urls.push(oldTags[i].getAttribute('url'));
+            console.log(oldTags[i]);
+        }
+        while (oldTags.length != 0) {
+            let oldTag = oldTags[0];
+            let newTag = document.createElement('a');
+            newTag.innerHTML = oldTag.innerHTML;
+            newTag.href = urls.shift();
+            console.log(newTag);
+            oldTag.parentNode.replaceChild(newTag, oldTag);
+        }
+        return parentNode;
+    }
+    replaceTags(parentNode, oldTagName, newTagName) {
+        let oldTags = parentNode.getElementsByTagName(oldTagName);
+        while (oldTags.length != 0) {
+            let oldTag = oldTags[0];
+            let newTag = document.createElement(newTagName);
+            newTag.innerHTML = oldTag.innerHTML;
+            console.log(newTag);
+            oldTag.parentNode.replaceChild(newTag, oldTag);
+        }
+        return parentNode;
+    }
+    // private repaireAnchor(html: HTMLElement) {
+    //     let anchors = html.getElementsByTagName('a');
+    //     for (let i = 0; i < anchors.length; i++) {
+    //         console.log(anchors[i]);
+    //         console.log(anchors[i].getAttribute('url'));
+    //         anchors[i].setAttribute('href', anchors[i].getAttribute('url'));
+    //         anchors[i].removeAttribute('url');
+    //     }
+    //     return html;
+    // }
+    getHtml(text) {
+        let html = document.createElement('div');
+        html.innerHTML = text;
+        html = this.replaceTags(html, 'bold', 'b');
+        html = this.replaceTags(html, 'italic', 'i');
+        html = this.replaceTags(html, 'underLine', 'u');
+        //html = this.replaceTags(html, 'link', 'a');
+        html = this.replaceTags(html, 'unorder-list', 'ul');
+        html = this.replaceTags(html, 'order-list', 'ol');
+        html = this.replaceTags(html, 'list-item', 'li');
+        html = this.replaceTags(html, 'heading', 'h2');
+        //html = this.replaceAnchors(html);
+        return html.innerHTML;
+    }
+    replaceAll(str, replacement, replaceBy) {
+        let re = new RegExp(replacement, "g");
+        return str.replace(re, replaceBy);
     }
     showFormatedAnswer(text) {
         let elem = document.getElementById('answer_display');
-        //elem.innerHTML = this.getHtml(text);
-        elem.innerHTML = text;
-    }
-    getHtml(text) {
-        return "";
+        text = this.replaceAll(text, "\n" + this.orderListTags[0] + "\n", this.orderListTags[0]);
+        text = this.replaceAll(text, "\n" + this.orderListTags[0], this.orderListTags[0]);
+        text = this.replaceAll(text, "\n" + this.unorderListTags[0] + "\n", this.unorderListTags[0]);
+        text = this.replaceAll(text, '<tab/>', '&nbsp;&nbsp;&nbsp;&nbsp;');
+        text = this.replaceAll(text, '\n', '<br>');
+        elem.innerHTML = this.getHtml(text);
     }
     selectText(startPos, endPos) {
         const input = document.getElementById('answer_editor');
