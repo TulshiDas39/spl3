@@ -1,6 +1,6 @@
 # SPL3: An Educational Forum for Bangladesh
 
-[![Tulshi Das|Bangladesh](https://raw.githubusercontent.com/TulshiDas39/kr-youtube-downloader/master/icon.ico)](https://github.com/TulshiDas39/kr-youtube-downloader)
+[![Tulshi Das|Bangladesh](https://raw.githubusercontent.com/TulshiDas39/spl3/master/stack/res/images/hand.ico)](https://github.com/TulshiDas39/spl3)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
