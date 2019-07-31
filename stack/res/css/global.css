@@ -18,6 +18,7 @@
     silimar div border color:1px solid #bbc0c4;
     border color with left_bar: 1px solid #d6d9dc;
     similarity div topbar background:#fafafb;
+    background of tag:#E1ECF4;
 */
 
 body {
@@ -84,21 +85,21 @@ body {
     cursor: pointer;
 }
 
-#search {
+/* .search {
     flex-grow: 9;
     height: 2rem;
     box-sizing: border-box;
 }
 
-#search form {
+.search form {
     position: relative;
     display: flex;
     align-items: center;
     height: 100%;
     width: 100%;
-}
+} */
 
-#search input {
+/* #search input {
     border: 1px solid #bbc0c4;
     height: 100%;
     width: 100%;
@@ -116,7 +117,43 @@ body {
     left: 10px;
     color: #bbc0c4;
     z-index: 1;
+} */
+
+.search {
+    flex-grow: 9;
+    height: 2rem;
+    box-sizing: border-box;
 }
+
+.search form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.search input {
+    border: 1px solid #bbc0c4;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    padding-left: 30px;
+}
+
+.search input:focus {
+    border-color: #66bfff;
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}
+
+.search span {
+    position: absolute;
+    left: 10px;
+    color: #bbc0c4;
+    z-index: 1;
+}
+
+
 
 #user {
     height: 100%;

@@ -21,6 +21,7 @@
     box-sizing: border-box;
     display:flex;
     flex-direction: column;
+    padding: 10px;
 }
 
 #headArea{
@@ -35,4 +36,55 @@
 #tagArea{
     display: flex;
     flex-direction: column;
+}
+#searchFilterContainer{
+    display: flex;
+}
+
+#filter-search{
+    width: 200px;
+}
+
+#filter-search > form{
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#filter-search > form > input{
+    padding: 10px 0 10px 30px;
+    border: 1px solid #bbc0c4;
+    border-radius: 4px;
+}
+
+#filter-search > form > input:focus{
+    border-color: #66bfff;
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}
+
+#filter-search > form > span{
+    position: absolute;
+    color: #bbc0c4;
+    left: 10px;
+}
+
+#tagsContainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.tagRow{
+    display: flex;
+}
+
+.tagItem{
+    display: flex;
+    flex-direction: column;
+}
+.tag{
+    padding: 10px 20px;
+    background: #E1ECF4;
+    margin-bottom: 4px;
 }
