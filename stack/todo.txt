@@ -2,7 +2,10 @@ In progress
     -answer page
 
 To Do
-
+    -tag page
+    -users page
+    -user profile public view page
+    -job page
     -using react
     -authentication
     -integrating to backend
