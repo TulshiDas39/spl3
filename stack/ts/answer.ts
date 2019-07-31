@@ -1,102 +1,96 @@
 
 class Answer {
     private answerEditor = <HTMLInputElement>document.getElementById('answer_editor');
-    private boldTags = ['<bold>', '</bold>', '<b>', '</b>'];
-    private italicTags = ['<italic>', '</italic>', '<i>', '</i>'];
-    private underLineTags = ['<underLine>', '</underLine>', '<u>', '</u>'];
+    private answerdisplay = <HTMLInputElement>document.getElementById('answer_display');
+    private boldTags = ['<b>', '</b>', '<b>', '</b>'];
+    private italicTags = ['<i>', '</i>', '<i>', '</i>'];
+    private underLineTags = ['<u>', '</u>', '<u>', '</u>'];
     private linkTags = ['<a href = "">', '</a>'];
-    private tabTag = '<tab>';
-    private unorderListTags = ['<unorder-list>', '</unorder-list>'];
-    private orderListTags = ['<order-list>', '</order-list>'];
-    private listItemTags = ['<list-item>', '</list-item>'];
-    private headingTags = ['<heading>', '</heading>'];
+    private tabTag = '&nbsp;&nbsp;&nbsp;&nbsp;';
+    private unorderListTags = ['\n<ul>\n\t<li>', '</li>\n</ul>'];
+    private orderListTags = ['\n<ol>\n\t<li>', '</li>\n</ol>'];
+    private listItemTags = ['\t<li>', '</li>'];
+    private headingTags = ['<h3>', '</h3>'];
+    private newLineTag = '<br>';
 
 
     public init() {
         this.setInputListenerInAnswerEditor();
         this.addBoldListener();
         this.addItalicListener();
-        this.addUnderLineListener();
         this.addLinkListener();
         this.addTabListener();
         this.addOrderListListener();
         this.addUnOrderListListener();
         this.addHeadingListener();
-
+        this.addImageListener();
+        this.addNewLineListener();
     }
 
 
     private setInputListenerInAnswerEditor() {
         document.getElementById('answer_editor').oninput = () => {
-            let text = this.answerEditor.value;
-            this.showFormatedAnswer(text);
-            window.scrollTo(0, document.body.scrollHeight);
+            this.displayChanges();
         }
     }
 
-    private replaceNewLineByBreakTag(text: string): string {
-        let res = text.replace(/\n/g, "<br>");
-        return res;
+    private displayChanges() {
+        document.getElementById('answer_display').innerHTML = this.answerEditor.value;;
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
-
+    private addNewLineListener() {
+        document.getElementById('newLineBtn').addEventListener('click', () => {
+            this.insertTag(this.newLineTag);
+            this.displayChanges()
+        });
+    }
     private addBoldListener() {
         document.getElementById('boldBtn').addEventListener('click', () => {
             this.toogleTag(this.boldTags);
+            this.displayChanges();
         });
     }
 
     private addItalicListener() {
         document.getElementById('italicBtn').addEventListener('click', () => {
             this.toogleTag(this.italicTags);
+            this.displayChanges();
         });
     }
 
     private addLinkListener() {
         document.getElementById('linkBtn').addEventListener('click', () => {
             this.toogleTag(this.linkTags);
-        });
-    }
-
-    private addUnderLineListener() {
-        document.getElementById('underLineBtn').addEventListener('click', () => {
-            this.toogleTag(this.underLineTags);
+            this.displayChanges();
         });
     }
 
     private addTabListener() {
         document.getElementById('tabBtn').addEventListener('click', () => {
             this.insertTag(this.tabTag);
+            this.displayChanges();
         });
     }
 
     private addOrderListListener() {
         document.getElementById('orderListBtn').addEventListener('click', () => {
-            let startIndex = this.answerEditor.selectionStart;
-            this.insertTag("\n" + this.orderListTags[0] + "\n\t");
-            this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
-            this.insertTag('\n' + this.orderListTags[1] + "\n");
-            let selectionStart = startIndex + this.orderListTags[0].length + 3 + this.listItemTags[0].length;
-
-            this.selectText(selectionStart, selectionStart + "write here".length);
+            this.toogleTag(this.orderListTags);
+            this.displayChanges();
         });
     }
 
     private addUnOrderListListener() {
         document.getElementById('unorderListBtn').addEventListener('click', () => {
-            let startIndex = this.answerEditor.selectionStart;
-            this.insertTag("\n" + this.unorderListTags[0] + "\n\t");
-            this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
-            this.insertTag('\n' + this.unorderListTags[1] + "\n");
-            let selectionStart = startIndex + this.unorderListTags[0].length + 3 + this.listItemTags[0].length;
-
-            this.selectText(selectionStart, selectionStart + "write here".length);
+            this.toogleTag(this.unorderListTags);
+            this.displayChanges();
         });
     }
 
     private addHeadingListener() {
         document.getElementById('headingBtn').addEventListener('click', () => {
             this.toogleTag(this.headingTags);
+            this.displayChanges();
         })
     }
 
@@ -154,91 +148,24 @@ class Answer {
     }
 
     private addImageListener() {
+        document.getElementById('imageUpload').addEventListener('click', () => {
+            document.getElementById('imageUploader').click();
+        })
 
-    }
+        document.getElementById('imageUploader').addEventListener('change', (event: Event) => {
+            let file = (<HTMLInputElement>event.target).files[0];
 
-    private replaceAnchors(parentNode: HTMLElement) {
-        let oldTags = parentNode.getElementsByTagName('link');
-        let urls = [];
+            console.log(file);
 
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('output');
+                // output.src = reader.result;
+                console.log(reader.result);
+            };
+            reader.readAsDataURL(file);
+        })
 
-        for (let i = 0; i < oldTags.length; i++) {
-            urls.push(oldTags[i].getAttribute('url'));
-            console.log(oldTags[i]);
-        }
-
-        while (oldTags.length != 0) {
-            let oldTag = oldTags[0];
-            let newTag = document.createElement('a');
-            newTag.innerHTML = oldTag.innerHTML;
-            newTag.href = urls.shift();
-            console.log(newTag);
-            oldTag.parentNode.replaceChild(newTag, oldTag);
-
-        }
-
-        return parentNode;
-    }
-
-    private replaceTags(parentNode: HTMLElement, oldTagName: string, newTagName: string) {
-        let oldTags = parentNode.getElementsByTagName(oldTagName);
-
-        while (oldTags.length != 0) {
-            let oldTag = oldTags[0];
-            let newTag = document.createElement(newTagName);
-            newTag.innerHTML = oldTag.innerHTML;
-            console.log(newTag);
-            oldTag.parentNode.replaceChild(newTag, oldTag);
-
-        }
-
-        return parentNode;
-
-    }
-
-    // private repaireAnchor(html: HTMLElement) {
-    //     let anchors = html.getElementsByTagName('a');
-    //     for (let i = 0; i < anchors.length; i++) {
-    //         console.log(anchors[i]);
-    //         console.log(anchors[i].getAttribute('url'));
-    //         anchors[i].setAttribute('href', anchors[i].getAttribute('url'));
-    //         anchors[i].removeAttribute('url');
-    //     }
-    //     return html;
-    // }
-
-    private getHtml(text: string): string {
-        let html: HTMLElement = document.createElement('div');
-        html.innerHTML = text;
-        html = this.replaceTags(html, 'bold', 'b');
-        html = this.replaceTags(html, 'italic', 'i');
-        html = this.replaceTags(html, 'underLine', 'u');
-        //html = this.replaceTags(html, 'link', 'a');
-        html = this.replaceTags(html, 'unorder-list', 'ul');
-        html = this.replaceTags(html, 'order-list', 'ol');
-        html = this.replaceTags(html, 'list-item', 'li');
-        html = this.replaceTags(html, 'heading', 'h2');
-
-        //html = this.replaceAnchors(html);
-
-        return html.innerHTML;
-    }
-
-    private replaceAll(str: string, replacement: string, replaceBy: string): string {
-        let re = new RegExp(replacement, "g");
-        return str.replace(re, replaceBy);
-
-    }
-
-    private showFormatedAnswer(text: string) {
-        let elem = document.getElementById('answer_display');
-        text = this.replaceAll(text, "\n" + this.orderListTags[0] + "\n", this.orderListTags[0]);
-        text = this.replaceAll(text, "\n" + this.orderListTags[0], this.orderListTags[0]);
-
-        text = this.replaceAll(text, "\n" + this.unorderListTags[0] + "\n", this.unorderListTags[0]);
-        text = this.replaceAll(text, '<tab/>', '&nbsp;&nbsp;&nbsp;&nbsp;');
-        text = this.replaceAll(text, '\n', '<br>');
-        elem.innerHTML = this.getHtml(text);
     }
 
     private selectText(startPos: number, endPos: number) {
