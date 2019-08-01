@@ -1,10 +1,9 @@
 In progress
-    -answer page
+    -users page
 
 To Do
-    -tag page
-    -users page
     -user profile public view page
+    -comment section to answer page
     -job page
     -using react
     -authentication
@@ -12,12 +11,15 @@ To Do
     
 
 Done
-    -1.bangla in nav
+    -bangla in nav
     -nav for mobile for base url after log in
     -ask page
     -left navigation
     -right navigation
     -middle place
+    -tag page
+    -answer page
+
 Bugs
 
 Can be improved later
