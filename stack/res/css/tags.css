@@ -11,7 +11,6 @@
 }
 
 #right{
-    /* max-width: 1100px; */
     width: calc(100% - 164px);
     background-color: #FFF;
     border-radius: 0;
@@ -71,20 +70,42 @@
 
 #tagsContainer{
     display: flex;
-    flex-direction: column;
     margin-top: 20px;
-}
-
-.tagRow{
-    display: flex;
+    flex-wrap: wrap;
 }
 
 .tagItem{
     display: flex;
     flex-direction: column;
+    border:1px solid #66bfff;
+    margin: 5px;
 }
 .tag{
-    padding: 10px 20px;
+    padding: 10px 10px;
+    margin-right: auto;
     background: #E1ECF4;
     margin-bottom: 4px;
+}
+
+.tagPagination{
+    display: flex;
+    justify-content: right;
+    margin-top: 20px;
+}
+
+.tagPagination> .tagGroup:first-child{
+    margin-left: auto;
+}
+
+.tagGroup{
+    border: 1px solid #bbc0c4;
+    border-radius: 3px;
+    padding: 4px 9px;
+    margin: 0 5px;
+    font-size: 13px;
+}
+
+.tagGroup:hover{
+    background: brown;
+    cursor: pointer;
 }
