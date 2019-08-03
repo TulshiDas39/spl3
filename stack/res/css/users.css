@@ -38,6 +38,7 @@
 }
 #searchFilterContainer{
     display: flex;
+    justify-content: space-around;
 }
 
 .filter-search{
@@ -120,15 +121,10 @@
     text-align: center;
 }
 
-.filterContainer{
-    display: flex;
-    margin-left: auto;
-    align-items: center;
-}
-
-.filterContainer > .filterText{
+.filterText{
     align-self: center;
     margin-right: 10px;
+    margin-left: auto;
 }
 
 #filterTags{
@@ -137,3 +133,6 @@
     border-radius: 3px;
 }
 
+.searchAndFilters{
+    display: flex;
+}

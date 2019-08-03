@@ -1,0 +1,41 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+/* search field */
+.filter-search{
+    width: 200px;
+}
+
+.filter-search > form{
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.filter-search > form > input{
+    padding: 10px 0 10px 30px;
+    border: 1px solid #bbc0c4;
+    border-radius: 4px;
+}
+
+.filter-search > form > input:focus{
+    border-color: #66bfff;
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}
+
+.filter-search > form > span{
+    position: absolute;
+    color: #bbc0c4;
+    left: 10px;
+}
+
+
+/* selction */
+.selection > option{
+    padding: 4px 0;
+}

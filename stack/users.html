@@ -39,31 +39,40 @@
             <div id="headArea">
                 <h1>ব্যবহারকারী</h1>
                 <p>ব্যবহারকারী এখানে উল্লেখ করা হল</p>
-                <div id="searchFilterContainer">
+
+                <div class="searchAndFilters">
+
                     <div class="filter-search">
                         <form action="/search" mathod="get">
                             <span class="fa fa-search"></span>
                             <input type="text" placeholder="খুজুন...">
                         </form>
                     </div>
-                    <div class="filterContainer">
-                        <span class="filterText">ফিল্টার</span>
-                        <div class="filterUsers">
-                            <div id="filterUser" class="filter-search">
-                                <form action="/search" mathod="get">
-                                    <input class="placeFilter" type="text" placeholder="স্থান...">
-                                </form>
-                            </div>
-                        </div>
 
-                        <div id="filterTags" style="border: 1px solid #eee;background:#fafafa;">
-                            <div style="padding :4px 7px;max-width:400px;margin:auto">
-                                <textarea id="hero-demo"></textarea>
-                            </div>
+                    <span class="filterText">ফিল্টার</span>
+
+                    <select class="selection">
+                        <option value="volvo">Select Category</option>
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+
+                    <div id="filterTags" style="border: 1px solid #eee;background:#fafafa;">
+                        <div style="padding :4px 7px;max-width:400px;margin:auto">
+                            <textarea id="hero-demo"></textarea>
                         </div>
                     </div>
 
                 </div>
+
+
+
+                <!-- <div id="searchFilterContainer">
+                    <div class="filterContainer">
+                    </div>
+                </div> -->
 
             </div>
             <div id="tagsContainer">
