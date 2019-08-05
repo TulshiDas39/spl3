@@ -7,7 +7,8 @@
 
 /* search field */
 .filter-search{
-    width: 200px;
+     width: 200px; 
+     height: 30px;
 }
 
 .filter-search > form{
@@ -18,7 +19,9 @@
 }
 
 .filter-search > form > input{
-    padding: 10px 0 10px 30px;
+    height: 100%;
+    width: 100%;
+    padding-left: 30px;
     border: 1px solid #bbc0c4;
     border-radius: 4px;
 }

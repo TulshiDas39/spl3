@@ -51,13 +51,12 @@
 
                     <span class="filterText">ফিল্টার</span>
 
-                    <select class="selection">
-                        <option value="volvo">Select Category</option>
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
-                    </select>
+                    <div id="filterByPlaceContainer" class="filter-search">
+                        <form action="/search" mathod="get">
+                            <input type="text" placeholder="স্থান...">
+                        </form>
+                    </div>
+                    
 
                     <div id="filterTags" style="border: 1px solid #eee;background:#fafafa;">
                         <div style="padding :4px 7px;max-width:400px;margin:auto">
