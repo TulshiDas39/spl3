@@ -38,7 +38,45 @@
 }
 
 
+
 /* selction */
 .selection > option{
     padding: 4px 0;
+}
+
+/* user */
+
+.user{
+    display: flex;
+    border:1px solid red;
+}
+
+.user > .user-img > img{
+    width: 45px;
+    height: 45px;
+}
+
+.user > .user-info{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.user > .user-info > .user-info-name{
+    color: #66bfff;
+
+}
+
+.user > .user-info > .user-info-place {
+    font-size: 12px;
+}
+
+.user > .user-info > .user-info-rating{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user > .user-info > .user-info-tags{
+    color: #929597;
+    font-size: 13px;
 }
