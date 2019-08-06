@@ -72,48 +72,6 @@
     left: 10px;
 }
 
-#tagsContainer{
-    display: flex;
-    margin-top: 20px;
-    flex-wrap: wrap;
-}
-
-.tagItem{
-    display: flex;
-    flex-direction: column;
-    border:1px solid #66bfff;
-    margin: 5px;
-}
-.tag{
-    padding: 10px 10px;
-    margin-right: auto;
-    background: #E1ECF4;
-    margin-bottom: 4px;
-}
-
-.tagPagination{
-    display: flex;
-    justify-content: right;
-    margin-top: 20px;
-}
-
-.tagPagination> .tagGroup:first-child{
-    margin-left: auto;
-}
-
-.tagGroup{
-    border: 1px solid #bbc0c4;
-    border-radius: 3px;
-    padding: 4px 9px;
-    margin: 0 5px;
-    font-size: 13px;
-}
-
-.tagGroup:hover{
-    background: brown;
-    cursor: pointer;
-}
-
 #filterUser{
     width: 120px;
 }
@@ -143,4 +101,74 @@
 #filterByPlaceContainer{
     width: 150px;
     align-self: center;
+}
+
+#userInfoContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.user{
+    display: flex;
+    border:1px solid #bbc0c4;
+    margin: 5px 5px;
+}
+
+.user:hover{
+    background: #f8f8fa;
+    cursor: pointer;
+}
+
+.user > .user-img > img{
+    width: 45px;
+    height: 45px;
+}
+
+.user > .user-info{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.user > .user-info > .user-info-name{
+    color: #836ab6;
+
+}
+
+.user > .user-info > .user-info-place {
+    font-size: 12px;
+}
+
+.user > .user-info > .user-info-rating{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user > .user-info > .user-info-tags{
+    color: #929597;
+    font-size: 13px;
+}
+
+.pagination{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.pagination> .pagination-btn:first-child{
+    margin-left: auto;
+}
+
+.pagination > .pagination-btn{
+    border: 1px solid #bbc0c4;
+    border-radius: 3px;
+    padding: 4px 9px;
+    margin: 0 5px;
+    font-size: 13px;
+}
+
+.pagination > .pagination-btn:hover{
+    background: brown;
+    cursor: pointer;
 }

@@ -49,6 +49,7 @@
 .user{
     display: flex;
     border:1px solid red;
+    margin-right: 5px;
 }
 
 .user > .user-img > img{
@@ -79,4 +80,28 @@
 .user > .user-info > .user-info-tags{
     color: #929597;
     font-size: 13px;
+}
+
+/*  pagination */
+.pagination{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.pagination> .pagination-btn:first-child{
+    margin-left: auto;
+}
+
+.pagination > .pagination-btn{
+    border: 1px solid #bbc0c4;
+    border-radius: 3px;
+    padding: 4px 9px;
+    margin: 0 5px;
+    font-size: 13px;
+}
+
+.pagination > .pagination-btn:hover{
+    background: brown;
+    cursor: pointer;
 }

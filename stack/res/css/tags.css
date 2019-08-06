@@ -87,17 +87,17 @@
     margin-bottom: 4px;
 }
 
-.tagPagination{
+.pagination{
     display: flex;
-    justify-content: right;
+    /* justify-content: right; */
     margin-top: 20px;
 }
 
-.tagPagination> .tagGroup:first-child{
+.pagination> .pagination-btn:first-child{
     margin-left: auto;
 }
 
-.tagGroup{
+.pagination > .pagination-btn{
     border: 1px solid #bbc0c4;
     border-radius: 3px;
     padding: 4px 9px;
@@ -105,7 +105,7 @@
     font-size: 13px;
 }
 
-.tagGroup:hover{
+.pagination > .pagination-btn:hover{
     background: brown;
     cursor: pointer;
 }
