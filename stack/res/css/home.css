@@ -140,6 +140,34 @@
     font-size: 14px;
 }
 
+.see-all-question{
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.pagination{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.pagination> .pagination-btn:first-child{
+    margin-left: auto;
+}
+
+.pagination > .pagination-btn{
+    border: 1px solid #bbc0c4;
+    border-radius: 3px;
+    padding: 4px 9px;
+    margin: 0 5px;
+    font-size: 13px;
+}
+
+.pagination > .pagination-btn:hover{
+    background: brown;
+    cursor: pointer;
+}
+
 @media (max-width:980px){
     #right{
         flex-direction: column;

@@ -1,5 +1,5 @@
 In progress
-    -users page
+    -authentication system
 
 To Do
     -user profile public view page
@@ -19,6 +19,7 @@ Done
     -middle place
     -tag page
     -answer page
+    -users page
 
 Bugs
 
