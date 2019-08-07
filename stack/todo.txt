@@ -1,5 +1,5 @@
 In progress
-    -authentication system
+    -comment system in answer page
 
 To Do
     -user profile public view page
@@ -8,6 +8,7 @@ To Do
     -using react
     -authentication
     -integrating to backend
+    -authentication system
     
 
 Done

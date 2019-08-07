@@ -85,13 +85,13 @@
                             <img src="res/images/sample.PNG" alt="" style="width: 100%;height:auto; margin: 10px 5px;">
                             <span style="font-weight: bold;"> তাই আমি এর একটা সমাধান চাই, অগ্রীম ধন্যবাদ</span>
 
-                            <div id="user_of_question">
+                            <div id="user_of_question" class="user_of_discuss">
                                 <span style="font-size: 13px;">১ ঘন্টা আগে প্রশ্ন করেছেন</span>
                                 <div>
                                     <img src="res/images/sample.PNG" alt="">
                                     <div>
                                         <a href="" style="text-decoration: none;font-size: 13px;">tulshi das</a>
-                                        <div id="rating_of_user_of_question">
+                                        <div class="rating_of_user_of_discuss">
                                             <span>4958</span>
                                             <span class="fa fa-eercast"></span>
                                             <span>৮</span>
@@ -101,12 +101,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr style="height: 0.05px; width: 100%; color:rgb(248, 247, 246);">
+                            <!-- <hr style="height: 0.05px; width: 100%; color:rgb(248, 247, 246);"> -->
+
+
+                            <div class="comments">
+                                <span class="user-comment">
+                                    <span class="user-comment-vote">
+                                        <span class="useful-comment">
+                                            <span class="vote-count"></span>
+                                            <span class="fa fa-sort-asc vote-icon" title="উপকারী কমেন্ট"></span>
+                                        </span>
+                                        <span class="flaged-comment">
+                                            <span class="vote-count"></span>
+                                            <span class="fa fa-fire vote-icon" title="সমস্যামুলক"></span>
+                                        </span>
+
+                                    </span>
+                                    <span class="user-comment-text">এটা একটি কমেন্ট, এটা একটি কমেন্ট</span>
+                                </span>
+
+                            </div>
+
                         </div>
                     </div>
+
+                    <h1 style="margin-bottom: 2px;">উত্তর ২ টি</h1>
+                    <hr style="height: 0.05px; width: 100%; color:rgb(248, 247, 246);">
+
                     <div id="answer_div">
-                        <h1 style="margin-bottom: 2px;">উত্তর ২ টি</h1>
-                        <hr style="height: 0.05px; width: 100%; color:rgb(248, 247, 246);">
 
                         <div class="user_answer">
                             <div class="vote_system">
@@ -130,6 +152,24 @@
                                 <span>আশা করি বুঝতে পেরেছেন</span>
                             </div>
 
+                           
+
+                        </div>
+                        <div class="user_of_discuss">
+                            <span style="font-size: 13px;">১ ঘন্টা আগে উত্তর করেছেন</span>
+                            <div>
+                                <img src="res/images/sample.PNG" alt="">
+                                <div>
+                                    <a href="" style="text-decoration: none;font-size: 13px;">tulshi das</a>
+                                    <div class="rating_of_user_of_discuss">
+                                        <span>4958</span>
+                                        <span class="fa fa-eercast"></span>
+                                        <span>৮</span>
+                                        <span class="fa fa-eercast"></span>
+                                        <span>23</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <hr style="height: 0.05px; width: 100%; color:rgb(248, 247, 246);">
@@ -137,9 +177,10 @@
 
                         <div class="answer_editor">
                             <div class="answer_editor_topbar">
-                                <span  id="boldBtn" class="answer_editor_topbar_bold fa fa-bold" title="bold text">
+                                <span id="boldBtn" class="answer_editor_topbar_bold fa fa-bold" title="bold text">
                                 </span>
-                                <span id="italicBtn" class="answer_editor_topbar_italic fa fa-italic" title="italic text">
+                                <span id="italicBtn" class="answer_editor_topbar_italic fa fa-italic"
+                                    title="italic text">
                                 </span>
                                 <span id="linkBtn" class="answer_editor_topbar_hyperlink fa fa-link" title="hyperlink">
                                 </span>
@@ -152,13 +193,13 @@
                                 <span id="imageUpload" class="fa fa-photo" title="upload image">
                                     <input id="imageUploader" style="display:none;" type="file" accept="image/*">
                                 </span>
-                                <span id="headingBtn" class="fa fa-align-center" title="heading text">                                    
+                                <span id="headingBtn" class="fa fa-align-center" title="heading text">
                                 </span>
                                 <span id="newLineBtn" class="fa fa-level-down" title="new line">
                                 </span>
                             </div>
-                            <textarea name="" id="answer_editor" cols="30" rows="10" ></textarea>
-                            
+                            <textarea name="" id="answer_editor" cols="30" rows="10"></textarea>
+
                         </div>
                         <div id="answer_display">
                         </div>

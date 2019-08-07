@@ -71,34 +71,35 @@
 }
 
 
-#user_of_question {
+.user_of_discuss {
     display: flex;
     flex-direction: column;
     background: #E1ECF4;
     margin-left: auto;
     border-radius: 4px;
     padding: 2px 5px;
+    margin-bottom: 10px;
 }
 
-#user_of_question > div {
+.user_of_discuss > div {
     display: flex;
     
 }
 
-#user_of_question > div > div{
+.user_of_discuss > div > div{
     display: flex;
     flex-direction: column;
 }
 
-#user_of_question > span{
+.user_of_discuss > span{
     padding: 5px 0;
 }
 
-#rating_of_user_of_question{
+.user_of_discuss .rating_of_user_of_discuss{
     font-size: 12px;
 }
 
-#user_of_question img{
+.user_of_discuss img{
     height: 32px;
     width: 32px;
     margin-right: 5px;
@@ -184,4 +185,29 @@
     height: 20px;
     margin-right: auto;
     margin-top: 30px;
+}
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    border-top:1px solid #bbc0c4;
+    font-size: 12px;
+    flex-basis: 100%;
+}
+
+.comments > .user-comment{
+    border-bottom:1px solid #bbc0c4;
+    padding: 10px 0 10px 30px;
+    display: flex;
+}
+
+.comments > .user-comment > .user-comment-vote{
+    display: flex;
+    flex-direction: column;
+    padding-right: 5px;
+}
+
+.comments .vote-icon:hover{
+    color:rgb(121, 71, 238);
+    cursor: pointer;
 }
