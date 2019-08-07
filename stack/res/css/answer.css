@@ -137,7 +137,6 @@
     position: relative;
 }
 
-
 .answer_editor_topbar_bold{
     font-weight: bold;
     padding: 0px 10px 0px 15px;
@@ -166,21 +165,6 @@
 .answer_editor_topbar > span{
     margin-right: 20px;
     cursor: pointer;
-}
-
-.answer_editor_topbar > span > span{
-    position: absolute;
-    display: none;
-    bottom: -20px;
-    border: 1px solid #bbc0c4;
-    background: #FFF;
-    z-index: -1;
-
-}
-
-.answer_editor_topbar > span:hover > span{
-    display: inline; 
-    z-index: 1;
 }
 
 #answer_display{

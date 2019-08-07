@@ -130,6 +130,6 @@
 }
 
 .comments .vote-icon:hover{
-    color:aqua;
+    color:rgb(121, 71, 238);
     cursor: pointer;
 }
