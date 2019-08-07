@@ -1,7 +1,11 @@
 .container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around; */
+}
+
+.container > *{
+    margin-bottom: 20px;
 }
 
 
@@ -103,5 +107,29 @@
 
 .pagination > .pagination-btn:hover{
     background: brown;
+    cursor: pointer;
+}
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    border-top:1px solid #bbc0c4;
+    font-size: 12px;
+}
+
+.comments > .user-comment{
+    border-bottom:1px solid #bbc0c4;
+    padding: 10px 0 10px 30px;
+    display: flex;
+}
+
+.comments > .user-comment > .user-comment-vote{
+    display: flex;
+    flex-direction: column;
+    padding-right: 5px;
+}
+
+.comments .vote-icon:hover{
+    color:aqua;
     cursor: pointer;
 }
