@@ -36,3 +36,57 @@
     border-top: 2px solid #F48024;
     border-bottom: none;
 }
+
+.user-info-div{
+   
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    height: 164px;
+    width: 164px;
+    padding: 15px;
+    border:1px solid #bbc0c4;
+
+}
+
+.user-info-div > img{
+    height: 100%;
+    width: 100%;
+}
+
+.user-info-div > .user-reputation{
+    text-align: center;
+}
+
+.user-info-div > .user-badges-count{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.8em;
+}
+
+.user-info-div > .user-badges-count > span{
+    padding: 5px 8px;
+    border: 1px solid #bbc0c4;
+}
+
+.user-info-div > .user-badges-count > span:hover{
+    cursor: pointer;
+}
+.user-info-div > .user-badges-count > span::before{
+    padding-right: 3px;
+}
+
+.platinum-count{
+    background: paleturquoise;
+}
+
+.gold-count{
+    margin-left: 3px;
+    background: gold;
+}
+
+.silver-count{
+    margin-left: 3px;
+    background: silver;
+}
