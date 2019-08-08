@@ -1,0 +1,38 @@
+.mainContainer{
+    display: flex;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #bbc0c4;
+    padding: 15px 10px;
+    flex-grow: 1;
+}
+
+.head-bar{
+    display: flex;
+    width: 100%;
+}
+
+.head-bar::after{
+    content: "";
+    border-bottom: 1px solid #bbc0c4;
+    flex-grow: 1;
+}
+
+.head-bar > span{
+    padding:8px 7px;
+    border-bottom: 1px solid #bbc0c4;
+}
+
+.head-bar > span:hover{
+    cursor: pointer;
+    background: #E1ECF4;
+}
+.head-bar > .user-profile{
+    border-left: 1px solid #bbc0c4;
+    border-right: 1px solid #bbc0c4;
+    border-top: 2px solid #F48024;
+    border-bottom: none;
+}
