@@ -136,6 +136,15 @@
     cursor: pointer;
 }
 
+.comments > .make-comment{
+    padding: 10px;
+    color: #1a0be4;
+}
+
+.comments > .make-comment:hover{
+    cursor: pointer;
+}
+
 /* user info at discussion */
 
 .user_of_discuss {

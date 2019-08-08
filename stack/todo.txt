@@ -1,12 +1,10 @@
 In progress
-    -comment system in answer page
+    -user profile public view page
 
 To Do
-    -user profile public view page
-    -comment section to answer page
-    -job page
+    -authentication(auth0)
+    -make all responsive
     -using react
-    -authentication
     -integrating to backend
     -authentication system
     
@@ -21,6 +19,7 @@ Done
     -tag page
     -answer page
     -users page
+    -comment system in answer page
 
 Bugs
 
