@@ -17,7 +17,7 @@ The SPL3 project is a web application which will make a plateform for educationa
 ### Probable Tech
 
 This project possible will use the following technology:
-* [Node Js](https://nodejs.org/en/) - As a backend Framework.
+* [dotnet core](https://dotnet.microsoft.com/) - As a backend Framework.
 * [TypeScript](https://www.typescriptlang.org/index.html) - As a programming language which will be compiled to javascript
 * [React](https://reactjs.org/docs/introducing-jsx.html) - As a front end framework
 * [MongDb Database](https://www.mongodb.com/) - As a Database service
