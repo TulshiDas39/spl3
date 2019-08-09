@@ -37,12 +37,14 @@
     border-bottom: none;
 }
 
+.user-info-container{
+    display: flex;
+}
+
 .user-info-div{
-   
     margin-top: 25px;
     display: flex;
     flex-direction: column;
-    height: 164px;
     width: 164px;
     padding: 15px;
     border:1px solid #bbc0c4;
@@ -50,8 +52,8 @@
 }
 
 .user-info-div > img{
-    height: 100%;
     width: 100%;
+    height: auto;
 }
 
 .user-info-div > .user-reputation{
@@ -89,4 +91,15 @@
 .silver-count{
     margin-left: 3px;
     background: silver;
+}
+
+.user-name-info{
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    flex-grow: 1;
+}
+
+.about-activiy{
+    width: 164px;
 }
