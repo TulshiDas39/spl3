@@ -184,3 +184,8 @@
 .second-line-icon{
     font-size: 0.7em !important;
 }
+
+.third-line-tag{
+    display: flex;
+    margin-top: 10px;
+}
