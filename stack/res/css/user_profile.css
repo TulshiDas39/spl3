@@ -126,3 +126,47 @@
     flex-direction: column;
     margin-top: 20px;
 }
+
+.top-tags{
+    display: flex;
+    flex-direction: column;
+}
+
+.top-tags > .tag-head{
+    margin-top: 20px;
+    border-bottom:1px solid #bbc0c4;
+    font-weight: bold;
+}
+
+.top-tags > .first-line-tag{
+    padding: 15px 0;
+    background: #FAFAFB;
+    display: flex;
+    align-items: center;
+}
+
+.top-tags > .first-line-tag > .main-tag-name{
+    padding: 5px 10px;
+    background: #E1ECF4;
+    font-size: 1.2em;
+}
+
+.main-tag-icon{
+    font-size: 0.7em !important;
+    color:gold;
+    margin-left: 5px;
+}
+
+.first-line-tag > .score{
+    margin-left: auto;
+    padding: 0 10px;
+}
+
+.first-line-tag > .posts{
+    padding: 0 10px;
+}
+
+.first-line-tag > .percent{
+    padding: 0 10px;
+}
+
