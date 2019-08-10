@@ -139,7 +139,7 @@
 }
 
 .top-tags > .first-line-tag{
-    padding: 15px 0;
+    margin: 15px 0;
     background: #FAFAFB;
     display: flex;
     align-items: center;
@@ -170,3 +170,17 @@
     padding: 0 10px;
 }
 
+.second-line-tag{
+    display: flex;
+}
+
+.second-line-tag> div{
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    background: #FAFAFB;
+}
+
+.second-line-icon{
+    font-size: 0.7em !important;
+}
