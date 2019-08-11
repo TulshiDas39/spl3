@@ -249,6 +249,21 @@ body {
     cursor: pointer;
 }
 
+.platinum-badge-icon{
+    font-size: 0.7em !important;
+    color:paleturquoise;
+}
+
+.gold-badge-icon{
+    font-size: 0.7em !important;
+    color:gold;
+}
+
+.silver-badge-icon{
+    font-size: 0.7em !important;
+    color:silver;
+}
+
 @media (max-width:980px){
     #user span{
         display: none;
