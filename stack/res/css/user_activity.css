@@ -42,3 +42,30 @@
     display: flex;
 }
 
+.menu-bar{
+    display: flex;
+    width: 100%;
+}
+
+.menu-bar::after{
+    content: "";
+    border-bottom: 1px solid #bbc0c4;
+    flex-grow: 1;
+}
+
+.menu-bar > .menu-item{
+    padding:8px 7px;
+    border-bottom: 1px solid #bbc0c4;
+}
+
+.menu-bar > .menu-item:hover{
+    cursor: pointer;
+    background: #E1ECF4;
+}
+
+.menu-bar > .active-item{
+    border-left: 1px solid #bbc0c4;
+    border-right: 1px solid #bbc0c4;
+    border-top: 2px solid #F48024;
+    border-bottom: none;
+}
