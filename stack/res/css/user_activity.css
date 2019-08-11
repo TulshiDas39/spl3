@@ -69,3 +69,12 @@
     border-top: 2px solid #F48024;
     border-bottom: none;
 }
+.see-more{
+    color: #0077CC;
+    margin-top: 20px;
+}
+
+.see-more:hover{
+    color: rgb(87, 158, 209);
+    cursor: pointer;
+}
