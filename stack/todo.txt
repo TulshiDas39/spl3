@@ -1,12 +1,10 @@
 In progress
-    -user profile public view page
+     -make all responsive
 
 To Do
     -authentication(auth0)
-    -make all responsive
     -using react
     -integrating to backend
-    -authentication system
     
 
 Done
@@ -20,6 +18,7 @@ Done
     -answer page
     -users page
     -comment system in answer page
+    -user profile public view page
 
 Bugs
 
