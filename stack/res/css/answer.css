@@ -68,6 +68,7 @@
     flex-shrink: 0;
     height: 20px;
     align-self: center;
+    text-decoration: none;
 }
 
 
@@ -219,4 +220,24 @@
 
 .comments > .make-comment:hover{
     cursor: pointer;
+}
+
+#status_bar{
+    align-self: flex-start;
+}
+
+@media (max-width:980px){
+    #middle_Div{
+        flex-direction: column;
+
+    }
+    #status_bar{
+        margin-top: 30px;
+    }
+}
+
+@media (max-width:640px){
+    #mainDiv{
+        width: 100%;
+    }
 }

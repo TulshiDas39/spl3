@@ -1,5 +1,5 @@
 In progress
-     -make all responsive
+     -using react and make all responsive
 
 To Do
     -authentication(auth0)
