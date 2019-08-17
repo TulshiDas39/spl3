@@ -68,24 +68,12 @@ class Answer {
     }
     addOrderListListener() {
         document.getElementById('orderListBtn').addEventListener('click', () => {
-            //  let startIndex = this.answerEditor.selectionStart;
-            // // this.insertTag("\n" + this.orderListTags[0] + "\n\t");
-            // // this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
-            // // this.insertTag('\n' + this.orderListTags[1] + "\n");
-            //  let selectionStart = startIndex + this.orderListTags[0].length + 3 + this.listItemTags[0].length;
-            // this.selectText(selectionStart, selectionStart + "write here".length);
             this.toogleTag(this.orderListTags);
             this.displayChanges();
         });
     }
     addUnOrderListListener() {
         document.getElementById('unorderListBtn').addEventListener('click', () => {
-            // let startIndex = this.answerEditor.selectionStart;
-            // this.insertTag("\n" + this.unorderListTags[0] + "\n\t");
-            // this.insertTag(this.listItemTags[0] + "write here" + this.listItemTags[1]);
-            // this.insertTag('\n' + this.unorderListTags[1] + "\n");
-            // let selectionStart = startIndex + this.unorderListTags[0].length + 3 + this.listItemTags[0].length;
-            // this.selectText(selectionStart, selectionStart + "write here".length);
             this.toogleTag(this.unorderListTags);
             this.displayChanges();
         });

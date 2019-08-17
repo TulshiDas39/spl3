@@ -37,6 +37,7 @@ class Ask{
     }
 
     private loadInitialView(){
+        document.getElementById('prevBtn').style.removeProperty('display');
         this.changeDisplayOfElementsByClass(this.currentStage,'none');
         this.currentStage = this.stages[0];
         this.changeDisplayOfElementsByClass(this.currentStage,'block');
@@ -47,7 +48,8 @@ class Ask{
         this.currentStage = this.stages[1];
         this.changeDisplayOfElementsByClass('ask_tags','block');
         document.getElementById('prevBtn').style.display = 'block';
-        document.getElementById('image').style.display = 'block';
+        document.getElementById('image').style.removeProperty('display');
+        //document.getElementById('image').style.display = 'block';
 
     }
 

@@ -3,6 +3,7 @@
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 48px;
+    flex-wrap: wrap;
 }
 
 #stages > span{
@@ -28,6 +29,8 @@
     display: flex;
     max-width: 700px;
     margin: auto;
+    justify-content: center;
+    padding: 10px;
 }
 
 #image{
@@ -64,6 +67,7 @@
     margin-right: 8px;
     margin-top: 15px;
     color: rgb(35, 160, 250);
+    display: none;
 }
 
 #nextBtn{
@@ -174,3 +178,18 @@ div.similar_question_list{
     box-shadow:  inset 0 0 4px #eff0f1, 0 0 0 4px rgba(0,149,255,0.15);
 }
 
+@media (max-width:815px){
+    #middle{
+        flex-direction: column;   
+    }
+
+    #image, #steps{
+        margin: auto;
+    }
+}
+
+@media (max-width:640px){
+    #image{
+        display: none;
+    }
+}

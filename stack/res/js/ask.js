@@ -44,6 +44,7 @@ class Ask {
         this.changeDisplayOfElementsByClass('similarity_check', 'block');
     }
     loadInitialView() {
+        document.getElementById('prevBtn').style.removeProperty('display');
         this.changeDisplayOfElementsByClass(this.currentStage, 'none');
         this.currentStage = this.stages[0];
         this.changeDisplayOfElementsByClass(this.currentStage, 'block');
@@ -53,7 +54,8 @@ class Ask {
         this.currentStage = this.stages[1];
         this.changeDisplayOfElementsByClass('ask_tags', 'block');
         document.getElementById('prevBtn').style.display = 'block';
-        document.getElementById('image').style.display = 'block';
+        document.getElementById('image').style.removeProperty('display');
+        //document.getElementById('image').style.display = 'block';
     }
     loadTitleView() {
         this.changeDisplayOfElementsByClass(this.currentStage, 'none');
