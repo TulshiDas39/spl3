@@ -167,6 +167,22 @@
     background: brown;
     cursor: pointer;
 }
+.go-unaswered{
+    text-decoration: none; 
+    color:rgb(62, 62, 236);
+}
+.go-unaswered:hover{
+    color:rgb(109, 109, 243);
+}
+
+.go-allquestion{
+    text-decoration: none;
+    color:green;
+}
+
+.go-allquestion:hover{
+    color:rgb(130, 228, 130);
+}
 
 @media (max-width:980px){
     #right{
