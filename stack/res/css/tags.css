@@ -109,3 +109,9 @@
     background: brown;
     cursor: pointer;
 }
+
+@media (max-width:640px){
+    #right{
+        width: 100%;
+    }
+}
