@@ -14,7 +14,7 @@ The SPL3 project is a web application which will make a plateform for educationa
   - User can follow tags on diiferent topics
   - User will view question of following tags on his timeline.
 
-The project will implement the two data mining algorithm:
+The project will solve two technical challenges:
 
   * [Apriori algorithm](https://en.wikipedia.org/wiki/Apriori_algorithm) - for question recommendation system
   * [Cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) - for question similarity checking
