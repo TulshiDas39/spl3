@@ -5,6 +5,7 @@ To Do
     -authentication(auth0)
     -using react
     -integrating to backend
+    -Apriori algorithm for question recommendation
     
 
 Done
