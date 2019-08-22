@@ -1,6 +1,6 @@
 # SPL3: An Educational Forum for Bangladesh
 
-[![Tulshi Das|Bangladesh](https://raw.githubusercontent.com/TulshiDas39/spl3/master/stack/res/images/hand.ico)](https://github.com/TulshiDas39/spl3)
+[![Tulshi Das|Bangladesh](https://raw.githubusercontent.com/TulshiDas39/spl3/master/pages/res/images/hand.ico)](https://github.com/TulshiDas39/spl3)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
@@ -13,6 +13,12 @@ The SPL3 project is a web application which will make a plateform for educationa
   - Anyone can rate an answer
   - User can follow tags on diiferent topics
   - User will view question of following tags on his timeline.
+
+The project will implement the two data mining algorithm:
+
+  * [Apriori algorithm](https://en.wikipedia.org/wiki/Apriori_algorithm) - for question recommendation system
+  * [Cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) - for question similarity checking
+
 
 ### Probable Tech
 
