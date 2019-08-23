@@ -39,6 +39,7 @@
 
 .user-info-container{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .user-info-div{
@@ -138,6 +139,10 @@
     font-weight: bold;
 }
 
+.tag-line{
+    flex-wrap: wrap;
+}
+
 .top-tags > .first-line-tag{
     margin: 15px 0;
     background: #FAFAFB;
@@ -188,4 +193,17 @@
 .third-line-tag{
     display: flex;
     margin-top: 10px;
+}
+
+.badges{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.badge-item{
+    margin: 0 5px;
+    min-width: 200px;
+    box-sizing: border-box;
 }
