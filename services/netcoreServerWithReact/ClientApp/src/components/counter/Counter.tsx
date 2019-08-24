@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CounterSub } from './CounterSub';
 
 interface ILocalState { 
   currentCount: number
@@ -29,6 +30,7 @@ export class Counter extends Component<{}, ILocalState> {
         <p>Current count: <strong>{this.state.currentCount}</strong></p>
 
         <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
+        <CounterSub/>
       </div>
     );
   }
