@@ -17,17 +17,17 @@
     <div id="parentDiv">
         <div id="left">
             <div>
-                <a href="">
+                <a href="home.html">
                     <span>মুল পাতা</span>
                 </a>
-                <a href="">
+                <a href="home.html">
                     <span class="fa fa-hand-o-up" style="padding-right: 5px;"></span>
                     <span>সমীকরণ</span>
                 </a>
-                <a href="">
+                <a href="tags.html">
                     <span style="padding-left: 20px;">বিষয় সমুহ</span>
                 </a>
-                <a href="">
+                <a href="users.html">
                     <span style="padding-left:20px;">ব্যবহারকারী</span>
                 </a>
 
@@ -42,23 +42,21 @@
 
                 <div class="searchAndFilters">
 
-                    <div class="filter-search">
+                    <div class="filter-search filter-item">
                         <form action="/search" mathod="get">
                             <span class="fa fa-search"></span>
-                            <input type="text" placeholder="খুজুন...">
+                            <input type="text" placeholder="নাম...">
                         </form>
                     </div>
-
-                    <span class="filterText">ফিল্টার</span>
-
-                    <div id="filterByPlaceContainer" class="filter-search">
+                    
+                    <div id="filterByPlaceContainer" class="filter-search filter-item">
                         <form action="/search" mathod="get">
                             <input type="text" placeholder="স্থান...">
                         </form>
                     </div>
 
 
-                    <div id="filterTags" style="border: 1px solid #eee;background:#fafafa;">
+                    <div id="filterTags" class="filter-item" style="border: 1px solid #eee;background:#fafafa;">
                         <div style="padding :4px 7px;max-width:400px;margin:auto">
                             <textarea id="hero-demo"></textarea>
                         </div>

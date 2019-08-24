@@ -17,7 +17,7 @@ export class CounterSub extends Component {
 
     render() {
         return (
-            <p style={{color: 'pink'}}>this is my custom sub component.</p>
+            <p style={{color: 'pink',backgroundColor:'red'}}>this is my custom sub component.</p>
         );
     }
 }

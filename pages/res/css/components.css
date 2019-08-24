@@ -92,6 +92,7 @@
     display: flex;
     margin-top: 20px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .pagination> .pagination-btn:first-child{
