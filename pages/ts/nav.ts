@@ -8,7 +8,6 @@ interface PopUps {
 class Nav {
 
     private popUps: PopUps[] = [];
-    private currentScreen: string = 'xl';
 
     public init(): void {
         this.initPopUps();
@@ -56,12 +55,12 @@ class Nav {
     }
 
     private makeInvisible(except: HTMLElement): void {
-        let popedElems = document.getElementsByClassName('oped');
+        let popedElems = document.getElementsByClassName('poped');
         for (let i = 0; i < popedElems.length; i++) {
             let elem = <HTMLElement>popedElems[i];
-            console.log(this.currentScreen);
             if (elem == except) continue;
-            elem.style.display = "none";
+            if(elem.style.display) elem.classList.remove('display');
+            else elem.style.display = "none";
             elem.classList.remove('poped');
             
         }
