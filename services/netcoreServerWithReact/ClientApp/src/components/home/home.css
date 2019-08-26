@@ -22,7 +22,7 @@
 
 #left > div{
     position: sticky;
-    width: 100%;
+    width: auto;
     top: 24px;
     margin-bottom: 8px;
     display: flex;
@@ -195,20 +195,16 @@
 }
 
 @media (max-width:640px){
-    /* #left > div{
+    #left > div{
         position: absolute;
         display: none;
         top: 5px;
         left: 5px;
         z-index: 1000;
-    } */
+    }
 
     #left{
         display: none;
-        width: 164px;
-        position: absolute;
-        z-index: 10000;
-        background: lemonchiffon;
     }
 
     #right{
