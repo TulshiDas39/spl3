@@ -3,7 +3,6 @@ interface PopUps {
     clickElement: HTMLElement;
     popUpElement: HTMLElement;
     toogleClass: string;
-    acceptedScreen: string[];
 }
 
 class Nav {
@@ -21,8 +20,7 @@ class Nav {
             {
                 clickElement: document.getElementById('search-sm'),
                 popUpElement: document.getElementById('search'),
-                toogleClass: "flex",
-                acceptedScreen: ['sm', 'md']
+                toogleClass: "flex"
             }
         );
     }
@@ -60,18 +58,19 @@ class Nav {
     private makeInvisible(except: HTMLElement): void {
         let popedElems = document.getElementsByClassName('oped');
         for (let i = 0; i < popedElems.length; i++) {
+            let elem = <HTMLElement>popedElems[i];
             console.log(this.currentScreen);
-            if (this.popUps[i].popUpElement == except) continue;
-            this.popUps[i].popUpElement.style.display = "none";
-            this.popUps[i].popUpElement.classList.remove('poped');
+            if (elem == except) continue;
+            elem.style.display = "none";
+            elem.classList.remove('poped');
             
         }
     }
 
-    private toogle(elem: HTMLElement, displayClass:string): void {
+    private toogle(elem: HTMLElement, toogleClass:string): void {
 
         if(elem.style.display) elem.style.removeProperty('display');
-        else elem.style.display = displayClass;
+        else elem.style.display = toogleClass;
     }
 
 }

@@ -10,7 +10,7 @@
 
 #left > div{
     position: sticky;
-    width: auto;
+    width: 100%;
     top: 24px;
     margin-bottom: 8px;
     display: flex;
