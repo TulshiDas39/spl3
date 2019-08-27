@@ -1,0 +1,256 @@
+
+
+#nav {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    position: relative;
+    height: 3rem;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 3px solid #F48024;
+}
+
+#list-sm{
+    height: 100%;
+    flex-basis: 3rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+#list-sm:hover{
+    cursor: pointer;
+}
+
+#logo {
+    flex-basis: 6em;
+    height: 100%;
+}
+
+#logo a {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.3em;
+    color: black;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#logo a:hover {
+    background: #eff0f1;
+}
+
+#project {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   flex-basis: 4em;
+}
+
+#project span{
+    padding: 5px 0.2em;
+}
+
+
+#project span:hover {
+    border-radius: 25px;
+    background: #eff0f1;
+    cursor: pointer;
+}
+
+.search {
+    flex-grow: 9;
+    height: 2rem;
+    box-sizing: border-box;
+}
+
+.search form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.search input {
+    border: 1px solid #bbc0c4;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    padding-left: 30px;
+}
+
+.search input:focus {
+    border-color: #66bfff;
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}
+
+.search span {
+    position: absolute;
+    left: 10px;
+    color: #bbc0c4;
+    z-index: 1;
+}
+
+
+
+#user {
+    height: 100%;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 6rem;
+}
+
+#user:hover {
+    background: #eff0f1;
+    cursor: pointer;
+}
+
+#user span:nth-child(3) {
+    font-size: 0.2em;
+    padding: 0px 3px;
+}
+
+#user span:nth-child(4) {
+    padding-right: 2px;
+}
+
+#user img {
+    height: 1.3em;
+    width: auto;
+    padding: 0px 5px;
+    border-radius: 3px;
+}
+
+#nofic {
+    height: 100%;
+    flex-basis: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nofic:hover {
+    background: #eff0f1;
+    cursor: pointer;
+}
+
+#nofic span {
+    font-size: 1.3rem;
+}
+
+#achieve {
+    height: 100%;
+    flex-basis: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+#achieve:hover {
+    background: #eff0f1;
+    cursor: pointer;
+}
+
+#achieve span {
+    font-size: 1.3rem;
+}
+
+#help {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 3rem;
+}
+
+#help:hover {
+    background: #eff0f1;
+    cursor: pointer;
+}
+
+#help span {
+    font-size: 1.3rem;
+    color: blue;
+}
+
+#search-sm{
+    margin-left: auto;
+    padding: 0px 0.5em;
+    height: 100%;
+    display: none;/*it will be flex on small device*/
+    justify-content: flex-end;
+}
+
+
+#search-sm span{
+    align-self: center;
+    justify-self: center;
+    font-size: 1.3rem;
+    color: #bbc0c4;
+}
+
+#search-sm:hover{
+    background: #eff0f1;
+    cursor: pointer;
+}
+
+.platinum-badge-icon{
+    font-size: 0.7em !important;
+    color:paleturquoise;
+}
+
+.gold-badge-icon{
+    font-size: 0.7em !important;
+    color:gold;
+}
+
+.silver-badge-icon{
+    font-size: 0.7em !important;
+    color:silver;
+}
+
+@media (max-width:980px){
+    #user span{
+        display: none;
+    }
+    #user{
+        flex-basis: 3rem;
+    }
+}
+
+@media (max-width:790px){
+    #search-sm{
+        display: flex;
+    }
+    #search{
+        display: none;
+        position: absolute;
+        bottom: -2rem;
+        width: 100%;
+        z-index: 1000;
+    }
+}
+
+
+@media (max-width:640px){
+    #help{
+        display: none;
+    }
+    #logo span:nth-child(2){
+        display: none;
+    }
+    #logo{
+        flex-basis: 3rem;
+    }
+
+    #list-sm{
+        display: flex;
+    }
+}
