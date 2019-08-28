@@ -9,10 +9,10 @@ interface PopUps {
 
     private popUps: PopUps[] = [];
 
-    public init(): void {
-        this.initPopUps();
-        this.initClickEvent();
-    }
+    // public init(): void {
+    //     this.initPopUps();
+    //     this.initClickEvent();
+    // }
 
     private initPopUps(): void {
         this.popUps.push(
@@ -74,6 +74,8 @@ interface PopUps {
         else elem.style.display = toogleClass;
     }
 
+ 
+
 }
 
-new NavManager().init();
+//new NavManager().init();

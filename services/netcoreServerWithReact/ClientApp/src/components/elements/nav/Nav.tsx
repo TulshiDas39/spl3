@@ -1,11 +1,39 @@
 import React from "react";
 import "./nav.css";
-import { NavManager } from "./NavManager";
 
-export class Nav extends React.Component {
+interface state{
+    searchSM:{}
+}
+
+export class Nav extends React.Component<{}, state> {
 
     static displayName = Nav.name;
-    private manager = new NavManager();
+    private searchSmPoped = false;
+    
+    constructor(props:any){
+        super(props);
+        this.state = {searchSM: {}};
+        this.toogle = this.toogle.bind(this);
+    }
+
+    toogle(){
+        console.log('in toogle');
+        console.log()
+        if(this.searchSmPoped){
+            this.setState({
+                searchSM:{}
+            })
+            this.searchSmPoped = !this.searchSmPoped;
+        }
+        else{
+            this.setState({
+                searchSM:{
+                    display:'flex'
+                }
+            })
+            this.searchSmPoped = !this.searchSmPoped;
+        }
+    }
 
     render() {
         return (
@@ -23,15 +51,15 @@ export class Nav extends React.Component {
                 <div id="project">
                     <span>
                         প্রকাশনা
-                </span>
+                    </span>
                 </div>
-                <div id="search" className="search">
+                <div id="search" className="search" style={this.state.searchSM} >
                     <form action="/search" >
                         <span className="fa fa-search"></span>
                         <input id="searchBox" type="text" placeholder="খুজুন..." />
                     </form>
                 </div>
-                <div id="search-sm">
+                <div id="search-sm" onClick={this.toogle}>
                     <span id="search-sm-icon" className="fa fa-search"></span>
                 </div>
                 <a href="#" id="user">
