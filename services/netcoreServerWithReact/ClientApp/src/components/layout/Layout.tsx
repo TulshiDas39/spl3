@@ -8,7 +8,7 @@ export class Layout extends Component {
     return (
       <div>
         <Nav/>
-        <div id="parentDiv">
+        <div id="secondRoot">
           {this.props.children}
         </div>
       </div>
