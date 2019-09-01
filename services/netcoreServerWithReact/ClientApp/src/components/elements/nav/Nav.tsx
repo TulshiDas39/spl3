@@ -1,5 +1,6 @@
 import React from "react";
 import "./nav.css";
+import { Link } from "react-router-dom";
 
 interface state{
     searchSM:{}
@@ -43,10 +44,10 @@ export class Nav extends React.Component<{}, state> {
                 </div>
                 <div id="logo">
 
-                    <a href="#">
+                    <Link to = "/">
                         <span className="fa fa-hand-o-up" style={{ color: 'teal' }}></span>
                         <span>সমীকরণ</span>
-                    </a>
+                    </Link>
                 </div>
                 <div id="project">
                     <span>

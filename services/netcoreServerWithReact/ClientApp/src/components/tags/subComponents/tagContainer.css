@@ -1,0 +1,18 @@
+#tagsContainer{
+    display: flex;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.tagItem{
+    display: flex;
+    flex-direction: column;
+    border:1px solid #66bfff;
+    margin: 5px;
+}
+.tag{
+    padding: 10px 10px;
+    margin-right: auto;
+    background: #E1ECF4;
+    margin-bottom: 4px;
+}
