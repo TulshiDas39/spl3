@@ -193,13 +193,6 @@
 }
 
 @media (max-width:640px){
-    /* #left > div{
-        position: absolute;
-        display: none;
-        top: 5px;
-        left: 5px;
-        z-index: 1000;
-    } */
 
     #left{
         display: none;

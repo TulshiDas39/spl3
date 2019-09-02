@@ -12,14 +12,14 @@ export class Leftbar extends Component {
                 <Link to="/" className="leftBarlink">
                     <span>মুল পাতা</span>
                 </Link>
-                <Link to = "/" href="home.html" className="leftBarlink">
+                <Link to = "/" className="leftBarlink">
                     <span className="fa fa-hand-o-up" style={{paddingRight: '5px'}}></span>
                     <span>সমীকরণ</span>
                 </Link>
-                <Link to = "/tags" href="tags.html" className="leftBarlink">
+                <Link to = "/tags" className="leftBarlink">
                     <span style={{paddingLeft: '20px'}}>বিষয় সমুহ</span>
                 </Link>
-                <Link to ="/users" href="users.html" className="leftBarlink">
+                <Link to ="/users" className="leftBarlink">
                     <span style={{paddingLeft:'20px'}}>ব্যবহারকারী</span>
                 </Link>
 

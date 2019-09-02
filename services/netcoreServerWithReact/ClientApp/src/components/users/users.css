@@ -1,6 +1,7 @@
-#tags-parentDiv{
+#parentDiv{
     text-align: left;
     position: relative;
+    max-width: 1264px;
     width: 100%;
     background: none;
     display: flex;
@@ -9,8 +10,7 @@
     flex: 1 0 auto;
 }
 
-#tags-right{
-    width: calc(100% - 164px);
+#users-right{
     background-color: #FFF;
     border-radius: 0;
     border-left: 1px solid #d6d9dc;

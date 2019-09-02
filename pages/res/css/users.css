@@ -31,10 +31,10 @@
     display: flex;
 }
 
-#tagArea{
+/* #tagArea{
     display: flex;
     flex-direction: column;
-}
+} */
 #searchFilterContainer{
     display: flex;
     justify-content: space-around;

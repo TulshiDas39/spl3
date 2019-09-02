@@ -9,14 +9,13 @@ export class Tags extends Component<any, any>{
 
     public render() {
         return (
-            <div id="parentDiv">
+            <div id="tags-parentDiv">
                 <Leftbar />
-                <div id="right">
+                <div id="tags-right">
                     <Head />
                     <TagContainer />
                     <Pagination />
                 </div>
-
             </div>
         );
     }
