@@ -1,0 +1,18 @@
+#parentDiv{
+    position: relative;
+    display: flex;
+}
+
+#mainDiv{
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 164px);
+    flex-shrink: 0;
+    padding: 24px;
+    box-sizing: border-box;
+    border-left: 1px solid rgb(211, 208, 205);
+}
+
+#middle_Div{
+    display: flex;
+}

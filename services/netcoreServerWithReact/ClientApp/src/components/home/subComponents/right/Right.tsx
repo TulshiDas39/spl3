@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Question } from "../../../elements/questions/Question";
 import { Pagination } from "../../../elements/pagination/Pagination";
 import "./right.css";
-import { StatusBar } from "../statusBar/StatusBar";
+import { StatusBar } from "../../../elements/statusBar/StatusBar";
 
 export class Right extends Component<any, any>{
 
@@ -26,9 +26,11 @@ export class Right extends Component<any, any>{
                         <div>উপহারযুক্ত</div>
                         <div>সকল বিষয়</div>
                     </div>
+                    <div className="questionList">
+                        <Question />
+                        <Question />
+                    </div>
 
-                    <Question />
-                    <Question />
 
                     <p className="see-all-question">
                         <a className="go-allquestion" href="">সকল প্রশ্ন দেখুন।</a>

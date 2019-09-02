@@ -1,0 +1,43 @@
+.questionTime{
+    font-size: 13px;
+}
+
+.userName{
+    text-decoration: none;
+    font-size: 13px;
+}
+
+
+.user_of_discuss {
+    display: flex;
+    flex-direction: column;
+    background: #E1ECF4;
+    margin-left: auto;
+    border-radius: 4px;
+    padding: 2px 5px;
+    margin-bottom: 10px;
+}
+
+.user_of_discuss > div {
+    display: flex;
+    
+}
+
+.user_of_discuss > div > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.user_of_discuss > span{
+    padding: 5px 0;
+}
+
+.user_of_discuss .rating_of_user_of_discuss{
+    font-size: 12px;
+}
+
+.user_of_discuss img{
+    height: 32px;
+    width: 32px;
+    margin-right: 5px;
+}

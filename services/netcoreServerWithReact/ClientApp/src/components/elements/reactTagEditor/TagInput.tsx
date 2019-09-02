@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-//import { render } from 'react-dom';
 import {COUNTRIES} from './countries';
-//import Hello from './Hello';
 import './style.css';
 import { WithContext as ReactTags } from 'react-tag-input';
 

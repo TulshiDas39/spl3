@@ -16,7 +16,7 @@
     padding: 0 8px 0 0;
 }
 
-.question_status > a{
+.question_status > .statusItem{
     display: flex;
     flex-direction: column;
     padding: 0 5px;
@@ -42,7 +42,7 @@
     flex-wrap: wrap;
 }
 
-.question_tags a{
+.question_tags .tagItem{
     border-radius: 3px;
     text-decoration: none;
     background: #E1ECF4;
@@ -59,19 +59,19 @@
     padding-top:4px;
 }
 
-.question_time a:nth-child(1){
+.question_time .question_time_tex{
     color: #9199a1;
 }
 
-.question_time a:nth-child(2){
+.question_time_user{
     color:#07C;
 }
 
-.question_time a:nth-child(1):hover{
+.question_time_tex:hover{
     color:#07C;
 }
 
-.question_time a:nth-child(2):hover{
+.question_time_user:hover{
     color:#3af;
 }
 
