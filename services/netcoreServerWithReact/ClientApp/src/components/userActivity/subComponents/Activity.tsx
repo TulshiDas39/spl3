@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./styles/activity.css";
 import { Badge, badge } from "./Badge";
 import { UserActivity } from "../UserActivity";
