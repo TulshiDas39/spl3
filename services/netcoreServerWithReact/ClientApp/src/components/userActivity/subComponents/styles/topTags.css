@@ -1,0 +1,56 @@
+.fg-1{
+    flex-grow: 1;
+}
+
+.mr-5{
+    margin-right: 5px;
+}
+
+.ml-5{
+    margin-left: 5px;
+}
+
+.ml-10{
+    margin-left: 10px;
+}
+
+.second-line-tagname{
+    padding: 5px 10px; 
+    background:#E1ECF4;
+}
+
+.second-line-icon{
+    color:silver;
+    margin-left: 5px;
+}
+
+.ml-auto{
+    margin-left:auto;
+}
+
+.fs-1p3em{
+    font-size: 1.3em;
+}
+
+.fs-1p1em{
+    font-size: 1.1em;
+}
+
+.third-line-tagitem{
+    flex-grow: 1; 
+    margin-right: 5px; 
+    display: flex;
+    align-items: center;
+    background: #FAFAFB;
+}
+
+.third-line-tagname{
+    padding: 5px 10px; 
+    background:#E1ECF4;
+}
+
+.third-line-tagstatus{
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+}
