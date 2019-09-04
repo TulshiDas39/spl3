@@ -6,7 +6,7 @@ import { Badges } from "./Badges";
 export class Profile extends Component<any, any>{
     public render() {
         return (
-            <div>
+            <div style={{display:'none'}}>
                 <UserInfo />
                 <TopTags />
                 <Badges />

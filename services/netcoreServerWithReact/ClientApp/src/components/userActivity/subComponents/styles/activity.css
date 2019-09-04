@@ -1,0 +1,271 @@
+.mainContainer{
+    display: flex;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #bbc0c4;
+    padding: 15px 10px;
+    flex-grow: 1;
+}
+
+.head-bar{
+    display: flex;
+    width: 100%;
+}
+
+.head-bar::after{
+    content: "";
+    border-bottom: 1px solid #bbc0c4;
+    flex-grow: 1;
+}
+
+.head-bar > span{
+    padding:8px 7px;
+    border-bottom: 1px solid #bbc0c4;
+}
+
+.head-bar > span:hover{
+    cursor: pointer;
+    background: #E1ECF4;
+}
+
+.head-bar > .user-activity{
+    border-left: 1px solid #bbc0c4;
+    border-right: 1px solid #bbc0c4;
+    border-top: 2px solid #F48024;
+    border-bottom: none;
+}
+
+.top-bar-info{
+    display: flex;
+}
+
+.menu-bar{
+    display: flex;
+    width: 100%;
+}
+
+.menu-bar::after{
+    content: "";
+    border-bottom: 1px solid #bbc0c4;
+    flex-grow: 1;
+}
+
+.menu-bar > .menu-item{
+    padding:8px 7px;
+    border-bottom: 1px solid #bbc0c4;
+}
+
+.menu-bar > .menu-item:hover{
+    cursor: pointer;
+    background: #E1ECF4;
+}
+
+.menu-bar > .active-item{
+    border-left: 1px solid #bbc0c4;
+    border-right: 1px solid #bbc0c4;
+    border-top: 2px solid #F48024;
+    border-bottom: none;
+}
+.see-more{
+    color: #0077CC;
+    margin-top: 20px;
+}
+
+.see-more:hover{
+    color: rgb(87, 158, 209);
+    cursor: pointer;
+}
+
+.pagination{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.pagination> .pagination-btn:first-child{
+    margin-left: auto;
+}
+
+.pagination > .pagination-btn{
+    border: 1px solid #bbc0c4;
+    border-radius: 3px;
+    padding: 4px 9px;
+    margin: 0 5px;
+    font-size: 13px;
+}
+
+.pagination > .pagination-btn:hover{
+    background: brown;
+    cursor: pointer;
+}
+
+.summery-line{
+    align-items: flex-start;
+    display: flex; 
+    flex-grow: 1;
+    margin-top:20px;
+}
+
+.summery-item{
+    margin: 15px 7px;
+}
+
+.answer-summery{
+    width: 50%; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.popularities-summery{
+    width: 50%; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.question-summery{
+    width: 50%; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.tags-summery{
+    width: 50%; 
+    display: flex;
+    flex-direction: column;
+}
+
+.badge-info{
+    display: flex;
+    flex-direction: column;
+    background: #FAFAFB; 
+    flex-basis: 400px;
+    margin-top:20px;
+    border-radius: 2px;
+    padding: 8px;
+    border:1px solid #e4e6e8;
+}
+
+.main-badges{
+    display: flex;
+    flex-grow: 1; 
+    margin-top: 20px;
+}
+
+.main-badge-item{
+    flex-grow: 1; 
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.user-summery{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.post-head{
+    border-bottom:1px solid #d6d9dc;
+    flex-grow: 1;
+    display: flex;
+}
+
+.answer-summery-item{
+    display: flex;
+    border-bottom: 1px solid #d6d9dc;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.answer-summery-item-rating{
+    padding: 3px 5px; 
+    background:green;
+    margin: 0 6px;color:white;
+}
+
+.popularity-summery-item{
+    display: flex; 
+    border-bottom: 1px solid #d6d9dc;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.popularity-summery-item-rating{
+    padding: 3px 5px; 
+    background:green;
+    margin: 0 6px;
+    color:white;
+}
+
+
+.question-suumery-item{
+    display: flex; 
+    border-bottom: 1px solid #d6d9dc;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.question-summery-item-rating{
+    padding: 3px 5px; 
+    background:green;
+    margin: 0 6px;
+    color:white;
+}
+
+.tags-summery-div{
+    display: flex; 
+    flex-direction: column; 
+    padding: 10px 0;
+}
+
+.tag-item{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.tag-item-name{
+    padding: 5px 10px;
+    margin-left: 10px; 
+    background: #E1ECF4
+}
+
+.newest-comming-badge{
+    display: flex;
+    margin-top: 20px;
+}
+
+.new-badge-info{
+    width: 100px; 
+    display: flex;
+    align-items: center;
+    background: rgb(123, 160, 160); 
+    padding: 5px 0;
+}
+
+.coming-badge{
+    display: flex;
+    flex-direction:column; 
+    margin-left: auto;
+}
+
+.coming-badge-info{
+    width: 180px; 
+    display: flex;
+    align-items: center;
+    background: rgb(123, 160, 160); 
+    padding: 5px 0;
+}
+
+@media (max-width:800px){
+    .summery-line{
+        flex-wrap: wrap;
+    }
+
+    .summery-item{
+        width: 100%;
+    }
+}

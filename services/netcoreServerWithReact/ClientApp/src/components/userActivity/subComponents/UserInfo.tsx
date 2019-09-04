@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { PUBLIC_URL } from "../../../Varables";
 
 export class UserInfo extends Component<any, any>{
     public render() {
         return (
             <div className="user-info-container">
                 <div className="user-info-div">
-                    <img className="user-pic" src={process.env.PUBLIC_URL+"/res/images/meanduddipda.jpg"} alt="" />
+                    <img className="user-pic" src={PUBLIC_URL+"/res/images/meanduddipda.jpg"} alt="" />
 
                     <span className="user-reputation">
                         ১০০২৩ সম্মানী

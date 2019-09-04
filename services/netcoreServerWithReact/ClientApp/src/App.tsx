@@ -7,7 +7,7 @@ import { Counter } from './components/counter/Counter';
 import { Tags } from './components/tags/Tags';
 import { Users } from './components/users/Users';
 import { Answer } from './components/answer/Answer';
-import { Activity } from './components/userActivity/UserActivity';
+import { UserActivity } from './components/userActivity/UserActivity';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -19,7 +19,7 @@ export default class App extends Component {
         <Route exact path='/tags' component={Tags} />
         <Route exact path='/users' component={Users} />
         <Route exact path='/answer' component={Answer} />
-        <Route exact path='/user' component={Activity} />
+        <Route exact path='/user' component={UserActivity} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data' component={FetchData} />
       </Layout>
