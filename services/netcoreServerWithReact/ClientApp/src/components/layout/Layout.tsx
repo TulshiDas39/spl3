@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav } from '../elements/nav/Nav';
+import { Nav } from '../../utilities/elements/nav/Nav';
 
 export class Layout extends Component {
   static displayName = Layout.name;

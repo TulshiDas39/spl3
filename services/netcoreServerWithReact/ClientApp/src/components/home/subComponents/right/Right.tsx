@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Question } from "../../../elements/questions/Question";
-import { Pagination } from "../../../elements/pagination/Pagination";
+import { Question } from "../../../../utilities/elements/questions/Question";
+import { Pagination } from "../../../../utilities/elements/pagination/Pagination";
 import "./right.css";
-import { StatusBar } from "../../../elements/statusBar/StatusBar";
+import { StatusBar } from "../../../../utilities/elements/statusBar/StatusBar";
 
 export class Right extends Component<any, any>{
 

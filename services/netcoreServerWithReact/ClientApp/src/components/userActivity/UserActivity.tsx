@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Leftbar } from "../elements/leftbar/Leftbar";
+import { Leftbar } from "../../utilities/elements/leftbar/Leftbar";
 import { Profile } from "./subComponents/Profile";
 import "./userActivity.css";
 import { Activity } from "./subComponents/Activity";

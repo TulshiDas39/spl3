@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./head.css";
-import { TagInput } from "../../elements/reactTagEditor/TagInput";
+import { TagInput } from "../../../utilities/elements/reactTagEditor/TagInput";
 
 export class Head extends Component<any, any>{
 

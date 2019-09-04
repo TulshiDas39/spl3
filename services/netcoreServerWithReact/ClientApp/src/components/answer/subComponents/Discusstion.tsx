@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./styles/discussion.css";
 import { Post } from "./Post";
 import { sampleDescription } from "./data";
-import { InputEditor } from "../../elements/inputEditor/InputEditor";
+import { InputEditor } from "../../../utilities/elements/inputEditor/InputEditor";
 
 export class Discussion extends Component<any, any>{
     public render() {

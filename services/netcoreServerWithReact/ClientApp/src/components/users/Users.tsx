@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Pagination } from '../elements/pagination/Pagination';
-import { Leftbar } from '../elements/leftbar/Leftbar';
+import { Pagination } from '../../utilities/elements/pagination/Pagination';
+import { Leftbar } from '../../utilities/elements/leftbar/Leftbar';
 import { Head } from './subComponents/Head';
 import { UserContainer } from './subComponents/UserContainer';
 import "./users.css";
