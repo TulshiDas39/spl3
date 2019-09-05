@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PUBLIC_URL } from "../../../Varables";
+import { PUBLIC_URL } from "../../../utilities/data";
 
 export class UserInfo extends Component<any, any>{
     public render() {

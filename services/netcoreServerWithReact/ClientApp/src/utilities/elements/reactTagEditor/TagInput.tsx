@@ -13,31 +13,20 @@ interface state{
   suggestions:string[]
 }
 
-export class TagInput extends Component <{}, state>{
-  constructor(props:any) {
-    super(props);
-    this.state = {
-      tags: [{ id: '1', text: "Thailand" }, { id: '2', text: "India" }],
-      suggestions: COUNTRIES,
-    };
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleAddition = this.handleAddition.bind(this);
+export class TagInput {
+
+  private state:state = {
+    tags: [{ id: '1', text: "Thailand" }, { id: '2', text: "India" }],
+    suggestions: COUNTRIES
+  };
+
+   constructor() {
+  
     this.handleDrag = this.handleDrag.bind(this);
     this.handleTagClick = this.handleTagClick.bind(this);
   }
 
-  handleDelete(i:number) {
-    this.setState({
-      tags: this.state.tags.filter((tag, index) => index !== i),
-    });
-  }
-
-  handleAddition(tag:string) {
-    let { tags } = this.state;
-    this.setState({ tags: [...tags, { id: (tags.length + 1)+"", text: tag }] });
-  }
-
-  handleDrag(tag:tag, currPos:number, newPos:number) {
+  private handleDrag(tag:tag, currPos:number, newPos:number) {
     const tags = [...this.state.tags];
 
     // mutate array
@@ -45,24 +34,22 @@ export class TagInput extends Component <{}, state>{
     tags.splice(newPos, 0, tag);
 
     // re-render
-    this.setState({ tags });
+    // this.setState({ tags });
   }
 
-  handleTagClick(index:number) {
+  private handleTagClick(index:number) {
     console.log('The tag at index ' + index + ' was clicked');
   }
 
-  render() {
-    const { tags, suggestions } = this.state;
+  public build(additionHandler:(tag:string)=>any, deleteHandler:(i:number)=>any, tagState:state) {
+    const { tags, suggestions } = tagState;
     return (
       <div id="app">
         <ReactTags
           tags={tags}
-          //@ts-ignore
-          suggestions={suggestions}
-          handleDelete={this.handleDelete}
-          //@ts-ignore
-          handleAddition={this.handleAddition}
+          suggestions={suggestions as any}
+          handleDelete={deleteHandler}
+          handleAddition={additionHandler as any}
           handleDrag={this.handleDrag}
           handleTagClick={this.handleTagClick}
         />

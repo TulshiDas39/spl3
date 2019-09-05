@@ -1,8 +1,27 @@
 import React, { Component } from "react";
 import "./head.css";
 import { TagInput } from "../../../utilities/elements/reactTagEditor/TagInput";
+import { COUNTRIES } from "../../../utilities/elements/reactTagEditor/countries";
 
-export class Head extends Component<any, any>{
+interface state {
+    tags: {
+        id: string,
+        text: string
+    }[],
+    suggestions: string[]
+}
+
+export class Head extends Component<any, state>{
+
+    constructor(props: any) {
+        super(props);
+        this.handleAddition = this.handleAddition.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.state = {
+            tags: [{ id: '1', text: "Thailand" }, { id: '2', text: "India" }],
+            suggestions: COUNTRIES
+        }
+    }
 
     public render() {
         return (
@@ -15,27 +34,40 @@ export class Head extends Component<any, any>{
                     <div className="filter-search filter-item">
                         <form >
                             <span className="fa fa-search"></span>
-                            <input type="text" placeholder="নাম..."/>
+                            <input type="text" placeholder="নাম..." />
                         </form>
                     </div>
-                    
+
                     <div id="filterByPlaceContainer" className="filter-search filter-item">
                         <form>
-                            <input type="text" placeholder="স্থান..."/>
+                            <input type="text" placeholder="স্থান..." />
                         </form>
                     </div>
 
-                    {/* <div id="filterTags" className="filter-item">
-                        <div className="filterTagDiv">
-                            <textarea id="hero-demo"></textarea>
-                        </div>
-                    </div> */}
-
-                    <TagInput/>
+                    {new TagInput().build(this.handleAddition, this.handleDelete,
+                        { tags: this.state.tags, suggestions: this.state.suggestions })}
 
                 </div>
 
-            </div>    
+            </div>
         );
+    }
+
+    public handleDelete(i: number) {
+        this.setState({
+            tags: this.state.tags.filter((tag, index) => index !== i),
+        });
+        console.log('delete ' + i);
+    }
+
+    public handleAddition(tag: string) {
+
+        let { tags } = this.state;
+        if (tags.map(val=> val.text).indexOf(tag) === -1) {
+            this.setState({ tags: [...tags, { id: (tags.length + 1) + "", text: tag }] });
+            console.log('added ' + tag);
+        }
+
+
     }
 }
