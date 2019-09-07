@@ -6,6 +6,10 @@
     flex-wrap: wrap;
 }
 
+#type{
+    display: flex;
+}
+
 #stages > span{
     padding: 8px 16px;
     color: #07C;

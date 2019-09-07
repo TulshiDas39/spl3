@@ -8,6 +8,7 @@ import { Tags } from './components/tags/Tags';
 import { Users } from './components/users/Users';
 import { Answer } from './components/answer/Answer';
 import { UserActivity } from './components/userActivity/UserActivity';
+import { Ask } from './components/ask/Ask';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -16,10 +17,11 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route exact path='/tags' component={Tags} />
-        <Route exact path='/users' component={Users} />
-        <Route exact path='/answer' component={Answer} />
-        <Route exact path='/user' component={UserActivity} />
+        <Route path='/tags' component={Tags} />
+        <Route path='/users' component={Users} />
+        <Route path='/answer' component={Answer} />
+        <Route path='/user' component={UserActivity} />
+        <Route path='/ask' component={Ask} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data' component={FetchData} />
       </Layout>

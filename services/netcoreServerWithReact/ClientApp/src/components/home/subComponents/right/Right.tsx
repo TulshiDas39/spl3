@@ -3,6 +3,7 @@ import { Question } from "../../../../utilities/elements/questions/Question";
 import { Pagination } from "../../../../utilities/elements/pagination/Pagination";
 import "./right.css";
 import { StatusBar } from "../../../../utilities/elements/statusBar/StatusBar";
+import { Link } from "react-router-dom";
 
 export class Right extends Component<any, any>{
 
@@ -15,9 +16,9 @@ export class Right extends Component<any, any>{
                         <div className="main-questions-text">
                             প্রধান প্রশ্নসমূহ
                         </div>
-                        <div id="ask">
+                        <Link to="/ask" id="ask">
                             প্রশ্ন করুন
-                        </div>
+                        </Link>
 
                     </div>
                     <div className="question_filter">
