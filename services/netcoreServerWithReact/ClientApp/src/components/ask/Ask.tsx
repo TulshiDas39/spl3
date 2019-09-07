@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TagInput } from "../../utilities/elements/reactTagEditor/TagInput";
 import { COUNTRIES } from "../../utilities/elements/reactTagEditor/countries";
 import "./ask.css";
+import "./question_list.css";
 
 interface state {
     tags: {
@@ -24,6 +25,7 @@ export class Ask extends Component<{}, state>{
     ];
     private displayOfSteps:string[];
     private reviewStep = false;
+    private questionTitle = "";
 
     constructor(props: any) {
         super(props);
@@ -31,7 +33,7 @@ export class Ask extends Component<{}, state>{
         this.handleDelete = this.handleDelete.bind(this);
         this.displayOfSteps = this.displaySequences[0];
         this.state = {
-            tags: [{ id: '1', text: "Thailand" }, { id: '2', text: "India" }],
+            tags: [],
             suggestions: COUNTRIES,
             currentStep:0
         }
@@ -43,7 +45,7 @@ export class Ask extends Component<{}, state>{
             <div>
                 {this.getHead()}
                 <div id="middle">
-                    <span id="image" className="fa fa-question-circle"> </span>
+                    <span id="image" className="fa fa-question-circle" style={{display: this.state.currentStep<2?'':'none'}}> </span>
                     {this.getSteps()}
                 </div>
             </div>
@@ -64,7 +66,7 @@ export class Ask extends Component<{}, state>{
                 <span id="title_tips" className="titleDiv" style={{display:this.displayOfSteps[2]}}>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
                 ফলে উত্তর প্রদান সহজ হয়</span>
                 <h4 id="title_level" className="titleDiv review" style={{display:this.reviewStep?'':this.displayOfSteps[2]}}>শিরোনাম</h4>
-                <input id="title_input" type="text" name="" className="titleDiv review" style={{display:this.reviewStep?'':this.displayOfSteps[2]}} />
+                <input id="title_input" type="text" name="" className="titleDiv review" style={{display:this.reviewStep?'':this.displayOfSteps[2]}}  onChange={this.saveQuestionTitle.bind(this)} />
 
 
                 <h1 className="ask_tags" style={{display:this.displayOfSteps[1],marginBottom: 0 }}>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
@@ -90,7 +92,7 @@ export class Ask extends Component<{}, state>{
                     <h1>প্রশ্ন সম্পর্কে বিস্তারিত তথ্য দিন</h1>
                     <span>প্রশ্নের বর্ণনা উত্তর প্রদানে প্রয়োজনীয় তথ্য সর্বরাহ করে থাকে</span>
                 </div>
-                <div className="similar_questions similarity_check" style={{display:this.displayOfSteps[4]}}>
+                <div className="similar_questions similarity_check" style={{display:this.displayOfSteps[3]}}>
                     <div className="head_space">
                         <span style={{ padding: '0 5px' }}>Similar question</span>
                     </div>
@@ -102,7 +104,7 @@ export class Ask extends Component<{}, state>{
                 {this.getGuidDiv()}
 
                 <div id="btnDiv">
-                    <button id="prevBtn" className="btns" >পুর্ববর্তী ধাপ</button>
+                    <button id="prevBtn" className="btns" style={{display:this.state.currentStep === 0?'':'block'}} onClick={this.getPreviousStep.bind(this)} >পুর্ববর্তী ধাপ</button>
                     <button id="nextBtn" className="btns" onClick={this.getNextStep.bind(this)}>পরবর্তী ধাপ</button>
                 </div>
 
@@ -110,16 +112,28 @@ export class Ask extends Component<{}, state>{
         )
     }
 
+    private saveQuestionTitle(event:any){
+        this.questionTitle = event.target.value;
+    }
+
+    private getPreviousStep(){
+        console.log('getPrevious step');
+        this.displayOfSteps = this.displaySequences[this.state.currentStep-1];
+        this.setState({
+            currentStep: this.state.currentStep - 1
+        })
+    }
+
     private getNextStep(){
         console.log('getNextStep');
         if(! this.stepCompleted()) return ;
-        if(this.state.currentStep < 4) this.displayOfSteps = this.displaySequences[this.state.currentStep+1];
         if(this.state.currentStep < 5 ){
+            this.displayOfSteps = this.displaySequences[this.state.currentStep+1];
             this.reviewStep =  this.state.currentStep === 4? true: false;
             this.setState({
                 currentStep: this.state.currentStep + 1
-            })
-
+            });
+            
         }
     }
 
@@ -127,6 +141,15 @@ export class Ask extends Component<{}, state>{
         if(this.state.currentStep === 0){
             return this.questionType == ""? false:true;
         }
+
+        if(this.state.currentStep === 1){
+            return this.state.tags.length === 0? false:true;
+        }
+    
+        if(this.state.currentStep === 2){
+            return this.questionTitle === ""? false:true;
+        }
+
         return false;
     }
 
@@ -144,8 +167,6 @@ export class Ask extends Component<{}, state>{
             this.setState({ tags: [...tags, { id: (tags.length + 1) + "", text: tag }] });
             console.log('added ' + tag);
         }
-
-
     }
 
     private handleTypeChange(event:any) {
