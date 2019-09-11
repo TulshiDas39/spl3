@@ -10,22 +10,24 @@ interface state {
         text: string
     }[],
     suggestions: string[],
-    currentStep:number
+    currentStep: number
 }
 
 export class Ask extends Component<{}, state>{
-    private questionType:string="";
-    private stepsCompleted = [false,false,false, false, false, false];
+    private questionType: string = "";
+    private stepsCompleted = [false, false, false, false, false, false];
     private displaySequences = [
-        ['', 'none', 'none','none','none','none'],
-        ['none', '', 'none','none','none','none'],
-        ['none', 'none', '','none','none','none'],
-        ['none', 'none', 'none','','none','none'],
-        ['none', 'none', 'none','none','','none']
+        ['', 'none', 'none', 'none', 'none', 'none'],
+        ['none', '', 'none', 'none', 'none', 'none'],
+        ['none', 'none', '', 'none', 'none', 'none'],
+        ['none', 'none', 'none', '', 'none', 'none'],
+        ['none', 'none', 'none', 'none', '', 'none'],
+        ['none', 'none', 'none', 'none', 'none', '']
     ];
-    private displayOfSteps:string[];
+    private displayOfSteps: string[];
     private reviewStep = false;
     private questionTitle = "";
+    private description = "";
 
     constructor(props: any) {
         super(props);
@@ -35,8 +37,9 @@ export class Ask extends Component<{}, state>{
         this.state = {
             tags: [],
             suggestions: COUNTRIES,
-            currentStep:0
+            currentStep: 0
         }
+        this.displayOfSteps = this.displaySequences[0];
 
     }
 
@@ -45,7 +48,7 @@ export class Ask extends Component<{}, state>{
             <div>
                 {this.getHead()}
                 <div id="middle">
-                    <span id="image" className="fa fa-question-circle" style={{display: this.state.currentStep<2?'':'none'}}> </span>
+                    <span id="image" className="fa fa-question-circle" style={{ display: this.state.currentStep < 2 ? '' : 'none' }}> </span>
                     {this.getSteps()}
                 </div>
             </div>
@@ -55,28 +58,28 @@ export class Ask extends Component<{}, state>{
     private getSteps() {
         return (
             <div id="steps">
-                <h1 id="type" className="about_question" style={{display:this.displayOfSteps[0]}}>আপনার কী ধরনের প্রশ্ন রয়েছে?</h1>
-                <span id="suggest" className="about_question"style={{display:this.displayOfSteps[0]}}>আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
+                <h1 id="type" className="about_question" style={{ display: this.displayOfSteps[0] }}>আপনার কী ধরনের প্রশ্ন রয়েছে?</h1>
+                <span id="suggest" className="about_question" style={{ display: this.displayOfSteps[0] }}>আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
 
                 {this.getQuestionType()}
-                <h1 className="review" style={{display: this.reviewStep?'':'none'}}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
-                <span className="review" style={{display:this.reviewStep?'':'none'}}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
+                <h1 className="review" style={{ display: this.reviewStep ? '' : 'none' }}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
+                <span className="review" style={{ display: this.reviewStep ? '' : 'none' }}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
 
-                <h1 className="titleDiv" style={{display:this.displayOfSteps[2]}}>আপনার প্রশ্নের শিরোনাম দিন</h1>
-                <span id="title_tips" className="titleDiv" style={{display:this.displayOfSteps[2]}}>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
+                <h1 className="titleDiv" style={{ display: this.displayOfSteps[2] }}>আপনার প্রশ্নের শিরোনাম দিন</h1>
+                <span id="title_tips" className="titleDiv" style={{ display: this.displayOfSteps[2] }}>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
                 ফলে উত্তর প্রদান সহজ হয়</span>
-                <h4 id="title_level" className="titleDiv review" style={{display:this.reviewStep?'':this.displayOfSteps[2]}}>শিরোনাম</h4>
-                <input id="title_input" type="text" name="" className="titleDiv review" style={{display:this.reviewStep?'':this.displayOfSteps[2]}}  onChange={this.saveQuestionTitle.bind(this)} />
+                <h4 id="title_level" className="titleDiv review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[2] }}>শিরোনাম</h4>
+                <input id="title_input" type="text" name="" className="titleDiv review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[2] }} onChange={this.saveQuestionTitle.bind(this)} />
 
 
-                <h1 className="ask_tags" style={{display:this.displayOfSteps[1],marginBottom: 0 }}>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
+                <h1 className="ask_tags" style={{ display: this.displayOfSteps[1], marginBottom: 0 }}>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
                 করতে চান?</h1>
-                <span className="ask_tags"  style={{display:this.displayOfSteps[1],marginTop: '20px 0'}} >
+                <span className="ask_tags" style={{ display: this.displayOfSteps[1], marginTop: '20px 0' }} >
                     ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
                 </span>
-                <span style={{ fontWeight: 'bold', display: this.reviewStep?'':this.displayOfSteps[1], marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
+                <span style={{ fontWeight: 'bold', display: this.reviewStep ? '' : this.displayOfSteps[1], marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
 
-                <div className="ask_tags review" style={{display:this.reviewStep?'':this.displayOfSteps[1]}}>
+                <div className="ask_tags review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[1] }}>
                     {new TagInput().build(this.handleAddition, this.handleDelete, {
                         tags: this.state.tags,
                         suggestions: this.state.suggestions
@@ -84,15 +87,15 @@ export class Ask extends Component<{}, state>{
                 </div>
 
 
-                <div id="similarityDiv" className="similarity_check" style={{display:this.displayOfSteps[3]}}>
+                <div id="similarityDiv" className="similarity_check" style={{ display: this.displayOfSteps[3] }}>
                     <h1>আপনার প্রশ্নের উত্তর কি এখানে আছে?</h1>
                     <span>এখানে আপনার প্রশ্নের সমতুল্য প্রশ্ন থাকতে পারে</span>
                 </div>
-                <div id="guid" className="description" style={{display:this.displayOfSteps[4]}}>
+                <div id="guid" className="description" style={{ display: this.displayOfSteps[4] }}>
                     <h1>প্রশ্ন সম্পর্কে বিস্তারিত তথ্য দিন</h1>
                     <span>প্রশ্নের বর্ণনা উত্তর প্রদানে প্রয়োজনীয় তথ্য সর্বরাহ করে থাকে</span>
                 </div>
-                <div className="similar_questions similarity_check" style={{display:this.displayOfSteps[3]}}>
+                <div className="similar_questions similarity_check" style={{ display: this.displayOfSteps[3] }}>
                     <div className="head_space">
                         <span style={{ padding: '0 5px' }}>Similar question</span>
                     </div>
@@ -104,7 +107,7 @@ export class Ask extends Component<{}, state>{
                 {this.getGuidDiv()}
 
                 <div id="btnDiv">
-                    <button id="prevBtn" className="btns" style={{display:this.state.currentStep === 0?'':'block'}} onClick={this.getPreviousStep.bind(this)} >পুর্ববর্তী ধাপ</button>
+                    <button id="prevBtn" className="btns" style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={this.getPreviousStep.bind(this)} >পুর্ববর্তী ধাপ</button>
                     <button id="nextBtn" className="btns" onClick={this.getNextStep.bind(this)}>পরবর্তী ধাপ</button>
                 </div>
 
@@ -112,43 +115,52 @@ export class Ask extends Component<{}, state>{
         )
     }
 
-    private saveQuestionTitle(event:any){
+    private saveQuestionTitle(event: any) {
         this.questionTitle = event.target.value;
     }
 
-    private getPreviousStep(){
+    private getPreviousStep() {
         console.log('getPrevious step');
-        this.displayOfSteps = this.displaySequences[this.state.currentStep-1];
+        this.displayOfSteps = this.displaySequences[this.state.currentStep - 1];
         this.setState({
             currentStep: this.state.currentStep - 1
         })
     }
 
-    private getNextStep(){
+    private getNextStep() {
         console.log('getNextStep');
-        if(! this.stepCompleted()) return ;
-        if(this.state.currentStep < 5 ){
-            this.displayOfSteps = this.displaySequences[this.state.currentStep+1];
-            this.reviewStep =  this.state.currentStep === 4? true: false;
+        if (!this.stepCompleted()) return;
+        if (this.state.currentStep < 5) {
+            this.displayOfSteps = this.displaySequences[this.state.currentStep + 1];
+            console.log('currentStep' + this.state.currentStep);
+            this.reviewStep = this.state.currentStep === 4 ? true : false;
             this.setState({
                 currentStep: this.state.currentStep + 1
             });
-            
+
         }
     }
 
-    private stepCompleted(){
-        if(this.state.currentStep === 0){
-            return this.questionType == ""? false:true;
+    private stepCompleted() {
+        if (this.state.currentStep === 0) {
+            return this.questionType == "" ? false : true;
         }
 
-        if(this.state.currentStep === 1){
-            return this.state.tags.length === 0? false:true;
+        if (this.state.currentStep === 1) {
+            return this.state.tags.length === 0 ? false : true;
         }
-    
-        if(this.state.currentStep === 2){
-            return this.questionTitle === ""? false:true;
+
+        if (this.state.currentStep === 2) {
+            return this.questionTitle === "" ? false : true;
         }
+
+        if (this.state.currentStep === 3) return true;
+
+        if (this.state.currentStep === 4) {
+            return this.description.match(/\w/);
+        }
+
+
 
         return false;
     }
@@ -169,7 +181,7 @@ export class Ask extends Component<{}, state>{
         }
     }
 
-    private handleTypeChange(event:any) {
+    private handleTypeChange(event: any) {
         console.log(event.target.value);
         this.questionType = event.target.value;
         this.stepsCompleted[0] = true;
@@ -177,44 +189,44 @@ export class Ask extends Component<{}, state>{
 
     private getQuestionType() {
         return (
-            <fieldset id="type_options" className="about_question" style={{display:this.displayOfSteps[0]}} onChange={this.handleTypeChange.bind(this)} >
+            <fieldset id="type_options" className="about_question" style={{ display: this.displayOfSteps[0] }} onChange={this.handleTypeChange.bind(this)} >
                 <div>
                     <input type="radio" name="option" id="first_option" value="type1" />
                     <label >আমার নিজস্য কারিকুলাম সম্পর্কিত সমস্যা সমাধান করতে চাই</label>
                 </div>
                 <div>
-                    <input type="radio" name="option" id="second_option" value="type2"/>
+                    <input type="radio" name="option" id="second_option" value="type2" />
                     <label >আমার বাড়ির কাজের সমস্যা সমাধান করতে চাই</label>
                 </div>
 
                 <div>
-                    <input type="radio" name="option" id="third_option" value="type3"/>
+                    <input type="radio" name="option" id="third_option" value="type3" />
                     <label >শিক্ষা সম্পর্কিত তথ্য জানতে চাই</label>
                 </div>
                 <div>
-                    <input type="radio" name="option" id="fourth_option" value="type4"/>
+                    <input type="radio" name="option" id="fourth_option" value="type4" />
                     <label >শিক্ষা সম্পর্কিত উপদেশ চাই</label>
                 </div>
 
                 <div>
-                    <input type="radio" name="option" id="fifth_option" value="type5"/>
+                    <input type="radio" name="option" id="fifth_option" value="type5" />
                     <label >অন্যান্য</label>
                 </div>
             </fieldset>
         );
     }
 
-   
+
 
     private getGuidDiv() {
         return (
-            <div className="guidDiv description review" style={{display:this.reviewStep?'':this.displayOfSteps[4]}}>
+            <div className="guidDiv description review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[4] }}>
                 <div className="questionPart">
                     <div className="titleField">
                         <span>১.প্রশ্নের বর্ণনা(আবশ্যক)</span>
                     </div>
-                    <div className="inputField">
-                        <textarea name="" id="" cols={30} rows={8}></textarea>
+                    <div className="inputField" >
+                        <textarea name="" id="" cols={30} rows={8} onChange={this.saveDescription.bind(this)}></textarea>
                     </div>
                 </div>
                 <div className="questionPart question_image">
@@ -237,6 +249,12 @@ export class Ask extends Component<{}, state>{
 
 
         )
+    }
+
+    private saveDescription(event: any) {
+        console.log('saveed description');
+        console.log(event.target.value);
+        this.description = event.target.value;
     }
 
 
