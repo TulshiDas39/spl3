@@ -16,3 +16,19 @@
 #middle_Div{
     display: flex;
 }
+
+@media (max-width:980px){
+    #middle_Div{
+        flex-direction: column;
+
+    }
+    #status_bar{
+        margin-top: 30px;
+    }
+}
+
+@media (max-width:640px){
+    #mainDiv{
+        width: 100%;
+    }
+}

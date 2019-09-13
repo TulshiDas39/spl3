@@ -13,34 +13,42 @@ interface state {
     currentStep: number
 }
 
-export class Ask extends Component<{}, state>{
+interface props{
+    history:string[]
+}
+
+interface tabProperties{
+    background:string;
+    color:string
+}
+
+export class Ask extends Component<props, state>{
     private questionType: string = "";
-    private stepsCompleted = [false, false, false, false, false, false];
-    private displaySequences = [
-        ['', 'none', 'none', 'none', 'none', 'none'],
-        ['none', '', 'none', 'none', 'none', 'none'],
-        ['none', 'none', '', 'none', 'none', 'none'],
-        ['none', 'none', 'none', '', 'none', 'none'],
-        ['none', 'none', 'none', 'none', '', 'none'],
-        ['none', 'none', 'none', 'none', 'none', '']
-    ];
-    private displayOfSteps: string[];
-    private reviewStep = false;
+    private stepsCompleted = [false, false, false, true, false, false];
+    private activeTabBackground = '#07C';
+    private tabStyles: tabProperties[] = [];
+    private displayOfSteps: string[]=['', 'none', 'none', 'none', 'none', 'none'];
     private questionTitle = "";
     private description = "";
+    private prevStep = -1;
 
     constructor(props: any) {
         super(props);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        this.displayOfSteps = this.displaySequences[0];
         this.state = {
             tags: [],
             suggestions: COUNTRIES,
             currentStep: 0
         }
-        this.displayOfSteps = this.displaySequences[0];
 
+    }
+
+    componentWillMount(){
+        this.tabStyles[0] = {background:this.activeTabBackground,color:'white'};
+        for(let i = 1;i <5;i++){
+            this.tabStyles[i]= {background:'', color:this.activeTabBackground};
+        }
     }
 
     public render() {
@@ -62,14 +70,14 @@ export class Ask extends Component<{}, state>{
                 <span id="suggest" className="about_question" style={{ display: this.displayOfSteps[0] }}>আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
 
                 {this.getQuestionType()}
-                <h1 className="review" style={{ display: this.reviewStep ? '' : 'none' }}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
-                <span className="review" style={{ display: this.reviewStep ? '' : 'none' }}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
+                <h1 className="review" style={{ display: this.displayOfSteps[5]}}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
+                <span className="review" style={{ display: this.displayOfSteps[5]}}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
 
                 <h1 className="titleDiv" style={{ display: this.displayOfSteps[2] }}>আপনার প্রশ্নের শিরোনাম দিন</h1>
                 <span id="title_tips" className="titleDiv" style={{ display: this.displayOfSteps[2] }}>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
                 ফলে উত্তর প্রদান সহজ হয়</span>
-                <h4 id="title_level" className="titleDiv review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[2] }}>শিরোনাম</h4>
-                <input id="title_input" type="text" name="" className="titleDiv review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[2] }} onChange={this.saveQuestionTitle.bind(this)} />
+                <h4 id="title_level" className="titleDiv review" style={{ display: this.state.currentStep === 2? this.displayOfSteps[2] : this.displayOfSteps[5]}}>শিরোনাম</h4>
+                <input id="title_input" type="text" name="" className="titleDiv review" style={{ display: this.state.currentStep === 2? this.displayOfSteps[2]:this.displayOfSteps[5] }} onChange={this.saveQuestionTitle.bind(this)} />
 
 
                 <h1 className="ask_tags" style={{ display: this.displayOfSteps[1], marginBottom: 0 }}>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
@@ -77,9 +85,9 @@ export class Ask extends Component<{}, state>{
                 <span className="ask_tags" style={{ display: this.displayOfSteps[1], marginTop: '20px 0' }} >
                     ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
                 </span>
-                <span style={{ fontWeight: 'bold', display: this.reviewStep ? '' : this.displayOfSteps[1], marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
+                <span style={{ fontWeight: 'bold', display: this.state.currentStep === 1? this.displayOfSteps[1]:this.displayOfSteps[5] , marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
 
-                <div className="ask_tags review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[1] }}>
+                <div className="ask_tags review" style={{ display: this.state.currentStep === 1? this.displayOfSteps[1] : this.displayOfSteps[5]}}>
                     {new TagInput().build(this.handleAddition, this.handleDelete, {
                         tags: this.state.tags,
                         suggestions: this.state.suggestions
@@ -107,8 +115,8 @@ export class Ask extends Component<{}, state>{
                 {this.getGuidDiv()}
 
                 <div id="btnDiv">
-                    <button id="prevBtn" className="btns" style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={this.getPreviousStep.bind(this)} >পুর্ববর্তী ধাপ</button>
-                    <button id="nextBtn" className="btns" onClick={this.getNextStep.bind(this)}>পরবর্তী ধাপ</button>
+                    <button id="prevBtn" className="btns" style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={()=>{this.changeStep(this.state.currentStep-1)}} >পুর্ববর্তী ধাপ</button>
+                    <button id="nextBtn" className="btns" onClick={()=>{this.changeStep(this.state.currentStep+1)}}>{ this.state.currentStep == 5?"নিশ্চিত করুন":"পরবর্তী ধাপ"} </button>
                 </div>
 
             </div>
@@ -117,58 +125,36 @@ export class Ask extends Component<{}, state>{
 
     private saveQuestionTitle(event: any) {
         this.questionTitle = event.target.value;
+        this.stepsCompleted[2] = this.questionTitle?true:false;
     }
 
-    private getPreviousStep() {
-        console.log('getPrevious step');
-        this.displayOfSteps = this.displaySequences[this.state.currentStep - 1];
+    private changeStep(nexStep:number){
+        console.log('change Step:'+nexStep);
+        if(nexStep === 6) this.props.history.push('/answer');
+        if(!this.stepCompleted(nexStep) && nexStep > this.state.currentStep) return;
+        this.displayOfSteps[this.state.currentStep] = 'none';
+        this.displayOfSteps[nexStep]='';
+        this.prevStep = this.state.currentStep;
         this.setState({
-            currentStep: this.state.currentStep - 1
+            currentStep:nexStep
         })
+
     }
 
-    private getNextStep() {
-        console.log('getNextStep');
-        if (!this.stepCompleted()) return;
-        if (this.state.currentStep < 5) {
-            this.displayOfSteps = this.displaySequences[this.state.currentStep + 1];
-            console.log('currentStep' + this.state.currentStep);
-            this.reviewStep = this.state.currentStep === 4 ? true : false;
-            this.setState({
-                currentStep: this.state.currentStep + 1
-            });
-
-        }
-    }
-
-    private stepCompleted() {
-        if (this.state.currentStep === 0) {
-            return this.questionType == "" ? false : true;
+    private stepCompleted(nexStep:number) {
+        for(let i=this.state.currentStep;i< nexStep;i++){
+            if(this.stepsCompleted[i] == false) return false;
         }
 
-        if (this.state.currentStep === 1) {
-            return this.state.tags.length === 0 ? false : true;
-        }
+        return true;
 
-        if (this.state.currentStep === 2) {
-            return this.questionTitle === "" ? false : true;
-        }
-
-        if (this.state.currentStep === 3) return true;
-
-        if (this.state.currentStep === 4) {
-            return this.description.match(/\w/);
-        }
-
-
-
-        return false;
     }
 
     public handleDelete(i: number) {
         this.setState({
             tags: this.state.tags.filter((tag, index) => index !== i),
         });
+        this.stepsCompleted[1] = this.state.tags.length === 0? false:true;
         console.log('delete ' + i);
     }
 
@@ -178,6 +164,7 @@ export class Ask extends Component<{}, state>{
         if (tags.map(val => val.text).indexOf(tag) === -1) {
             this.setState({ tags: [...tags, { id: (tags.length + 1) + "", text: tag }] });
             console.log('added ' + tag);
+            this.stepsCompleted[1] = true;
         }
     }
 
@@ -220,7 +207,7 @@ export class Ask extends Component<{}, state>{
 
     private getGuidDiv() {
         return (
-            <div className="guidDiv description review" style={{ display: this.reviewStep ? '' : this.displayOfSteps[4] }}>
+            <div className="guidDiv description review" style={{ display: this.state.currentStep===4? this.displayOfSteps[4] : this.displayOfSteps[5]}}>
                 <div className="questionPart">
                     <div className="titleField">
                         <span>১.প্রশ্নের বর্ণনা(আবশ্যক)</span>
@@ -253,11 +240,11 @@ export class Ask extends Component<{}, state>{
 
     private saveDescription(event: any) {
         console.log('saveed description');
-        console.log(event.target.value);
+        let description = event.target.value;
+        console.log(description);
         this.description = event.target.value;
+        this.stepsCompleted[4] = description? true : false;
     }
-
-
 
     private getSimilarQuestion() {
         return (
@@ -327,12 +314,28 @@ export class Ask extends Component<{}, state>{
     private getHead() {
         return (
             <div id="stages">
-                <span>প্রশ্নের ধরণ</span>
-                <span>ট্যাগ</span>
-                <span>শিরোনাম</span>
-                <span>বর্ণনা</span>
-                <span>পরিদর্শন</span>
+                <span onClick={()=>{this.changeStep(0)}} style={this.state.currentStep === 0? this.getActivedTabStyle():this.getDeactivatedStyle()}>প্রশ্নের ধরণ</span>
+                <span onClick={()=>{this.changeStep(1)}} style={this.state.currentStep === 1? this.getActivedTabStyle():this.getDeactivatedStyle()}>ট্যাগ</span>
+                <span onClick={()=>{this.changeStep(2)}} style={this.state.currentStep === 2? this.getActivedTabStyle():this.getDeactivatedStyle()}>শিরোনাম</span>
+                <span onClick={()=>{this.changeStep(4)}} style={this.state.currentStep === 4? this.getActivedTabStyle():this.getDeactivatedStyle()}>বর্ণনা</span>
+                <span onClick={()=>{this.changeStep(5)}} style={this.state.currentStep === 5? this.getActivedTabStyle():this.getDeactivatedStyle()}>পরিদর্শন</span>
             </div>
         )
     }
+
+    private getActivedTabStyle(){
+        return {
+            background:this.activeTabBackground,
+            color:'white'
+        }
+    }
+
+    private getDeactivatedStyle(){
+        return {
+            background:'',
+            color:this.activeTabBackground
+        }
+    }
+
+
 }

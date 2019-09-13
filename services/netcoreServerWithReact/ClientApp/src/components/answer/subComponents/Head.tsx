@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./styles/head.css";
+import { Link } from "react-router-dom";
 export class Head extends Component<any, any>{
 
     public render() {
@@ -15,7 +16,7 @@ export class Head extends Component<any, any>{
                     </div>
 
                 </div>
-                <a href="ask.html" id="ask_btn">প্রশ্ন করুন</a>
+                <Link to="/ask" id="ask_btn">প্রশ্ন করুন</Link>
             </div>
         )
     }

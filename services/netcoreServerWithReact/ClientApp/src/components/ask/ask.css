@@ -18,12 +18,12 @@
     cursor: pointer;
 }
 
-
+/* 
 #stages > span:first-child {
     background: #07C;
     color: white;
 
-}
+} */
 
 #middle{
     display: flex;
