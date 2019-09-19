@@ -19,17 +19,17 @@ namespace ForumApi.Models
 
     public interface IDatabaseSettings
     {
-        public string UsersCollectionName { get; set; }
+        string UsersCollectionName { get; set; }
 
-        public string QuestionsCollectionName { get; set; }
+        string QuestionsCollectionName { get; set; }
 
-        public string AnswersCollectionName { get; set; }
+        string AnswersCollectionName { get; set; }
 
-        public string CommentsCollectionName { get; set; }
+        string CommentsCollectionName { get; set; }
 
-        public string TagItemsCollectionName { get; set; }
+        string TagItemsCollectionName { get; set; }
 
-        public string ConnectionString { get; set; }
-        public string DatabaseName { get; set; }
+        string ConnectionString { get; set; }
+        string DatabaseName { get; set; }
     }
 }
