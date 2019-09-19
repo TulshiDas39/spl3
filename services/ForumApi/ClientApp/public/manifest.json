@@ -1,6 +1,6 @@
 {
-  "short_name": "netcoreServerWithReact",
-  "name": "netcoreServerWithReact",
+  "short_name": "ForumApi",
+  "name": "ForumApi",
   "icons": [
     {
       "src": "favicon.ico",
