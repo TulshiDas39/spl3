@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ForumApi.Models
 {
-    public class Tag
+    public class TagItem
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

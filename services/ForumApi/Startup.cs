@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using ForumApi.Models;
+using ForumApi.Services;
 
 namespace ForumApi
 {
@@ -27,7 +30,28 @@ namespace ForumApi
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            addDataBaseServices(services);
         }
+
+        private void addDataBaseServices(IServiceCollection services)
+        {
+            services.Configure<DatabaseSettings>(
+                Configuration.GetSection(nameof(DatabaseSettings)));
+
+            services.AddSingleton<IDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+
+            services.AddSingleton<UserService>();
+            services.AddSingleton<QuestionService>();
+            services.AddSingleton<AnswerService>();
+            services.AddSingleton<CommentService>();
+            services.AddSingleton<TagItemService>();
+
+        }
+
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
