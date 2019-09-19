@@ -1,0 +1,30 @@
+.question_description_text{
+    text-align: justify;
+}
+
+.questionImage{
+    width: 100%;height:auto;
+    margin: 10px 5px;
+}
+
+#postDiv{
+    display: flex;
+}
+
+.vote_system{
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+}
+
+.vote_icon:hover{
+    cursor: pointer;
+}
+
+#question_description{
+    border: 1px soid #07c;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 5px;
+}

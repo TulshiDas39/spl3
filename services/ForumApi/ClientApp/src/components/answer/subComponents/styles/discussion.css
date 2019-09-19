@@ -1,0 +1,4 @@
+#discussion_flow{
+    display: flex;
+    flex-direction: column;
+}
