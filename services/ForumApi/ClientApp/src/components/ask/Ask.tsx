@@ -3,6 +3,8 @@ import { TagInput } from "../../utilities/elements/reactTagEditor/TagInput";
 import { COUNTRIES } from "../../utilities/elements/reactTagEditor/countries";
 import "./ask.css";
 import "./question_list.css";
+import { any } from "prop-types";
+import { PUBLIC_URL } from "../../utilities/data";
 
 interface state {
     tags: {
@@ -13,24 +15,36 @@ interface state {
     currentStep: number
 }
 
-interface props{
-    history:string[]
+interface props {
+    history: string[]
 }
 
-interface tabProperties{
-    background:string;
-    color:string
+interface tabProperties {
+    background: string;
+    color: string
 }
+
+interface Question {
+    UserId: string
+    Title: string
+    Description: string
+    Tags: string
+    Ratings: number
+    DateTime: string
+}
+
+
 
 export class Ask extends Component<props, state>{
     private questionType: string = "";
     private stepsCompleted = [false, false, false, true, false, false];
     private activeTabBackground = '#07C';
     private tabStyles: tabProperties[] = [];
-    private displayOfSteps: string[]=['', 'none', 'none', 'none', 'none', 'none'];
+    private displayOfSteps: string[] = ['', 'none', 'none', 'none', 'none', 'none'];
     private questionTitle = "";
     private description = "";
     private prevStep = -1;
+    private data: Question = {} as Question;
 
     constructor(props: any) {
         super(props);
@@ -42,12 +56,15 @@ export class Ask extends Component<props, state>{
             currentStep: 0
         }
 
+
     }
 
-    componentWillMount(){
-        this.tabStyles[0] = {background:this.activeTabBackground,color:'white'};
-        for(let i = 1;i <5;i++){
-            this.tabStyles[i]= {background:'', color:this.activeTabBackground};
+
+
+    componentWillMount() {
+        this.tabStyles[0] = { background: this.activeTabBackground, color: 'white' };
+        for (let i = 1; i < 5; i++) {
+            this.tabStyles[i] = { background: '', color: this.activeTabBackground };
         }
     }
 
@@ -70,14 +87,14 @@ export class Ask extends Component<props, state>{
                 <span id="suggest" className="about_question" style={{ display: this.displayOfSteps[0] }}>আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
 
                 {this.getQuestionType()}
-                <h1 className="review" style={{ display: this.displayOfSteps[5]}}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
-                <span className="review" style={{ display: this.displayOfSteps[5]}}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
+                <h1 className="review" style={{ display: this.displayOfSteps[5] }}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
+                <span className="review" style={{ display: this.displayOfSteps[5] }}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
 
                 <h1 className="titleDiv" style={{ display: this.displayOfSteps[2] }}>আপনার প্রশ্নের শিরোনাম দিন</h1>
                 <span id="title_tips" className="titleDiv" style={{ display: this.displayOfSteps[2] }}>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
                 ফলে উত্তর প্রদান সহজ হয়</span>
-                <h4 id="title_level" className="titleDiv review" style={{ display: this.state.currentStep === 2? this.displayOfSteps[2] : this.displayOfSteps[5]}}>শিরোনাম</h4>
-                <input id="title_input" type="text" name="" className="titleDiv review" style={{ display: this.state.currentStep === 2? this.displayOfSteps[2]:this.displayOfSteps[5] }} onChange={this.saveQuestionTitle.bind(this)} />
+                <h4 id="title_level" className="titleDiv review" style={{ display: this.state.currentStep === 2 ? this.displayOfSteps[2] : this.displayOfSteps[5] }}>শিরোনাম</h4>
+                <input id="title_input" type="text" name="" className="titleDiv review" style={{ display: this.state.currentStep === 2 ? this.displayOfSteps[2] : this.displayOfSteps[5] }} onChange={this.saveQuestionTitle.bind(this)} />
 
 
                 <h1 className="ask_tags" style={{ display: this.displayOfSteps[1], marginBottom: 0 }}>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
@@ -85,9 +102,9 @@ export class Ask extends Component<props, state>{
                 <span className="ask_tags" style={{ display: this.displayOfSteps[1], marginTop: '20px 0' }} >
                     ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
                 </span>
-                <span style={{ fontWeight: 'bold', display: this.state.currentStep === 1? this.displayOfSteps[1]:this.displayOfSteps[5] , marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
+                <span style={{ fontWeight: 'bold', display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5], marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
 
-                <div className="ask_tags review" style={{ display: this.state.currentStep === 1? this.displayOfSteps[1] : this.displayOfSteps[5]}}>
+                <div className="ask_tags review" style={{ display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5] }}>
                     {new TagInput().build(this.handleAddition, this.handleDelete, {
                         tags: this.state.tags,
                         suggestions: this.state.suggestions
@@ -115,35 +132,70 @@ export class Ask extends Component<props, state>{
                 {this.getGuidDiv()}
 
                 <div id="btnDiv">
-                    <button id="prevBtn" className="btns" style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={()=>{this.changeStep(this.state.currentStep-1)}} >পুর্ববর্তী ধাপ</button>
-                    <button id="nextBtn" className="btns" onClick={()=>{this.changeStep(this.state.currentStep+1)}}>{ this.state.currentStep == 5?"নিশ্চিত করুন":"পরবর্তী ধাপ"} </button>
+                    <button id="prevBtn" className="btns" style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={() => { this.changeStep(this.state.currentStep - 1) }} >পুর্ববর্তী ধাপ</button>
+                    <button id="nextBtn" className="btns" onClick={() => { this.changeStep(this.state.currentStep + 1) }}>{this.state.currentStep == 5 ? "নিশ্চিত করুন" : "পরবর্তী ধাপ"} </button>
                 </div>
 
             </div>
         )
     }
 
-    private saveQuestionTitle(event: any) {
-        this.questionTitle = event.target.value;
-        this.stepsCompleted[2] = this.questionTitle?true:false;
+    private post() {
+        this.data.Description = this.description;
+        this.data.Title = this.questionTitle;
+        this.data.Tags = this.getTagsAsString();
+        this.data.DateTime = new Date().toDateString();
+        this.data.Ratings = 0;
+        this.data.UserId = "sakdfjq3l4jasdlsadjfq23";
+
+        fetch('api/questions', {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(this.data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res:Response) => {
+            console.log(res);
+            this.props.history.push('/answer');
+           // return res;
+        }).catch(err => {
+            console.log('error happened');
+            console.log(err);
+        });
     }
 
-    private changeStep(nexStep:number){
-        console.log('change Step:'+nexStep);
-        if(nexStep === 6) this.props.history.push('/answer');
-        if(!this.stepCompleted(nexStep) && nexStep > this.state.currentStep) return;
+    private getTagsAsString() {
+        let tags = this.state.tags;
+        let tagStr = "";
+        tags.forEach(element => {
+            tagStr += element.text
+        });
+        console.log('tagStr:' + tagStr);
+        return tagStr;
+    }
+
+    private saveQuestionTitle(event: any) {
+        this.questionTitle = event.target.value;
+        this.stepsCompleted[2] = this.questionTitle ? true : false;
+    }
+
+    private changeStep(nexStep: number) {
+        console.log('change Step:' + nexStep);
+        if (nexStep === 6) this.post();
+        if (!this.stepCompleted(nexStep) && nexStep > this.state.currentStep) return;
         this.displayOfSteps[this.state.currentStep] = 'none';
-        this.displayOfSteps[nexStep]='';
+        this.displayOfSteps[nexStep] = '';
         this.prevStep = this.state.currentStep;
         this.setState({
-            currentStep:nexStep
+            currentStep: nexStep
         })
 
     }
 
-    private stepCompleted(nexStep:number) {
-        for(let i=this.state.currentStep;i< nexStep;i++){
-            if(this.stepsCompleted[i] == false) return false;
+    private stepCompleted(nexStep: number) {
+        for (let i = this.state.currentStep; i < nexStep; i++) {
+            if (this.stepsCompleted[i] == false) return false;
         }
 
         return true;
@@ -154,7 +206,7 @@ export class Ask extends Component<props, state>{
         this.setState({
             tags: this.state.tags.filter((tag, index) => index !== i),
         });
-        this.stepsCompleted[1] = this.state.tags.length === 0? false:true;
+        this.stepsCompleted[1] = this.state.tags.length === 0 ? false : true;
         console.log('delete ' + i);
     }
 
@@ -207,7 +259,7 @@ export class Ask extends Component<props, state>{
 
     private getGuidDiv() {
         return (
-            <div className="guidDiv description review" style={{ display: this.state.currentStep===4? this.displayOfSteps[4] : this.displayOfSteps[5]}}>
+            <div className="guidDiv description review" style={{ display: this.state.currentStep === 4 ? this.displayOfSteps[4] : this.displayOfSteps[5] }}>
                 <div className="questionPart">
                     <div className="titleField">
                         <span>১.প্রশ্নের বর্ণনা(আবশ্যক)</span>
@@ -243,7 +295,7 @@ export class Ask extends Component<props, state>{
         let description = event.target.value;
         console.log(description);
         this.description = event.target.value;
-        this.stepsCompleted[4] = description? true : false;
+        this.stepsCompleted[4] = description ? true : false;
     }
 
     private getSimilarQuestion() {
@@ -314,26 +366,26 @@ export class Ask extends Component<props, state>{
     private getHead() {
         return (
             <div id="stages">
-                <span onClick={()=>{this.changeStep(0)}} style={this.state.currentStep === 0? this.getActivedTabStyle():this.getDeactivatedStyle()}>প্রশ্নের ধরণ</span>
-                <span onClick={()=>{this.changeStep(1)}} style={this.state.currentStep === 1? this.getActivedTabStyle():this.getDeactivatedStyle()}>ট্যাগ</span>
-                <span onClick={()=>{this.changeStep(2)}} style={this.state.currentStep === 2? this.getActivedTabStyle():this.getDeactivatedStyle()}>শিরোনাম</span>
-                <span onClick={()=>{this.changeStep(4)}} style={this.state.currentStep === 4? this.getActivedTabStyle():this.getDeactivatedStyle()}>বর্ণনা</span>
-                <span onClick={()=>{this.changeStep(5)}} style={this.state.currentStep === 5? this.getActivedTabStyle():this.getDeactivatedStyle()}>পরিদর্শন</span>
+                <span onClick={() => { this.changeStep(0) }} style={this.state.currentStep === 0 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>প্রশ্নের ধরণ</span>
+                <span onClick={() => { this.changeStep(1) }} style={this.state.currentStep === 1 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>ট্যাগ</span>
+                <span onClick={() => { this.changeStep(2) }} style={this.state.currentStep === 2 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>শিরোনাম</span>
+                <span onClick={() => { this.changeStep(4) }} style={this.state.currentStep === 4 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>বর্ণনা</span>
+                <span onClick={() => { this.changeStep(5) }} style={this.state.currentStep === 5 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>পরিদর্শন</span>
             </div>
         )
     }
 
-    private getActivedTabStyle(){
+    private getActivedTabStyle() {
         return {
-            background:this.activeTabBackground,
-            color:'white'
+            background: this.activeTabBackground,
+            color: 'white'
         }
     }
 
-    private getDeactivatedStyle(){
+    private getDeactivatedStyle() {
         return {
-            background:'',
-            color:this.activeTabBackground
+            background: '',
+            color: this.activeTabBackground
         }
     }
 
