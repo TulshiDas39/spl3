@@ -20,7 +20,7 @@ namespace ForumApi.Controllers
         public ActionResult<List<Question>> Get() =>
             _questionService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetQuestion")]
+        [HttpGet("{id}", Name = "GetQuestion")]
         public ActionResult<Question> Get(string id)
         {
             var question = _questionService.Get(id);

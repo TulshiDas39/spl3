@@ -3,8 +3,6 @@ import { TagInput } from "../../utilities/elements/reactTagEditor/TagInput";
 import { COUNTRIES } from "../../utilities/elements/reactTagEditor/countries";
 import "./ask.css";
 import "./question_list.css";
-import { any } from "prop-types";
-import { PUBLIC_URL } from "../../utilities/data";
 
 interface state {
     tags: {
@@ -24,7 +22,7 @@ interface tabProperties {
     color: string
 }
 
-interface Question {
+export interface Question {
     UserId: string
     Title: string
     Description: string
@@ -32,8 +30,6 @@ interface Question {
     Ratings: number
     DateTime: string
 }
-
-
 
 export class Ask extends Component<props, state>{
     private questionType: string = "";
@@ -157,8 +153,12 @@ export class Ask extends Component<props, state>{
             }
         }).then((res:Response) => {
             console.log(res);
-            this.props.history.push('/answer');
+           // 
            // return res;
+           return res.json();
+        }).then(data=>{
+            console.log(data);
+            this.props.history.push('/answer/'+data.id);
         }).catch(err => {
             console.log('error happened');
             console.log(err);

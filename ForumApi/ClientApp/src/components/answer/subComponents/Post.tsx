@@ -22,8 +22,8 @@ export class Post extends Component<props, any>{
                 </div>
                 <div id="question_description">
                     <span className="question_description_text">{this.props.description}</span>
-                    <img className="questionImage" src="res/images/sample.PNG" alt="" />
-                    <span> তাই আমি এর একটা সমাধান চাই, অগ্রীম ধন্যবাদ</span>
+                    {/* <img className="questionImage" src="res/images/sample.PNG" alt="" /> */}
+                    {/* <span> তাই আমি এর একটা সমাধান চাই, অগ্রীম ধন্যবাদ</span> */}
 
                     <User />
 

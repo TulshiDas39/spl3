@@ -19,7 +19,7 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route path='/tags' component={Tags} />
         <Route path='/users' component={Users} />
-        <Route path='/answer' component={Answer} />
+        <Route path='/answer/:handle' component={Answer} />
         <Route path='/user' component={UserActivity} />
         <Route path='/ask' component={Ask} />
         <Route path='/counter' component={Counter} />
