@@ -20,7 +20,11 @@ namespace ForumApi.Controllers
         public ActionResult<List<Answer>> Get() =>
             _answerService.Get();
 
-        [HttpGet("{id}", Name = "GetAnswer")]
+        [HttpPost("get/{questionId}")]
+        public ActionResult<List<Answer>> GetByQuestion(string questionId) =>
+            _answerService.GetByQuestion(questionId);
+
+        [HttpPost("{id}", Name = "GetAnswer")]
         public ActionResult<Answer> Get(string id)
         {
             var answer = _answerService.Get(id);

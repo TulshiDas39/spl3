@@ -23,6 +23,9 @@ namespace ForumApi.Services
         public Answer Get(string id) =>
             _answers.Find<Answer>(Answer => Answer.Id == id).FirstOrDefault();
 
+        public List<Answer> GetByQuestion(string questionId) =>
+            _answers.Find(Answer => Answer.QuestionId == questionId).ToList();
+
         public Answer Create(Answer answer)
         {
             _answers.InsertOne(answer);
