@@ -11,6 +11,8 @@ namespace ForumApi.Models
 
         public string UserId {get; set;}
 
+        public string QuestionId {get; set;}
+
         public string Description { get; set; }
 
         public int Ratings { get; set; }

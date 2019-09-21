@@ -24,7 +24,7 @@ export class Discussion{
                 </div>
 
                 <h2>আপনার উত্তর</h2>
-                <InputEditor />
+                <InputEditor id={this.questionData.id}/>
 
             </div>
         )

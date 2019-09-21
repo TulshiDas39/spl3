@@ -27,6 +27,8 @@ class Answer {
         this.addNewLineListener();
     }
 
+    
+
 
     private setInputListenerInAnswerEditor() {
         document.getElementById('answer_editor').oninput = () => {
