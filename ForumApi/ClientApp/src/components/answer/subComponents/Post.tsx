@@ -19,7 +19,7 @@ export class Post extends Component<props, any>{
             <div id="postDiv">
                 <div id="question_vote" className="vote_system">
                     <span className="fa fa-sort-asc vote_icon"></span>
-                    <span>১০</span>
+                    <span>{this.props.data.ratings}</span>
                     <span className="fa fa-sort-desc vote_icon"></span>
                 </div>
                 <div id="question_description">

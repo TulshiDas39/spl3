@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./styles/discussion.css";
 import { Post } from "./Post";
-import { sampleDescription } from "./data";
 import { InputEditor } from "../../../utilities/elements/inputEditor/InputEditor";
 import { Answer, QuestionData } from "../Answer";
 
@@ -62,7 +61,10 @@ export class Discussion extends Component<Properties,state>{
                 <h1 style={{ marginBottom: '2px' }}>উত্তর {this.answerData.length} টি</h1>
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
-                    <Post data={this.answerData[0]} />
+                    {
+                        this.answerData.map((item,index) => <Post key={index} data={item} />)
+                    }
+                    {/* <Post data={this.answerData[0]} /> */}
                 </div>
 
                 <h2>আপনার উত্তর</h2>
