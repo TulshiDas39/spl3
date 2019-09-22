@@ -5,7 +5,7 @@ import { sampleDescription } from "./data";
 import { InputEditor } from "../../../utilities/elements/inputEditor/InputEditor";
 import { Answer, QuestionData } from "../Answer";
 
-interface AnswerData{
+export interface AnswerData{
     id:string;
     userId:string;
     questionId:string;
@@ -58,11 +58,11 @@ export class Discussion extends Component<Properties,state>{
         if(this.state.isLoading) return <p>Loading...</p>;
         return (
             <div id="discussion_flow">
-                <Post description={this.props.questionData.description} />
+                <Post data={this.props.questionData} />
                 <h1 style={{ marginBottom: '2px' }}>উত্তর {this.answerData.length} টি</h1>
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
-                    <Post description={sampleDescription} />
+                    <Post data={this.answerData[0]} />
                 </div>
 
                 <h2>আপনার উত্তর</h2>
