@@ -4,10 +4,23 @@ import { Pagination } from "../../../../utilities/elements/pagination/Pagination
 import "./right.css";
 import { StatusBar } from "../../../../utilities/elements/statusBar/StatusBar";
 import { Link } from "react-router-dom";
+import { Loader } from "../../../../utilities/elements/loader/loader";
 
-export class Right extends Component<any, any>{
+interface state{
+    isLoading:boolean;
+}
+
+export class Right extends Component<any, state>{
+
+    constructor(props:any){
+        super(props);
+        this.state = {isLoading:true};
+    }
 
     public render() {
+        if(this.state.isLoading){
+            return <Loader />
+        }
         return (
             <div id="right">
 
