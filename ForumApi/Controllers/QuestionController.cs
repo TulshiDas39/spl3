@@ -2,6 +2,7 @@ using ForumApi.Models;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System;
 
 namespace ForumApi.Controllers
 {
@@ -10,10 +11,12 @@ namespace ForumApi.Controllers
     public class QuestionsController : ControllerBase
     {
         private readonly QuestionService _questionService;
+        private readonly UserService _userService;
 
-        public QuestionsController(QuestionService questionService)
+        public QuestionsController(QuestionService questionService, UserService userService)
         {
             _questionService = questionService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -31,6 +34,21 @@ namespace ForumApi.Controllers
             }
 
             return question;
+        }
+
+        [HttpPost("get/{userId}")]
+        public ActionResult<List<Question>> getByUser(string userId){
+            return _questionService.GetByUser(userId);;
+        }
+
+        [HttpPost("recommend/{iteration}/{userId}")]
+        public ActionResult<List<Question>> recommendToUser(string userId, int iteration = 0){
+            //Console.WriteLine("iteration:"+iteration);
+            System.Diagnostics.Debug.WriteLine("userId:"+userId);
+            System.Diagnostics.Debug.WriteLine("iteration:"+iteration);
+
+            User user = _userService.Get(userId);
+            return _questionService.recommend(user,iteration);
         }
 
         [HttpPost]

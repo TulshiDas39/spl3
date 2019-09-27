@@ -14,13 +14,16 @@ export class Right extends Component<any, state>{
 
     constructor(props:any){
         super(props);
-        this.state = {isLoading:true};
+        this.state = {isLoading:false};
     }
+
+
 
     public render() {
         if(this.state.isLoading){
             return <Loader />
         }
+
         return (
             <div id="right">
 
