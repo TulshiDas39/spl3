@@ -2,7 +2,8 @@ using ForumApi.Models;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System;
+using Serilog;
+
 
 namespace ForumApi.Controllers
 {
@@ -10,6 +11,7 @@ namespace ForumApi.Controllers
     [ApiController]
     public class QuestionsController : ControllerBase
     {
+
         private readonly QuestionService _questionService;
         private readonly UserService _userService;
 
@@ -37,18 +39,21 @@ namespace ForumApi.Controllers
         }
 
         [HttpPost("get/{userId}")]
-        public ActionResult<List<Question>> getByUser(string userId){
-            return _questionService.GetByUser(userId);;
+        public ActionResult<List<Question>> getByUser(string userId)
+        {
+            return _questionService.GetByUser(userId); ;
         }
 
         [HttpPost("recommend/{iteration}/{userId}")]
-        public ActionResult<List<Question>> recommendToUser(string userId, int iteration = 0){
-            //Console.WriteLine("iteration:"+iteration);
-            System.Diagnostics.Debug.WriteLine("userId:"+userId);
-            System.Diagnostics.Debug.WriteLine("iteration:"+iteration);
+        public ActionResult<List<Question>> recommendToUser(string userId, int iteration = 0)
+        {
+            // _logger.LogInformation("userId:"+userId);
+            // _logger.LogInformation("iteration:"+iteration);
+            Log.Information("userId:"+userId);
+            Log.Information("iteration:"+iteration);
 
             User user = _userService.Get(userId);
-            return _questionService.recommend(user,iteration);
+            return _questionService.recommend(user, iteration);
         }
 
         [HttpPost]

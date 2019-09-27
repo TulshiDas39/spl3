@@ -4,13 +4,14 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Serilog;
 
 namespace ForumApi.Services
 {
     public class QuestionService
     {
         private int recommendListSize = 2;
-        private Utility utility = new Utility();
+        // private Utility utility = new Utility();
         private readonly IMongoCollection<Question> _questions;
 
         public QuestionService(IDatabaseSettings settings)
@@ -44,7 +45,7 @@ namespace ForumApi.Services
 
         internal ActionResult<List<Question>> recommend(User user, int iteration)
         {
-         
+
             // return _questions.Find((question)=>  this.hasCommon(user.Tags, question.Tags)).
             //     Skip(iteration*recommendListSize).Limit(recommendListSize).ToList();
 
@@ -60,12 +61,18 @@ namespace ForumApi.Services
 
             List<Question> list = new List<Question>();
 
-            List<Question> listAll = _questions.Find(question=> true).SortByDescending(question => question.Id).ToList();
+            List<Question> listAll = _questions.Find(question => true).SortByDescending(question => question.Id).ToList();
 
-            int i=0;
-            foreach(Question q in listAll){
-                if(i>=recommendListSize) break;
-                if(Utility.hasCommon(user.Tags, q.Tags)){ 
+            int i = 0;
+            foreach (Question q in listAll)
+            {
+                if (i >= recommendListSize) break;
+                if (Utility.hasCommon(user.Tags, q.Tags))
+                {
+                    //  _logger.LogInformation("user.Tags"+user.Tags);
+                    // _logger.LogInformation("question.Tags"+q.Tags);
+                    Log.Information("usre.Tags:" + user.Tags);
+                    Log.Information("question.Tags:" + q.Tags);
                     list.Add(q);
                     i++;
                 }
