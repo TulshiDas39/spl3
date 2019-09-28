@@ -9,7 +9,7 @@ namespace ForumApi.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        public string UserId {get; set;}
+        public string UserId { get; set; }
 
         public string Title { get; set; }
 
@@ -20,5 +20,9 @@ namespace ForumApi.Models
         public int Ratings { get; set; }
 
         public long DateTime { get; set; }
+
+        public int Views { get; set; }
+
+        public bool IsAccepted { get; set; }
     }
 }

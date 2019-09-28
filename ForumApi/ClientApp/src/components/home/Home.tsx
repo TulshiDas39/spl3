@@ -9,7 +9,7 @@ export class Home extends Component {
         return (
             <div id="parentDiv">
                 <Leftbar />
-                <Right />
+                <Right userId="5d8358193e2c7c281009e8c8"/>
             </div>
         );
     }

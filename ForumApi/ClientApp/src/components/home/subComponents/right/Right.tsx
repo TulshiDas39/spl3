@@ -1,30 +1,53 @@
 import React, { Component } from "react";
-import { Question } from "../../../../utilities/elements/questions/Question";
 import { Pagination } from "../../../../utilities/elements/pagination/Pagination";
 import "./right.css";
 import { StatusBar } from "../../../../utilities/elements/statusBar/StatusBar";
 import { Link } from "react-router-dom";
 import { Loader } from "../../../../utilities/elements/loader/loader";
+import {TQuestion} from "../../../../utilities/Models";
+import { Question } from "../../../../utilities/elements/questions/Question";
 
 interface state{
     isLoading:boolean;
 }
 
-export class Right extends Component<any, state>{
+interface props{
+    userId:string;
+}
 
-    constructor(props:any){
+export class Right extends Component<props, state>{
+    private iteration = 0;
+    private questionList:TQuestion[] =[];
+    constructor(props:props){
         super(props);
-        this.state = {isLoading:false};
+        this.state = {isLoading:true};
+        this.FetchData();
     }
 
-
+    private FetchData() {
+        fetch('api/questions/recommend/'+this.iteration+"/"+this.props.userId,{
+            method: 'POST',
+        }).then((res:Response)=>{
+            return res.json();
+        }).then(data=>{
+            console.log(data);
+            this.questionList = data;
+            console.log('Answer of questions:');
+            console.log(this.questionList);
+            this.setState({isLoading:false});
+            
+        }).catch(err=>{
+            console.log('error fetching question data');
+            console.log(err);
+        })
+    }
 
     public render() {
         if(this.state.isLoading){
-            return <Loader />
+            return <Loader />;
         }
 
-        return (
+       else return (
             <div id="right">
 
                 <div id="questionDiv">
@@ -44,8 +67,9 @@ export class Right extends Component<any, state>{
                         <div>সকল বিষয়</div>
                     </div>
                     <div className="questionList">
-                        <Question />
-                        <Question />
+                        {
+                            this.questionList.map((q,index)=> <Question key={index+"questionItem"} data = {q}/>)
+                        }
                     </div>
 
 
