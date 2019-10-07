@@ -48,7 +48,7 @@ export class Question extends Component<props, any>{
                     
                     </div>
                     <div className="question_time">
-                        <a className="question_time_tex" href="">তিন ঘন্টা আগে প্রশ্ন করেছেন</a>
+                        <a className="question_time_tex" href="">{new Date(this.props.data.dateTime).toLocaleString()}</a>
                         <a className="question_time_user" href="">তুলশী দাস</a>
                         <span className="question_time_user_rating">১০৩৯</span>
                     </div>

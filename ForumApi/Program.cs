@@ -17,7 +17,7 @@ namespace ForumApi
     {
         public static void Main(string[] args)
         {
-            ConfigureLogger();
+           // ConfigureLogger();
             Log.Information("Starting web host");
             CreateWebHostBuilder(args).Build().Run();
         }

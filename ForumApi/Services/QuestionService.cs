@@ -43,22 +43,8 @@ namespace ForumApi.Services
             throw new NotImplementedException();
         }
 
-        internal ActionResult<List<Question>> recommend(User user, int iteration)
+        internal List<Question> recommend(User user, int iteration)
         {
-
-            // return _questions.Find((question)=>  this.hasCommon(user.Tags, question.Tags)).
-            //     Skip(iteration*recommendListSize).Limit(recommendListSize).ToList();
-
-            // return _questions.AsQueryable().AsEnumerable().Select(q =>
-            // {
-            //     string[] uTags = user.Tags.Trim().Split(@"\s+");
-            //     string[] qTags = q.Tags.Trim().Split(@"\s+");
-            //     foreach (string qTag in qTags)
-            //     {
-            //         if (uTags.Contains(qTag)) { return q; };
-            //     }
-            // }).ToList();
-
             List<Question> list = new List<Question>();
 
             List<Question> listAll = _questions.Find(question => true).SortByDescending(question => question.Id).ToList();
@@ -69,8 +55,6 @@ namespace ForumApi.Services
                 if (i >= recommendListSize) break;
                 if (Utility.hasCommon(user.Tags, q.Tags))
                 {
-                    //  _logger.LogInformation("user.Tags"+user.Tags);
-                    // _logger.LogInformation("question.Tags"+q.Tags);
                     Log.Information("usre.Tags:" + user.Tags);
                     Log.Information("question.Tags:" + q.Tags);
                     list.Add(q);

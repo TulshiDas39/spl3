@@ -9,22 +9,32 @@ import { Users } from './components/users/Users';
 import { Answer } from './components/answer/Answer';
 import { UserActivity } from './components/userActivity/UserActivity';
 import { Ask } from './components/ask/Ask';
+import { BrowserRouter } from 'react-router-dom';
 
-export default class App extends Component {
+interface props{
+  basename:string;
+}
+
+export default class App extends Component<props,any> {
   static displayName = App.name;
+  constructor(props:props){
+    super(props);
+  }
 
-  render () {
+  render() {
     return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/tags' component={Tags} />
-        <Route path='/users' component={Users} />
-        <Route path='/answer/:handle' component={Answer} />
-        <Route path='/user' component={UserActivity} />
-        <Route path='/ask' component={Ask} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-      </Layout>
+      <BrowserRouter basename={this.props.basename}>
+        <Layout>
+          <Route exact path='/' component={Home} />
+          <Route path='/tags' component={Tags} />
+          <Route path='/users' component={Users} />
+          <Route path='/answer/:handle' component={Answer} />
+          <Route path='/user' component={UserActivity} />
+          <Route path='/ask' component={Ask} />
+          <Route path='/counter' component={Counter} />
+          <Route path='/fetch-data' component={FetchData} />
+        </Layout>
+      </BrowserRouter>
     );
   }
 }

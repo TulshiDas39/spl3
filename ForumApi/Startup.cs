@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ForumApi.Models;
 using ForumApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace ForumApi
 {
@@ -31,10 +34,34 @@ namespace ForumApi
                 configuration.RootPath = "ClientApp/build";
             });
 
-            addDataBaseServices(services);
+            AddDataBaseServices(services);
+            AddJWTBearerService(services);
         }
 
-        private void addDataBaseServices(IServiceCollection services)
+        public void AddJWTBearerService(IServiceCollection services)
+        {
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:appointment", policy => policy.Requirements.Add(new HasScopeRequirement("read:appointment", domain)));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
+        }
+
+        private void AddDataBaseServices(IServiceCollection services)
         {
             services.Configure<DatabaseSettings>(
                 Configuration.GetSection(nameof(DatabaseSettings)));
@@ -70,6 +97,9 @@ namespace ForumApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseAuthentication();
+
 
             app.UseMvc(routes =>
             {

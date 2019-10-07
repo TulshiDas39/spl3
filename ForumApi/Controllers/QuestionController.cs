@@ -3,7 +3,7 @@ using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Serilog;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ForumApi.Controllers
 {
@@ -22,6 +22,7 @@ namespace ForumApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Question>> Get() =>
             _questionService.Get();
 
