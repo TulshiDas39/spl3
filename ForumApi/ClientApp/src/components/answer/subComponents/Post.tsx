@@ -10,9 +10,6 @@ interface props{
 }
 
 export class Post extends Component<props, any>{
-    constructor(props: any) {
-        super(props);
-    }
 
     public render() {
         return (

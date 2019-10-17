@@ -129,7 +129,7 @@ export class Ask extends Component<props, state>{
 
                 <div id="btnDiv">
                     <button id="prevBtn" className="btns" style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={() => { this.changeStep(this.state.currentStep - 1) }} >পুর্ববর্তী ধাপ</button>
-                    <button id="nextBtn" className="btns" onClick={() => { this.changeStep(this.state.currentStep + 1) }}>{this.state.currentStep == 5 ? "নিশ্চিত করুন" : "পরবর্তী ধাপ"} </button>
+                    <button id="nextBtn" className="btns" onClick={() => { this.changeStep(this.state.currentStep + 1) }}>{this.state.currentStep === 5 ? "নিশ্চিত করুন" : "পরবর্তী ধাপ"} </button>
                 </div>
 
             </div>
@@ -195,7 +195,7 @@ export class Ask extends Component<props, state>{
 
     private stepCompleted(nexStep: number) {
         for (let i = this.state.currentStep; i < nexStep; i++) {
-            if (this.stepsCompleted[i] == false) return false;
+            if (this.stepsCompleted[i] === false) return false;
         }
 
         return true;
@@ -314,7 +314,7 @@ export class Ask extends Component<props, state>{
         return (
             <div className="questions">
                 <div className="question_status">
-                    <a href="" className="votes">
+                    <a href="#" className="votes">
                         <span className="vote_number">
                             ৫
                                 </span>
@@ -322,7 +322,7 @@ export class Ask extends Component<props, state>{
                             ভোট
                                 </span>
                     </a>
-                    <a href="" className="answered">
+                    <a href="#" className="answered">
                         <span className="answer_number">
                             ৬
                                 </span>
@@ -330,7 +330,7 @@ export class Ask extends Component<props, state>{
                             উত্তর
                                 </span>
                     </a>
-                    <a href="" className="views">
+                    <a href="#" className="views">
                         <span className="view_number">
                             ৪০
                                 </span>
@@ -341,7 +341,7 @@ export class Ask extends Component<props, state>{
                 </div>
 
                 <div className="question_text">
-                    <a className="question_title" href="">
+                    <a className="question_title" href="#">
                         কোথায় প্রশ্ন করা যায়?
                             </a>
                     <div className="question_tags">

@@ -1,4 +1,4 @@
-import React ,{ useState } from "react";
+import React from "react";
 import "./nav.css";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ export class Nav extends React.Component<{}, state> {
 
     toogle(){
         console.log('in toogle');
-        console.log()
+        console.log();
         if(this.searchSmPoped){
             this.setState({
                 searchSM:{}
