@@ -54,7 +54,7 @@ namespace ForumApi
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("read:appointment", policy => policy.Requirements.Add(new HasScopeRequirement("read:appointment", domain)));
+                options.AddPolicy("read:client_grants", policy => policy.Requirements.Add(new HasScopeRequirement("read:client_grants", domain)));
             });
 
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
