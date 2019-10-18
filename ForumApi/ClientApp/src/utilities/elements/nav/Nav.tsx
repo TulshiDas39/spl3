@@ -1,35 +1,39 @@
 import React from "react";
 import "./nav.css";
 import { Link } from "react-router-dom";
+import { Auth0Context } from "../../Contexts"
+import { IAuth0Contex } from "../../Structures";
+import { async } from "q";
 
-interface state{
-    searchSM:{}
+interface state {
+    searchSM: {}
 }
 
 export class Nav extends React.Component<{}, state> {
 
     static displayName = Nav.name;
     private searchSmPoped = false;
-    
-    constructor(props:any){
+    static contextType = Auth0Context;
+
+    constructor(props: any) {
         super(props);
-        this.state = {searchSM: {}};
+        this.state = { searchSM: {} };
         this.toogle = this.toogle.bind(this);
     }
 
-    toogle(){
+    toogle() {
         console.log('in toogle');
         console.log();
-        if(this.searchSmPoped){
+        if (this.searchSmPoped) {
             this.setState({
-                searchSM:{}
+                searchSM: {}
             })
             this.searchSmPoped = !this.searchSmPoped;
         }
-        else{
+        else {
             this.setState({
-                searchSM:{
-                    display:'flex'
+                searchSM: {
+                    display: 'flex'
                 }
             })
             this.searchSmPoped = !this.searchSmPoped;
@@ -37,6 +41,7 @@ export class Nav extends React.Component<{}, state> {
     }
 
     render() {
+        let context = this.context as IAuth0Contex;
         return (
             <div id="nav">
                 <div id="list-sm">
@@ -44,7 +49,7 @@ export class Nav extends React.Component<{}, state> {
                 </div>
                 <div id="logo">
 
-                    <Link to = "/">
+                    <Link to="/">
                         <span className="fa fa-hand-o-up" style={{ color: 'teal' }}></span>
                         <span>সমীকরণ</span>
                     </Link>
@@ -63,17 +68,7 @@ export class Nav extends React.Component<{}, state> {
                 <div id="search-sm" onClick={this.toogle}>
                     <span id="search-sm-icon" className="fa fa-search"></span>
                 </div>
-                <a href="#" id="user">
-                    <img src="res/images/meanduddipda.jpg" alt="" />
-                    <span id="reputation">
-                        ৪৪
-                </span>
-                    <span className="fa fa-eercast"></span>
-                    <span id="badge">
-                        ৪
-                    </span>
-                </a>
-
+                {context.isAuthenticated ? this.getUser() : this.getLogin()}
                 <div id="nofic">
                     <span className="fa fa-globe"></span>
                 </div>
@@ -86,5 +81,25 @@ export class Nav extends React.Component<{}, state> {
                 </div>
             </div>
         );
+    }
+
+    private getLogin() {
+        let context = this.context as IAuth0Contex;
+        return (
+            <button id="idNavLogin" onClick = { async()=> await context.loginWithRedirect({
+                appState: { targetUrl: window.location.pathname }
+              })}>লগইন</button>
+        );
+    }
+
+    private getUser() {
+        return (
+            <a href="#" id="user">
+                <img src="res/images/meanduddipda.jpg" alt="" />
+                <span id="reputation"> ৪৪ </span>
+                <span className="fa fa-eercast"></span>
+                <span id="badge">৪</span>
+            </a>
+        )
     }
 }

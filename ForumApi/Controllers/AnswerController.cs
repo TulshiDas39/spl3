@@ -2,6 +2,7 @@ using ForumApi.Models;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ForumApi.Controllers
 {
@@ -16,6 +17,7 @@ namespace ForumApi.Controllers
             _answerService = answerService;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<List<Answer>> Get() =>
             _answerService.Get();

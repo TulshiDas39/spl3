@@ -24,6 +24,7 @@ export default class StartUp extends React.Component<props, any> {
         return {
             domain: config.domain,
             client_id: config.clientId,
+            audience:config.audience,
             redirect_uri: window.location.origin,
             onRedirectCallback: onRedirectCallback
         }

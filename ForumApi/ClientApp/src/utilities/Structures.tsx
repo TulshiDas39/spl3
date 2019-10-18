@@ -14,3 +14,17 @@ export interface IAuth0Contex {
     loading: boolean;
     popupOpen: boolean;
 }   
+
+
+export interface IUserCredential{
+    email: string;
+    email_verified: boolean;
+    family_name: string;
+    given_name: string;
+    locale: string;
+    name: string;
+    nickname: string;
+    picture: string;
+    sub: string;
+    updated_at: string;
+}
