@@ -1,0 +1,12 @@
+-------user data----------
+
+email: "tulshidas37@gmail.com"
+email_verified: true
+family_name: "Das"
+given_name: "Tulshi"
+locale: "en"
+name: "Tulshi Das"
+nickname: "tulshidas37"
+picture: "https://lh5.googleusercontent.com/-YOZym7I4cko/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3reZhnnFWnzfSehgnSH0MJUzp2s_sQ/photo.jpg"
+sub: "google-oauth2|117296233457658928546"
+updated_at: "2019-10-19T06:48:29.381Z"

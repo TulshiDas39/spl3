@@ -15,6 +15,8 @@ namespace ForumApi.Controllers
         private readonly QuestionService _questionService;
         private readonly UserService _userService;
 
+        private readonly int questionCount = 20;
+
         public QuestionsController(QuestionService questionService, UserService userService)
         {
             _questionService = questionService;
@@ -22,9 +24,9 @@ namespace ForumApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public ActionResult<List<Question>> Get() =>
-            _questionService.Get();
+        // [Authorize]
+        public ActionResult<List<Question>> Get(int iteration = 0) =>
+            _questionService.Get(iteration*questionCount, questionCount);
 
         [HttpGet("{id}", Name = "GetQuestion")]
         public ActionResult<Question> Get(string id)

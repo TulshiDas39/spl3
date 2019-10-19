@@ -22,11 +22,17 @@ namespace ForumApi.Services
             _questions = database.GetCollection<Question>(settings.QuestionsCollectionName);
         }
 
+        public Question Get(string questionId) =>
+             _questions.Find<Question>(Question => Question.Id == questionId).FirstOrDefault();
         public List<Question> Get() =>
-            _questions.Find(Question => true).SortByDescending(question => question.Id).Skip(2).Limit(2).ToList();
+            _questions.Find(Question => true).ToList();
 
-        public Question Get(string id) =>
-            _questions.Find<Question>(Question => Question.Id == id).FirstOrDefault();
+        public List<Question> Get(int skip, int limit) =>
+            _questions.Find(Question => true).SortByDescending(question => question.Id).Skip(skip).Limit(limit).ToList();
+
+        public List<Question> GetByUser(string userId, int skip, int limit) =>
+            _questions.Find(Question => Question.UserId == userId).SortByDescending(question => question.Id).Skip(skip).Limit(limit).ToList();
+
 
         public Question Create(Question question)
         {
