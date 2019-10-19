@@ -86,7 +86,7 @@ export class Nav extends React.Component<{}, state> {
     private getLogin() {
         let context = this.context as IAuth0Contex;
         return (
-            <button id="idNavLogin" onClick = { async()=> await context.loginWithRedirect({
+            <button id="idNavLogin" onClick = { async ()=> await context.loginWithRedirect({
                 appState: { targetUrl: window.location.pathname }
               })}>লগইন</button>
         );

@@ -1,14 +1,21 @@
 In progress
-     -using react and make all responsive
+
 
 To Do
-    -authentication(auth0)
-    -using react
-    -integrating to backend
+    -modify answer editor 
     -Apriori algorithm for question recommendation
+    -similar question
+    -user profile
+    -hosting
+    -search engine optimization
     
 
 Done
+    -authorization
+    -using react
+    -integrating to backend
+    -authentication(auth0)
+    -using react and make all responsive
     -bangla in nav
     -nav for mobile for base url after log in
     -ask page
@@ -26,3 +33,4 @@ Bugs
 Can be improved later
     -ask page ta improve kora jai
     -question field e formatting dewa
+
