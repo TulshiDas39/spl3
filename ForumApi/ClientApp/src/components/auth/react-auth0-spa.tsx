@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 //@ts-ignore
 import createAuth0Client from "@auth0/auth0-spa-js";
-import { Auth0Context } from "../../utilities/Contexts";
+import { Auth0Context } from "../../utils/Contexts";
 
 
 const DEFAULT_REDIRECT_CALLBACK = () =>

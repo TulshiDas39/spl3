@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./styles/discussion.css";
 import { Post } from "./Post";
-import { InputEditor } from "../../../utilities/elements/inputEditor/InputEditor";
+import { InputEditor } from "../../inputEditor/InputEditor";
 import { Answer, QuestionData } from "../Answer";
 
 export interface AnswerData{

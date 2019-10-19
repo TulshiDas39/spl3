@@ -1,8 +1,8 @@
 import React from "react";
 import "./nav.css";
 import { Link } from "react-router-dom";
-import { Auth0Context } from "../../Contexts"
-import { IAuth0Contex } from "../../Structures";
+import { Auth0Context } from "../../utils/Contexts"
+import { IAuth0Contex } from "../../utils/Structures";
 import { async } from "q";
 
 interface state {

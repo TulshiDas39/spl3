@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./question.css";
 import { Link } from "react-router-dom";
-import { TQuestion } from "../../Models";
-import { Utility } from "../../Utility";
+import { TQuestion } from "../../utils/Models";
+import { Utility } from "../../utils/Utility";
 
 interface props {
     data: TQuestion;

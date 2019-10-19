@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
-import { useAuth0 } from "../../utilities/Contexts";
+import { useAuth0 } from "../../utils/Contexts";
 //@ts-ignore
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
   console.log('in private route');

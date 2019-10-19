@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Pagination } from "../../../../utilities/elements/pagination/Pagination";
+import { Pagination } from "../../../pagination/Pagination";
 import "./right.css";
-import { StatusBar } from "../../../../utilities/elements/statusBar/StatusBar";
+import { StatusBar } from "../../../statusBar/StatusBar";
 import { Link } from "react-router-dom";
-import { Loader } from "../../../../utilities/elements/loader/loader";
-import {TQuestion} from "../../../../utilities/Models";
-import { Question } from "../../../../utilities/elements/questions/Question";
+import { Loader } from "../../../loader/loader";
+import {TQuestion} from "../../../../utils/Models";
+import { Question } from "../../../questions/Question";
 
 interface state{
     isLoading:boolean;

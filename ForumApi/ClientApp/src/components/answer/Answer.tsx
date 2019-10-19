@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./answer.css";
-import { Leftbar } from "../../utilities/elements/leftbar/Leftbar";
+import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
-import { StatusBar } from "../../utilities/elements/statusBar/StatusBar";
+import { StatusBar } from "../statusBar/StatusBar";
 import { Head } from "./subComponents/Head";
 
 export interface AnswerState {

@@ -10,9 +10,9 @@ import { Answer } from './components/answer/Answer';
 import { UserActivity } from './components/userActivity/UserActivity';
 import { Ask } from './components/ask/Ask';
 import { BrowserRouter } from 'react-router-dom';
-import Loading from './utilities/elements/loader/Loading';
-import {Auth0Context} from './utilities/Contexts';
-import { IAuth0Contex } from './utilities/Structures';
+import Loading from './components/loader/Loading';
+import {Auth0Context} from './utils/Contexts';
+import { IAuth0Contex } from './utils/Structures';
 
 interface props {
   basename: string;

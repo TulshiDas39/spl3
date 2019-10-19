@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./head.css";
-import { TagInput } from "../../../utilities/elements/reactTagEditor/TagInput";
-import { COUNTRIES } from "../../../utilities/elements/reactTagEditor/countries";
+import { TagInput } from "../../reactTagEditor/TagInput";
+import { COUNTRIES } from "../../reactTagEditor/countries";
 
 interface state {
     tags: {
