@@ -24,7 +24,6 @@ namespace ForumApi.Controllers
         }
 
         [HttpGet]
-        // [Authorize]
         public ActionResult<List<Question>> Get(int iteration = 0) =>
             _questionService.Get(iteration*questionCount, questionCount);
 
@@ -41,13 +40,15 @@ namespace ForumApi.Controllers
             return question;
         }
 
+        [Authorize]
         [HttpPost("get/{userId}")]
         public ActionResult<List<Question>> getByUser(string userId)
         {
-            return _questionService.GetByUser(userId); ;
+            return _questionService.GetByUser(userId);
         }
 
-        [HttpPost("recommend/{iteration}/{userId}")]
+        [Authorize]
+        [HttpGet("recommend/{iteration}/{userId}")]
         public ActionResult<List<Question>> recommendToUser(string userId, int iteration = 0)
         {
             // _logger.LogInformation("userId:"+userId);
@@ -59,6 +60,7 @@ namespace ForumApi.Controllers
             return _questionService.recommend(user, iteration);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<Question> Create(Question question)
         {

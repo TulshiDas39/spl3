@@ -4,50 +4,96 @@ import "./right.css";
 import { StatusBar } from "../../../statusBar/StatusBar";
 import { Link } from "react-router-dom";
 import { Loader } from "../../../loader/loader";
-import {TQuestion} from "../../../../utils/Models";
+import { TQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
+import { Auth0Context } from "../../../../utils/Contexts"
+import { IAuth0Contex, IUserCredential } from "../../../../utils/Structures";
 
-interface state{
-    isLoading:boolean;
+interface state {
+    isLoading: boolean;
 }
 
-interface props{
-    userId:string;
+interface props {
+    userId?: string;
 }
 
 export class Right extends Component<props, state>{
     private iteration = 0;
-    private questionList:TQuestion[] =[];
-    constructor(props:props){
+    private questionList: TQuestion[] = [];
+    static contextType = Auth0Context;
+
+    constructor(props: props) {
         super(props);
-        this.state = {isLoading:true};
-        this.FetchData();
+        this.state = { isLoading: true };
+        // this.FetchData();
     }
 
-    private FetchData() {
-        fetch('api/questions/recommend/'+this.iteration+"/"+this.props.userId,{
+    private async FetchData() {
+        let context = this.context as IAuth0Contex;
+        console.log('in home component:');
+        console.log(context);
+        if (context.isAuthenticated) {
+            let token = await context.getTokenSilently();
+            let user = context.user as IUserCredential;
+            this.fetchRecommendedData(token, user.sub);
+        }
+        else {
+            this.fetchLatestQuestion();
+        }
+
+    }
+
+    fetchLatestQuestion() {
+        fetch('api/questions/' + this.iteration + "/").
+            then((res: Response) => {
+                return res.json();
+            }).then(data => {
+                console.log(data);
+                this.questionList = data;
+                console.log('Answer of questions:');
+                console.log(this.questionList);
+                this.iteration++;
+                this.setState({ isLoading: false });
+
+            }).catch(err => {
+                console.log('error fetching question data');
+                console.log(err);
+            })
+    }
+
+    fetchRecommendedData(token: string, userId: string) {
+        fetch('api/questions/recommend/' + this.iteration + "/" + userId, {
             method: 'POST',
-        }).then((res:Response)=>{
+            headers: new Headers({
+                "Authorization": "Bearer " + token
+            })
+        }).then((res: Response) => {
             return res.json();
-        }).then(data=>{
+        }).then(data => {
             console.log(data);
             this.questionList = data;
             console.log('Answer of questions:');
             console.log(this.questionList);
-            this.setState({isLoading:false});
-            
-        }).catch(err=>{
+            this.iteration++;
+            this.setState({ isLoading: false });
+
+        }).catch(err => {
             console.log('error fetching question data');
             console.log(err);
         })
     }
 
+
+
     public render() {
-        if(this.state.isLoading){
+        console.log("context");
+        console.log(this.context);
+        if (this.state.isLoading) {
             return <Loader />;
         }
 
-       else return (
+
+        else return (
             <div id="right">
 
                 <div id="questionDiv">
@@ -68,7 +114,7 @@ export class Right extends Component<props, state>{
                     </div>
                     <div className="questionList">
                         {
-                            this.questionList.map((q,index)=> <Question key={index+"questionItem"} data = {q}/>)
+                            this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
                         }
                     </div>
 

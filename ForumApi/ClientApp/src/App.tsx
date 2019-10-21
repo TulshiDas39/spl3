@@ -13,6 +13,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Loading from './components/loader/Loading';
 import {Auth0Context} from './utils/Contexts';
 import { IAuth0Contex } from './utils/Structures';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 interface props {
   basename: string;
@@ -28,7 +29,6 @@ export default class App extends Component<props, any> {
   componentDidUpdate(){
     console.log('component did update');
     this.log();
-    
   }
 
   async log(){
@@ -49,14 +49,11 @@ export default class App extends Component<props, any> {
       return <Loading />;
     }
 
-    
-
-
     return (
       <BrowserRouter basename={this.props.basename}>
         <Layout>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <ProtectedRoute exact path='/' component={Home} />
             <Route path='/tags' component={Tags} />
             <Route path='/users' component={Users} />
             <Route path='/answer/:handle' component={Answer} />
