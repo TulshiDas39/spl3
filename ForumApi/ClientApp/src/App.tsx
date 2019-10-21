@@ -14,6 +14,7 @@ import Loading from './components/loader/Loading';
 import {Auth0Context} from './utils/Contexts';
 import { IAuth0Contex } from './utils/Structures';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 interface props {
   basename: string;
@@ -58,7 +59,7 @@ export default class App extends Component<props, any> {
             <Route path='/users' component={Users} />
             <Route path='/answer/:handle' component={Answer} />
             <Route path='/user' component={UserActivity} />
-            <Route path='/ask' component={Ask} />
+            <PrivateRoute path='/ask' component={Ask} />
             <Route path='/counter' component={Counter} />
             <Route path='/fetch-data' component={FetchData} />
           </Switch>
