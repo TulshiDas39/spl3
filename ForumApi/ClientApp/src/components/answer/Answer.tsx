@@ -31,12 +31,10 @@ export class Answer extends Component<any, AnswerState>{
         Answer.setAnswerState = this.setState;
         Answer.answerState = this.state;
         this.fetchData();
-        //console.log('handle:'+handle);
     }
 
     private fetchData() {
         fetch('api/questions/' + this.state.questionId).then((res: Response) => {
-            //console.log(res.json());
             return res.json();
         }).then(data => {
             console.log(data);
@@ -66,7 +64,6 @@ export class Answer extends Component<any, AnswerState>{
                 <div id="mainDiv">
                     {new Head(this.questionData).getHead()}
                     <div id="middle_Div">
-                        {/* {new Discussion(this.questionData).getDiscussion()} */}
                         <Discussion questionData={this.questionData} />
                         <StatusBar />
                     </div>
