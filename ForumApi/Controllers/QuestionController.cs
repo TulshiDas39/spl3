@@ -23,7 +23,7 @@ namespace ForumApi.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("latest/{iteration}")]
         public ActionResult<List<Question>> Get(int iteration = 0) =>
             _questionService.Get(iteration*questionCount, questionCount);
 

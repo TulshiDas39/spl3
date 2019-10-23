@@ -43,7 +43,7 @@ namespace ForumApi.Services
         public void Update(string id, Question questionIn) =>
             _questions.ReplaceOne(question => question.Id == id, questionIn);
 
-        internal ActionResult<List<Question>> GetByUser(string questionId)
+        internal ActionResult<List<Question>> GetByUser(string userId)
         {
 
             throw new NotImplementedException();

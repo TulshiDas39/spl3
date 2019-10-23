@@ -25,7 +25,11 @@ export class Right extends Component<props, state>{
     constructor(props: props) {
         super(props);
         this.state = { isLoading: true };
-        // this.FetchData();
+        //this.FetchData();
+    }
+
+    componentDidMount(){
+        this.FetchData();
     }
 
     private async FetchData() {
@@ -44,7 +48,7 @@ export class Right extends Component<props, state>{
     }
 
     fetchLatestQuestion() {
-        fetch('api/questions/' + this.iteration + "/").
+        fetch('api/questions/latest/' + this.iteration + "/").
             then((res: Response) => {
                 return res.json();
             }).then(data => {
