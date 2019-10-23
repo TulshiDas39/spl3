@@ -42,7 +42,7 @@ export class Question extends Component<props, any>{
                 </div>
 
                 <div className="question_text">
-                    <Link to="/answer" className="question_title">{this.props.data.title}</Link>
+                    <Link to={"/answer/"+this.props.data.id} className="question_title">{this.props.data.title}</Link>
                     <div className="question_tags">
                         {this.tags.map((tag,index) => <a key={"tagKey"+index} className="tagItem" href="#">{tag}</a>)}
                     

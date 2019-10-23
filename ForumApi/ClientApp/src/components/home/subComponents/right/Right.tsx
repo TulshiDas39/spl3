@@ -4,7 +4,7 @@ import "./right.css";
 import { StatusBar } from "../../../statusBar/StatusBar";
 import { Link } from "react-router-dom";
 import { Loader } from "../../../loader/loader";
-import { TQuestion, IUser } from "../../../../utils/Models";
+import { TQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
 import { IAuth0Contex, IUserCredential } from "../../../../utils/Structures";
