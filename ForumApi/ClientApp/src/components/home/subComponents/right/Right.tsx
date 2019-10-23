@@ -4,7 +4,7 @@ import "./right.css";
 import { StatusBar } from "../../../statusBar/StatusBar";
 import { Link } from "react-router-dom";
 import { Loader } from "../../../loader/loader";
-import { TQuestion } from "../../../../utils/Models";
+import { TQuestion, IUser } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
 import { IAuth0Contex, IUserCredential } from "../../../../utils/Structures";
@@ -38,7 +38,7 @@ export class Right extends Component<props, state>{
         if (context.isAuthenticated) {
             let token = await context.getTokenSilently();
             let user = context.user as IUserCredential;
-            this.fetchRecommendedData(token, user.sub);
+            this.fetchRecommendedData(token, user);
         }
         else {
             this.fetchLatestQuestion();
@@ -64,11 +64,14 @@ export class Right extends Component<props, state>{
             })
     }
 
-    fetchRecommendedData(token: string, userId: string) {
-        fetch('api/questions/recommend/' + this.iteration + "/" + userId, {
+    fetchRecommendedData(token: string, user: IUserCredential) {
+        fetch('api/questions/recommend/' + this.iteration, {
             method: 'POST',
+            mode: 'cors',
+            body:JSON.stringify(user),
             headers: new Headers({
-                "Authorization": "Bearer " + token
+                "Authorization": "Bearer " + token,
+                'Content-Type': 'application/json'
             })
         }).then((res: Response) => {
             return res.json();

@@ -2,7 +2,6 @@ using ForumApi.Models;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-//using Serilog;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 
@@ -30,7 +29,7 @@ namespace ForumApi.Controllers
         [HttpGet("latest/{iteration}")]
         public ActionResult<List<Question>> Get(int iteration = 0)
         {
-            _logger.LogDebug("iteration:"+iteration);
+            _logger.LogDebug("iteration:" + iteration);
             return _questionService.Get(iteration * questionCount, questionCount);
         }
 
@@ -55,14 +54,32 @@ namespace ForumApi.Controllers
         }
 
         [Authorize]
-        [HttpPost("recommend/{iteration}/{userId}")]
-        public ActionResult<List<Question>> recommendToUser(string userId, int iteration = 0)
+        [HttpPost("recommend/{iteration}")]
+        public ActionResult<List<Question>> recommendToUser(IUserCredential userCred, int iteration = 0)
         {
-            _logger.LogDebug("userId:" + userId);
+            _logger.LogDebug("user AuthId:" + userCred.sub);
             _logger.LogDebug("iteration:" + iteration);
+            User user = _userService.Get(userCred.sub);
 
-            User user = _userService.Get(userId);
-            return _questionService.recommend(user, iteration);
+
+            if (user == null)
+            {
+                createUser(userCred);
+
+            }
+            return _questionService.Get(iteration * questionCount, questionCount);
+            //return _questionService.recommend(user, iteration);
+        }
+
+        private void createUser(IUserCredential user)
+        {
+            User user_data = new User();
+            user_data.AuthId = user.sub;
+            user_data.Location = "";
+            user_data.Name = user.name;
+            user_data.Reputation = 0;
+            user_data.Tags = "";
+            _userService.Create(user_data);
         }
 
         [Authorize]

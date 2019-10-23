@@ -19,7 +19,7 @@ export interface TAnswer{
     dateTime:string;
 }
 
-export interface TUser{
+export interface IUser{
     id:string;
     authId:string;
     name:string;

@@ -21,7 +21,7 @@ namespace ForumApi.Services
             _users.Find(User => true).ToList();
 
         public User Get(string id) =>
-            _users.Find<User>(User => User.Id == id).FirstOrDefault();
+            _users.Find<User>(User => User.AuthId == id).FirstOrDefault();
 
         public User Create(User user)
         {
