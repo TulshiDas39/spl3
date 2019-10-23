@@ -25,7 +25,6 @@ export class Right extends Component<props, state>{
     constructor(props: props) {
         super(props);
         this.state = { isLoading: true };
-        //this.FetchData();
     }
 
     componentDidMount(){

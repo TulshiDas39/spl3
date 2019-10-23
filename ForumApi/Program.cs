@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace ForumApi
 {
@@ -17,8 +19,10 @@ namespace ForumApi
     {
         public static void Main(string[] args)
         {
-            ///ConfigureLogger();
-            Log.Information("Starting web host");
+            var serviceProvider = new ServiceCollection().AddLogging(cfg => cfg.AddConsole()).Configure<LoggerFilterOptions>(cfg => cfg.MinLevel = LogLevel.Debug).BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<Program>>();
+            logger.LogDebug("Starting web host");
+
             CreateWebHostBuilder(args).Build().Run();
         }
 
@@ -41,8 +45,13 @@ namespace ForumApi
 
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args).
+                 ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
                 .UseStartup<Startup>();
-                // .UseSerilog();
+        // .UseSerilog();
     }
 }

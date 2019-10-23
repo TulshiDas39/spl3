@@ -4,7 +4,8 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Serilog;
+using Microsoft.Extensions.Logging;
+//using Serilog;
 
 namespace ForumApi.Services
 {
@@ -14,12 +15,16 @@ namespace ForumApi.Services
         // private Utility utility = new Utility();
         private readonly IMongoCollection<Question> _questions;
 
-        public QuestionService(IDatabaseSettings settings)
+        private readonly ILogger _logger;
+
+        public QuestionService(IDatabaseSettings settings, ILogger<QuestionService> logger)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
             _questions = database.GetCollection<Question>(settings.QuestionsCollectionName);
+
+            _logger = logger;
         }
 
         public Question Get(string questionId) =>
@@ -27,8 +32,11 @@ namespace ForumApi.Services
         public List<Question> Get() =>
             _questions.Find(Question => true).ToList();
 
-        public List<Question> Get(int skip, int limit) =>
-            _questions.Find(Question => true).SortByDescending(question => question.Id).Skip(skip).Limit(limit).ToList();
+        public List<Question> Get(int skip, int limit)
+        {
+            _logger.LogDebug("skip:"+skip+", limit"+limit);
+            return _questions.Find(Question => true).SortByDescending(question => question.Id).Skip(skip).Limit(limit).ToList();
+        }
 
         public List<Question> GetByUser(string userId, int skip, int limit) =>
             _questions.Find(Question => Question.UserId == userId).SortByDescending(question => question.Id).Skip(skip).Limit(limit).ToList();
@@ -54,15 +62,19 @@ namespace ForumApi.Services
             List<Question> list = new List<Question>();
 
             List<Question> listAll = _questions.Find(question => true).SortByDescending(question => question.Id).ToList();
-
+            _logger.LogDebug("recommending questions:");
+            int length = listAll.Count();
+            _logger.LogDebug("length:" + length);
             int i = 0;
             foreach (Question q in listAll)
             {
                 if (i >= recommendListSize) break;
                 if (Utility.hasCommon(user.Tags, q.Tags))
                 {
-                    Log.Information("usre.Tags:" + user.Tags);
-                    Log.Information("question.Tags:" + q.Tags);
+                   // Log.Information("usre.Tags:" + user.Tags);
+                   _logger.LogDebug("user.Tags:"+user.Tags);
+                    //Log.Information("question.Tags:" + q.Tags);
+                    _logger.LogDebug("question.Tags:"+q.Tags);
                     list.Add(q);
                     i++;
                 }

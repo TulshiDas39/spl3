@@ -2,7 +2,8 @@ using ForumApi.Models;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Serilog;
+//using Serilog;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ForumApi.Controllers
@@ -17,15 +18,21 @@ namespace ForumApi.Controllers
 
         private readonly int questionCount = 20;
 
-        public QuestionsController(QuestionService questionService, UserService userService)
+        private readonly ILogger _logger;
+
+        public QuestionsController(QuestionService questionService, UserService userService, ILogger<QuestionsController> logger)
         {
             _questionService = questionService;
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpGet("latest/{iteration}")]
-        public ActionResult<List<Question>> Get(int iteration = 0) =>
-            _questionService.Get(iteration*questionCount, questionCount);
+        public ActionResult<List<Question>> Get(int iteration = 0)
+        {
+            _logger.LogDebug("iteration:"+iteration);
+            return _questionService.Get(iteration * questionCount, questionCount);
+        }
 
         [HttpGet("{id}", Name = "GetQuestion")]
         public ActionResult<Question> Get(string id)
@@ -48,13 +55,11 @@ namespace ForumApi.Controllers
         }
 
         [Authorize]
-        [HttpGet("recommend/{iteration}/{userId}")]
+        [HttpPost("recommend/{iteration}/{userId}")]
         public ActionResult<List<Question>> recommendToUser(string userId, int iteration = 0)
         {
-            // _logger.LogInformation("userId:"+userId);
-            // _logger.LogInformation("iteration:"+iteration);
-            Log.Information("userId:"+userId);
-            Log.Information("iteration:"+iteration);
+            _logger.LogDebug("userId:" + userId);
+            _logger.LogDebug("iteration:" + iteration);
 
             User user = _userService.Get(userId);
             return _questionService.recommend(user, iteration);
