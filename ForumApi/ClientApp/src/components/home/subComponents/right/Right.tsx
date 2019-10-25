@@ -4,7 +4,7 @@ import "./right.css";
 import { StatusBar } from "../../../statusBar/StatusBar";
 import { Link } from "react-router-dom";
 import { Loader } from "../../../loader/loader";
-import { TQuestion } from "../../../../utils/Models";
+import { IQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
 import { IAuth0Contex, IUserCredential } from "../../../../utils/Structures";
@@ -19,7 +19,7 @@ interface props {
 
 export class Right extends Component<props, state>{
     private iteration = 0;
-    private questionList: TQuestion[] = [];
+    private questionList: IQuestion[] = [];
     static contextType = Auth0Context;
 
     constructor(props: props) {

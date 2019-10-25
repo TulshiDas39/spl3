@@ -21,10 +21,10 @@ namespace ForumApi.Services
             _answers.Find(Answer => true).ToList();
 
         public Answer Get(string id) =>
-            _answers.Find<Answer>(Answer => Answer.Id == id).FirstOrDefault();
+            _answers.Find<Answer>(Answer => Answer.id == id).FirstOrDefault();
 
         public List<Answer> GetByQuestion(string questionId) =>
-            _answers.Find(Answer => Answer.QuestionId == questionId).ToList();
+            _answers.Find(Answer => Answer.questionId == questionId).ToList();
 
         public Answer Create(Answer answer)
         {
@@ -33,12 +33,12 @@ namespace ForumApi.Services
         }
 
         public void Update(string id, Answer answerIn) =>
-            _answers.ReplaceOne(answer => answer.Id == id, answerIn);
+            _answers.ReplaceOne(answer => answer.id == id, answerIn);
 
         public void Remove(Answer answerIn) =>
-            _answers.DeleteOne(answer => answer.Id == answerIn.Id);
+            _answers.DeleteOne(answer => answer.id == answerIn.id);
 
         public void Remove(string id) => 
-            _answers.DeleteOne(answer => answer.Id == id);
+            _answers.DeleteOne(answer => answer.id == id);
     }
 }

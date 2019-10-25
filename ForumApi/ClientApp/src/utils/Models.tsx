@@ -1,4 +1,4 @@
-export interface TQuestion {
+export interface IQuestion {
     id: string;
     userId: string;
     title: string;
@@ -10,7 +10,7 @@ export interface TQuestion {
     isAccepted: boolean;
 }
 
-export interface TAnswer{
+export interface IAnswer{
     id:string;
     userId:string;
     questionId:string;
@@ -21,19 +21,19 @@ export interface TAnswer{
 
 export interface IUser{
     id:string;
-    authId:string;
+    userId:string;
     name:string;
     tags:string;
     reputation:string;
-    Location:string;
+    location:string;
 }
 
-export interface TComment{
+export interface IComment{
     id:string;
     userId:string;
     target:string;
     targetId:string;
     text:string;
-    Ratings:number;
+    ratings:number;
     dateTime:number;
 }

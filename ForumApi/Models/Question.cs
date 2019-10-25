@@ -7,22 +7,22 @@ namespace ForumApi.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string id { get; set; }
 
-        public string UserId { get; set; }
+        public string userId { get; set; }
 
-        public string Title { get; set; }
+        public string title { get; set; }
 
-        public string Description { get; set; }
+        public string description { get; set; }
 
-        public string Tags { get; set; }
+        public string tags { get; set; }
 
-        public int Ratings { get; set; }
+        public int ratings { get; set; }
 
-        public long DateTime { get; set; }
+        public long dateTime { get; set; }
 
-        public int Views { get; set; }
+        public int views { get; set; }
 
-        public bool IsAccepted { get; set; }
+        public bool isAccepted { get; set; }
     }
 }

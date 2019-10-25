@@ -44,7 +44,7 @@ namespace ForumApi.Controllers
         {
             _answerService.Create(answer);
 
-            return CreatedAtRoute("GetAnswer", new { id = answer.Id.ToString() }, answer);
+            return CreatedAtRoute("GetAnswer", new { id = answer.id.ToString() }, answer);
         }
 
         [HttpPut("{id:length(24)}")]
@@ -72,7 +72,7 @@ namespace ForumApi.Controllers
                 return NotFound();
             }
 
-            _answerService.Remove(answer.Id);
+            _answerService.Remove(answer.id);
 
             return NoContent();
         }

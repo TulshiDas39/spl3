@@ -21,7 +21,7 @@ namespace ForumApi.Services
             _users.Find(User => true).ToList();
 
         public User Get(string id) =>
-            _users.Find<User>(User => User.AuthId == id).FirstOrDefault();
+            _users.Find<User>(User => User.userId == id).FirstOrDefault();
 
         public User Create(User user)
         {
@@ -30,12 +30,12 @@ namespace ForumApi.Services
         }
 
         public void Update(string id, User userIn) =>
-            _users.ReplaceOne(user => user.Id == id, userIn);
+            _users.ReplaceOne(user => user.id == id, userIn);
 
         public void Remove(User userIn) =>
-            _users.DeleteOne(user => user.Id == userIn.Id);
+            _users.DeleteOne(user => user.id == userIn.id);
 
         public void Remove(string id) => 
-            _users.DeleteOne(user => user.Id == id);
+            _users.DeleteOne(user => user.id == id);
     }
 }

@@ -26,16 +26,16 @@ namespace ForumApi.Controllers
         public ActionResult<List<QuestionInfo>> getInfo(string userId, int iteration = 0)
         {
             User user = _userService.Get(userId);
-            Log.Information("user:"+user.Id);
+            Log.Information("user:"+user.id);
             List<Question> list = _questionService.recommend(user, iteration);
             List<QuestionInfo> questionInfoList = new List<QuestionInfo>();
 
             foreach (Question q in list)
             {
                 QuestionInfo info = new QuestionInfo();
-                info.User = _userService.Get(q.UserId);
-                info.AnswerCount = _answerService.GetByQuestion(q.Id).Count;
-                info.Question = q;
+                info.user = _userService.Get(q.userId);
+                info.answerCount = _answerService.GetByQuestion(q.id).Count;
+                info.question = q;
                 questionInfoList.Add(info);
             }
 

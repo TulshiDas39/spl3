@@ -5,7 +5,7 @@ import "./ask.css";
 import "./question_list.css";
 import {Auth0Context} from "../../utils/Contexts";
 import { IAuth0Contex } from "../../utils/Structures";
-import { IUser } from "../../utils/Models";
+import {IQuestion } from "../../utils/Models";
 
 interface state {
     tags: {
@@ -25,16 +25,16 @@ interface tabProperties {
     color: string
 }
 
-export interface Question {
-    UserId: string;
-    Title: string;
-    Description: string;
-    Tags: string;
-    Ratings: number;
-    DateTime: number;
-    IsAccepted:boolean;
-    Views:number;
-}
+// export interface Question {
+//     UserId: string;
+//     Title: string;
+//     Description: string;
+//     Tags: string;
+//     Ratings: number;
+//     DateTime: number;
+//     IsAccepted:boolean;
+//     Views:number;
+// }
 
 export class Ask extends Component<props, state>{
     private stepsCompleted = [false, false, false, true, false, false];
@@ -43,7 +43,7 @@ export class Ask extends Component<props, state>{
     private displayOfSteps: string[] = ['', 'none', 'none', 'none', 'none', 'none'];
     private questionTitle = "";
     private description = "";
-    private data: Question = {} as Question;
+    private data: IQuestion = {} as IQuestion;
     static contextType = Auth0Context;
 
     constructor(props: any) {
@@ -55,15 +55,15 @@ export class Ask extends Component<props, state>{
             suggestions: COUNTRIES,
             currentStep: 0
         }
+        this.init();
     }
 
-    componentDidMount() {
+
+    private init(){
         this.tabStyles[0] = { background: this.activeTabBackground, color: 'white' };
         for (let i = 1; i < 5; i++) {
             this.tabStyles[i] = { background: '', color: this.activeTabBackground };
         }
-
-        this.showToken();
     }
 
     async showToken(){
@@ -147,28 +147,17 @@ export class Ask extends Component<props, state>{
 
     private async post() {
         let context = this.context as IAuth0Contex;
-        let user = context.user as IUser;
+        //let user = context.user as IUser;
         let token = await context.getTokenSilently();
 
-        this.data.Description = this.description;
-        this.data.Title = this.questionTitle;
-        this.data.Tags = this.getTagsAsString();
-        this.data.DateTime = new Date().getTime();;
-        this.data.Ratings = 0;
-        this.data.UserId = user.authId;
-        this.data.IsAccepted = false;
-        this.data.Views = 0;
-
-        // this.data = {
-        //     UserId: "google-oauth2|117296233457658928546",
-        //     Title: "this is title",
-        //     Description: "this is description",
-        //     Tags: "tags",
-        //     Ratings: 0,
-        //     DateTime: 2348234239,
-        //     IsAccepted: false,
-        //     Views:0
-        // }
+        this.data.description = this.description;
+        this.data.title = this.questionTitle;
+        this.data.tags = this.getTagsAsString();
+        this.data.dateTime = new Date().getTime();;
+        this.data.ratings = 0;
+        this.data.userId = context.user.sub;
+        this.data.isAccepted = false;
+        this.data.views = 0;
 
         console.log('token:');
         console.log(token);

@@ -38,7 +38,7 @@ namespace ForumApi.Controllers
         {
             _userService.Create(user);
 
-            return CreatedAtRoute("GetUser", new { id = user.Id.ToString() }, user);
+            return CreatedAtRoute("GetUser", new { id = user.id.ToString() }, user);
         }
 
         [HttpPut("{id:length(24)}")]
@@ -66,7 +66,7 @@ namespace ForumApi.Controllers
                 return NotFound();
             }
 
-            _userService.Remove(user.Id);
+            _userService.Remove(user.id);
 
             return NoContent();
         }

@@ -7,16 +7,16 @@ namespace ForumApi.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string id { get; set; }
 
-        public string AuthId { get; set; }
+        public string userId { get; set; }
 
-        public string Name { get; set; }
+        public string name { get; set; }
 
-        public string Tags { get; set; }
+        public string tags { get; set; }
 
-        public int Reputation { get; set; }
+        public int reputation { get; set; }
 
-        public string Location { get; set; }
+        public string location { get; set; }
     }
 }

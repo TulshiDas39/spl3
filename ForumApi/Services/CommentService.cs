@@ -21,7 +21,7 @@ namespace ForumApi.Services
             _comments.Find(Comment => true).ToList();
 
         public Comment Get(string id) =>
-            _comments.Find<Comment>(Comment => Comment.Id == id).FirstOrDefault();
+            _comments.Find<Comment>(Comment => Comment.id == id).FirstOrDefault();
 
         public Comment Create(Comment comment)
         {
@@ -30,12 +30,12 @@ namespace ForumApi.Services
         }
 
         public void Update(string id, Comment commentIn) =>
-            _comments.ReplaceOne(comment => comment.Id == id, commentIn);
+            _comments.ReplaceOne(comment => comment.id == id, commentIn);
 
         public void Remove(Comment commentIn) =>
-            _comments.DeleteOne(comment => comment.Id == commentIn.Id);
+            _comments.DeleteOne(comment => comment.id == commentIn.id);
 
         public void Remove(string id) => 
-            _comments.DeleteOne(comment => comment.Id == id);
+            _comments.DeleteOne(comment => comment.id == id);
     }
 }

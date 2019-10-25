@@ -74,11 +74,11 @@ namespace ForumApi.Controllers
         private void createUser(IUserCredential user)
         {
             User user_data = new User();
-            user_data.AuthId = user.sub;
-            user_data.Location = "";
-            user_data.Name = user.name;
-            user_data.Reputation = 0;
-            user_data.Tags = "";
+            user_data.userId = user.sub;
+            user_data.location = "";
+            user_data.name = user.name;
+            user_data.reputation = 0;
+            user_data.tags = "";
             _userService.Create(user_data);
         }
 
@@ -89,7 +89,7 @@ namespace ForumApi.Controllers
             _logger.LogDebug("in create question");
             _questionService.Create(question);
 
-            return CreatedAtRoute("GetQuestion", new { id = question.Id.ToString() }, question);
+            return CreatedAtRoute("GetQuestion", new { id = question.id.ToString() }, question);
         }
 
         [HttpPut("{id:length(24)}")]
@@ -117,7 +117,7 @@ namespace ForumApi.Controllers
                 return NotFound();
             }
 
-            _questionService.Remove(question.Id);
+            _questionService.Remove(question.id);
 
             return NoContent();
         }

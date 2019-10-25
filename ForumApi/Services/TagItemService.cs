@@ -21,7 +21,7 @@ namespace ForumApi.Services
             _tags.Find(TagItem => true).ToList();
 
         public TagItem Get(string id) =>
-            _tags.Find<TagItem>(TagItem => TagItem.Id == id).FirstOrDefault();
+            _tags.Find<TagItem>(TagItem => TagItem.id == id).FirstOrDefault();
 
         public TagItem Create(TagItem tag)
         {
@@ -30,12 +30,12 @@ namespace ForumApi.Services
         }
 
         public void Update(string id, TagItem tagIn) =>
-            _tags.ReplaceOne(tag => tag.Id == id, tagIn);
+            _tags.ReplaceOne(tag => tag.id == id, tagIn);
 
         public void Remove(TagItem tagIn) =>
-            _tags.DeleteOne(tag => tag.Id == tagIn.Id);
+            _tags.DeleteOne(tag => tag.id == tagIn.id);
 
         public void Remove(string id) => 
-            _tags.DeleteOne(tag => tag.Id == id);
+            _tags.DeleteOne(tag => tag.id == id);
     }
 }

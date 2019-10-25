@@ -3,10 +3,10 @@ namespace ForumApi.Models
 {
     public class QuestionInfo
     {
-        public User User { get; set; }
+        public User user { get; set; }
 
-        public int AnswerCount { get; set; }
+        public int answerCount { get; set; }
 
-        public Question Question { get; set; }
+        public Question question { get; set; }
     }
 }
