@@ -3,6 +3,9 @@ import { TagInput } from "../reactTagEditor/TagInput";
 import { COUNTRIES } from "../reactTagEditor/countries";
 import "./ask.css";
 import "./question_list.css";
+import {Auth0Context} from "../../utils/Contexts";
+import { IAuth0Contex } from "../../utils/Structures";
+import { IUser } from "../../utils/Models";
 
 interface state {
     tags: {
@@ -23,24 +26,25 @@ interface tabProperties {
 }
 
 export interface Question {
-    UserId: string
-    Title: string
-    Description: string
-    Tags: string
-    Ratings: number
-    DateTime: string
+    UserId: string;
+    Title: string;
+    Description: string;
+    Tags: string;
+    Ratings: number;
+    DateTime: number;
+    IsAccepted:boolean;
+    Views:number;
 }
 
 export class Ask extends Component<props, state>{
-    private questionType: string = "";
     private stepsCompleted = [false, false, false, true, false, false];
     private activeTabBackground = '#07C';
     private tabStyles: tabProperties[] = [];
     private displayOfSteps: string[] = ['', 'none', 'none', 'none', 'none', 'none'];
     private questionTitle = "";
     private description = "";
-    private prevStep = -1;
     private data: Question = {} as Question;
+    static contextType = Auth0Context;
 
     constructor(props: any) {
         super(props);
@@ -51,17 +55,22 @@ export class Ask extends Component<props, state>{
             suggestions: COUNTRIES,
             currentStep: 0
         }
-
-
     }
 
-
-
-    componentWillMount() {
+    componentDidMount() {
         this.tabStyles[0] = { background: this.activeTabBackground, color: 'white' };
         for (let i = 1; i < 5; i++) {
             this.tabStyles[i] = { background: '', color: this.activeTabBackground };
         }
+
+        this.showToken();
+    }
+
+    async showToken(){
+        // let context = this.context as IAuth0Contex;
+        // let token = await context.getTokenSilently();
+        // console.log('log:');
+        // console.log(token);
     }
 
     public render() {
@@ -136,25 +145,44 @@ export class Ask extends Component<props, state>{
         )
     }
 
-    private post() {
+    private async post() {
+        let context = this.context as IAuth0Contex;
+        let user = context.user as IUser;
+        let token = await context.getTokenSilently();
+
         this.data.Description = this.description;
         this.data.Title = this.questionTitle;
         this.data.Tags = this.getTagsAsString();
-        this.data.DateTime = new Date().toDateString();
+        this.data.DateTime = new Date().getTime();;
         this.data.Ratings = 0;
-        this.data.UserId = "sakdfjq3l4jasdlsadjfq23";
+        this.data.UserId = user.authId;
+        this.data.IsAccepted = false;
+        this.data.Views = 0;
+
+        // this.data = {
+        //     UserId: "google-oauth2|117296233457658928546",
+        //     Title: "this is title",
+        //     Description: "this is description",
+        //     Tags: "tags",
+        //     Ratings: 0,
+        //     DateTime: 2348234239,
+        //     IsAccepted: false,
+        //     Views:0
+        // }
+
+        console.log('token:');
+        console.log(token);
 
         fetch('api/questions', {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(this.data),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             }
         }).then((res:Response) => {
             console.log(res);
-           // 
-           // return res;
            return res.json();
         }).then(data=>{
             console.log(data);
@@ -186,7 +214,7 @@ export class Ask extends Component<props, state>{
         if (!this.stepCompleted(nexStep) && nexStep > this.state.currentStep) return;
         this.displayOfSteps[this.state.currentStep] = 'none';
         this.displayOfSteps[nexStep] = '';
-        this.prevStep = this.state.currentStep;
+        //this.prevStep = this.state.currentStep;
         this.setState({
             currentStep: nexStep
         })
@@ -222,7 +250,7 @@ export class Ask extends Component<props, state>{
 
     private handleTypeChange(event: any) {
         console.log(event.target.value);
-        this.questionType = event.target.value;
+       // this.questionType = event.target.value;
         this.stepsCompleted[0] = true;
     }
 

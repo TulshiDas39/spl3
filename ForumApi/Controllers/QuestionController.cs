@@ -33,7 +33,7 @@ namespace ForumApi.Controllers
             return _questionService.Get(iteration * questionCount, questionCount);
         }
 
-        [HttpGet("{id}", Name = "GetQuestion")]
+        [HttpGet("{id:length(24)}", Name = "GetQuestion")]
         public ActionResult<Question> Get(string id)
         {
             var question = _questionService.Get(id);
@@ -86,6 +86,7 @@ namespace ForumApi.Controllers
         [HttpPost]
         public ActionResult<Question> Create(Question question)
         {
+            _logger.LogDebug("in create question");
             _questionService.Create(question);
 
             return CreatedAtRoute("GetQuestion", new { id = question.Id.ToString() }, question);

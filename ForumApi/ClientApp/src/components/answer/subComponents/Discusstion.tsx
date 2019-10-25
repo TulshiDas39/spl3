@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./styles/discussion.css";
 import { Post } from "./Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
-import { Answer, QuestionData } from "../Answer";
+import { QuestionData } from "../Answer";
 
 export interface AnswerData{
     id:string;

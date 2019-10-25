@@ -1,4 +1,5 @@
 In progress
+    -similar question
 
 
 To Do
@@ -6,7 +7,7 @@ To Do
     -footer
     -tag follow option in tag page
     -Apriori algorithm for question recommendation
-    -similar question
+    -uploading image in question
     -user profile
     -hosting
     -search engine optimization
