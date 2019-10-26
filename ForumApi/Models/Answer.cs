@@ -13,10 +13,10 @@ namespace ForumApi.Models
 
         public string questionId {get; set;}
 
-        public string Description { get; set; }
+        public string description { get; set; }
 
         public int ratings { get; set; }
 
-        public long dateTime { get; set; }
+        public long datetime { get; set; }
     }
 }
