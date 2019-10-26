@@ -9,9 +9,6 @@ namespace ForumApi.Services
 {
     public class Utility
     {
-        public static ServiceProvider getLoggerServiceProvider(){
-           return new ServiceCollection().AddLogging(cfg => cfg.AddConsole()).Configure<LoggerFilterOptions>(cfg => cfg.MinLevel = LogLevel.Debug).BuildServiceProvider();
-        }
         public static bool hasCommon(string userTags, string questionTags)
         {
             string[] uTags = GetWords(userTags);

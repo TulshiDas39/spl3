@@ -46,9 +46,16 @@ namespace ForumApi.Controllers
             return question;
         }
 
+        [HttpPost("similarity")]
+        public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity ,[FromBody] string questionData){
+            _logger.LogDebug("question data:");
+            _logger.LogDebug(questionData);
+            return similarity.getSimilarQuestions(questionData);
+        }
+
         [Authorize]
         [HttpPost("get/{userId}")]
-        public ActionResult<List<Question>> getByUser(string userId)
+        public ActionResult<List<Question>> GetByUser(string userId)
         {
             return _questionService.GetByUser(userId);
         }

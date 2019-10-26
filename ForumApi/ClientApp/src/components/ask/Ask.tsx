@@ -3,17 +3,20 @@ import { TagInput } from "../reactTagEditor/TagInput";
 import { COUNTRIES } from "../reactTagEditor/countries";
 import "./ask.css";
 import "./question_list.css";
-import {Auth0Context} from "../../utils/Contexts";
+import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Contex } from "../../utils/Structures";
-import {IQuestion } from "../../utils/Models";
+import { IQuestion } from "../../utils/Models";
+import Loading from "../loader/Loading";
+import { Question } from "../questions/Question";
 
 interface state {
     tags: {
-        id: string,
-        text: string
-    }[],
-    suggestions: string[],
-    currentStep: number
+        id: string;
+        text: string;
+    }[];
+    suggestions: string[];
+    currentStep: number;
+    loadSimilarities: boolean;
 }
 
 interface props {
@@ -25,17 +28,6 @@ interface tabProperties {
     color: string
 }
 
-// export interface Question {
-//     UserId: string;
-//     Title: string;
-//     Description: string;
-//     Tags: string;
-//     Ratings: number;
-//     DateTime: number;
-//     IsAccepted:boolean;
-//     Views:number;
-// }
-
 export class Ask extends Component<props, state>{
     private stepsCompleted = [false, false, false, true, false, false];
     private activeTabBackground = '#07C';
@@ -44,33 +36,98 @@ export class Ask extends Component<props, state>{
     private questionTitle = "";
     private description = "";
     private data: IQuestion = {} as IQuestion;
+    private similarQuestions: IQuestion[] = [];
     static contextType = Auth0Context;
 
-    constructor(props: any) {
+    constructor(props: props) {
         super(props);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.state = {
             tags: [],
             suggestions: COUNTRIES,
-            currentStep: 0
+            currentStep: 0,
+            loadSimilarities: false
         }
         this.init();
     }
 
 
-    private init(){
+    private init() {
         this.tabStyles[0] = { background: this.activeTabBackground, color: 'white' };
         for (let i = 1; i < 5; i++) {
             this.tabStyles[i] = { background: '', color: this.activeTabBackground };
         }
     }
 
-    async showToken(){
-        // let context = this.context as IAuth0Contex;
-        // let token = await context.getTokenSilently();
-        // console.log('log:');
-        // console.log(token);
+    componentDidUpdate() {
+        console.log('component did update');
+        if (this.state.loadSimilarities) this.fetchSimilarQuestions();
+    }
+
+    private async post() {
+        let context = this.context as IAuth0Contex;
+        let token = await context.getTokenSilently();
+
+        this.data.description = this.description;
+        this.data.title = this.questionTitle;
+        this.data.tags = this.getTagsAsString();
+        this.data.dateTime = new Date().getTime();
+        this.data.ratings = 0;
+        this.data.userId = context.user.sub;
+        this.data.isAccepted = false;
+        this.data.views = 0;
+
+        console.log('token:');
+        console.log(token);
+
+        fetch('api/questions', {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(this.data),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        }).then((res: Response) => {
+            console.log(res);
+            return res.json();
+        }).then(data => {
+            console.log(data);
+            this.props.history.push('/answer/' + data.id);
+        }).catch(err => {
+            console.log('error happened');
+            console.log(err);
+        });
+    }
+
+    private fetchSimilarQuestions() {
+        let questionData = this.questionTitle;
+        this.state.tags.forEach(val => questionData += " " + val.text);
+        console.log('tags are pushed: ' + questionData);
+
+        fetch('api/questions/similarity', {
+            method: 'POST',
+            body: JSON.stringify(questionData),
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Authorization': 'Bearer ' + token
+            }
+        }).then((res: Response) => {
+            console.log(res);
+            return res.json();
+        }).then(data => {
+            console.log('retrieved similar questions:');
+            console.log(data);
+            this.similarQuestions = data;
+            this.setState({
+                loadSimilarities: false
+            })
+            //this.props.history.push('/answer/' + data.id);
+        }).catch(err => {
+            console.log('error happened');
+            console.log(err);
+        });
     }
 
     public render() {
@@ -145,42 +202,7 @@ export class Ask extends Component<props, state>{
         )
     }
 
-    private async post() {
-        let context = this.context as IAuth0Contex;
-        //let user = context.user as IUser;
-        let token = await context.getTokenSilently();
 
-        this.data.description = this.description;
-        this.data.title = this.questionTitle;
-        this.data.tags = this.getTagsAsString();
-        this.data.dateTime = new Date().getTime();;
-        this.data.ratings = 0;
-        this.data.userId = context.user.sub;
-        this.data.isAccepted = false;
-        this.data.views = 0;
-
-        console.log('token:');
-        console.log(token);
-
-        fetch('api/questions', {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(this.data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-        }).then((res:Response) => {
-            console.log(res);
-           return res.json();
-        }).then(data=>{
-            console.log(data);
-            this.props.history.push('/answer/'+data.id);
-        }).catch(err => {
-            console.log('error happened');
-            console.log(err);
-        });
-    }
 
     private getTagsAsString() {
         let tags = this.state.tags;
@@ -205,7 +227,8 @@ export class Ask extends Component<props, state>{
         this.displayOfSteps[nexStep] = '';
         //this.prevStep = this.state.currentStep;
         this.setState({
-            currentStep: nexStep
+            currentStep: nexStep,
+            loadSimilarities: nexStep === 3 ? true : false
         })
 
     }
@@ -239,7 +262,7 @@ export class Ask extends Component<props, state>{
 
     private handleTypeChange(event: any) {
         console.log(event.target.value);
-       // this.questionType = event.target.value;
+        // this.questionType = event.target.value;
         this.stepsCompleted[0] = true;
     }
 
@@ -316,65 +339,14 @@ export class Ask extends Component<props, state>{
     }
 
     private getSimilarQuestion() {
+        if (this.state.loadSimilarities) return <Loading />;
         return (
+
             <div className="similar_question_list">
-                {this.getSingleQuestion()}
-                {this.getSingleQuestion()}
-                {this.getSingleQuestion()}
-                {this.getSingleQuestion()}
+                {
+                    this.similarQuestions.map((q, index) => <Question key={index + "similarQuestionItem"} data={q} />)
+                }
             </div>
-
-        )
-    }
-
-    private getSingleQuestion() {
-        return (
-            <div className="questions">
-                <div className="question_status">
-                    <a href="#" className="votes">
-                        <span className="vote_number">
-                            ৫
-                                </span>
-                        <span className="vote_text">
-                            ভোট
-                                </span>
-                    </a>
-                    <a href="#" className="answered">
-                        <span className="answer_number">
-                            ৬
-                                </span>
-                        <span className="answer_text">
-                            উত্তর
-                                </span>
-                    </a>
-                    <a href="#" className="views">
-                        <span className="view_number">
-                            ৪০
-                                </span>
-                        <span className="view_text">
-                            দেখা
-                                </span>
-                    </a>
-                </div>
-
-                <div className="question_text">
-                    <a className="question_title" href="#">
-                        কোথায় প্রশ্ন করা যায়?
-                            </a>
-                    <div className="question_tags">
-                        <a href="">javascript</a>
-                        <a href="">jquery</a>
-                        <a href="">typescript</a>
-                        <a href="">electron</a>
-                    </div>
-                    <div className="question_time">
-                        <a href="">তিন ঘন্টা আগে প্রশ্ন করেছেন</a>
-                        <a href="">তুলশী দাস</a>
-                        <span>১০৩৯</span>
-                    </div>
-                </div>
-            </div>
-
 
         )
     }
