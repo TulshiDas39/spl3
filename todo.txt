@@ -1,5 +1,5 @@
 In progress
-    -similar question
+    -user creation
 
 
 To Do
@@ -30,6 +30,7 @@ Done
     -users page
     -comment system in answer page
     -user profile public view page
+    -similar question
 
 Bugs
 

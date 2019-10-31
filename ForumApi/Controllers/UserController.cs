@@ -2,6 +2,8 @@ using ForumApi.Models;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+
 
 namespace ForumApi.Controllers
 {
@@ -10,10 +12,12 @@ namespace ForumApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
+        private ILogger _logger;
 
-        public UsersController(UserService userService)
+        public UsersController(UserService userService,ILogger<UsersController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -38,6 +42,7 @@ namespace ForumApi.Controllers
         {
             if (!_userService.Exist(userCred.sub))
             {
+                _logger.LogDebug("user not exist, creating the user");
                 User user = new User();
                 user.location = "";
                 user.name = userCred.name;
@@ -49,6 +54,7 @@ namespace ForumApi.Controllers
                 return CreatedAtRoute("GetUser", new { id = user.id.ToString() }, user);
             }
 
+            _logger.LogDebug("user exist");
             User user2 = _userService.Get(userCred.sub);
 
             return user2;

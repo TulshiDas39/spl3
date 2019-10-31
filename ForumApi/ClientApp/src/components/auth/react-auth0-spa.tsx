@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 //@ts-ignore
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { Auth0Context } from "../../utils/Contexts";
@@ -22,7 +22,7 @@ export const Auth0Provider = ({
   const [auth0Client, setAuth0] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
-  let accessToken="";
+  let accessToken = "";
   console.log('isAuthenticated:');
   console.log(isAuthenticated);
   console.log('user:');
@@ -46,8 +46,10 @@ export const Auth0Provider = ({
 
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
+        createUserIfNotExist(user);
         accessToken = await auth0FromHook.getTokenSilently();
         setUser(user);
+
       }
 
       setLoading(false);
@@ -55,6 +57,28 @@ export const Auth0Provider = ({
     initAuth0();
     // eslint-disable-next-line
   }, []);
+
+  const createUserIfNotExist = (user: any) => {
+    fetch('api/users/create', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json'
+       // 'Authorization': 'Bearer ' + token
+      }
+    }).then((res: Response) => {
+      console.log(res);
+      return res.json();
+    }).then(data => {
+      console.log('create user response');
+      console.log(data);
+     // this.props.history.push('/answer/' + data.id);
+    }).catch(err => {
+      console.log('error happened in create user');
+      console.log(err);
+    });
+  }
 
   const loginWithPopup = async (params = {}) => {
     setPopupOpen(true);

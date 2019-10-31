@@ -95,12 +95,12 @@ export class Nav extends React.Component<{}, state> {
 
     private getUser() {
         return (
-            [<a href="#" id="user">
+            [<a key="userIcon123" href="#" id="user">
                 <img src="res/images/meanduddipda.jpg" alt="" />
                 <span id="reputation"> ৪৪ </span>
                 <span className="fa fa-eercast"></span>
                 <span id="badge">৪</span>
-            </a>, <button id="logoutBtn" onClick={()=> this.context.logout({returnTo: window.location.origin})}>লগআউট</button>]
+            </a>, <button key="logoutBtn123" id="logoutBtn" onClick={()=> this.context.logout({returnTo: window.location.origin})}>লগআউট</button>]
         )
     }
 }
