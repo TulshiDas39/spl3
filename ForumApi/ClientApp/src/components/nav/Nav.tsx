@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Auth0Context } from "../../utils/Contexts"
 import { IAuth0Contex } from "../../utils/Structures";
 import { async } from "q";
+import { PUBLIC_URL } from "../../utils/data";
 
 interface state {
     searchSM: {}
@@ -94,12 +95,12 @@ export class Nav extends React.Component<{}, state> {
 
     private getUser() {
         return (
-            <a href="#" id="user">
+            [<a href="#" id="user">
                 <img src="res/images/meanduddipda.jpg" alt="" />
                 <span id="reputation"> ৪৪ </span>
                 <span className="fa fa-eercast"></span>
                 <span id="badge">৪</span>
-            </a>
+            </a>, <button id="logoutBtn" onClick={()=> this.context.logout({returnTo: window.location.origin})}>লগআউট</button>]
         )
     }
 }

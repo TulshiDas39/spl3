@@ -1,9 +1,7 @@
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace ForumApi.Models
 {
-    public class IUserCredential
+    public class UserCredential
     {
         public string email;
         public string family_name;

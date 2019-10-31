@@ -75,6 +75,7 @@ namespace ForumApi
             services.AddSingleton<CommentService>();
             services.AddSingleton<TagItemService>();
             services.AddSingleton<QuestionSimilarity>();
+            services.AddSingleton<QuestionRecommendation>();
 
         }
 

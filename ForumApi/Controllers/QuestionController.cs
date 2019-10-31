@@ -62,7 +62,7 @@ namespace ForumApi.Controllers
 
         [Authorize]
         [HttpPost("recommend/{iteration}")]
-        public ActionResult<List<Question>> recommendToUser(IUserCredential userCred, int iteration = 0)
+        public ActionResult<List<Question>> recommendToUser(UserCredential userCred, int iteration = 0)
         {
             _logger.LogDebug("user AuthId:" + userCred.sub);
             _logger.LogDebug("iteration:" + iteration);
@@ -78,7 +78,12 @@ namespace ForumApi.Controllers
             //return _questionService.recommend(user, iteration);
         }
 
-        private void createUser(IUserCredential user)
+        [HttpPost("recommendation/{userId}/{iteration}")]
+        public ActionResult<List<Question>> RecommendQuestions([FromServices] QuestionRecommendation recommendation, string userId, int iteration){
+            return recommendation.Recommend(userId,iteration);
+        }
+
+        private void createUser(UserCredential user)
         {
             User user_data = new User();
             user_data.userId = user.sub;

@@ -29,6 +29,11 @@ namespace ForumApi.Services
             return user;
         }
 
+        public bool Exist(string userId){
+            if( Get(userId) == null ) return false;
+            return true;
+        }
+
         public void Update(string id, User userIn) =>
             _users.ReplaceOne(user => user.id == id, userIn);
 

@@ -33,12 +33,26 @@ namespace ForumApi.Controllers
             return user;
         }
 
-        [HttpPost]
-        public ActionResult<User> Create(User user)
+        [HttpPost("create")]
+        public ActionResult<User> Create(UserCredential userCred)
         {
-            _userService.Create(user);
+            if (!_userService.Exist(userCred.sub))
+            {
+                User user = new User();
+                user.location = "";
+                user.name = userCred.name;
+                user.userId = userCred.sub;
+                user.tags = "";
+                user.reputation = 0;
+                _userService.Create(user);
 
-            return CreatedAtRoute("GetUser", new { id = user.id.ToString() }, user);
+                return CreatedAtRoute("GetUser", new { id = user.id.ToString() }, user);
+            }
+
+            User user2 = _userService.Get(userCred.sub);
+
+            return user2;
+
         }
 
         [HttpPut("{id:length(24)}")]

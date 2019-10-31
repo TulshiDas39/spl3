@@ -265,3 +265,12 @@
 #idNavLogin:hover{
     background: #eff0f1;
 }
+
+#logoutBtn{
+    border:none;
+    background:none;
+    cursor:pointer;
+}
+#logoutbtn:hover{
+    background: #bbc0c4;
+}
