@@ -14,6 +14,7 @@ namespace ForumApi.Services
         {
             _questionService = questionService;
             _logger = logger;
+            _logger.LogDebug("initialising logger for question recommendation");
         }
 
         public List<Question> Recommend(string userId, int iteration){

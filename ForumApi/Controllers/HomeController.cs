@@ -24,6 +24,7 @@ namespace ForumApi.Controllers
             _userService = userService;
             _answerService = answerService;
             _logger = logger;
+            _logger.LogDebug("logger in HomeController:");
         }
 
         [HttpPost("recommend/{iteration}/{userId}")]

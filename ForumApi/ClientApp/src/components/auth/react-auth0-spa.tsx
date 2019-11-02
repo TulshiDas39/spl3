@@ -46,8 +46,8 @@ export const Auth0Provider = ({
 
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
-        createUserIfNotExist(user);
         accessToken = await auth0FromHook.getTokenSilently();
+        createUserIfNotExist(user,accessToken);
         setUser(user);
 
       }
@@ -58,14 +58,14 @@ export const Auth0Provider = ({
     // eslint-disable-next-line
   }, []);
 
-  const createUserIfNotExist = (user: any) => {
+  const createUserIfNotExist = (user: any, token:string) => {
     fetch('api/users/create', {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify(user),
       headers: {
-        'Content-Type': 'application/json'
-       // 'Authorization': 'Bearer ' + token
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
       }
     }).then((res: Response) => {
       console.log(res);

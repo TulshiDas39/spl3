@@ -36,6 +36,8 @@ namespace ForumApi
 
             AddDataBaseServices(services);
             AddJWTBearerService(services);
+            services.AddHostedService<BackgroundServices>();
+
         }
 
         public void AddJWTBearerService(IServiceCollection services)

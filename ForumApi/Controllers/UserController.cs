@@ -3,6 +3,8 @@ using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace ForumApi.Controllers
@@ -37,6 +39,7 @@ namespace ForumApi.Controllers
             return user;
         }
 
+        [Authorize]
         [HttpPost("create")]
         public ActionResult<User> Create(UserCredential userCred)
         {
