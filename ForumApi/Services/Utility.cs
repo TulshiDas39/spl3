@@ -1,8 +1,8 @@
 using System.Linq;
 using Serilog;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 
 namespace ForumApi.Services
@@ -49,6 +49,14 @@ namespace ForumApi.Services
             }
 
             return word;
+        }
+
+        public static string ArrayToString(IEnumerable<string> words){
+            string str = "";
+            foreach(string word in words){
+                str += word+" ";
+            }
+            return str;
         }
     }
 

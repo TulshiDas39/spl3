@@ -1,12 +1,12 @@
 In progress
-    -user creation
+    -Apriori algorithm for question recommendation
 
 
 To Do
     -modify answer editor
+    -question search
     -footer
     -tag follow option in tag page
-    -Apriori algorithm for question recommendation
     -uploading image in question
     -user profile
     -hosting
@@ -14,6 +14,7 @@ To Do
     
 
 Done
+    -user creation
     -authorization
     -using react
     -integrating to backend

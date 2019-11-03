@@ -10,7 +10,7 @@ using ForumApi.Models;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-
+using System;
 
 namespace ForumApi
 {
@@ -35,9 +35,16 @@ namespace ForumApi
             });
 
             AddDataBaseServices(services);
+            AddFeatureServices(services);
             AddJWTBearerService(services);
-            services.AddHostedService<BackgroundServices>();
 
+        }
+
+        private void AddFeatureServices(IServiceCollection services)
+        {
+            services.AddSingleton<QuestionSimilarity>();
+            services.AddSingleton<QuestionRecommendation>();
+            services.AddHostedService<BackgroundServices>();
         }
 
         public void AddJWTBearerService(IServiceCollection services)
@@ -76,8 +83,7 @@ namespace ForumApi
             services.AddSingleton<AnswerService>();
             services.AddSingleton<CommentService>();
             services.AddSingleton<TagItemService>();
-            services.AddSingleton<QuestionSimilarity>();
-            services.AddSingleton<QuestionRecommendation>();
+            
 
         }
 
