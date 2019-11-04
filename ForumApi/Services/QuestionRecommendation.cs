@@ -133,7 +133,7 @@ namespace ForumApi.Services
             foreach (var item in frequentItemSets)
             {
                 string[] tokens = Utility.Tokenize(item.Key);
-                if (tokens.Intersect(predecessors).Count() == tokenRules.Length)
+                if (tokens.Intersect(predecessors).Count() == predecessors.Count)
                 {
                     predecessorSupport = item.Value;
                     break;
