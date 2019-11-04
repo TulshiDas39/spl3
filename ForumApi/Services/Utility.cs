@@ -32,7 +32,7 @@ namespace ForumApi.Services
         public static string[] Tokenize(string input)
         {
             string pattern = "\\s+";
-            return Regex.Split(input, pattern);
+            return Regex.Split(input.Trim(), pattern);
         }
 
         public static string ArrayToString(IEnumerable<string> words)

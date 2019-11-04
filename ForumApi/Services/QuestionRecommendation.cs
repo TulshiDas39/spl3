@@ -47,7 +47,7 @@ namespace ForumApi.Services
             Console.WriteLine("min support:" + _minSupportCount);
 
             Dictionary<string, int> frequentItemSets = new Dictionary<string, int>();
-            Dictionary<string, int> associations = new Dictionary<string, int>();
+            Dictionary<string, double> associations = new Dictionary<string, double>();
             Dictionary<string, int> newCandidates = GenerateCandidates(tags);
             Filter(newCandidates);
             mergeCandidates(frequentItemSets, newCandidates);
@@ -58,45 +58,90 @@ namespace ForumApi.Services
                 newCandidates = GenerateCandidates(oldCandidates, tags);
                 Console.WriteLine("new candidates:");
                 Filter(newCandidates);
-                mergeCandidates(frequentItemSets, newCandidates);
                 GenerateAssociations(newCandidates, frequentItemSets, associations);
+                mergeCandidates(frequentItemSets, newCandidates);
                 oldCandidates = newCandidates;
             }
 
         }
 
-        private void GenerateAssociations(Dictionary<string, int> newCandidates, Dictionary<string, int> frequentItemSets, Dictionary<string, int> associations)
+        private void GenerateAssociations(Dictionary<string, int> newCandidates, Dictionary<string, int> frequentItemSets, Dictionary<string, double> associations)
         {
             foreach (var item in newCandidates)
             {
-                CreateAssociationItems(item, frequentItemSets, associations);
+                CreateAssociationItems(item, frequentItemSets, associations, newCandidates);
             }
         }
 
-        private void CreateAssociationItems(KeyValuePair<string, int> item, Dictionary<string, int> frequentItemSets, Dictionary<string, int> associations)
+        private void CreateAssociationItems(KeyValuePair<string, int> item, Dictionary<string, int> frequentItemSets, Dictionary<string, double> associations, Dictionary<string, int> newCandidates)
         {
             string[] tokens = Utility.Tokenize(item.Key);
             string association = item.Key;
 
-            List<string> rules = GetRules(item.Key);
+            List<string> rules = GetRules(item.Key, frequentItemSets);
+
+            ResolveWithConfidence(rules, associations, newCandidates, frequentItemSets);
 
             //int candidateSupport = getCandidateSupport(tokens);
         }
 
-        private List<string> GetRules(string key)
+        private List<string> GetRules(string key, Dictionary<string, int> frequentItemSets)
         {
             List<string> rules = new List<string>();
             string[] tokens = Utility.Tokenize(key);
-            //string association = Key;
             foreach (var token in tokens)
             {
                 var rule = key.Replace(token, "") + " " + token;
                 rule = rule.Replace("  ", " ").Trim();
                 rules.Add(rule);
-               
             }
 
             return rules;
+        }
+
+        private void ResolveWithConfidence(List<string> rules, Dictionary<string, double> associations, Dictionary<string, int> newCandidates, Dictionary<string, int> frequentItemSets)
+        {
+            double confidence;
+
+            foreach (var item in rules)
+            {
+                confidence = GetConfidence(item, frequentItemSets, newCandidates);
+                if (confidence >= _minConfidence) associations.Add(item, confidence);
+            }
+        }
+
+        private double GetConfidence(string rule, Dictionary<string, int> frequentItemSets, Dictionary<string, int> newCandidates)
+        {
+
+            string[] tokenRules = Utility.Tokenize(rule);
+            int totalSupport = 0;
+
+            foreach (var item in newCandidates)
+            {
+                string[] tokens = Utility.Tokenize(item.Key);
+                if (tokens.Intersect(tokenRules).Count() == tokenRules.Length)
+                {
+                    totalSupport = item.Value;
+                    break;
+                }
+            }
+
+            List<string> predecessors = tokenRules.ToList();
+            predecessors.Remove(tokenRules.Last());
+            int predecessorSupport  = Int32.MaxValue;
+
+            foreach (var item in frequentItemSets)
+            {
+                string[] tokens = Utility.Tokenize(item.Key);
+                if (tokens.Intersect(predecessors).Count() == tokenRules.Length)
+                {
+                    predecessorSupport = item.Value;
+                    break;
+                }
+            }
+
+            return (double)totalSupport / predecessorSupport;
+
         }
 
         private void mergeCandidates(Dictionary<string, int> dic, Dictionary<string, int> newCandidates)
