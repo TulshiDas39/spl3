@@ -133,8 +133,8 @@ namespace ForumApi.Services
             _logger.LogDebug("measuring similarity");
             _logger.LogDebug("sentence1:" + sentence1);
             _logger.LogDebug("sentence2:" + sentence2);
-            List<string> xList = Utility.GetWords(sentence1).ToList();
-            List<string> yList = Utility.GetWords(sentence2).ToList();
+            List<string> xList = Utility.Tokenize(sentence1).ToList();
+            List<string> yList = Utility.Tokenize(sentence2).ToList();
             printArray(xList);
             printArray(yList);
 

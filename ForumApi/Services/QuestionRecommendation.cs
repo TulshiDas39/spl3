@@ -43,34 +43,71 @@ namespace ForumApi.Services
 
         private void Apriori(List<string> tags)
         {
-            // int iteration = 1;
             _minSupportCount = (int)(_minSupport * tags.Count);
             Console.WriteLine("min support:" + _minSupportCount);
 
+            Dictionary<string, int> frequentItemSets = new Dictionary<string, int>();
+            Dictionary<string, int> associations = new Dictionary<string, int>();
             Dictionary<string, int> newCandidates = GenerateCandidates(tags);
-            bool isFiltered = Filter(newCandidates);
+            Filter(newCandidates);
+            mergeCandidates(frequentItemSets, newCandidates);
             Dictionary<string, int> oldCandidates = newCandidates;
-			Dictionary<string, int> associations = new Dictionary<string, int>();
 
             while (oldCandidates.Count() > 0)
             {
-                newCandidates = GenerateCandidates(oldCandidates,tags);
-				Console.WriteLine("new candidates:");
-                isFiltered = Filter(newCandidates);
-                mergeCandidates(associations,newCandidates);
+                newCandidates = GenerateCandidates(oldCandidates, tags);
+                Console.WriteLine("new candidates:");
+                Filter(newCandidates);
+                mergeCandidates(frequentItemSets, newCandidates);
+                GenerateAssociations(newCandidates, frequentItemSets, associations);
                 oldCandidates = newCandidates;
             }
 
         }
 
+        private void GenerateAssociations(Dictionary<string, int> newCandidates, Dictionary<string, int> frequentItemSets, Dictionary<string, int> associations)
+        {
+            foreach (var item in newCandidates)
+            {
+                CreateAssociationItems(item, frequentItemSets, associations);
+            }
+        }
+
+        private void CreateAssociationItems(KeyValuePair<string, int> item, Dictionary<string, int> frequentItemSets, Dictionary<string, int> associations)
+        {
+            string[] tokens = Utility.Tokenize(item.Key);
+            string association = item.Key;
+
+            List<string> rules = GetRules(item.Key);
+
+            //int candidateSupport = getCandidateSupport(tokens);
+        }
+
+        private List<string> GetRules(string key)
+        {
+            List<string> rules = new List<string>();
+            string[] tokens = Utility.Tokenize(key);
+            //string association = Key;
+            foreach (var token in tokens)
+            {
+                var rule = key.Replace(token, "") + " " + token;
+                rule = rule.Replace("  ", " ").Trim();
+                rules.Add(rule);
+               
+            }
+
+            return rules;
+        }
+
         private void mergeCandidates(Dictionary<string, int> dic, Dictionary<string, int> newCandidates)
         {
-            foreach(var candidate in newCandidates){
+            foreach (var candidate in newCandidates)
+            {
                 dic.Add(candidate.Key, candidate.Value);
             }
         }
 
-        private bool Filter(Dictionary<string, int> dic)
+        private void Filter(Dictionary<string, int> dic)
         {
 
             List<string> keys = new List<string>();
@@ -85,21 +122,17 @@ namespace ForumApi.Services
                 dic.Remove(key);
             });
 
-            if (keys.Count == 0) return false;
-
-            return true;
-
         }
 
         private Dictionary<string, int> GenerateCandidates(Dictionary<string, int> dic, List<string> tags)
         {
             Dictionary<string, int> newCandidates = new Dictionary<string, int>();
-            int interSectCount = Utility.GetWords(dic.Keys.ElementAt(0)).Length - 1;
+            int interSectCount = Utility.Tokenize(dic.Keys.ElementAt(0)).Length - 1;
 
             for (int i = 0; i < dic.Keys.Count; i++)
             {
                 string key = dic.Keys.ElementAt(i);
-                string[] words = Utility.GetWords(dic.Keys.ElementAt(i));
+                string[] words = Utility.Tokenize(dic.Keys.ElementAt(i));
 
                 for (int j = i + 1; j < dic.Keys.Count; j++)
                 {
@@ -113,12 +146,12 @@ namespace ForumApi.Services
         private void CreateCandidate(Dictionary<string, int> dic, Dictionary<string, int> newCandidates, int interSectCount, string[] tags, int index, List<string> allTags)
         {
             string key = dic.Keys.ElementAt(index);
-            string[] tags2 = Utility.GetWords(key);
+            string[] tags2 = Utility.Tokenize(key);
             int intersection = tags.Intersect(tags2).Count();
             if (interSectCount == intersection)
             {
-				IEnumerable<string> newCandidate = tags.Union(tags2);
-				string newCandidateStr = Utility.ArrayToString(newCandidate);
+                IEnumerable<string> newCandidate = tags.Union(tags2);
+                string newCandidateStr = Utility.ArrayToString(newCandidate);
                 int support = MeasureSupport(newCandidate, allTags);
                 newCandidates.Add(newCandidateStr, support);
             }
@@ -128,9 +161,10 @@ namespace ForumApi.Services
         {
             int support = 0;
             string[] words;
-            tags.ForEach(item=>{
-                words = Utility.GetWords(item);
-                if(words.Intersect(words2).Count() == words2.Count()) support++;
+            tags.ForEach(item =>
+            {
+                words = Utility.Tokenize(item);
+                if (words.Intersect(words2).Count() == words2.Count()) support++;
             });
 
             return support;
@@ -141,7 +175,7 @@ namespace ForumApi.Services
 
             tags.ForEach(tag =>
             {
-                string[] items = Utility.GetWords(tag);
+                string[] items = Utility.Tokenize(tag);
                 for (int i = 0; i < items.Length; i++)
                 {
                     if (dic.ContainsKey(items[i]))

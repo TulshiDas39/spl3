@@ -11,50 +11,36 @@ namespace ForumApi.Services
     {
         public static bool hasCommon(string userTags, string questionTags)
         {
-            string[] uTags = GetWords(userTags);
-            string[] qTags = GetWords(questionTags);
+            string[] uTags = Tokenize(userTags);
+            string[] qTags = Tokenize(questionTags);
             Log.Information("all uTags:");
             foreach (string s in uTags)
             {
-                Log.Information("uTags item:" + s);
+                //Log.Information("uTags item:" + s);
             }
 
 
             foreach (string qTag in qTags)
             {
-                Log.Information("qTag:" + qTag);
+                //Log.Information("qTag:" + qTag);
                 if (uTags.Contains(qTag)) { return true; };
             }
 
             return false;
         }
 
-        public static string[] GetWords(string input)
+        public static string[] Tokenize(string input)
         {
-            MatchCollection matches = Regex.Matches(input, @"\b[\w']*\b");
-
-            var words = from m in matches.Cast<Match>()
-                        where !string.IsNullOrEmpty(m.Value)
-                        select TrimSuffix(m.Value);
-
-            return words.ToArray();
+            string pattern = "\\s+";
+            return Regex.Split(input, pattern);
         }
 
-        private static string TrimSuffix(string word)
+        public static string ArrayToString(IEnumerable<string> words)
         {
-            int apostropheLocation = word.IndexOf('\'');
-            if (apostropheLocation != -1)
-            {
-                word = word.Substring(0, apostropheLocation);
-            }
-
-            return word;
-        }
-
-        public static string ArrayToString(IEnumerable<string> words){
             string str = "";
-            foreach(string word in words){
-                str += word+" ";
+            foreach (string word in words)
+            {
+                str += word + " ";
             }
             return str;
         }
