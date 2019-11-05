@@ -8,6 +8,7 @@ import { IQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
 import { IAuth0Contex, IUserCredential } from "../../../../utils/Structures";
+import { FetchData } from "../../Service";
 
 interface state {
     isLoading: boolean;
@@ -28,69 +29,13 @@ export class Right extends Component<props, state>{
     }
 
     componentDidMount(){
-        this.FetchData();
-    }
-
-    private async FetchData() {
-        let context = this.context as IAuth0Contex;
-        console.log('in home component:');
-        console.log(context);
-        if (context.isAuthenticated) {
-            let token = await context.getTokenSilently();
-            let user = context.user as IUserCredential;
-            this.fetchRecommendedData(token, user);
-        }
-        else {
-            this.fetchLatestQuestion();
-        }
-
-    }
-
-    fetchLatestQuestion() {
-        fetch('api/questions/latest/' + this.iteration + "/").
-            then((res: Response) => {
-                return res.json();
-            }).then(data => {
-                console.log(data);
-                this.questionList = data;
-                console.log('Answer of questions:');
-                console.log(this.questionList);
-                //this.iteration++;
-                this.setState({ isLoading: false });
-
-            }).catch(err => {
-                console.log('error fetching question data');
-                console.log(err);
-            })
-    }
-
-    fetchRecommendedData(token: string, user: IUserCredential) {
-        console.log("fetching recommended questions:");
-        fetch('api/questions/recommend/'+user.sub+"/" + this.iteration, {
-            method: 'POST',
-            mode: 'cors',
-            body:JSON.stringify(user),
-            headers: new Headers({
-                "Authorization": "Bearer " + token,
-                'Content-Type': 'application/json'
-            })
-        }).then((res: Response) => {
-            return res.json();
-        }).then(data => {
-            console.log(data);
-            this.questionList = data;
-            console.log('recommended questions:');
-            console.log(this.questionList);
-           // this.iteration++;
+        FetchData(this.context,this.iteration).then((data)=>{
+            this.questionList = data as IQuestion[];
             this.setState({ isLoading: false });
-
-        }).catch(err => {
-            console.log('error fetching question data');
+        }, err=>{
             console.log(err);
-        })
+        });
     }
-
-
 
     public render() {
         console.log("context");

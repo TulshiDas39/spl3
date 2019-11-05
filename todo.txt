@@ -1,6 +1,5 @@
 In progress
-    -Apriori algorithm for question recommendation
-
+    -filter options in home page
 
 To Do
     -modify answer editor
@@ -17,6 +16,7 @@ To Do
     
 
 Done
+    -Apriori algorithm for question recommendation
     -user creation
     -authorization
     -using react
