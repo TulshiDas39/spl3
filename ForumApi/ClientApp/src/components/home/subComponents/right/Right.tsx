@@ -55,7 +55,7 @@ export class Right extends Component<props, state>{
                 this.questionList = data;
                 console.log('Answer of questions:');
                 console.log(this.questionList);
-                this.iteration++;
+                //this.iteration++;
                 this.setState({ isLoading: false });
 
             }).catch(err => {
@@ -65,7 +65,8 @@ export class Right extends Component<props, state>{
     }
 
     fetchRecommendedData(token: string, user: IUserCredential) {
-        fetch('api/questions/recommend/' + this.iteration, {
+        console.log("fetching recommended questions:");
+        fetch('api/questions/recommend/'+user.sub+"/" + this.iteration, {
             method: 'POST',
             mode: 'cors',
             body:JSON.stringify(user),
@@ -78,9 +79,9 @@ export class Right extends Component<props, state>{
         }).then(data => {
             console.log(data);
             this.questionList = data;
-            console.log('Answer of questions:');
+            console.log('recommended questions:');
             console.log(this.questionList);
-            this.iteration++;
+           // this.iteration++;
             this.setState({ isLoading: false });
 
         }).catch(err => {

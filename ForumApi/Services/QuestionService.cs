@@ -11,19 +11,24 @@ namespace ForumApi.Services
 {
     public class QuestionService
     {
-        private int recommendListSize = 2;
+        private int recommendListSize = 20;
         // private Utility utility = new Utility();
         private readonly IMongoCollection<Question> _questions;
 
         private readonly ILogger _logger;
+        private readonly UserService _userService;
 
-        public QuestionService(IDatabaseSettings settings, ILogger<QuestionService> logger)
+        private readonly RecommendationService _recommendationService;
+
+        public QuestionService(IDatabaseSettings settings, ILogger<QuestionService> logger, UserService userService,
+            RecommendationService recommendationService)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
             _questions = database.GetCollection<Question>(settings.QuestionsCollectionName);
-
+            _userService = userService;
+            _recommendationService = recommendationService;
             _logger = logger;
         }
 
@@ -34,7 +39,7 @@ namespace ForumApi.Services
 
         public List<Question> Get(int skip, int limit)
         {
-            _logger.LogDebug("skip:"+skip+", limit"+limit);
+            _logger.LogDebug("skip:" + skip + ", limit" + limit);
             return _questions.Find(Question => true).SortByDescending(question => question.id).Skip(skip).Limit(limit).ToList();
         }
 
@@ -57,36 +62,74 @@ namespace ForumApi.Services
             throw new NotImplementedException();
         }
 
-        internal List<Question> recommend(User user, int iteration)
+        public List<Question> Recommend(string userId, int iteration)
         {
             List<Question> list = new List<Question>();
+            List<string> tags = Utility.Tokenize(_userService.Get(userId).tags).ToList();
+            List<Question> questions;
+            List<string> userRecommendations = GetUserRecommendations(tags);
 
-            List<Question> listAll = _questions.Find(question => true).SortByDescending(question => question.id).ToList();
-            _logger.LogDebug("recommending questions:");
-            int length = listAll.Count();
-            _logger.LogDebug("length:" + length);
-            int i = 0;
-            foreach (Question q in listAll)
+
+            do
             {
-                if (i >= recommendListSize) break;
-                if (Utility.hasCommon(user.tags, q.tags))
+                questions = Get(recommendListSize * iteration, recommendListSize);
+                foreach (var item in questions)
                 {
-                   // Log.Information("usre.Tags:" + user.Tags);
-                   _logger.LogDebug("user.Tags:"+user.tags);
-                    //Log.Information("question.Tags:" + q.Tags);
-                    _logger.LogDebug("question.Tags:"+q.tags);
-                    list.Add(q);
-                    i++;
+                    List<string> questionTags = Utility.Tokenize(item.tags).ToList();
+                    if (questionTags.Intersect(tags).Count() >= 1) list.Add(item);
+                    else if (IsRecommended(questionTags, userRecommendations)) list.Add(item);
+                    if (list.Count == recommendListSize) return list;
                 }
+                iteration++;
 
-            }
+            } while (questions.Count == 20);
 
             return list;
         }
 
-        private bool hasCommon(string a, string b)
+        private List<string> GetUserRecommendations(List<string> tags)
         {
-            return true;
+            List<string> recommendationList = _recommendationService.GetFirst().recommendations.ToList();
+            List<string> userRecommendations = new List<string>();
+
+            foreach (var item in recommendationList)
+            {
+                List<string> predecessors = GetDependency(item);
+                if (predecessors.Intersect(tags).Count() == predecessors.Count) userRecommendations.Add(GetResultant(item));
+            }
+
+
+            _logger.LogDebug("\nUserRecommendations:");
+            PrintDictionary(userRecommendations);
+            return userRecommendations;
+        }
+
+        private string GetResultant(string item)
+        {
+            return Utility.Tokenize(item).Last();
+        }
+
+        private bool IsRecommended(List<string> questionTags, List<string> userRecommendations)
+        {
+            if (questionTags.Intersect(userRecommendations).Count() >= 1) return true;
+            return false;
+        }
+
+        private void PrintDictionary(IEnumerable<string> dic)
+        {
+            foreach (var item in dic)
+            {
+                _logger.LogDebug("item: " + item);
+            }
+        }
+
+        private List<string> GetDependency(string association)
+        {
+            List<string> dependency = new List<string>();
+            var tokens = Utility.Tokenize(association).ToList();
+            tokens.Remove(tokens.Last());
+
+            return tokens;
         }
 
         public void Remove(Question questionIn) =>

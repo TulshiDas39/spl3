@@ -27,28 +27,28 @@ namespace ForumApi.Controllers
             _logger.LogDebug("logger in HomeController:");
         }
 
-        [HttpPost("recommend/{iteration}/{userId}")]
-        public ActionResult<List<QuestionInfo>> getInfo(string userId, int iteration = 0)
-        {
-            User user = _userService.Get(userId);
-            //Log.Information("user:" + user.id);
+        // [HttpPost("recommend/{iteration}/{userId}")]
+        // public ActionResult<List<QuestionInfo>> getInfo(string userId, int iteration = 0)
+        // {
+        //     User user = _userService.Get(userId);
+        //     //Log.Information("user:" + user.id);
 
-            List<Question> list = _questionService.recommend(user, iteration);
-            List<QuestionInfo> questionInfoList = new List<QuestionInfo>();
+        //     List<Question> list = _questionService.Recommend(userId, iteration);
+        //     List<QuestionInfo> questionInfoList = new List<QuestionInfo>();
 
-            foreach (Question q in list)
-            {
-                QuestionInfo info = new QuestionInfo();
-                info.user = _userService.Get(q.userId);
-                info.answerCount = _answerService.GetByQuestion(q.id).Count;
-                info.question = q;
-                questionInfoList.Add(info);
-            }
+        //     foreach (Question q in list)
+        //     {
+        //         QuestionInfo info = new QuestionInfo();
+        //         info.user = _userService.Get(q.userId);
+        //         info.answerCount = _answerService.GetByQuestion(q.id).Count;
+        //         info.question = q;
+        //         questionInfoList.Add(info);
+        //     }
 
-            return questionInfoList;
+        //     return questionInfoList;
 
 
-        }
+        // }
 
         private string GetToken()
         {

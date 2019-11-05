@@ -62,25 +62,23 @@ namespace ForumApi.Controllers
 
         [Authorize]
         [HttpPost("recommend/{iteration}")]
-        public ActionResult<List<Question>> recommendToUser(UserCredential userCred, int iteration = 0)
+        public ActionResult<List<Question>> Recommend(UserCredential userCred, int iteration = 0)
         {
             _logger.LogDebug("user AuthId:" + userCred.sub);
             _logger.LogDebug("iteration:" + iteration);
             User user = _userService.Get(userCred.sub);
-
-
             if (user == null)
             {
                 createUser(userCred);
-
             }
             return _questionService.Get(iteration * questionCount, questionCount);
             //return _questionService.recommend(user, iteration);
         }
 
-        [HttpPost("recommendation/{userId}/{iteration}")]
-        public ActionResult<List<Question>> RecommendQuestions([FromServices] QuestionRecommendation recommendation, string userId, int iteration){
-            return recommendation.Recommend(userId,iteration);
+        [Authorize]
+        [HttpPost("recommend/{userId}/{iteration}")]
+        public ActionResult<List<Question>> RecommendQuestions(string userId, int iteration){
+            return _questionService.Recommend(userId,iteration);
         }
 
         private void createUser(UserCredential user)

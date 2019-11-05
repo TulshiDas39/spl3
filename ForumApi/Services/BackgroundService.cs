@@ -24,7 +24,7 @@ namespace ForumApi.Services
             _logger.LogInformation("Timed Hosted Service running.");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromSeconds(3600));
 
             return Task.CompletedTask;
         }
