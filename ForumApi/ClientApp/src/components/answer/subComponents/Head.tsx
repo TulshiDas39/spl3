@@ -1,10 +1,10 @@
 import React from "react";
 import "./styles/head.css";
 import { Link } from "react-router-dom";
-import { QuestionData } from "../Answer";
+import { IQuestion } from "../../../utils/Models";
 export class Head{
-    private questionData:QuestionData;
-    constructor(questionData:QuestionData){
+    private questionData:IQuestion;
+    constructor(questionData:IQuestion){
         this.questionData = questionData;
     }
     public getHead() {

@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { User } from "./User";
 import "./styles/post.css";
 import { Comment } from "./Comment";
-import { QuestionData } from "../Answer";
-import { AnswerData } from "./Discusstion";
+import { IQuestion, IAnswer } from "../../../utils/Models";
 
 interface props{
-    data:QuestionData | AnswerData
+    data:IQuestion | IAnswer
 }
 
 export class Post extends Component<props, any>{

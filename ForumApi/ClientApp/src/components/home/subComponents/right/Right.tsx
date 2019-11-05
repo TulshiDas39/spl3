@@ -33,7 +33,7 @@ export class Right extends Component<props, state>{
             this.questionList = data as IQuestion[];
             this.setState({ isLoading: false });
         }, err=>{
-            console.log(err);
+            console.error(err);
         });
     }
 

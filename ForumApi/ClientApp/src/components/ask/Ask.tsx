@@ -5,9 +5,10 @@ import "./ask.css";
 import "./question_list.css";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Contex } from "../../utils/Structures";
-import { IQuestion } from "../../utils/Models";
+import { IQuestion, IAnswer } from "../../utils/Models";
 import Loading from "../loader/Loading";
 import { Question } from "../questions/Question";
+import { postQuestion } from "./Services";
 
 interface state {
     tags: {
@@ -33,8 +34,8 @@ export class Ask extends Component<props, state>{
     private activeTabBackground = '#07C';
     private tabStyles: tabProperties[] = [];
     private displayOfSteps: string[] = ['', 'none', 'none', 'none', 'none', 'none'];
-    private questionTitle = "";
-    private description = "";
+    //private questionTitle = "";
+    //private description = "";
     private data: IQuestion = {} as IQuestion;
     private similarQuestions: IQuestion[] = [];
     static contextType = Auth0Context;
@@ -58,6 +59,8 @@ export class Ask extends Component<props, state>{
         for (let i = 1; i < 5; i++) {
             this.tabStyles[i] = { background: '', color: this.activeTabBackground };
         }
+
+        this.data = {} as IQuestion;
     }
 
     componentDidUpdate() {
@@ -69,8 +72,8 @@ export class Ask extends Component<props, state>{
         let context = this.context as IAuth0Contex;
         let token = await context.getTokenSilently();
 
-        this.data.description = this.description;
-        this.data.title = this.questionTitle;
+        //this.data.description = this.description;
+        //this.data.title = this.questionTitle;
         this.data.tags = this.getTagsAsString();
         this.data.dateTime = new Date().getTime();
         this.data.ratings = 0;
@@ -80,29 +83,35 @@ export class Ask extends Component<props, state>{
 
         console.log('token:');
         console.log(token);
-
-        fetch('api/questions', {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(this.data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-        }).then((res: Response) => {
-            console.log(res);
-            return res.json();
-        }).then(data => {
-            console.log(data);
+        postQuestion(this.data,token).then(response=>{
+            let data = response as IQuestion;
             this.props.history.push('/answer/' + data.id);
-        }).catch(err => {
-            console.log('error happened');
-            console.log(err);
-        });
+        }, err=>{
+            console.error(err);
+        })
+
+        // fetch('api/questions', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     body: JSON.stringify(this.data),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer ' + token
+        //     }
+        // }).then((res: Response) => {
+        //     console.log(res);
+        //     return res.json();
+        // }).then(data => {
+        //     console.log(data);
+        //     this.props.history.push('/answer/' + data.id);
+        // }).catch(err => {
+        //     console.log('error happened');
+        //     console.log(err);
+        // });
     }
 
     private fetchSimilarQuestions() {
-        let questionData = this.questionTitle;
+        let questionData = this.data.title;
         this.state.tags.forEach(val => questionData += " " + val.text);
         questionData = questionData.trim().replace(/[.,\/#!\^&]/g,"");
         console.log('tags are pushed: ' + questionData);
@@ -216,8 +225,8 @@ export class Ask extends Component<props, state>{
     }
 
     private saveQuestionTitle(event: any) {
-        this.questionTitle = event.target.value;
-        this.stepsCompleted[2] = this.questionTitle ? true : false;
+        this.data.title = event.target.value;
+        this.stepsCompleted[2] = this.data.title ? true : false;
     }
 
     private changeStep(nexStep: number) {
@@ -332,11 +341,12 @@ export class Ask extends Component<props, state>{
     }
 
     private saveDescription(event: any) {
-        console.log('saveed description');
-        let description = event.target.value;
-        console.log(description);
-        this.description = event.target.value;
-        this.stepsCompleted[4] = description ? true : false;
+        console.log('saved description');
+        //let description = event.target.value;
+        //console.log(description);
+        //this.description = event.target.value;
+        this.data.description = event.target.value;
+        this.stepsCompleted[4] = this.data.description ? true : false;
     }
 
     private getSimilarQuestion() {

@@ -2,19 +2,12 @@ import React, { Component } from "react";
 import "./styles/discussion.css";
 import { Post } from "./Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
-import { QuestionData } from "../Answer";
+import { IQuestion, IAnswer } from "../../../utils/Models";
+import { getAnswers } from "../Services";
 
-export interface AnswerData{
-    id:string;
-    userId:string;
-    questionId:string;
-    description:string;
-    ratings:number;
-    dateTime:string;
-}
 
 interface Properties{
-    questionData:QuestionData;
+    questionData:IQuestion;
 }
 interface state{
     isLoading:boolean;
@@ -22,7 +15,7 @@ interface state{
 export class Discussion extends Component<Properties,state>{
   
     //private questionData:QuestionData;
-    private answerData = [] as AnswerData[];
+    private answerData = [] as IAnswer[];
     constructor(props:Properties){
         super(props);
         this.init();
@@ -36,20 +29,9 @@ export class Discussion extends Component<Properties,state>{
     }
 
     private fetchAnswerData(){
-        fetch('api/answers/get/'+this.props.questionData.id,{
-            method: 'POST',
-        }).then((res:Response)=>{
-            return res.json();
-        }).then(data=>{
-            console.log(data);
-            this.answerData = data;
-            console.log('Answer of questions:');
-            console.log(this.answerData);
+        getAnswers(this.props.questionData.id).then(data=>{
+            this.answerData = data as IAnswer[];
             this.setState({isLoading:false});
-            
-        }).catch(err=>{
-            console.log('error fetching question data');
-            console.log(err);
         })
     }
 
@@ -64,7 +46,6 @@ export class Discussion extends Component<Properties,state>{
                     {
                         this.answerData.map((item,index) => <Post key={index} data={item} />)
                     }
-                    {/* <Post data={this.answerData[0]} /> */}
                 </div>
 
                 <h2>আপনার উত্তর</h2>

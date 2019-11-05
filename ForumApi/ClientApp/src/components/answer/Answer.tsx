@@ -4,6 +4,8 @@ import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
 import { StatusBar } from "../statusBar/StatusBar";
 import { Head } from "./subComponents/Head";
+import { getQuestion } from "./Services";
+import { IQuestion } from "../../utils/Models";
 
 export interface AnswerState {
     questionId: string;
@@ -11,20 +13,10 @@ export interface AnswerState {
     isloading: boolean;
 }
 
-export interface QuestionData {
-    id: string;
-    userId: string;
-    description: string;
-    title: string;
-    tags: string;
-    ratings: number;
-    dateTime: string;
-}
-
 export class Answer extends Component<any, AnswerState>{
     public static answerState: AnswerState;
     public static setAnswerState: any;
-    private questionData: QuestionData = {} as QuestionData;
+    private questionData: IQuestion = {} as IQuestion;
     constructor(props: any) {
         super(props);
         this.init();
@@ -34,19 +26,12 @@ export class Answer extends Component<any, AnswerState>{
     }
 
     private fetchData() {
-        fetch('api/questions/' + this.state.questionId).then((res: Response) => {
-            return res.json();
-        }).then(data => {
-            console.log(data);
-            this.questionData = data;
-            console.log('in Answer:');
-            console.log(this.questionData.description);
-            this.setState({ isloading: false })
 
-        }).catch(err => {
-            console.log('error fetching question data');
-            console.log(err);
+        getQuestion(this.state.questionId).then(data=>{
+            this.questionData = data as IQuestion;
+            this.setState({ isloading: false });
         })
+
     }
 
     private init() {
