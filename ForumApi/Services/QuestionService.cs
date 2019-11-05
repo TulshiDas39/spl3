@@ -66,6 +66,8 @@ namespace ForumApi.Services
         {
             List<Question> list = new List<Question>();
             List<string> tags = Utility.Tokenize(_userService.Get(userId).tags).ToList();
+            _logger.LogDebug("\ntags:");
+            PrintDictionary(tags);
             List<Question> questions;
             List<string> userRecommendations = GetUserRecommendations(tags);
 
@@ -95,7 +97,10 @@ namespace ForumApi.Services
             foreach (var item in recommendationList)
             {
                 List<string> predecessors = GetDependency(item);
-                if (predecessors.Intersect(tags).Count() == predecessors.Count) userRecommendations.Add(GetResultant(item));
+                if (predecessors.Intersect(tags).Count() == predecessors.Count) {
+                    string resultant = GetResultant(item);
+                    if(!userRecommendations.Contains(resultant)) userRecommendations.Add(resultant);
+                }
             }
 
 
