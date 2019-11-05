@@ -83,6 +83,7 @@ namespace ForumApi
             services.AddSingleton<AnswerService>();
             services.AddSingleton<CommentService>();
             services.AddSingleton<TagItemService>();
+            services.AddSingleton<RecommendationService>();
             
 
         }

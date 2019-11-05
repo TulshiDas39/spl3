@@ -35,7 +35,7 @@ namespace ForumApi.Services
 
             _logger.LogInformation(
                 "Timed Hosted Service is working. Count: {Count}", executionCount);
-            _recommender.prepareRecommendations();
+            _recommender.PrepareRecommendations();
         }
 
         public Task StopAsync(CancellationToken stoppingToken)

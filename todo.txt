@@ -5,12 +5,15 @@ In progress
 To Do
     -modify answer editor
     -question search
+    -rating system(in question, answer, post, comment)
+    -blocking question based on user reaction
     -footer
     -tag follow option in tag page
     -uploading image in question
     -user profile
     -hosting
     -search engine optimization
+
     
 
 Done

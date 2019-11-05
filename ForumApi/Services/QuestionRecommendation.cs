@@ -9,15 +9,18 @@ namespace ForumApi.Services
     public class QuestionRecommendation
     {
         private UserService _userService;
+
+        private RecommendationService _recommendationService;
         private ILogger _logger;
         private double _minConfidence = 0.5;
         private double _minSupport = 0.4;
 
         private int _minSupportCount;
 
-        public QuestionRecommendation(UserService userService, ILogger<QuestionSimilarity> logger)
+        public QuestionRecommendation(UserService userService, RecommendationService recommendationService, ILogger<QuestionSimilarity> logger)
         {
             _userService = userService;
+            _recommendationService = recommendationService;
             _logger = logger;
         }
 
@@ -28,23 +31,46 @@ namespace ForumApi.Services
             return list;
         }
 
-        public void prepareRecommendations()
+        public void PrepareRecommendations()
         {
             List<User> users = _userService.Get();
             List<string> tags = new List<string>();
 
             users.ForEach(user =>
             {
-                tags.Add(user.tags);
+                if (user.tags != "") tags.Add(user.tags);
             });
 
+            //Init(tags);
+
             Apriori(tags);
+        }
+
+        private void Init(List<string> s)
+        {
+            s.Add("math physics");
+            s.Add("javascript html css");
+            s.Add("javascript html");
+            s.Add("javascript html");
+            s.Add("javascript html");
+            s.Add("javascript html");
+            s.Add("javascript html");
+            s.Add("javascript html");
+            s.Add("javascript css");
+            s.Add("javascript");
+            s.Add("typescript");
+            s.Add("typescript html css");
+            s.Add("photosop elastrator");
+            s.Add("html css");
         }
 
         private void Apriori(List<string> tags)
         {
             _minSupportCount = (int)(_minSupport * tags.Count);
-            Console.WriteLine("min support:" + _minSupportCount);
+            _logger.LogDebug("tags:");
+            printDictionary(tags);
+            _logger.LogDebug("min support:" + _minSupportCount);
+            Console.WriteLine("using console.write line");
 
             Dictionary<string, int> frequentItemSets = new Dictionary<string, int>();
             Dictionary<string, double> associations = new Dictionary<string, double>();
@@ -56,12 +82,23 @@ namespace ForumApi.Services
             while (oldCandidates.Count() > 0)
             {
                 newCandidates = GenerateCandidates(oldCandidates, tags);
-                Console.WriteLine("new candidates:");
+                _logger.LogDebug("\nnew candidates:");
+                printDictionary(newCandidates);
                 Filter(newCandidates);
+                _logger.LogDebug("after filter:");
+                printDictionary(newCandidates);
                 GenerateAssociations(newCandidates, frequentItemSets, associations);
+                _logger.LogDebug("associations:");
+                printDictionary(associations);
                 mergeCandidates(frequentItemSets, newCandidates);
                 oldCandidates = newCandidates;
             }
+
+            string[] associationRules = associations.Keys.ToArray();
+            Recommendation recommendation = new Recommendation();
+            recommendation.recommendations = associationRules;
+            
+            _recommendationService.UpdateFirst(recommendation);
 
         }
 
@@ -82,7 +119,6 @@ namespace ForumApi.Services
 
             ResolveWithConfidence(rules, associations, newCandidates, frequentItemSets);
 
-            //int candidateSupport = getCandidateSupport(tokens);
         }
 
         private List<string> GetRules(string key, Dictionary<string, int> frequentItemSets)
@@ -128,7 +164,7 @@ namespace ForumApi.Services
 
             List<string> predecessors = tokenRules.ToList();
             predecessors.Remove(tokenRules.Last());
-            int predecessorSupport  = Int32.MaxValue;
+            int predecessorSupport = Int32.MaxValue;
 
             foreach (var item in frequentItemSets)
             {
@@ -169,37 +205,50 @@ namespace ForumApi.Services
 
         }
 
-        private Dictionary<string, int> GenerateCandidates(Dictionary<string, int> dic, List<string> tags)
+        private Dictionary<string, int> GenerateCandidates(Dictionary<string, int> previousCandidates, List<string> tags)
         {
             Dictionary<string, int> newCandidates = new Dictionary<string, int>();
-            int interSectCount = Utility.Tokenize(dic.Keys.ElementAt(0)).Length - 1;
-
-            for (int i = 0; i < dic.Keys.Count; i++)
+            int interSectCount = Utility.Tokenize(previousCandidates.Keys.ElementAt(0)).Length - 1;
+           // _logger.LogDebug("preveous candidates:");
+            printDictionary(previousCandidates);
+            for (int i = 0; i < previousCandidates.Keys.Count; i++)
             {
-                string key = dic.Keys.ElementAt(i);
-                string[] words = Utility.Tokenize(dic.Keys.ElementAt(i));
+                string key = previousCandidates.Keys.ElementAt(i);
+                string[] words = Utility.Tokenize(key);
 
-                for (int j = i + 1; j < dic.Keys.Count; j++)
+                for (int j = i + 1; j < previousCandidates.Keys.Count; j++)
                 {
-                    CreateCandidate(dic, newCandidates, interSectCount, words, j, tags);
+                    CreateCandidate(previousCandidates, newCandidates, interSectCount, words, j, tags);
                 }
             }
 
             return newCandidates;
         }
 
-        private void CreateCandidate(Dictionary<string, int> dic, Dictionary<string, int> newCandidates, int interSectCount, string[] tags, int index, List<string> allTags)
+        private void CreateCandidate(Dictionary<string, int> previousCandidates, Dictionary<string, int> newCandidates, int interSectCount, string[] tags, int index, List<string> allTags)
         {
-            string key = dic.Keys.ElementAt(index);
+            string key = previousCandidates.Keys.ElementAt(index);
             string[] tags2 = Utility.Tokenize(key);
             int intersection = tags.Intersect(tags2).Count();
             if (interSectCount == intersection)
             {
                 IEnumerable<string> newCandidate = tags.Union(tags2);
                 string newCandidateStr = Utility.ArrayToString(newCandidate);
+                _logger.LogDebug("newCandidateStr:" + newCandidateStr);
                 int support = MeasureSupport(newCandidate, allTags);
-                newCandidates.Add(newCandidateStr, support);
+                if(!Exist(newCandidateStr,newCandidates))
+                    newCandidates.Add(newCandidateStr, support);
             }
+        }
+
+        private bool Exist(string newCandidateStr, Dictionary<string, int> newCandidates)
+        {
+            var candidateTokens = Utility.Tokenize(newCandidateStr);
+            foreach(var item in newCandidates){
+                var tokens = Utility.Tokenize(item.Key);
+                if(tokens.Intersect(candidateTokens).Count() == candidateTokens.Count()) return true;
+            }
+            return false;
         }
 
         private int MeasureSupport(IEnumerable<string> words2, List<string> tags)
@@ -236,6 +285,30 @@ namespace ForumApi.Services
             });
 
             return dic;
+        }
+
+        private void printDictionary(Dictionary<string, int> dic)
+        {
+            for (int i = 0; i < dic.Keys.Count; i++)
+            {
+                _logger.LogDebug("key: " + dic.Keys.ElementAt(i) + " value: " + dic[dic.Keys.ElementAt(i)]);
+            }
+        }
+
+        private void printDictionary(Dictionary<string, double> dic)
+        {
+            for (int i = 0; i < dic.Keys.Count; i++)
+            {
+                _logger.LogDebug("key: " + dic.Keys.ElementAt(i) + " value: " + dic[dic.Keys.ElementAt(i)]);
+            }
+        }
+
+        private void printDictionary(IEnumerable<string> dic)
+        {
+            for (int i = 0; i < dic.Count(); i++)
+            {
+                _logger.LogDebug("list item: " + dic.ElementAt(i));
+            }
         }
 
 
