@@ -8,7 +8,7 @@ import { IQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
 import { IAuth0Context, IUserCredential } from "../../../../utils/Structures";
-import { fetchLatestQuestion, fetchRecommendedQuestions } from "../../Service";
+import { fetchLatestQuestion, fetchRecommendedQuestions, fetchAnswerLessQuestions } from "../../Service";
 import { HomePageTab } from "../../../../utils/Enums";
 import { colors } from "../../../../utils/colors";
 
@@ -63,6 +63,14 @@ export class Right extends Component<props, state>{
         });
     }
 
+    private getAnswerLessQuestions(): void {
+        fetchAnswerLessQuestions(this.iteration).then(data=>{
+            this.questionList = data;
+            this.tab = HomePageTab.unanswered;
+            this.setState({isLoading:false});
+        })
+    }
+
     private getInitialQuestions() {
         fetchRecommendedQuestions(this.context, this.iteration).then(data => {
             if (data.length == 0) {
@@ -99,7 +107,7 @@ export class Right extends Component<props, state>{
                         <div style={{ background: this.tab == HomePageTab.recommended ? colors.tagBackground : '' }}
                             onClick={() => this.getRecommendedQuestions()}>উপযোগী</div>
                         <div style={{ background: this.tab == HomePageTab.unanswered ? colors.tagBackground : '' }}
-                            >উত্তরহীন</div>
+                            onClick={() => this.getAnswerLessQuestions()}>উত্তরহীন</div>
                         <div style={{ background: this.tab == HomePageTab.all ? colors.tagBackground : '' }}
                             onClick={() => this.getLatestQuestions()}>সকল প্রশ্ন</div>
                     </div>
@@ -122,4 +130,5 @@ export class Right extends Component<props, state>{
             </div>
         )
     }
+ 
 }

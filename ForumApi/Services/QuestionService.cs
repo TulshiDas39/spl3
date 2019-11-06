@@ -53,6 +53,13 @@ namespace ForumApi.Services
             return question;
         }
 
+        internal ActionResult<List<Question>> getAnswerLessQuestions(int skip, int limit)
+        {
+            ActionResult<List<Question>> list = _questions.Find(Question => Question.isAccepted == false).SortByDescending(question => question.id).Skip(skip).Limit(limit).ToList();
+
+            return list;
+        }
+
         public void Update(string id, Question questionIn) =>
             _questions.ReplaceOne(question => question.id == id, questionIn);
 
@@ -97,9 +104,10 @@ namespace ForumApi.Services
             foreach (var item in recommendationList)
             {
                 List<string> predecessors = GetDependency(item);
-                if (predecessors.Intersect(tags).Count() == predecessors.Count) {
+                if (predecessors.Intersect(tags).Count() == predecessors.Count)
+                {
                     string resultant = GetResultant(item);
-                    if(!userRecommendations.Contains(resultant)) userRecommendations.Add(resultant);
+                    if (!userRecommendations.Contains(resultant)) userRecommendations.Add(resultant);
                 }
             }
 

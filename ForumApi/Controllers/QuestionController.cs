@@ -53,26 +53,17 @@ namespace ForumApi.Controllers
             return similarity.getSimilarQuestions(questionData);
         }
 
+        [HttpGet("answerless/{iteration}")]
+         public ActionResult<List<Question>> GetAnswerless(int iteration){
+            _logger.LogDebug("in answerless data:");
+            return _questionService.getAnswerLessQuestions(iteration* questionCount, questionCount);
+        }
+
         [Authorize]
         [HttpPost("get/{userId}")]
         public ActionResult<List<Question>> GetByUser(string userId)
         {
             return _questionService.GetByUser(userId);
-        }
-
-        [Authorize]
-        [HttpPost("recommend/{iteration}")]
-        public ActionResult<List<Question>> Recommend(UserCredential userCred, int iteration = 0)
-        {
-            _logger.LogDebug("user AuthId:" + userCred.sub);
-            _logger.LogDebug("iteration:" + iteration);
-            User user = _userService.Get(userCred.sub);
-            if (user == null)
-            {
-                createUser(userCred);
-            }
-            return _questionService.Get(iteration * questionCount, questionCount);
-            //return _questionService.recommend(user, iteration);
         }
 
         [Authorize]
