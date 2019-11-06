@@ -2,9 +2,9 @@ import { IAuth0Contex, IUserCredential } from "../../utils/Structures";
 import { post, get } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 
-export function Log(text: string) {
-    console.log(text);
-}
+// export function Log(text: string) {
+//     console.log(text);
+// }
 
 export function FetchData(myContext: any, iteration: number) {
     return new Promise(async (resolve, reject) => {
@@ -20,7 +20,11 @@ export function FetchData(myContext: any, iteration: number) {
             });
         }
         else {
-            fetchLatestQuestion(iteration);
+            fetchLatestQuestion(iteration).then(data=>{
+                resolve(data);
+            }, err=>{
+                reject(err);
+            });
         }
     });
 }

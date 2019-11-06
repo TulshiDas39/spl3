@@ -29,8 +29,11 @@ export class Right extends Component<props, state>{
     }
 
     componentDidMount(){
+        console.log("component did mount");
         FetchData(this.context,this.iteration).then((data)=>{
             this.questionList = data as IQuestion[];
+            console.log("data retrieved:");
+            console.log(this.questionList);
             this.setState({ isLoading: false });
         }, err=>{
             console.error(err);
