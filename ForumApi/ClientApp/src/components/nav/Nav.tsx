@@ -55,11 +55,6 @@ export class Nav extends React.Component<{}, state> {
                         <span>সমীকরণ</span>
                     </Link>
                 </div>
-                <div id="project">
-                    <span>
-                        প্রকাশনা
-                    </span>
-                </div>
                 <div id="search" className="search" style={this.state.searchSM} >
                     <form action="/search" >
                         <span className="fa fa-search"></span>
@@ -72,9 +67,6 @@ export class Nav extends React.Component<{}, state> {
                 {context.isAuthenticated ? this.getUser() : this.getLogin()}
                 <div id="nofic">
                     <span className="fa fa-globe"></span>
-                </div>
-                <div id="achieve">
-                    <span className="fa fa-gift"></span>
                 </div>
 
                 <div id="help">

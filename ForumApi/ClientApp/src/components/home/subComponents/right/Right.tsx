@@ -59,10 +59,9 @@ export class Right extends Component<props, state>{
 
                     </div>
                     <div className="question_filter">
-                        <div>সর্বশেষ</div>
+                        <div>উপযোগী</div>
                         <div>উত্তরহীন</div>
-                        <div>উপহারযুক্ত</div>
-                        <div>সকল বিষয়</div>
+                        <div>সকল প্রশ্ন</div>
                     </div>
                     <div className="questionList">
                         {
