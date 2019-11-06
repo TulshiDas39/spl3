@@ -12,7 +12,7 @@ import { Ask } from './components/ask/Ask';
 import { BrowserRouter } from 'react-router-dom';
 import Loading from './components/loader/Loading';
 import {Auth0Context} from './utils/Contexts';
-import { IAuth0Contex } from './utils/Structures';
+import { IAuth0Context } from './utils/Structures';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PrivateRoute from './components/auth/PrivateRoute';
 
@@ -33,7 +33,8 @@ export default class App extends Component<props, any> {
   }
 
   async log(){
-    let context = this.context as IAuth0Contex;
+    let context = this.context as IAuth0Context;
+  
     if(context && context.isAuthenticated){
       console.log('authenticated');
       let accessToken = await context.getTokenSilently();
@@ -44,7 +45,7 @@ export default class App extends Component<props, any> {
   }
 
   render() {
-    const { loading } = this.context as IAuth0Contex;
+    const { loading } = this.context as IAuth0Context;
 
     if (loading) {
       return <Loading />;

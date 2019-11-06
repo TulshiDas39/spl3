@@ -1,39 +1,17 @@
-import { IAuth0Contex, IUserCredential } from "../../utils/Structures";
+import { IAuth0Context, IUserCredential } from "../../utils/Structures";
 import { post, get } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
-
-// export function Log(text: string) {
-//     console.log(text);
-// }
-
-export function FetchData(myContext: any, iteration: number) {
-    return new Promise(async (resolve, reject) => {
-        let context = myContext as IAuth0Contex;
-        console.log(context);
-        if (context.isAuthenticated) {
-            let token = await context.getTokenSilently();
-            let user = context.user as IUserCredential;
-            fetchRecommendedData(token, user, iteration).then(data => {
-                resolve(data);
-            }, err => {
-                reject(err);
-            });
-        }
-        else {
-            fetchLatestQuestion(iteration).then(data=>{
-                resolve(data);
-            }, err=>{
-                reject(err);
-            });
-        }
-    });
-}
+import { IQuestion } from "../../utils/Models";
 
 
-function fetchRecommendedData(token: string, user: IUserCredential, iteration: number) {
-    let url = 'api/questions/recommend/' + user.sub + "/" + iteration;
+export async function fetchRecommendedQuestions(myContext: any, iteration: number) {
+    let context = myContext as IAuth0Context;
+    let token = await context.getTokenSilently();
     let headers = createHeader(token);
-    return new Promise((resolve: any, reject: any) => {
+    let user = context.user as IUserCredential;
+    let url = 'api/questions/recommend/' + user.sub + "/" + iteration;
+
+    return new Promise<IQuestion[]>((resolve: any, reject: any) => {
         console.log("fetching recommended questions:");
         post(url, headers, user).then(data => {
             resolve(data);
@@ -45,10 +23,10 @@ function fetchRecommendedData(token: string, user: IUserCredential, iteration: n
 }
 
 
-function fetchLatestQuestion(iteration: number) {
+export function fetchLatestQuestion(iteration: number) {
     let url = 'api/questions/latest/' + iteration + "/";
 
-    return new Promise((resolve, reject) => {
+    return new Promise<IQuestion[]>((resolve, reject) => {
         get(url).then(data => {
             resolve(data);
         }, err => {

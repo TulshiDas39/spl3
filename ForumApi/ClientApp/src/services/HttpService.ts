@@ -1,6 +1,6 @@
 
 export function get(url: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
         fetch(url).then(data => {
             return data.json();
         }).then(data => {
@@ -13,7 +13,7 @@ export function get(url: string) {
 }
 
 export function post(url: string, header: Headers, body: object) {
-    return new Promise((resolve: any, reject: any) => {
+    return new Promise<any>((resolve: any, reject: any) => {
 
         console.log("fetching data:");
         fetch(url, {

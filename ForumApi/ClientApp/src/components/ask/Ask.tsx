@@ -4,7 +4,7 @@ import { COUNTRIES } from "../reactTagEditor/countries";
 import "./ask.css";
 import "./question_list.css";
 import { Auth0Context } from "../../utils/Contexts";
-import { IAuth0Contex } from "../../utils/Structures";
+import { IAuth0Context } from "../../utils/Structures";
 import { IQuestion, IAnswer } from "../../utils/Models";
 import Loading from "../loader/Loading";
 import { Question } from "../questions/Question";
@@ -69,7 +69,7 @@ export class Ask extends Component<props, state>{
     }
 
     private async post() {
-        let context = this.context as IAuth0Contex;
+        let context = this.context as IAuth0Context;
         let token = await context.getTokenSilently();
 
         //this.data.description = this.description;

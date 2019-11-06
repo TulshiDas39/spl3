@@ -1,6 +1,6 @@
 import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client";
 
-export interface IAuth0Contex {
+export interface IAuth0Context {
     loginWithPopup(params?: {}):Promise<void>;
     handleRedirectCallback():Promise<void>;
     getIdTokenClaims(...p: any[]):Promise<IdToken>;

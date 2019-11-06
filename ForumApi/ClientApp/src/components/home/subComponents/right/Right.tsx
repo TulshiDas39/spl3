@@ -7,8 +7,10 @@ import { Loader } from "../../../loader/loader";
 import { IQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
-import { IAuth0Contex, IUserCredential } from "../../../../utils/Structures";
-import { FetchData } from "../../Service";
+import { IAuth0Context, IUserCredential } from "../../../../utils/Structures";
+import { fetchLatestQuestion, fetchRecommendedQuestions } from "../../Service";
+import { HomePageTab } from "../../../../utils/Enums";
+import { colors } from "../../../../utils/colors";
 
 interface state {
     isLoading: boolean;
@@ -22,22 +24,56 @@ export class Right extends Component<props, state>{
     private iteration = 0;
     private questionList: IQuestion[] = [];
     static contextType = Auth0Context;
+    private tab = HomePageTab.recommended;
 
     constructor(props: props) {
         super(props);
         this.state = { isLoading: true };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         console.log("component did mount");
-        FetchData(this.context,this.iteration).then((data)=>{
-            this.questionList = data as IQuestion[];
-            console.log("data retrieved:");
-            console.log(this.questionList);
+        this.fetchData();
+    }
+
+    private fetchData() {
+        if (this.context.isAuthenticated) {
+            this.getInitialQuestions();
+        }
+        else {
+            this.getLatestQuestions();
+        }
+
+    }
+
+    private getRecommendedQuestions() {
+        if(!this.context.isAuthenticated) (this.context as IAuth0Context).loginWithRedirect({ targetUrl: window.location.href })
+        fetchRecommendedQuestions(this.context, this.iteration).then(data => {
+            this.tab = HomePageTab.recommended;
+            this.questionList = data;
             this.setState({ isLoading: false });
-        }, err=>{
-            console.error(err);
+        })
+    }
+
+    private getLatestQuestions() {
+        fetchLatestQuestion(this.iteration).then(data => {
+            this.tab = HomePageTab.all;
+            this.questionList = data;
+            this.setState({ isLoading: false });
         });
+    }
+
+    private getInitialQuestions() {
+        fetchRecommendedQuestions(this.context, this.iteration).then(data => {
+            if (data.length == 0) {
+                this.getLatestQuestions();
+            }
+            else {
+                this.tab = HomePageTab.recommended;
+                this.questionList = data;
+                this.setState({ isLoading: false });
+            }
+        })
     }
 
     public render() {
@@ -47,10 +83,8 @@ export class Right extends Component<props, state>{
             return <Loader />;
         }
 
-
         else return (
             <div id="right">
-
                 <div id="questionDiv">
                     <div id="question_heading">
                         <div className="main-questions-text">
@@ -62,12 +96,16 @@ export class Right extends Component<props, state>{
 
                     </div>
                     <div className="question_filter">
-                        <div>উপযোগী</div>
-                        <div>উত্তরহীন</div>
-                        <div>সকল প্রশ্ন</div>
+                        <div style={{ background: this.tab == HomePageTab.recommended ? colors.tagBackground : '' }}
+                            onClick={() => this.getRecommendedQuestions()}>উপযোগী</div>
+                        <div style={{ background: this.tab == HomePageTab.unanswered ? colors.tagBackground : '' }}
+                            >উত্তরহীন</div>
+                        <div style={{ background: this.tab == HomePageTab.all ? colors.tagBackground : '' }}
+                            onClick={() => this.getLatestQuestions()}>সকল প্রশ্ন</div>
                     </div>
                     <div className="questionList">
                         {
+                            this.questionList.length==0?<p>No recommended questions found</p>:
                             this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
                         }
                     </div>
