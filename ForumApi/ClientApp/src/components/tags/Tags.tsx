@@ -7,6 +7,14 @@ import "./tags.css";
 
 export class Tags extends Component<any, any>{
 
+    private eventNext(){
+
+    }
+
+    private eventPrev(){
+
+    }
+
     public render() {
         return (
             <div id="tags-parentDiv">
@@ -14,7 +22,7 @@ export class Tags extends Component<any, any>{
                 <div id="tags-right">
                     <Head />
                     <TagContainer />
-                    <Pagination />
+                    <Pagination eventNext ={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />
                 </div>
             </div>
         );

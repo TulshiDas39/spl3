@@ -46,6 +46,11 @@ export class Right extends Component<props, state>{
 
     }
 
+    private showRecommendedQuestions(){
+        this.iteration = 0;
+        this.getRecommendedQuestions();
+    }
+
     private getRecommendedQuestions() {
         if(!this.context.isAuthenticated) (this.context as IAuth0Context).loginWithRedirect({ targetUrl: window.location.href })
         fetchRecommendedQuestions(this.context, this.iteration).then(data => {
@@ -53,6 +58,11 @@ export class Right extends Component<props, state>{
             this.questionList = data;
             this.setState({ isLoading: false });
         })
+    }
+
+    private showLatestQuestions(){
+        this.iteration = 0;
+        this.getLatestQuestions();
     }
 
     private getLatestQuestions() {
@@ -63,12 +73,38 @@ export class Right extends Component<props, state>{
         });
     }
 
+    private showAnswerlessQuestions(){
+        this.iteration = 0;
+        this.getAnswerLessQuestions();
+    }
+
     private getAnswerLessQuestions(): void {
         fetchAnswerLessQuestions(this.iteration).then(data=>{
             this.questionList = data;
             this.tab = HomePageTab.unanswered;
             this.setState({isLoading:false});
         })
+    }
+
+    private eventNext(){
+        this.iteration++;
+        this.loadMoreQuestions();
+    }
+
+    private eventPrev(){
+        this.iteration--;
+        if(this.iteration < 0) this.iteration=0;
+        this.loadMoreQuestions();
+    }
+
+    private loadMoreQuestions() {
+        if (this.tab = HomePageTab.all) {
+            this.getLatestQuestions();
+        }
+        else if (this.tab == HomePageTab.unanswered)
+            this.getAnswerLessQuestions();
+        else
+            this.getRecommendedQuestions();
     }
 
     private getInitialQuestions() {
@@ -105,11 +141,11 @@ export class Right extends Component<props, state>{
                     </div>
                     <div className="question_filter">
                         <div style={{ background: this.tab == HomePageTab.recommended ? colors.tagBackground : '' }}
-                            onClick={() => this.getRecommendedQuestions()}>উপযোগী</div>
+                            onClick={() => this.showRecommendedQuestions()}>উপযোগী</div>
                         <div style={{ background: this.tab == HomePageTab.unanswered ? colors.tagBackground : '' }}
-                            onClick={() => this.getAnswerLessQuestions()}>উত্তরহীন</div>
+                            onClick={() => this.showAnswerlessQuestions()}>উত্তরহীন</div>
                         <div style={{ background: this.tab == HomePageTab.all ? colors.tagBackground : '' }}
-                            onClick={() => this.getLatestQuestions()}>সকল প্রশ্ন</div>
+                            onClick={() => this.showLatestQuestions()}>সকল প্রশ্ন</div>
                     </div>
                     <div className="questionList">
                         {
@@ -124,7 +160,7 @@ export class Right extends Component<props, state>{
                         <a className="go-unaswered" href="">উত্তরহীন প্রশ্নগুলোতে আমাদের সাহায্য করুন</a>
                     </p>
 
-                    <Pagination />
+                    <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />
                 </div>
                 <StatusBar />
             </div>

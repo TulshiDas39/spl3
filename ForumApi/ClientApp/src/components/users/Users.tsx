@@ -8,6 +8,15 @@ import "./users.css";
 export class Users extends Component {
     static displayName = Users.name;
 
+
+    private eventNext(){
+
+    }
+
+    private eventPrev(){
+
+    }
+
     public render(): JSX.Element {
         return (
             <div id="parentDiv">
@@ -15,7 +24,7 @@ export class Users extends Component {
                 <div id="users-right">
                     <Head />
                     <UserContainer />
-                    <Pagination />
+                    <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />
                 </div>
             </div>
         );
