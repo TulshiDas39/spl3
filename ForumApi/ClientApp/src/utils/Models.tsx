@@ -11,12 +11,12 @@ export interface IQuestion {
 }
 
 export interface IAnswer{
-    id:string;
+    id?:string;
     userId:string;
     questionId:string;
     description:string;
     ratings:number;
-    dateTime:string;
+    datetime:number;
 }
 
 export interface IUser{

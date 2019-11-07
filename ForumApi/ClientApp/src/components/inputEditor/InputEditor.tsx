@@ -2,27 +2,34 @@ import React, { Component, RefObject } from "react";
 //import {InputHandler} from "./InputHandler";
 import "./inputEditor.css";
 import { Editor } from "../answer/editor";
+import { postAnswer } from "./Service";
+import { IAuth0Context } from "../../utils/Structures";
+import {Auth0Context} from "../../utils/Contexts";
+import { IAnswer } from "../../utils/Models";
 
 interface state {
     input: string;
 }
 
-interface props{
-    id:string;
+interface props {
+    id: string;
 }
-export class InputEditor extends Component<props, state>{
+export class InputEditor extends Component<props, state, IAuth0Context>{
 
     private inputText: string = "";
 
     private inputEditor = React.createRef<HTMLDivElement>();
+    private editor?: Editor;
+    static contextType = Auth0Context;
 
     constructor(props: props) {
         super(props);
         this.state = { input: "" };
     }
 
-    componentDidMount(){
-        new Editor(this.inputEditor.current as HTMLDivElement);
+    componentDidMount() {
+        this.editor = new Editor(this.inputEditor.current as HTMLDivElement);
+
     }
 
     public render() {
@@ -51,59 +58,67 @@ export class InputEditor extends Component<props, state>{
                         <span id="newLineBtn" className="fa fa-level-down newLineBtn" title="new line">
                         </span>
                     </div>
-                    <textarea className="inputArea" onClick={this.focus.bind(this)} name="" id="answer_editor" cols={30} rows={10} onChange={this.showInputText.bind(this)}></textarea>
+                    <textarea className="inputArea" name="" id="answer_editor" cols={30} rows={10} ></textarea>
 
                 </div>
-                <div className="outputArea" id="answer_display" dangerouslySetInnerHTML={{ __html: this.state.input }}>
+                <div className="outputArea" id="answer_display" >
                 </div>
 
                 <div onClick={this.post.bind(this)} id="post_question_btn">উত্তর প্রেরণ করুন</div>
-                <p className="testP" ></p>
             </div>
 
         );
     }
 
-    private focus(){
-        
-    }
-
     private post() {
 
-        let data = {
-            QuestionId:this.props.id, 
-            Description:this.state.input,
-            Ratings:0,
-            DateTime: new Date().toDateString(),
-            UserId:"5d8358193e2c7c281009e8c8"
-
-        };
-        console.log('posing answer');
-
-        fetch('api/answers', {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((res: Response) => {
-            console.log(res);
-            return res.json();
-        }).then(data => {
+        console.log(this.context);
+        let data:IAnswer;
+        if (this.editor) {
+            data = {
+                questionId: this.props.id,
+                description: this.editor.answerEditor.value,
+                ratings: 0,
+                datetime: new Date().getTime(),
+                userId: this.context.user.sub
+            };
+            console.log('posting answer');
             console.log(data);
-            //this.props.history.push('/answer/' + data.id);
-        }).catch(err => {
-            console.log('error happened');
-            console.log(err);
-        });
+
+            let token = this.context.getTokenSilently();
+            postAnswer(data, token).then(data=>{
+                console.log('after successful answer post:');
+                console.log(data);
+                this.updateComponent();
+            }, err=>{
+                console.log('error answer post:');
+                console.log(err);
+            });
+        }
+
+        // fetch('api/answers', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     body: JSON.stringify(data),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // }).then((res: Response) => {
+        //     console.log(res);
+        //     return res.json();
+        // }).then(data => {
+        //     console.log(data);
+        //     //this.props.history.push('/answer/' + data.id);
+        // }).catch(err => {
+        //     console.log('error happened');
+        //     console.log(err);
+        // });
 
     }
 
-    private showInputText(event: any) {
-        //this.inputText= event.target.value;
-        this.setState({
-            input: event.target.value
-        })
+    private updateComponent(){
+        this.setState(this.state);
     }
 }
+
+//dangerouslySetInnerHTML={{ __html: this.state.input }}

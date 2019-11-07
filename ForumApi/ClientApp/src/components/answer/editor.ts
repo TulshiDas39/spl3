@@ -1,8 +1,8 @@
 
 export class Editor {
     private editor:HTMLDivElement;
-    private answerEditor:HTMLTextAreaElement; //= <HTMLInputElement>document.getElementById('answer_editor');
-    private answerdisplay:HTMLDivElement;// = <HTMLInputElement>document.getElementById('answer_display');
+    public answerEditor:HTMLTextAreaElement;
+    private answerdisplay:HTMLDivElement;
     private boldTags = ['<b>', '</b>', '<b>', '</b>'];
     private italicTags = ['<i>', '</i>', '<i>', '</i>'];
     private underLineTags = ['<u>', '</u>', '<u>', '</u>'];
@@ -185,5 +185,3 @@ export class Editor {
         input.setSelectionRange(startPos, endPos);
     }
 }
-
-//new Answer().init();

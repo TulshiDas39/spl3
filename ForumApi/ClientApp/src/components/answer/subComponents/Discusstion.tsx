@@ -16,6 +16,7 @@ export class Discussion extends Component<Properties,state>{
   
     //private questionData:QuestionData;
     private answerData = [] as IAnswer[];
+
     constructor(props:Properties){
         super(props);
         this.init();

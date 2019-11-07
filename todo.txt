@@ -1,7 +1,6 @@
 In progress
-    -post answer
+
 To Do
-    -modify answer editor
     -question search
     -rating system(in question, answer, post, comment)
     -blocking question based on user reaction
@@ -15,6 +14,8 @@ To Do
     
 
 Done
+    -modify answer editor
+    -post answer
     -filter options in home page
     -Apriori algorithm for question recommendation
     -user creation
