@@ -1,0 +1,11 @@
+.spinner{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.spinner > img{
+    height: 100%;
+}

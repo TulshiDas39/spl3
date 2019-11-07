@@ -1,10 +1,9 @@
 import React, { Component, RefObject } from "react";
-//import {InputHandler} from "./InputHandler";
 import "./inputEditor.css";
 import { Editor } from "../answer/editor";
 import { postAnswer } from "./Service";
 import { IAuth0Context } from "../../utils/Structures";
-import {Auth0Context} from "../../utils/Contexts";
+import { Auth0Context } from "../../utils/Contexts";
 import { IAnswer } from "../../utils/Models";
 
 interface state {
@@ -13,11 +12,10 @@ interface state {
 
 interface props {
     id: string;
-    onPost():void;
+    onPost(): void;
 }
 export class InputEditor extends Component<props, state, IAuth0Context>{
 
-    private inputText: string = "";
 
     private inputEditor = React.createRef<HTMLDivElement>();
     private editor?: Editor;
@@ -30,7 +28,6 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
 
     componentDidMount() {
         this.editor = new Editor(this.inputEditor.current as HTMLDivElement);
-
     }
 
     public render() {
@@ -73,8 +70,7 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
 
     private post() {
 
-        console.log(this.context);
-        let data:IAnswer;
+        let data: IAnswer;
         if (this.editor) {
             data = {
                 questionId: this.props.id,
@@ -83,43 +79,17 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
                 datetime: new Date().getTime(),
                 userId: this.context.user.sub
             };
-            console.log('posting answer');
-            console.log(data);
 
             let token = this.context.getTokenSilently();
-            postAnswer(data, token).then(data=>{
-                console.log('after successful answer post:');
-                console.log(data);
+            postAnswer(data, token).then(data => {
                 this.props.onPost();
-            }, err=>{
-                console.log('error answer post:');
+            }, err => {
                 console.log(err);
             });
         }
 
-        // fetch('api/answers', {
-        //     method: 'POST',
-        //     mode: 'cors',
-        //     body: JSON.stringify(data),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // }).then((res: Response) => {
-        //     console.log(res);
-        //     return res.json();
-        // }).then(data => {
-        //     console.log(data);
-        //     //this.props.history.push('/answer/' + data.id);
-        // }).catch(err => {
-        //     console.log('error happened');
-        //     console.log(err);
-        // });
-
     }
 
-    // private updateComponent(){
-    //     this.setState(this.state);
-    // }
 }
 
 //dangerouslySetInnerHTML={{ __html: this.state.input }}
