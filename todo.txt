@@ -1,6 +1,5 @@
 In progress
-    -filter options in home page
-
+    -post answer
 To Do
     -modify answer editor
     -question search
@@ -16,6 +15,7 @@ To Do
     
 
 Done
+    -filter options in home page
     -Apriori algorithm for question recommendation
     -user creation
     -authorization

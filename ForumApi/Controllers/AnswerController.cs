@@ -39,7 +39,8 @@ namespace ForumApi.Controllers
             return answer;
         }
 
-        [HttpPost]
+        //[Authorize]
+        [HttpPost("create")]
         public ActionResult<Answer> Create(Answer answer)
         {
             _answerService.Create(answer);

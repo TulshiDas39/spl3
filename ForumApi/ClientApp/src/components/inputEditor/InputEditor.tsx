@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, RefObject } from "react";
 //import {InputHandler} from "./InputHandler";
 import "./inputEditor.css";
+import { Editor } from "../answer/editor";
 
 interface state {
     input: string;
@@ -12,58 +13,59 @@ interface props{
 export class InputEditor extends Component<props, state>{
 
     private inputText: string = "";
-    private inputEditor = this.refs.InputEditor;
-    // private inputHandler:InputHandler;
-    private myRef = React.createRef();
 
-    constructor(props: any) {
+    private inputEditor = React.createRef<HTMLDivElement>();
+
+    constructor(props: props) {
         super(props);
         this.state = { input: "" };
-        // this.init();
-        //   this.inputHandler = new InputHandler(this.inputEditor);
-        //this.myRef = React.createRef();
     }
 
-    // init(){
-    //     this.myRef.
-    // }
+    componentDidMount(){
+        new Editor(this.inputEditor.current as HTMLDivElement);
+    }
 
     public render() {
         return (
-            <div className="Input_editor_pane">
+            <div className="Input_editor_pane" ref={this.inputEditor}>
                 <div className="answer_editor">
                     <div className="answer_editor_topbar">
-                        <span id="boldBtn" className="answer_editor_topbar_bold fa fa-bold" title="bold text">
+                        <span id="boldBtn" className="answer_editor_topbar_bold fa fa-bold boldBtn" title="bold text">
                         </span>
                         <span id="italicBtn" className="answer_editor_topbar_italic fa fa-italic"
                             title="italic text">
                         </span>
                         <span id="linkBtn" className="answer_editor_topbar_hyperlink fa fa-link" title="hyperlink">
                         </span>
-                        <span id="tabBtn" className="fa fa-indent" title="insert tab">
+                        <span id="tabBtn" className="fa fa-indent tabBtn" title="insert tab">
                         </span>
-                        <span id="orderListBtn" className="fa fa-list-ol" title="order list">
+                        <span id="orderListBtn" className="fa fa-list-ol orderListBtn" title="order list">
                         </span>
-                        <span id="unorderListBtn" className="fa fa-list-ul" title="unorder list">
+                        <span id="unorderListBtn" className="fa fa-list-ul unorderListBtn" title="unorder list">
                         </span>
-                        <span id="imageUpload" className="fa fa-photo" title="upload image">
-                            <input id="imageUploader" style={{ display: 'none' }} type="file" accept="image/*" />
+                        <span id="imageUpload" className="fa fa-photo imageUpload" title="upload image">
+                            <input id="imageUploader" className="imageUploader" style={{ display: 'none' }} type="file" accept="image/*" />
                         </span>
-                        <span id="headingBtn" className="fa fa-align-center" title="heading text">
+                        <span id="headingBtn" className="fa fa-align-center headingBtn" title="heading text">
                         </span>
-                        <span id="newLineBtn" className="fa fa-level-down" title="new line">
+                        <span id="newLineBtn" className="fa fa-level-down newLineBtn" title="new line">
                         </span>
                     </div>
-                    <textarea name="" id="answer_editor" cols={30} rows={10} onChange={this.showInputText.bind(this)}></textarea>
+                    <textarea className="inputArea" onClick={this.focus.bind(this)} name="" id="answer_editor" cols={30} rows={10} onChange={this.showInputText.bind(this)}></textarea>
 
                 </div>
-                <div id="answer_display" dangerouslySetInnerHTML={{ __html: this.state.input }}>
+                <div className="outputArea" id="answer_display" dangerouslySetInnerHTML={{ __html: this.state.input }}>
                 </div>
 
                 <div onClick={this.post.bind(this)} id="post_question_btn">উত্তর প্রেরণ করুন</div>
+                <p className="testP" ></p>
             </div>
 
         );
+    }
+
+    private focus(){
+        
     }
 
     private post() {
