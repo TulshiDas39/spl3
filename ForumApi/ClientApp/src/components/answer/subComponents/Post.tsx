@@ -19,7 +19,7 @@ export class Post extends Component<props, any>{
                     <span className="fa fa-sort-desc vote_icon"></span>
                 </div>
                 <div id="question_description">
-                    <span className="question_description_text">{this.props.data.description}</span>
+                    <span className="question_description_text" dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {/* <img className="questionImage" src="res/images/sample.PNG" alt="" /> */}
                     {/* <span> তাই আমি এর একটা সমাধান চাই, অগ্রীম ধন্যবাদ</span> */}
 

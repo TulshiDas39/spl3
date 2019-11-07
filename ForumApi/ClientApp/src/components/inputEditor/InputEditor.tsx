@@ -13,6 +13,7 @@ interface state {
 
 interface props {
     id: string;
+    onPost():void;
 }
 export class InputEditor extends Component<props, state, IAuth0Context>{
 
@@ -89,7 +90,7 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
             postAnswer(data, token).then(data=>{
                 console.log('after successful answer post:');
                 console.log(data);
-                this.updateComponent();
+                this.props.onPost();
             }, err=>{
                 console.log('error answer post:');
                 console.log(err);
@@ -116,9 +117,9 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
 
     }
 
-    private updateComponent(){
-        this.setState(this.state);
-    }
+    // private updateComponent(){
+    //     this.setState(this.state);
+    // }
 }
 
 //dangerouslySetInnerHTML={{ __html: this.state.input }}

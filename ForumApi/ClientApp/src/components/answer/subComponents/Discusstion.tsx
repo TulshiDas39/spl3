@@ -22,17 +22,31 @@ export class Discussion extends Component<Properties,state>{
         this.init();
         console.log('in discussion: ');
         console.log(this.props.questionData);
-        this.fetchAnswerData();
+       // this.fetchPostedAnswers();
+    }
+
+    fetchPostedAnswers(){
+        getAnswers(this.props.questionData.id).then(data=>{
+            this.answerData = data as IAnswer[];
+            this.updateComponent();
+        })
+    }
+
+    private updateComponent(){
+        this.setState(this.state);
     }
 
     private init(){
         this.state = {isLoading:true}
+        getAnswers(this.props.questionData.id).then(data=>{
+            this.answerData = data as IAnswer[];
+            this.setState({isLoading:false});
+        })
     }
 
     private fetchAnswerData(){
         getAnswers(this.props.questionData.id).then(data=>{
             this.answerData = data as IAnswer[];
-            this.setState({isLoading:false});
         })
     }
 
@@ -50,7 +64,7 @@ export class Discussion extends Component<Properties,state>{
                 </div>
 
                 <h2>আপনার উত্তর</h2>
-                <InputEditor id={this.props.questionData.id}/>
+                <InputEditor id={this.props.questionData.id} onPost={this.fetchPostedAnswers.bind(this)}/>
 
             </div>
         )

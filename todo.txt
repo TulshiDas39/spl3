@@ -1,5 +1,5 @@
 In progress
-
+    -show answers
 To Do
     -question search
     -rating system(in question, answer, post, comment)
