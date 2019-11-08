@@ -53,11 +53,11 @@ export function put(url: string, header: Headers, body: object) {
     });
 }
 
-export function deleteItem(url:string, header:Headers){
+export function deleteEntity(url:string, header:Headers){
     return fetch(url ,{
-        method: 'delete',
+        method: 'DELETE',
         headers: header
-    }).then(response => response.json());
+    }).then(response => {});
 
 }
 

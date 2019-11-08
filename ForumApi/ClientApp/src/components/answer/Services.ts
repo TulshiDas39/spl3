@@ -1,4 +1,4 @@
-import { get, post, put } from "../../services/HttpService";
+import { get, post, put, deleteEntity } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
 import { IAnswer } from "../../utils/Models";
@@ -60,5 +60,20 @@ export function updateAnswer(data: object, token: string){
             reject(err);
         })
     })
+    
+}
+
+export function deleteAnswer(id:string,token:string){
+    let url = API_CALLS.deleteAnswer+id;
+    let headers = createHeader(token);
+
+    return new Promise<void>((resolve,reject)=>{
+        deleteEntity(url,headers).then(data=>{
+            resolve();
+        }, err=>{
+            reject(err);
+        })
+    })
+
     
 }

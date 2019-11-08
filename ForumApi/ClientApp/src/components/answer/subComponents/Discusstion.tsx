@@ -3,7 +3,7 @@ import "./styles/discussion.css";
 import { Post } from "./Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
-import { getAnswers, postAnswer, updateAnswer } from "../Services";
+import { getAnswers, postAnswer, updateAnswer, deleteAnswer } from "../Services";
 import { IAuth0Context } from "../../../utils/Structures";
 import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
@@ -48,7 +48,7 @@ export class Discussion extends Component<discussionProps, state>{
     }
 
 
-    answerPost(text: string) {
+    private async answerPost(text: string) {
         let data: IAnswer;
         data = {
             questionId: this.props.questionData.id,
@@ -58,7 +58,9 @@ export class Discussion extends Component<discussionProps, state>{
             userId: this.context.user.sub
         };
 
-        let token = this.context.getTokenSilently();
+        let token = await this.context.getTokenSilently();
+        console.log("token:");
+        console.log(token);
         postAnswer(data, token).then(data => {
             this.fetchPostedAnswers();
         }, err => {
@@ -77,6 +79,23 @@ export class Discussion extends Component<discussionProps, state>{
             this.fetchPostedAnswers();
         }, err => {
             console.log(err);
+        });
+    }
+
+    private editAnswer() {
+        this.editorInnerHtml = this.answerData[this.userAnswerIndex].description;
+        this.displayEditor = true;
+        this.actionStatus = ActionType.Edit;
+        this.updateComponent();
+    }
+
+    private async deleteAnswer() {
+        let token = await this.context.getTokenSilently();
+        let id = this.answerData[this.userAnswerIndex].id as string;
+        deleteAnswer(id ,token).then(()=>{
+            this.fetchPostedAnswers();
+        }, err=>{
+            console.error(err);
         });
     }
 
@@ -126,17 +145,6 @@ export class Discussion extends Component<discussionProps, state>{
     }
 
     private deleteQuestion() {
-
-    }
-
-    private editAnswer() {
-        this.editorInnerHtml = this.answerData[this.userAnswerIndex].description;
-        this.displayEditor = true;
-        this.actionStatus = ActionType.Edit;
-        this.updateComponent();
-    }
-
-    private deleteAnswer() {
 
     }
 

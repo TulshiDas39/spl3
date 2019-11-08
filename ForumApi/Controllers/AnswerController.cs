@@ -3,6 +3,7 @@ using ForumApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace ForumApi.Controllers
 {
@@ -12,9 +13,12 @@ namespace ForumApi.Controllers
     {
         private readonly AnswerService _answerService;
 
-        public AnswersController(AnswerService answerService)
+        private readonly ILogger _logger;
+
+        public AnswersController(AnswerService answerService, ILogger<AnswersController> logger)
         {
             _answerService = answerService;
+            _logger = logger;
         }
 
         [Authorize]
@@ -65,6 +69,7 @@ namespace ForumApi.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("delete/{id:length(24)}")]
         public IActionResult Delete(string id)
         {
@@ -72,6 +77,7 @@ namespace ForumApi.Controllers
 
             if (answer == null)
             {
+                
                 return NotFound();
             }
 

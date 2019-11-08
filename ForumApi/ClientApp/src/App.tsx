@@ -49,10 +49,7 @@ export default class App extends Component<props, any> {
     const { loading } = this.context as IAuth0Context;
 
     if (loading) {
-      return <Loading />
-      // return (<ConfirmationDialog title="Do you want to delete" onConfirm={() => { console.log("confirmed") }} onClose={() => { console.log("closed") }}>
-      //   <p>delete</p>
-      // </ConfirmationDialog>);
+      return <Loading />;
     }
 
     return (
