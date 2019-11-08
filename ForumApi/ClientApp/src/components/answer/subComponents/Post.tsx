@@ -5,11 +5,12 @@ import { Comment } from "./Comment";
 import { IQuestion, IAnswer } from "../../../utils/Models";
 import { Auth0Context } from "../../../utils/Contexts";
 import { IAuth0Context } from "../../../utils/Structures";
+import { ConfirmationDialog } from "../../popups/ConfirmationDialog";
 
 interface props {
     data: IQuestion | IAnswer;
-    onEdit():void;
-    onDelete():void;
+    onEdit(): void;
+    onDelete(): void;
 }
 
 export class Post extends Component<props, any>{
@@ -37,10 +38,13 @@ export class Post extends Component<props, any>{
 
     private getEdit_DeleteOptions() {
         if (this.isEditable()) {
-            return (<p className="edit_delete_options">
+            return (<div className="edit_delete_options">
                 <span className="edit_option" onClick={this.props.onEdit}>সম্পাদন করুন </span>
-                <span className="delete_option" onClick={this.props.onDelete}>মুছুন</span>
-            </p>
+                <ConfirmationDialog title="Do you want to delete" onConfirm={this.props.onDelete} onClose={() => { console.log("closed") }}>
+                    <span className="delete_option">মুছুন</span>
+                </ConfirmationDialog>
+
+            </div>
             );
         }
     }

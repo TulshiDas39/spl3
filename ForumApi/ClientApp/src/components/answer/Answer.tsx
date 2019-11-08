@@ -20,8 +20,8 @@ export class Answer extends Component<any, AnswerState>{
     constructor(props: any) {
         super(props);
         this.init();
-        Answer.setAnswerState = this.setState;
-        Answer.answerState = this.state;
+        // Answer.setAnswerState = this.setState;
+        // Answer.answerState = this.state;
         this.fetchData();
     }
 

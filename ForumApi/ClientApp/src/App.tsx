@@ -11,10 +11,11 @@ import { UserActivity } from './components/userActivity/UserActivity';
 import { Ask } from './components/ask/Ask';
 import { BrowserRouter } from 'react-router-dom';
 import Loading from './components/loader/Loading';
-import {Auth0Context} from './utils/Contexts';
+import { Auth0Context } from './utils/Contexts';
 import { IAuth0Context } from './utils/Structures';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PrivateRoute from './components/auth/PrivateRoute';
+import { ConfirmationDialog } from './components/popups/ConfirmationDialog';
 
 interface props {
   basename: string;
@@ -27,15 +28,15 @@ export default class App extends Component<props, any> {
     super(props);
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     console.log('component did update');
     this.log();
   }
 
-  async log(){
+  async log() {
     let context = this.context as IAuth0Context;
-  
-    if(context && context.isAuthenticated){
+
+    if (context && context.isAuthenticated) {
       console.log('authenticated');
       let accessToken = await context.getTokenSilently();
       console.log('accessToken:');
@@ -48,7 +49,10 @@ export default class App extends Component<props, any> {
     const { loading } = this.context as IAuth0Context;
 
     if (loading) {
-      return <Loading />;
+      return <Loading />
+      // return (<ConfirmationDialog title="Do you want to delete" onConfirm={() => { console.log("confirmed") }} onClose={() => { console.log("closed") }}>
+      //   <p>delete</p>
+      // </ConfirmationDialog>);
     }
 
     return (

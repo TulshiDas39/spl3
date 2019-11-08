@@ -67,7 +67,7 @@ export class Discussion extends Component<discussionProps, state>{
 
     }
 
-    updateAnswer(text: string) {
+    private updateAnswer(text: string) {
         let answer = this.answerData[this.userAnswerIndex];
         answer.description = text;
         let token = this.context.getTokenSilently();
@@ -129,15 +129,14 @@ export class Discussion extends Component<discussionProps, state>{
 
     }
 
-    private editAnswer(index: number) {
-        console.log("editing answer:" + index);
-        this.editorInnerHtml = this.answerData[index].description;
+    private editAnswer() {
+        this.editorInnerHtml = this.answerData[this.userAnswerIndex].description;
         this.displayEditor = true;
         this.actionStatus = ActionType.Edit;
         this.updateComponent();
     }
 
-    private deleteAnswer(index: number) {
+    private deleteAnswer() {
 
     }
 
@@ -165,7 +164,7 @@ export class Discussion extends Component<discussionProps, state>{
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
                     {
-                        this.answerData.map((item, index) => <Post key={index} data={item} onEdit={() => this.editAnswer(index)} onDelete={() => this.deleteAnswer(index)} />)
+                        this.answerData.map((item, index) => <Post key={index} data={item} onEdit={this.editAnswer.bind(this)} onDelete={this.deleteAnswer.bind(this)} />)
                     }
                 </div>
 

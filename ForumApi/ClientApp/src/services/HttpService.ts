@@ -5,7 +5,7 @@ export function get(url: string) {
             return data.json();
         }).then(data => {
             resolve(data);
-        }).catch(err=>{
+        }).catch(err => {
             reject(err);
         })
     })
@@ -52,3 +52,12 @@ export function put(url: string, header: Headers, body: object) {
         });
     });
 }
+
+export function deleteItem(url:string, header:Headers){
+    return fetch(url ,{
+        method: 'delete',
+        headers: header
+    }).then(response => response.json());
+
+}
+

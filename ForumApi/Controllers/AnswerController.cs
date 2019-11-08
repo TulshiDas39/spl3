@@ -65,7 +65,7 @@ namespace ForumApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("delete/{id:length(24)}")]
         public IActionResult Delete(string id)
         {
             var answer = _answerService.Get(id);
