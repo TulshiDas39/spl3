@@ -56,7 +56,7 @@ namespace ForumApi.Services
         public bool Exist(Question question)
         {
             if (question.id == null) return false;
-            if(question.id.Length != 24) return false;
+            if (question.id.Length != 24) return false;
             if (Get(question.id) == null) return false;
             return true;
         }
@@ -156,7 +156,9 @@ namespace ForumApi.Services
         public void Remove(Question questionIn) =>
             _questions.DeleteOne(question => question.id == questionIn.id);
 
-        public void Remove(string id) =>
+        public void Remove(string id)
+        {        
             _questions.DeleteOne(question => question.id == id);
+        }
     }
 }

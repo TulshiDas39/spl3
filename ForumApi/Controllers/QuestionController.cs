@@ -109,8 +109,9 @@ namespace ForumApi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete("{id:length(24)}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete([FromServices] AnswerService answerService, string id)
         {
             var question = _questionService.Get(id);
 
@@ -118,10 +119,11 @@ namespace ForumApi.Controllers
             {
                 return NotFound();
             }
+            answerService.RemoveMany(id);
 
             _questionService.Remove(question.id);
 
-            return NoContent();
+            return Ok();
         }
     }
 }

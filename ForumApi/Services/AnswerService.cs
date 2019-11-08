@@ -35,7 +35,7 @@ namespace ForumApi.Services
         public bool Exist(Answer answer)
         {
             if (answer.id == null) return false;
-            if(answer.id.Length != 24) return false;
+            if (answer.id.Length != 24) return false;
             if (Get(answer.id) == null) return false;
             return true;
         }
@@ -43,8 +43,19 @@ namespace ForumApi.Services
         public void Update(string id, Answer answerIn) =>
             _answers.ReplaceOne(answer => answer.id == id, answerIn);
 
-        public void Remove(Answer answerIn) =>
+        public void Remove(Answer answerIn)
+        {
             _answers.DeleteOne(answer => answer.id == answerIn.id);
+        }
+
+        public void RemoveMany( string questionId){
+
+            List<Answer> answers = GetByQuestion(questionId);
+            
+            foreach(var item in answers){
+                Remove(item);
+            }
+        }
 
         public void Remove(string id) =>
             _answers.DeleteOne(answer => answer.id == id);

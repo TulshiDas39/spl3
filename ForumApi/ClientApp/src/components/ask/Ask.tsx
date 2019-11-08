@@ -90,24 +90,6 @@ export class Ask extends Component<props, state>{
             console.error(err);
         })
 
-        // fetch('api/questions', {
-        //     method: 'POST',
-        //     mode: 'cors',
-        //     body: JSON.stringify(this.data),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Bearer ' + token
-        //     }
-        // }).then((res: Response) => {
-        //     console.log(res);
-        //     return res.json();
-        // }).then(data => {
-        //     console.log(data);
-        //     this.props.history.push('/answer/' + data.id);
-        // }).catch(err => {
-        //     console.log('error happened');
-        //     console.log(err);
-        // });
     }
 
     private fetchSimilarQuestions() {

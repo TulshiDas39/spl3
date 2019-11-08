@@ -3,11 +3,11 @@ import "./styles/discussion.css";
 import { Post } from "./Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
-import { getAnswers, postAnswer, updateAnswer, deleteAnswer, updateQuestion } from "../Services";
+import { getAnswers, postAnswer, updateAnswer, deleteAnswer, updateQuestion, deleteQuestion } from "../Services";
 import { IAuth0Context } from "../../../utils/Structures";
 import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
-import { discussionProps, ActionType, ActionEntity } from "../Types";
+import { discussionProps } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
 
 interface state {
@@ -20,8 +20,6 @@ export class Discussion extends Component<discussionProps, state>{
     static contextType = Auth0Context;
     private displayEditor = false;
     private editorInnerHtml = "";
-    //private actionStatus = ActionType.None;
-    //private actionEntity = ActionEntity.None;
     private userAnswerIndex = -1;
     private post: (text: string) => Promise<void>;
 
@@ -95,6 +93,7 @@ export class Discussion extends Component<discussionProps, state>{
         }, err => {
             console.log(err);
         });
+
     }
 
     private editAnswer() {
@@ -140,7 +139,13 @@ export class Discussion extends Component<discussionProps, state>{
     }
 
     private async deleteQuestion() {
-
+        let token = await this.context.getTokenSilently();
+        let id = this.props.questionData.id as string;
+        deleteQuestion(id, token).then(() => {
+         (this.props as any).history.push('/');
+        }, err => {
+            console.error(err);
+        });
     }
 
     private updateComponent() {

@@ -1,6 +1,7 @@
 import { IQuestion } from "../../utils/Models";
+import { RouteProps } from "react-router";
 
-export interface discussionProps {
+export interface discussionProps{
     questionData: IQuestion;
 }
 

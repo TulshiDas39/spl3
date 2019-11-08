@@ -30,6 +30,22 @@ export function updateQuestion(question: IQuestion, token:string) {
 
 }
 
+export function deleteQuestion(id:string, token:string){
+    let url = API_CALLS.deleteQuestion+id;
+    let headers = createHeader(token);
+
+    return new Promise<void>((resolve,reject)=>{
+        deleteEntity(url,headers).then(()=>{
+            resolve();
+        }, err=>{
+            reject(err);
+        })
+    })
+
+    
+
+}
+
 export function getAnswers(questionId: string) {
     let url = 'api/answers/get/' + questionId;
     let headers = createHeader("");
