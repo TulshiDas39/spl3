@@ -1,38 +1,34 @@
 import React, { Component, RefObject } from "react";
 import "./inputEditor.css";
 import { Editor } from "../answer/editor";
-import { postAnswer } from "./Service";
 import { IAuth0Context } from "../../utils/Structures";
 import { Auth0Context } from "../../utils/Contexts";
-import { IAnswer } from "../../utils/Models";
+import { editorProps } from "./Types";
+import { ActionType } from "../answer/Types";
 
 interface state {
     input: string;
 }
 
-interface props {
-    id: string;
-    onPost(): void;
-    innterHtml:string;
-}
-export class InputEditor extends Component<props, state, IAuth0Context>{
-
+export class InputEditor extends Component<editorProps, state>{
 
     private inputEditor = React.createRef<HTMLDivElement>();
     private editor?: Editor;
     static contextType = Auth0Context;
 
-    constructor(props: props) {
+    constructor(props: editorProps) {
         super(props);
         this.state = { input: "" };
     }
 
     componentDidMount() {
-        this.editor = new Editor(this.inputEditor.current as HTMLDivElement);
+        let ref = this.inputEditor.current as HTMLDivElement;
+        this.editor = new Editor(ref, this.props.innterHtml);
+        if(this.props.actionType == ActionType.Edit) this.editor.scrollToView();
     }
 
-    componentDidUpdate(){
-        if(this.props.innterHtml && this.editor) this.editor.updateEditor(this.props.innterHtml);
+    componentDidUpdate() {
+        if (this.props.innterHtml && this.editor) this.editor.updateEditor(this.props.innterHtml);
     }
 
     public render() {
@@ -61,40 +57,22 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
                         <span id="newLineBtn" className="fa fa-level-down newLineBtn" title="new line">
                         </span>
                     </div>
-                    <textarea className="inputArea" name="" id="answer_editor" cols={30} rows={10} defaultValue={this.props.innterHtml}></textarea>
+                    <textarea className="inputArea" name="" id="answer_editor" cols={30} rows={10}></textarea>
 
                 </div>
                 <div className="outputArea" id="answer_display" >
                 </div>
 
-                <div onClick={this.post.bind(this)} id="post_question_btn">উত্তর প্রেরণ করুন</div>
+                <div onClick={this.post.bind(this)} id="post_question_btn">প্রেরণ করুন</div>
             </div>
 
         );
     }
 
     private post() {
-
-        let data: IAnswer;
         if (this.editor) {
-            data = {
-                questionId: this.props.id,
-                description: this.editor.answerEditor.value,
-                ratings: 0,
-                datetime: new Date().getTime(),
-                userId: this.context.user.sub
-            };
-
-            let token = this.context.getTokenSilently();
-            postAnswer(data, token).then(data => {
-                this.props.onPost();
-            }, err => {
-                console.log(err);
-            });
+            this.props.onPost(this.editor.getValue());
         }
-
     }
 
 }
-
-//dangerouslySetInnerHTML={{ __html: this.state.input }}

@@ -1,5 +1,7 @@
 import { get, post } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
+import { API_CALLS } from "../../utils/api_calls";
+import { IAnswer } from "../../utils/Models";
 
 export function getQuestion(questionId: string) {
     let url = 'api/questions/' + questionId;
@@ -25,5 +27,22 @@ export function getAnswers(questionId: string) {
             reject(err);
         })
     })
+
+}
+
+export function postAnswer(data: object, token: string) {
+    let url = API_CALLS.createAnswer;
+    let headers = createHeader(token);
+
+    console.log('posing answer');
+    
+    return new Promise<IAnswer>((resolve, reject) => {
+        post(url, headers, data).then(data => {
+            resolve(data);
+        }, err => {
+            reject(err);
+        })
+    })
+    
 
 }

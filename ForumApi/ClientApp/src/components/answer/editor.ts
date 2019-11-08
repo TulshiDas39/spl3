@@ -1,7 +1,7 @@
 
 export class Editor {
     private editor:HTMLDivElement;
-    public answerEditor:HTMLTextAreaElement;
+    private textArea:HTMLTextAreaElement;
     private answerdisplay:HTMLDivElement;
     private boldTags = ['<b>', '</b>', '<b>', '</b>'];
     private italicTags = ['<i>', '</i>', '<i>', '</i>'];
@@ -15,15 +15,16 @@ export class Editor {
     private newLineTag = '<br>';
 
 
-    constructor(editor:HTMLDivElement){
+    constructor(editor:HTMLDivElement, innerHtml:string){
 
         this.editor = editor;
-        this.answerEditor = editor.getElementsByClassName("inputArea")[0] as HTMLTextAreaElement;
+        this.textArea = editor.getElementsByClassName("inputArea")[0] as HTMLTextAreaElement;
         this.answerdisplay = editor.getElementsByClassName("outputArea")[0] as HTMLDivElement;
+        this.textArea.value = innerHtml;
         this.init();
     }
 
-    public init() {
+    private init() {
         this.setInputListenerInAnswerEditor();
         this.addBoldListener();
         this.addItalicListener();
@@ -36,17 +37,14 @@ export class Editor {
         this.addNewLineListener();
     }
 
-
-
-
     private setInputListenerInAnswerEditor() {
-        this.answerEditor.oninput = () => {
+        this.textArea.oninput = () => {
             this.displayChanges();
         }
     }
 
     private displayChanges() {
-        this.answerdisplay.innerHTML = this.answerEditor.value;;
+        this.answerdisplay.innerHTML = this.textArea.value;;
         window.scrollTo(0, document.body.scrollHeight);
     }
 
@@ -106,17 +104,17 @@ export class Editor {
     }
 
     private insertTag(tag: string) {
-        let startIndex = this.answerEditor.selectionStart;
-        let value = this.answerEditor.value;
+        let startIndex = this.textArea.selectionStart;
+        let value = this.textArea.value;
         let first_part = value.substring(0, startIndex);
         let second_part = value.substring(startIndex, value.length);
-        this.answerEditor.value = first_part + tag + second_part;
+        this.textArea.value = first_part + tag + second_part;
     }
 
     private toogleTag(tags: string[]) {
-        let value = this.answerEditor.value;
-        let startIndex = this.answerEditor.selectionStart;
-        let endIndex = this.answerEditor.selectionEnd;
+        let value = this.textArea.value;
+        let startIndex = this.textArea.selectionStart;
+        let endIndex = this.textArea.selectionEnd;
         if (this.isTagExist(startIndex, endIndex, tags)) {
             this.removeTag(startIndex, endIndex, tags);
             return;
@@ -126,32 +124,32 @@ export class Editor {
     }
 
     private addTag(startIndex: number, endIndex: number, tags: string[]) {
-        let value = this.answerEditor.value;
+        let value = this.textArea.value;
         let first_part = value.substring(0, startIndex);
         let second_part = value.substring(endIndex, value.length);
         let middle_part = value.substring(startIndex, endIndex);
         if (middle_part == "") {
             middle_part = "write here";
         }
-        this.answerEditor.value = first_part + tags[0] + middle_part + tags[1] + second_part;
+        this.textArea.value = first_part + tags[0] + middle_part + tags[1] + second_part;
 
         this.selectText(startIndex + tags[0].length, startIndex + middle_part.length + tags[0].length);
 
     }
 
     private removeTag(startIndex: number, endIndex: number, tags: string[]) {
-        let value = this.answerEditor.value;
+        let value = this.textArea.value;
         let first_part = value.substring(0, startIndex - tags[0].length);
         let second_part = value.substring(endIndex + tags[1].length, value.length);
         let middle_part = value.substring(startIndex, endIndex);
         if (middle_part == "write here") middle_part = "";
-        this.answerEditor.value = first_part + middle_part + second_part;
+        this.textArea.value = first_part + middle_part + second_part;
         this.selectText(startIndex - tags[0].length, startIndex + middle_part.length - tags[0].length);
 
     }
 
     private isTagExist(startIndex: number, endIndex: number, tags: string[]): boolean {
-        let value = this.answerEditor.value;
+        let value = this.textArea.value;
         let prefix = value.substring(startIndex - tags[0].length, startIndex);
         let suffix = value.substring(endIndex, endIndex + tags[1].length);
         if (prefix == tags[0] && suffix == tags[1]) return true;
@@ -186,7 +184,15 @@ export class Editor {
     }
 
     public updateEditor(value:string){
-        this.answerEditor.value = value;
-        this.answerEditor.scrollIntoView();
+        this.textArea.value = value;
+        this.scrollToView();
+    }
+
+    public getValue(){
+        return this.textArea.value;
+    }
+
+    public scrollToView(){
+        this.textArea.scrollIntoView();
     }
 }

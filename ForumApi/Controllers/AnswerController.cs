@@ -43,7 +43,8 @@ namespace ForumApi.Controllers
         [HttpPost("create")]
         public ActionResult<Answer> Create(Answer answer)
         {
-            _answerService.Create(answer);
+            if(answer.id == null) _answerService.Create(answer);
+            else Update(answer.id, answer);
 
             return CreatedAtRoute("GetAnswer", new { id = answer.id.ToString() }, answer);
         }
