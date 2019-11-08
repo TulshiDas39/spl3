@@ -1,5 +1,5 @@
 In progress
-    -show answers
+    -condition editor view, question edit, delete options.
 To Do
     -question search
     -rating system(in question, answer, post, comment)
@@ -11,9 +11,9 @@ To Do
     -hosting
     -search engine optimization
 
-    
 
 Done
+    -show answers
     -modify answer editor
     -post answer
     -filter options in home page

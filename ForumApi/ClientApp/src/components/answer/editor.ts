@@ -184,4 +184,9 @@ export class Editor {
         input.focus();
         input.setSelectionRange(startPos, endPos);
     }
+
+    public updateEditor(value:string){
+        this.answerEditor.value = value;
+        this.answerEditor.scrollIntoView();
+    }
 }

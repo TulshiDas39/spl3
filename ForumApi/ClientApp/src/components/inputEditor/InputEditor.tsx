@@ -13,6 +13,7 @@ interface state {
 interface props {
     id: string;
     onPost(): void;
+    innterHtml:string;
 }
 export class InputEditor extends Component<props, state, IAuth0Context>{
 
@@ -28,6 +29,10 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
 
     componentDidMount() {
         this.editor = new Editor(this.inputEditor.current as HTMLDivElement);
+    }
+
+    componentDidUpdate(){
+        if(this.props.innterHtml && this.editor) this.editor.updateEditor(this.props.innterHtml);
     }
 
     public render() {
@@ -56,7 +61,7 @@ export class InputEditor extends Component<props, state, IAuth0Context>{
                         <span id="newLineBtn" className="fa fa-level-down newLineBtn" title="new line">
                         </span>
                     </div>
-                    <textarea className="inputArea" name="" id="answer_editor" cols={30} rows={10} ></textarea>
+                    <textarea className="inputArea" name="" id="answer_editor" cols={30} rows={10} defaultValue={this.props.innterHtml}></textarea>
 
                 </div>
                 <div className="outputArea" id="answer_display" >

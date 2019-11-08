@@ -4,7 +4,6 @@ import { Right } from './subComponents/right/Right';
 
 export class Home extends Component {
     static displayName = Home.name;
-
     public render():JSX.Element {
         return (
             <div id="parentDiv">

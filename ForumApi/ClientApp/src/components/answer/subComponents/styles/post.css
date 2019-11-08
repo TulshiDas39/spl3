@@ -29,3 +29,23 @@
     flex-grow: 1;
     margin-left: 5px;
 }
+
+.edit_delete_options {
+    display: flex;
+}
+
+.edit_delete_options > span{
+    cursor: pointer;
+    color: #848d95;
+    
+}
+
+.edit_delete_options > .edit_option{
+    margin-right: 20px;
+    
+}
+
+.edit_delete_options> span:hover{
+    cursor: pointer;
+    color: #3b4045;
+}
