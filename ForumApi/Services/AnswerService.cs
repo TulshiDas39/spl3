@@ -32,13 +32,21 @@ namespace ForumApi.Services
             return answer;
         }
 
+        public bool Exist(Answer answer)
+        {
+            if (answer.id == null) return false;
+            if(answer.id.Length != 24) return false;
+            if (Get(answer.id) == null) return false;
+            return true;
+        }
+
         public void Update(string id, Answer answerIn) =>
             _answers.ReplaceOne(answer => answer.id == id, answerIn);
 
         public void Remove(Answer answerIn) =>
             _answers.DeleteOne(answer => answer.id == answerIn.id);
 
-        public void Remove(string id) => 
+        public void Remove(string id) =>
             _answers.DeleteOne(answer => answer.id == id);
     }
 }

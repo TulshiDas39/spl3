@@ -1,7 +1,6 @@
 import React, { Component, RefObject } from "react";
 import "./inputEditor.css";
 import { Editor } from "../answer/editor";
-import { IAuth0Context } from "../../utils/Structures";
 import { Auth0Context } from "../../utils/Contexts";
 import { editorProps } from "./Types";
 import { ActionType } from "../answer/Types";
@@ -14,7 +13,6 @@ export class InputEditor extends Component<editorProps, state>{
 
     private inputEditor = React.createRef<HTMLDivElement>();
     private editor?: Editor;
-    static contextType = Auth0Context;
 
     constructor(props: editorProps) {
         super(props);

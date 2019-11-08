@@ -1,4 +1,4 @@
-import { get, post } from "../../services/HttpService";
+import { get, post, put } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
 import { IAnswer } from "../../utils/Models";
@@ -45,4 +45,20 @@ export function postAnswer(data: object, token: string) {
     })
     
 
+}
+
+export function updateAnswer(data: object, token: string){
+    let url = API_CALLS.updateAnswer;
+    let headers = createHeader(token);
+
+    console.log('posing answer');
+    
+    return new Promise<IAnswer>((resolve, reject) => {
+        put(url, headers, data).then(data => {
+            resolve(data);
+        }, err => {
+            reject(err);
+        })
+    })
+    
 }

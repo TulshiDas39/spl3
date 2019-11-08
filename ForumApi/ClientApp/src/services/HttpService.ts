@@ -33,3 +33,22 @@ export function post(url: string, header: Headers, body: object) {
         });
     });
 }
+
+export function put(url: string, header: Headers, body: object) {
+    return new Promise<any>((resolve: any, reject: any) => {
+
+        console.log("fetching data:");
+        fetch(url, {
+            method: 'PUT',
+            mode: 'cors',
+            body: JSON.stringify(body),
+            headers: header
+        }).then((res: Response) => {
+            //return res.json();
+            resolve("");
+        }).catch(err => {
+            console.log('error updating answer data');
+            reject(err);
+        });
+    });
+}

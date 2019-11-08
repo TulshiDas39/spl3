@@ -39,27 +39,28 @@ namespace ForumApi.Controllers
             return answer;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("create")]
         public ActionResult<Answer> Create(Answer answer)
         {
-            if(answer.id == null) _answerService.Create(answer);
-            else Update(answer.id, answer);
+            
+            if(answer.id != null) return BadRequest();
+            _answerService.Create(answer);
 
             return CreatedAtRoute("GetAnswer", new { id = answer.id.ToString() }, answer);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, Answer answerIn)
+        [Authorize]
+        [HttpPut("update")]
+        public IActionResult Update(Answer answer)
         {
-            var answer = _answerService.Get(id);
 
-            if (answer == null)
+            if (!_answerService.Exist(answer))
             {
                 return NotFound();
             }
 
-            _answerService.Update(id, answerIn);
+            _answerService.Update(answer.id, answer);
 
             return NoContent();
         }
