@@ -13,6 +13,10 @@ export enum ActionType{
     Edit, Delete, None
 }
 
+export enum ActionEntity{
+    Answer, Question, None
+}
+
 export enum postType{
     Question,
     Answer

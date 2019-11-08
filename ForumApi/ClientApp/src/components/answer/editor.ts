@@ -1,5 +1,6 @@
 
 export class Editor {
+ 
     private editor:HTMLDivElement;
     private textArea:HTMLTextAreaElement;
     private answerdisplay:HTMLDivElement;
@@ -185,6 +186,7 @@ export class Editor {
 
     public updateEditor(value:string){
         this.textArea.value = value;
+        this.displayChanges();
         this.scrollToView();
     }
 
@@ -194,5 +196,9 @@ export class Editor {
 
     public scrollToView(){
         this.textArea.scrollIntoView();
+    }
+
+    public clear() {
+        this.textArea.value = "";
     }
 }

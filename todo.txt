@@ -1,5 +1,5 @@
 In progress
-    -condition editor view, question edit, delete options.
+    -condition editor view, question/answer edit, delete options.
 To Do
     -question search
     -rating system(in question, answer, post, comment)

@@ -22,11 +22,11 @@ export class InputEditor extends Component<editorProps, state>{
     componentDidMount() {
         let ref = this.inputEditor.current as HTMLDivElement;
         this.editor = new Editor(ref, this.props.innterHtml);
-        if(this.props.actionType == ActionType.Edit) this.editor.scrollToView();
+        if(this.props.innterHtml) this.editor.scrollToView();
     }
 
     componentDidUpdate() {
-        if (this.props.innterHtml && this.editor) this.editor.updateEditor(this.props.innterHtml);
+        if (this.editor) this.editor.updateEditor(this.props.innterHtml);
     }
 
     public render() {

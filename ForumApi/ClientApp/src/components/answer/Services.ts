@@ -1,7 +1,7 @@
 import { get, post, put, deleteEntity } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
-import { IAnswer } from "../../utils/Models";
+import { IAnswer, IQuestion } from "../../utils/Models";
 
 export function getQuestion(questionId: string) {
     let url = 'api/questions/' + questionId;
@@ -9,7 +9,21 @@ export function getQuestion(questionId: string) {
     return new Promise((resolve, reject) => {
         get(url).then(data => {
             resolve(data);
-        }, err=>{
+        }, err => {
+            reject(err);
+        })
+    })
+
+}
+
+export function updateQuestion(question: IQuestion, token:string) {
+    let url = API_CALLS.updateQuestion;
+    let headers = createHeader(token);
+
+    return new Promise<void>((resolve, reject) => {
+        put(url,headers,question).then(() => {
+            resolve();
+        }, err => {
             reject(err);
         })
     })
@@ -17,13 +31,13 @@ export function getQuestion(questionId: string) {
 }
 
 export function getAnswers(questionId: string) {
-    let url = 'api/answers/get/'+questionId;
+    let url = 'api/answers/get/' + questionId;
     let headers = createHeader("");
 
     return new Promise((resolve, reject) => {
-        post(url,headers,{}).then(data => {
+        post(url, headers, {}).then(data => {
             resolve(data);
-        }, err=>{
+        }, err => {
             reject(err);
         })
     })
@@ -35,7 +49,7 @@ export function postAnswer(data: object, token: string) {
     let headers = createHeader(token);
 
     console.log('posing answer');
-    
+
     return new Promise<IAnswer>((resolve, reject) => {
         post(url, headers, data).then(data => {
             resolve(data);
@@ -43,37 +57,37 @@ export function postAnswer(data: object, token: string) {
             reject(err);
         })
     })
-    
+
 
 }
 
-export function updateAnswer(data: object, token: string){
+export function updateAnswer(data: IAnswer, token: string) {
     let url = API_CALLS.updateAnswer;
     let headers = createHeader(token);
 
     console.log('posing answer');
-    
-    return new Promise<IAnswer>((resolve, reject) => {
-        put(url, headers, data).then(data => {
-            resolve(data);
+
+    return new Promise<void>((resolve, reject) => {
+        put(url, headers, data).then(() => {
+            resolve();
         }, err => {
             reject(err);
         })
     })
-    
+
 }
 
-export function deleteAnswer(id:string,token:string){
-    let url = API_CALLS.deleteAnswer+id;
+export function deleteAnswer(id: string, token: string) {
+    let url = API_CALLS.deleteAnswer + id;
     let headers = createHeader(token);
 
-    return new Promise<void>((resolve,reject)=>{
-        deleteEntity(url,headers).then(data=>{
+    return new Promise<void>((resolve, reject) => {
+        deleteEntity(url, headers).then(data => {
             resolve();
-        }, err=>{
+        }, err => {
             reject(err);
         })
     })
 
-    
+
 }

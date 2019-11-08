@@ -35,7 +35,7 @@ export function post(url: string, header: Headers, body: object) {
 }
 
 export function put(url: string, header: Headers, body: object) {
-    return new Promise<any>((resolve: any, reject: any) => {
+    return new Promise<void>((resolve, reject) => {
 
         console.log("fetching data:");
         fetch(url, {
@@ -45,7 +45,7 @@ export function put(url: string, header: Headers, body: object) {
             headers: header
         }).then((res: Response) => {
             //return res.json();
-            resolve("");
+            resolve();
         }).catch(err => {
             console.log('error updating answer data');
             reject(err);

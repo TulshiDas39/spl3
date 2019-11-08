@@ -93,19 +93,20 @@ namespace ForumApi.Controllers
             return CreatedAtRoute("GetQuestion", new { id = question.id.ToString() }, question);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, Question questionIn)
+        [Authorize]
+        [HttpPut]
+        public IActionResult Update(Question question)
         {
-            var question = _questionService.Get(id);
+            //var question = _questionService.Get(id);
 
-            if (question == null)
+            if (! _questionService.Exist(question))
             {
                 return NotFound();
             }
 
-            _questionService.Update(id, questionIn);
+            _questionService.Update(question.id, question);
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id:length(24)}")]

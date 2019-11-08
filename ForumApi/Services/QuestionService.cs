@@ -53,6 +53,14 @@ namespace ForumApi.Services
             return question;
         }
 
+        public bool Exist(Question question)
+        {
+            if (question.id == null) return false;
+            if(question.id.Length != 24) return false;
+            if (Get(question.id) == null) return false;
+            return true;
+        }
+
         internal ActionResult<List<Question>> getAnswerLessQuestions(int skip, int limit)
         {
             ActionResult<List<Question>> list = _questions.Find(Question => Question.isAccepted == false).SortByDescending(question => question.id).Skip(skip).Limit(limit).ToList();

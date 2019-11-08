@@ -4,6 +4,8 @@ export const API_CALLS={
     recommendedQuestions:"api/questions/recommend/",
     createAnswer:"api/answers/create",
     updateAnswer:"api/answers/update",
-    deleteAnswer:"api/answers/delete/"
+    deleteAnswer:"api/answers/delete/",
+    updateQuestion:"api/questions",
+    deleteQuestion:"api/questions/"
 
 }

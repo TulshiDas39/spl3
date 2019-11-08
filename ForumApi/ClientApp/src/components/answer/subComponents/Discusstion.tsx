@@ -3,11 +3,11 @@ import "./styles/discussion.css";
 import { Post } from "./Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
-import { getAnswers, postAnswer, updateAnswer, deleteAnswer } from "../Services";
+import { getAnswers, postAnswer, updateAnswer, deleteAnswer, updateQuestion } from "../Services";
 import { IAuth0Context } from "../../../utils/Structures";
 import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
-import { discussionProps, ActionType } from "../Types";
+import { discussionProps, ActionType, ActionEntity } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
 
 interface state {
@@ -20,14 +20,17 @@ export class Discussion extends Component<discussionProps, state>{
     static contextType = Auth0Context;
     private displayEditor = false;
     private editorInnerHtml = "";
-    private actionStatus = ActionType.None;
+    //private actionStatus = ActionType.None;
+    //private actionEntity = ActionEntity.None;
     private userAnswerIndex = -1;
+    private post: (text: string) => Promise<void>;
 
     constructor(props: discussionProps) {
         super(props);
         console.log('in discussion: ');
         this.state = { isLoading: true };
         console.log(this.props.questionData);
+        this.post = this.answerPost.bind(this);
     }
 
     componentDidMount() {
@@ -36,7 +39,17 @@ export class Discussion extends Component<discussionProps, state>{
 
     componentWillUpdate() {
         this.setUserAnswerIndex();
-        this.setDisplayEditor();
+    }
+
+    private init() {
+
+        getAnswers(this.props.questionData.id).then(data => {
+            this.answerData = data as IAnswer[];
+            this.setUserAnswerIndex();
+            this.setDisplayEditor();
+            this.setState({ isLoading: false });
+        })
+
     }
 
     fetchPostedAnswers() {
@@ -59,23 +72,25 @@ export class Discussion extends Component<discussionProps, state>{
         };
 
         let token = await this.context.getTokenSilently();
-        console.log("token:");
-        console.log(token);
+
         postAnswer(data, token).then(data => {
+            this.displayEditor = false;
+            this.editorInnerHtml = "";
             this.fetchPostedAnswers();
         }, err => {
-            console.log(err);
+            console.error(err);
         });
 
     }
 
-    private updateAnswer(text: string) {
+    private async updateAnswer(text: string) {
         let answer = this.answerData[this.userAnswerIndex];
         answer.description = text;
-        let token = this.context.getTokenSilently();
+        let token = await this.context.getTokenSilently();
 
-        updateAnswer(answer, token).then(data => {
-            this.actionStatus = ActionType.None;
+        updateAnswer(answer, token).then(() => {
+            this.displayEditor = false;
+            this.editorInnerHtml = "";
             this.fetchPostedAnswers();
         }, err => {
             console.log(err);
@@ -85,32 +100,51 @@ export class Discussion extends Component<discussionProps, state>{
     private editAnswer() {
         this.editorInnerHtml = this.answerData[this.userAnswerIndex].description;
         this.displayEditor = true;
-        this.actionStatus = ActionType.Edit;
+        this.post = this.updateAnswer.bind(this);
+        this.displayEditor = true;
         this.updateComponent();
     }
 
     private async deleteAnswer() {
         let token = await this.context.getTokenSilently();
         let id = this.answerData[this.userAnswerIndex].id as string;
-        deleteAnswer(id ,token).then(()=>{
+        deleteAnswer(id, token).then(() => {
+            this.displayEditor = true;
             this.fetchPostedAnswers();
-        }, err=>{
+        }, err => {
             console.error(err);
         });
     }
 
-    private updateComponent() {
-        this.setState(this.state);
+
+    private editQuestion() {
+        this.editorInnerHtml = this.props.questionData.description;
+        this.displayEditor = true;
+        this.post = this.updateQuestion.bind(this);
+        this.displayEditor = true;
+        this.updateComponent();
     }
 
-    private init() {
-        this.state = { isLoading: true }
+    private async updateQuestion(text:string) {
+        let question = this.props.questionData;
+        question.description = text;
+        let token = await this.context.getTokenSilently();
 
-        getAnswers(this.props.questionData.id).then(data => {
-            this.answerData = data as IAnswer[];
-            this.setState({ isLoading: false });
-        })
+        updateQuestion(question, token).then(() => {
+            this.editorInnerHtml = "";
+            this.setDisplayEditor();
+            this.fetchPostedAnswers();
+        }, err => {
+            console.log(err);
+        });
+    }
 
+    private async deleteQuestion() {
+
+    }
+
+    private updateComponent() {
+        this.setState(this.state);
     }
 
     private setUserAnswerIndex() {
@@ -134,19 +168,9 @@ export class Discussion extends Component<discussionProps, state>{
             this.displayEditor = true;
         }
 
-        else if (this.actionStatus == ActionType.Edit) this.displayEditor = true;
-
-        else this.displayEditor = false;
-
     }
 
-    private editQuestion() {
 
-    }
-
-    private deleteQuestion() {
-
-    }
 
     private getEditor() {
         if (this.displayEditor) return this.editor();
@@ -154,10 +178,10 @@ export class Discussion extends Component<discussionProps, state>{
 
     private editor() {
         let props: editorProps;
+
         props = {
             innterHtml: this.editorInnerHtml,
-            onPost: this.actionStatus == ActionType.Edit ? this.updateAnswer.bind(this) : this.answerPost.bind(this),
-            actionType: this.actionStatus
+            onPost: this.post
         }
 
         return <InputEditor {...props} />;
@@ -167,7 +191,7 @@ export class Discussion extends Component<discussionProps, state>{
         if (this.state.isLoading) return <Loader />;
         return (
             <div id="discussion_flow">
-                <Post data={this.props.questionData} onEdit={() => this.editQuestion()} onDelete={() => this.deleteQuestion()} />
+                <Post data={this.props.questionData} onEdit={this.editQuestion.bind(this)} onDelete={this.deleteQuestion.bind(this)} />
                 <h1 style={{ marginBottom: '2px' }}>উত্তর {this.answerData.length} টি</h1>
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
