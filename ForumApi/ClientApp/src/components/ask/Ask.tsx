@@ -34,8 +34,6 @@ export class Ask extends Component<props, state>{
     private activeTabBackground = '#07C';
     private tabStyles: tabProperties[] = [];
     private displayOfSteps: string[] = ['', 'none', 'none', 'none', 'none', 'none'];
-    //private questionTitle = "";
-    //private description = "";
     private data: IQuestion = {} as IQuestion;
     private similarQuestions: IQuestion[] = [];
     static contextType = Auth0Context;
@@ -200,7 +198,7 @@ export class Ask extends Component<props, state>{
         let tags = this.state.tags;
         let tagStr = "";
         tags.forEach(element => {
-            tagStr += element.text
+            tagStr += " "+element.text
         });
         console.log('tagStr:' + tagStr);
         return tagStr;

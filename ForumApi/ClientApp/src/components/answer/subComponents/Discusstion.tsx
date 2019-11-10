@@ -142,7 +142,7 @@ export class Discussion extends Component<discussionProps, state>{
         let token = await this.context.getTokenSilently();
         let id = this.props.questionData.id as string;
         deleteQuestion(id, token).then(() => {
-         (this.props as any).history.push('/');
+            this.props.onDeleteQuestion();
         }, err => {
             console.error(err);
         });

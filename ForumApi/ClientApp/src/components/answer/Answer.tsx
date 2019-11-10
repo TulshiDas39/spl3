@@ -6,6 +6,7 @@ import { StatusBar } from "../statusBar/StatusBar";
 import { Head } from "./subComponents/Head";
 import { getQuestion } from "./Services";
 import { IQuestion } from "../../utils/Models";
+import { AnswerProps } from "./Types";
 
 export interface AnswerState {
     questionId: string;
@@ -13,7 +14,7 @@ export interface AnswerState {
     isloading: boolean;
 }
 
-export class Answer extends Component<any, AnswerState>{
+export class Answer extends Component<AnswerProps, AnswerState>{
     public static answerState: AnswerState;
     public static setAnswerState: any;
     private questionData: IQuestion = {} as IQuestion;
@@ -39,6 +40,10 @@ export class Answer extends Component<any, AnswerState>{
         this.state = { questionId: handle, answerCount: "২", isloading: true }
     }
 
+    private onDeleteQuestion(){
+        this.props.history.push('/');
+    }
+
     public render() {
         console.log('rendering answer');
         if (this.state.isloading) return (<p>loading...</p>);
@@ -49,7 +54,7 @@ export class Answer extends Component<any, AnswerState>{
                 <div id="mainDiv">
                     {new Head(this.questionData).getHead()}
                     <div id="middle_Div">
-                        <Discussion questionData={this.questionData} />
+                        <Discussion onDeleteQuestion={this.onDeleteQuestion.bind(this)} questionData={this.questionData} />
                         <StatusBar />
                     </div>
                 </div>

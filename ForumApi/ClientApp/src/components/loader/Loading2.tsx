@@ -1,12 +1,12 @@
 import React from "react";
 //@ts-ignore
-import loading from "../../assets/loading3.svg";
+import loading from "../../assets/multipleCircle.svg";
 import "./loading.css";
 
-const Loading = () => (
+const Loading2 = () => (
   <div className="spinner">
     <img src={loading} alt="Loading" />
   </div>
 );
 
-export default Loading;
+export default Loading2;

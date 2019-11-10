@@ -3,7 +3,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    height: 30vh;
+    position: absolute;
+    top: 30%;
+    left: 40%;
 }
 
 .spinner > img{
