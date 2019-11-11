@@ -1,0 +1,25 @@
+.commentBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.commentBox > input{
+    border:1px solid gray;
+}
+
+.commentActions{
+    display: flex;
+    flex-direction: row;
+}
+.commentActionItem{
+    color: #848d95;
+}
+
+.commentActionItem:hover{
+    color: #3b4045;
+    cursor: pointer;
+}
+
+.cancellComment{
+    margin-left: 20px;
+}

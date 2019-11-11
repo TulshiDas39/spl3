@@ -1,0 +1,7 @@
+.comments{
+    display: flex;
+    flex-direction: column;
+    border-top:1px solid #bbc0c4;
+    font-size: 12px;
+    flex-basis: 100%;
+}

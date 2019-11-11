@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./styles/comment.css";
 
 export class Comment extends Component<any, any>{
+
+    
     render() {
         return (
             <div className="comments">

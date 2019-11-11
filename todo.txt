@@ -1,5 +1,5 @@
 In progress
-    -editing question list
+    -comment system
 To Do
     -question search
     -rating system(in question, answer, post, comment)
@@ -13,6 +13,7 @@ To Do
 
 
 Done
+    -editing question list
     -condition editor view, question/answer edit, delete options.
     -show answers
     -modify answer editor

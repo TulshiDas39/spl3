@@ -1,3 +1,7 @@
 export enum HomePageTab{
-    recommended,all,unanswered
+    RECOMMENDED,ALL,UNANSWERED
+}
+
+export enum PostType{
+    QUESTION,ANSWER
 }
