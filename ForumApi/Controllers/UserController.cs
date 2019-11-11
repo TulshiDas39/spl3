@@ -26,7 +26,8 @@ namespace ForumApi.Controllers
         public ActionResult<List<User>> Get() =>
             _userService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetUser")]
+
+        [HttpGet("{id}", Name = "GetUser")]
         public ActionResult<User> Get(string id)
         {
             var user = _userService.Get(id);
@@ -34,7 +35,7 @@ namespace ForumApi.Controllers
             if (user == null)
             {
                 return NotFound();
-            }
+            } 
 
             return user;
         }

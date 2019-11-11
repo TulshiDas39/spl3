@@ -6,6 +6,7 @@ export const API_CALLS={
     updateAnswer:"api/answers/update",
     deleteAnswer:"api/answers/delete/",
     updateQuestion:"api/questions",
-    deleteQuestion:"api/questions/"
+    deleteQuestion:"api/questions/",
+    users:"api/users/"
 
 }

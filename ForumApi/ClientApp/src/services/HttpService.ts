@@ -1,13 +1,18 @@
 
-export function get(url: string) {
+export function get(url: string, headers?: Headers) {
     return new Promise<any>((resolve, reject) => {
-        fetch(url).then(data => {
-            return data.json();
-        }).then(data => {
-            resolve(data);
-        }).catch(err => {
-            reject(err);
-        })
+        fetch(url,
+            {
+                method: 'GET',
+                mode: 'cors',
+                headers: headers
+            }).then(data => {
+                return data.json();
+            }).then(data => {
+                resolve(data);
+            }).catch(err => {
+                reject(err);
+            })
     })
 
 }
@@ -53,11 +58,11 @@ export function put(url: string, header: Headers, body: object) {
     });
 }
 
-export function deleteEntity(url:string, header:Headers){
-    return fetch(url ,{
+export function deleteEntity(url: string, header: Headers) {
+    return fetch(url, {
         method: 'DELETE',
         headers: header
-    }).then(response => {});
+    }).then(response => { });
 
 }
 
