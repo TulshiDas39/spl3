@@ -4,13 +4,11 @@ import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
 import { StatusBar } from "../statusBar/StatusBar";
 import { Head } from "./subComponents/Head";
-import { getQuestion } from "./Services";
+import { getQuestion, countView } from "./Services";
 import { IQuestion } from "../../utils/Models";
 import { AnswerProps } from "./Types";
 
 export interface AnswerState {
-    questionId: string;
-    answerCount: string;
     isloading: boolean;
 }
 
@@ -18,26 +16,26 @@ export class Answer extends Component<AnswerProps, AnswerState>{
     public static answerState: AnswerState;
     public static setAnswerState: any;
     private questionData: IQuestion = {} as IQuestion;
-    constructor(props: any) {
+    constructor(props: AnswerProps) {
         super(props);
-        this.init();
-        // Answer.setAnswerState = this.setState;
-        // Answer.answerState = this.state;
+        this.state = {isloading: true };
+    }
+
+    componentDidMount(){
         this.fetchData();
     }
 
     private fetchData() {
-
-        getQuestion(this.state.questionId).then(data=>{
-            this.questionData = data as IQuestion;
-            this.setState({ isloading: false });
-        })
-
-    }
-
-    private init() {
         const { handle } = this.props.match.params;
-        this.state = { questionId: handle, answerCount: "২", isloading: true }
+        console.log('fetching question data');
+        getQuestion(handle).then(data=>{
+            this.questionData = data as IQuestion;
+            console.log('counting views');
+            countView(handle);
+            this.setState({ isloading: false });
+        });
+       
+
     }
 
     private onDeleteQuestion(){

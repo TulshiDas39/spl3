@@ -21,7 +21,7 @@ export function updateQuestion(question: IQuestion, token:string) {
     let headers = createHeader(token);
 
     return new Promise<void>((resolve, reject) => {
-        put(url,headers,question).then(() => {
+        put(url,question,headers).then(() => {
             resolve();
         }, err => {
             reject(err);
@@ -84,7 +84,7 @@ export function updateAnswer(data: IAnswer, token: string) {
     console.log('posing answer');
 
     return new Promise<void>((resolve, reject) => {
-        put(url, headers, data).then(() => {
+        put(url, data, headers).then(() => {
             resolve();
         }, err => {
             reject(err);
@@ -106,4 +106,26 @@ export function deleteAnswer(id: string, token: string) {
     })
 
 
+}
+
+export function countView(id:string){
+    let url = API_CALLS.viewQuestionCount+id;
+    console.log('counting view:');
+
+    let data= localStorage.getItem('views');
+    if(!data) {
+        localStorage.setItem('views',JSON.stringify([]));
+        data="[]";
+    };
+    
+    let views:string[] = JSON.parse(data);
+    if(views.indexOf(id) != -1) return;
+
+    put(url,{}).then(()=>{
+        views.push(id);
+        localStorage.setItem('views',JSON.stringify(views));
+        console.log('counted view');
+    },err=>{
+        console.error(err);
+    })
 }

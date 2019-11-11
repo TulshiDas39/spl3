@@ -39,7 +39,7 @@ export function post(url: string, header: Headers, body: object) {
     });
 }
 
-export function put(url: string, header: Headers, body: object) {
+export function put(url: string, body: object, header?: Headers) {
     return new Promise<void>((resolve, reject) => {
 
         console.log("fetching data:");
@@ -52,7 +52,6 @@ export function put(url: string, header: Headers, body: object) {
             //return res.json();
             resolve();
         }).catch(err => {
-            console.log('error updating answer data');
             reject(err);
         });
     });

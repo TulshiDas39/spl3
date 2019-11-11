@@ -83,6 +83,18 @@ namespace ForumApi.Controllers
             _userService.Create(user_data);
         }
 
+        [HttpPut("view/{id:length(24)}")]
+        public ActionResult CountView(string id){
+            _logger.LogDebug("question id to count view:"+id);
+            Question question = _questionService.Get(id);
+            if(question == null) return NotFound();
+            _logger.LogDebug("updating views");
+            question.views += 1;
+            _questionService.Update(id,question);
+
+            return Ok();
+        }
+
         [Authorize]
         [HttpPost]
         public ActionResult<Question> Create(Question question)
