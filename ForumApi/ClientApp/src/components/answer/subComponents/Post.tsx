@@ -6,7 +6,7 @@ import { Auth0Context } from "../../../utils/Contexts";
 import { IAuth0Context } from "../../../utils/Structures";
 import { ConfirmationDialog } from "../../popups/ConfirmationDialog";
 import { PostType } from "../../../utils/Enums";
-import { Comments } from "../../commentList/CommentList";
+import { CommentList } from "../../commentList/CommentList";
 import { ICommentsProps } from "../../commentList/Types";
 
 interface props {
@@ -43,7 +43,7 @@ export class Post extends Component<props, any>{
 
                     <User />
 
-                    <Comments postId= {this.props.data.id} postType = {this.postType} />
+                    <CommentList postId= {this.props.data.id} postType = {this.postType} />
                 </div>
             </div>
         )

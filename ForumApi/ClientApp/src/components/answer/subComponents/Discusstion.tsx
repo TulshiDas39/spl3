@@ -62,6 +62,7 @@ export class Discussion extends Component<discussionProps, state>{
     private async answerPost(text: string) {
         let data: IAnswer;
         data = {
+            id:undefined as any,
             questionId: this.props.questionData.id,
             description: text,
             ratings: 0,

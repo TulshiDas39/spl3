@@ -32,6 +32,7 @@
 
 .edit_delete_options {
     display: flex;
+    margin-top: 20px;
 }
 
 .edit_delete_options > span{

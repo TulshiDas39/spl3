@@ -10,6 +10,7 @@ export const API_CALLS={
     viewQuestionCount:"api/questions/view/",
     users:"api/users/",
 
-    comment:"api/comment/"
+    comment:"api/comment/",
+    commentList:"api/comment/list/"
 
 }

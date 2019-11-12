@@ -5,20 +5,20 @@ import "./comments.css";
 import { Comment } from "../comment/Comment";
 import { CommentBox } from "../comment/CommentBox";
 import {Auth0Context} from "../../utils/Contexts";
-import { postComment } from "./Services";
+import { postComment, fetchCommentList } from "./Services";
 
 interface state {
     isLoading: boolean;
 }
 
-export class Comments extends React.Component<ICommentsProps, state>{
-    private comments: IComment[] = [{ datetime: new Date().getTime(), id: "231341241234", ratings: 0, target: "Q", targetId: "1238383378287483", text: "hellow orld", userId: "1431341kfdasfjasdfasdf" }];
+export class CommentList extends React.Component<ICommentsProps, state>{
+    private comments: IComment[] = [];
     private isCommenting = false;
 
     static contextType = Auth0Context;
     constructor(props: any) {
         super(props);
-        this.state = { isLoading: false };
+        this.state = { isLoading: true };
     }
 
     componentDidMount() {
@@ -26,7 +26,10 @@ export class Comments extends React.Component<ICommentsProps, state>{
     }
 
     private fetchComments() {
-        //throw new Error("Method not implemented.");
+        fetchCommentList(this.props.postId).then(data=>{
+            this.comments = data;
+            this.setState({isLoading:false});
+        });
     }
 
     private updateComponent() {
@@ -57,19 +60,24 @@ export class Comments extends React.Component<ICommentsProps, state>{
             datetime: new Date().getTime()
         }
         postComment(comment,token).then(data=>{
-            console.log('successfully pushed data');
             this.comments.push(data);
+            this.isCommenting = false;
             this.updateComponent();
         }, err =>{
             console.error(err);
         });
     }
 
-    render() {
+    deleteComment(index: number) {
+        this.comments.splice(index,1);
+        this.updateComponent();
+    }
 
+    render() {
+        if(this.state.isLoading) return <span></span>;
         return (
             <div className="comments">
-                {this.comments.map((item) => <Comment key={"commentItem_" + item.id} data={item} />)}
+                {this.comments.map((item,index) => <Comment key={"commentItem_" + item.id} data={item} onDelete={()=> this.deleteComment(index)}/>)}
                 {this.isCommenting ? <CommentBox onCancell={this.cancellComment.bind(this)} onSave={this.saveComment.bind(this)} text=""/> :
                     <span className="make-comment" onClick={this.comment.bind(this)}>মন্তব্য করুন</span>}
             </div>

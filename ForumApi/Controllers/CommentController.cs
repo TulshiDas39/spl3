@@ -21,7 +21,7 @@ namespace ForumApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{id}", Name = "GetComment")]
+        [HttpGet("{id:length(24)}", Name = "GetComment")]
         public ActionResult<Comment> Get(string id)
         {
             var comment = _commentService.Get(id);
@@ -32,6 +32,13 @@ namespace ForumApi.Controllers
             }
 
             return comment;
+        }
+
+
+
+        [HttpGet("list/{postId:length(24)}")]
+        public ActionResult<List<Comment>> GetMany(string postId){
+            return _commentService.GetMany(postId);
         }
 
         [Authorize]
@@ -46,7 +53,7 @@ namespace ForumApi.Controllers
         }
 
         [Authorize]
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult Update(Comment comment)
         {
 

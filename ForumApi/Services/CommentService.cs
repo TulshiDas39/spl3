@@ -18,16 +18,18 @@ namespace ForumApi.Services
             _comments = database.GetCollection<Comment>(settings.CommentsCollectionName);
         }
 
-        public List<Comment> Get() =>
-            _comments.Find(Comment => true).ToList();
-
-        public Comment Get(string id) =>
-            _comments.Find<Comment>(Comment => Comment.id == id).FirstOrDefault();
+        public List<Comment> GetMany(string postId) =>
+            _comments.Find<Comment>(Comment => Comment.targetId == postId).ToList();
 
         public Comment Create(Comment comment)
         {
             _comments.InsertOne(comment);
             return comment;
+        }
+
+        internal Comment Get(string id)
+        {
+            return _comments.Find<Comment>(Comment => Comment.id == id).FirstOrDefault();
         }
 
         public void Update(string id, Comment commentIn) =>

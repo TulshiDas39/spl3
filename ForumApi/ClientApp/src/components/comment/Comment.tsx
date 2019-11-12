@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { ICommentProps } from "./Types";
 import { CommentBox } from "./CommentBox";
+import { Auth0Context } from "../../utils/Contexts";
 import "./styles/comment.css";
+import { updateComment } from "../commentList/Services";
+import { IComment } from "../../utils/Models";
 
 interface state {
     isEditing: boolean;
 }
 
 export class Comment extends Component<ICommentProps, state>{
+
+    static contextType = Auth0Context;
+    private editingComment = {} as IComment;
 
     constructor(props: ICommentProps) {
         super(props);
@@ -16,13 +22,18 @@ export class Comment extends Component<ICommentProps, state>{
 
 
     editComment(): void {
-
         this.setState({ isEditing: true })
     }
 
-    onEditSave(text: string) {
-        // preprocessing..........
-        this.setState({ isEditing: false });
+    async onEditSave(text: string) {
+        let token = await this.context.getTokenSilently();
+        let comment = this.props.data;
+        comment.text = text;
+        updateComment(comment, token).then(() => {
+            this.setState({ isEditing: false });
+        }, err => {
+            console.error(err);
+        });
     }
 
     onCancell() {
@@ -49,12 +60,14 @@ export class Comment extends Component<ICommentProps, state>{
 
                 </span>
                 <span className="commentDiv">
-                    <span className="user-comment-text">এটা একটি এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট
-                এটা একটি এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট</span>
-                    <span className="commentOptions">
-                        <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
-                        <span className="user-comment-delete">মুছুন</span>
-                    </span>
+                    <span className="user-comment-text">{this.props.data.text}</span>
+                    {this.context.isAuthenticated ?
+                        <span className="commentOptions">
+                            <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
+                            <span className="user-comment-delete" onClick={this.props.onDelete}>মুছুন</span>
+                        </span> : null
+                    }
+
                 </span>
             </span>
         )
