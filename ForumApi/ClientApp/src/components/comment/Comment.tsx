@@ -1,32 +1,32 @@
-import React,{ Component } from "react";
+import React, { Component } from "react";
 import { ICommentProps } from "./Types";
 import { CommentBox } from "./CommentBox";
 import "./styles/comment.css";
 
 interface state {
-    isEditing:boolean;
+    isEditing: boolean;
 }
 
 export class Comment extends Component<ICommentProps, state>{
 
     constructor(props: ICommentProps) {
         super(props);
-        this.state={isEditing:false};
+        this.state = { isEditing: false };
     }
 
 
     editComment(): void {
-        
-        this.setState({isEditing:true})
+
+        this.setState({ isEditing: true })
     }
 
-    onEditSave(text:string){
+    onEditSave(text: string) {
         // preprocessing..........
-        this.setState({isEditing:false});
+        this.setState({ isEditing: false });
     }
 
-    onCancell(){
-        this.setState({isEditing:false});
+    onCancell() {
+        this.setState({ isEditing: false });
     }
 
     render() {
@@ -48,10 +48,14 @@ export class Comment extends Component<ICommentProps, state>{
                     </span>
 
                 </span>
-                <span className="user-comment-text">এটা একটি এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট
-                এটা একটি এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট</span> <br />
-                <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
-                <span className="user-comment-delete">মুছুন</span>
+                <span className="commentDiv">
+                    <span className="user-comment-text">এটা একটি এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট
+                এটা একটি এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট এটা একটি কমেন্ট, এটা একটি কমেন্ট</span>
+                    <span className="commentOptions">
+                        <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
+                        <span className="user-comment-delete">মুছুন</span>
+                    </span>
+                </span>
             </span>
         )
     }

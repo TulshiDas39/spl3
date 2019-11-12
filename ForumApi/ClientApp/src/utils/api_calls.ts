@@ -8,6 +8,8 @@ export const API_CALLS={
     updateQuestion:"api/questions",
     deleteQuestion:"api/questions/",
     viewQuestionCount:"api/questions/view/",
-    users:"api/users/"
+    users:"api/users/",
+
+    comment:"api/comment/"
 
 }

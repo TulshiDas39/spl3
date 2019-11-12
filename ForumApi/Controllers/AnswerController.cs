@@ -70,7 +70,7 @@ namespace ForumApi.Controllers
         }
 
         [Authorize]
-        [HttpDelete("delete/{id:length(24)}")]
+        [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
             var answer = _answerService.Get(id);

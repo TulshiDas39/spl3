@@ -35,5 +35,5 @@ export interface IComment{
     targetId:string;
     text:string;
     ratings:number;
-    dateTime:number;
+    datetime:number;
 }

@@ -14,7 +14,7 @@ export async function fetchRecommendedQuestions(myContext: any, iteration: numbe
 
     return new Promise<IQuestion[]>((resolve: any, reject: any) => {
         console.log("fetching recommended questions:");
-        post(url, headers, user).then(data => {
+        post(url, user, headers).then(data => {
             resolve(data);
         }, err => {
             reject(err);

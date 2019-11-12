@@ -1,5 +1,6 @@
 using ForumApi.Models;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,5 +38,13 @@ namespace ForumApi.Services
 
         public void Remove(string id) => 
             _comments.DeleteOne(comment => comment.id == id);
+
+        internal bool Exist(Comment comment)
+        {
+            if (comment.id == null) return false;
+            if (comment.id.Length != 24) return false;
+            if (Get(comment.id) == null) return false;
+            return true;
+        }
     }
 }

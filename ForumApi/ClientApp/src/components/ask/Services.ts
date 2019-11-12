@@ -6,7 +6,7 @@ export function postQuestion(data:IQuestion, token:string){
     let url = 'api/questions';
     let headers = createHeader(token);
     return new Promise((resolve, reject)=>{
-        post(url,headers,data).then(data=>{
+        post(url,data,headers).then(data=>{
             resolve(data);
         },err=>{
             reject(err);

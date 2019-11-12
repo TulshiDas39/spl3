@@ -3,5 +3,6 @@ export enum HomePageTab{
 }
 
 export enum PostType{
-    QUESTION,ANSWER
+    QUESTION="Q",
+    ANSWER="A"
 }

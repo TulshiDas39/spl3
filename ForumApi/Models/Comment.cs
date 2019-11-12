@@ -19,6 +19,6 @@ namespace ForumApi.Models
 
         public int ratings { get; set; }
         
-        public string dateTime { get; set; }
+        public long datetime { get; set; }
     }
 }
