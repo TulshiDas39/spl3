@@ -7,7 +7,7 @@ import { Loader } from "../../../loader/loader";
 import { IQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
-import { IAuth0Context, IUserCredential } from "../../../../utils/Structures";
+import { IAuth0Context} from "../../../../utils/Structures";
 import { fetchLatestQuestion, fetchRecommendedQuestions, fetchAnswerLessQuestions } from "../../Service";
 import { HomePageTab } from "../../../../utils/Enums";
 import { colors } from "../../../../utils/colors";

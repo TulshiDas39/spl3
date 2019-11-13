@@ -6,3 +6,7 @@ export enum PostType{
     QUESTION="Q",
     ANSWER="A"
 }
+
+export enum CashedItem{
+    USER_COMMENT="userComment"
+}

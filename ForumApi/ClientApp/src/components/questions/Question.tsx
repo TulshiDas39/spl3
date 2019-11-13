@@ -34,8 +34,7 @@ export class Question extends Component<QuestionProps, state>{
 
 
     private async loadUserInfo() {
-        let token = await this.context.getTokenSilently();
-        getUser(this.props.data.userId, token).then(data => {
+        getUser(this.props.data.userId).then(data => {
             console.log('user info:');
             console.log(data);
             this.user = data;

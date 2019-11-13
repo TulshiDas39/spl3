@@ -5,3 +5,8 @@ export interface ICommentsProps{
     postId:string;
     postType:PostType;
 }
+
+export interface ICashedComment{
+    targetId?:string;
+    text?:string;
+}
