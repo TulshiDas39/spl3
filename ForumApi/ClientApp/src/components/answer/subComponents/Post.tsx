@@ -1,26 +1,22 @@
 import React, { Component } from "react";
 import { User } from "./User";
 import "./styles/post.css";
-import { IQuestion, IAnswer } from "../../../utils/Models";
+import {IAnswer } from "../../../utils/Models";
 import { Auth0Context } from "../../../utils/Contexts";
 import { IAuth0Context } from "../../../utils/Structures";
 import { ConfirmationDialog } from "../../popups/ConfirmationDialog";
 import { PostType } from "../../../utils/Enums";
 import { CommentList } from "../../commentList/CommentList";
-import { ICommentsProps } from "../../commentList/Types";
+import { Utility } from "../../../utils/Utility";
+import { PostProps } from "../Types";
 
-interface props {
-    data: IQuestion | IAnswer;
-    onEdit(): void;
-    onDelete(): void;
-}
 
-export class Post extends Component<props, any>{
+export class Post extends Component<PostProps, any>{
 
     static contextType = Auth0Context;
     private postType = PostType.QUESTION;
 
-    constructor(props:props){
+    constructor(props:PostProps){
         super(props);
         this. init();
     }
@@ -34,7 +30,7 @@ export class Post extends Component<props, any>{
             <div id="postDiv">
                 <div id="question_vote" className="vote_system">
                     <span className="fa fa-sort-asc vote_icon"></span>
-                    <span>{this.props.data.ratings}</span>
+                    <span>{Utility.convertToBengaliText(this.props.data.ratings)}</span>
                     <span className="fa fa-sort-desc vote_icon"></span>
                 </div>
                 <div id="question_description">

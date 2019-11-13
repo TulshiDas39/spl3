@@ -8,5 +8,6 @@ export enum PostType{
 }
 
 export enum CashedItem{
-    USER_COMMENT="userComment"
+    USER_COMMENT="userComment",
+    VIEWS="views"
 }

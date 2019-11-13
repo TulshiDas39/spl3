@@ -2,6 +2,7 @@ import { get, post, put, deleteEntity } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
 import { IAnswer, IQuestion } from "../../utils/Models";
+import { CashedItem } from "../../utils/Enums";
 
 export function getQuestion(questionId: string) {
     let url = 'api/questions/' + questionId;
@@ -112,9 +113,9 @@ export function countView(id:string){
     let url = API_CALLS.viewQuestionCount+id;
     console.log('counting view:');
 
-    let data= localStorage.getItem('views');
+    let data= localStorage.getItem(CashedItem.VIEWS);
     if(!data) {
-        localStorage.setItem('views',JSON.stringify([]));
+        localStorage.setItem(CashedItem.VIEWS,JSON.stringify([]));
         data="[]";
     };
     
@@ -123,7 +124,7 @@ export function countView(id:string){
 
     put(url,{}).then(()=>{
         views.push(id);
-        localStorage.setItem('views',JSON.stringify(views));
+        localStorage.setItem(CashedItem.VIEWS,JSON.stringify(views));
         console.log('counted view');
     },err=>{
         console.error(err);

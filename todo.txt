@@ -1,8 +1,9 @@
 In progress
-    -comment system
-To Do
-    -question search
     -rating system(in question, answer, post, comment)
+
+To Do
+    -refering user in Question,Answer,Comment
+    -question search
     -blocking question based on user reaction
     -footer
     -tag follow option in tag page
@@ -15,6 +16,7 @@ To Do
 
 
 Done
+    -comment system
     -editing question list
     -condition editor view, question/answer edit, delete options.
     -show answers

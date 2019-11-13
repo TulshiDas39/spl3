@@ -7,7 +7,7 @@ import { Loader } from "../../../loader/loader";
 import { IQuestion } from "../../../../utils/Models";
 import { Question } from "../../../questions/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
-import { IAuth0Context} from "../../../../utils/Structures";
+import { IAuth0Context, IAppState } from "../../../../utils/Structures";
 import { fetchLatestQuestion, fetchRecommendedQuestions, fetchAnswerLessQuestions } from "../../Service";
 import { HomePageTab } from "../../../../utils/Enums";
 import { colors } from "../../../../utils/colors";
@@ -46,13 +46,23 @@ export class Right extends Component<props, state>{
 
     }
 
-    private showRecommendedQuestions(){
+    private showRecommendedQuestions() {
         this.iteration = 0;
         this.getRecommendedQuestions();
     }
 
     private getRecommendedQuestions() {
-        if(!this.context.isAuthenticated) (this.context as IAuth0Context).loginWithRedirect({ targetUrl: window.location.href })
+
+        if (!this.context.isAuthenticated) {
+            let context = this.context as IAuth0Context;
+            let appState:IAppState;
+            appState ={
+                appState:{
+                    targetUrl:window.location.pathname
+                }
+            }
+            context.loginWithRedirect(appState);
+        }
         fetchRecommendedQuestions(this.context, this.iteration).then(data => {
             this.tab = HomePageTab.RECOMMENDED;
             this.questionList = data;
@@ -60,7 +70,7 @@ export class Right extends Component<props, state>{
         })
     }
 
-    private showLatestQuestions(){
+    private showLatestQuestions() {
         this.iteration = 0;
         this.getLatestQuestions();
     }
@@ -73,27 +83,27 @@ export class Right extends Component<props, state>{
         });
     }
 
-    private showAnswerlessQuestions(){
+    private showAnswerlessQuestions() {
         this.iteration = 0;
         this.getAnswerLessQuestions();
     }
 
     private getAnswerLessQuestions(): void {
-        fetchAnswerLessQuestions(this.iteration).then(data=>{
+        fetchAnswerLessQuestions(this.iteration).then(data => {
             this.questionList = data;
             this.tab = HomePageTab.UNANSWERED;
-            this.setState({isLoading:false});
+            this.setState({ isLoading: false });
         })
     }
 
-    private eventNext(){
+    private eventNext() {
         this.iteration++;
         this.loadMoreQuestions();
     }
 
-    private eventPrev(){
+    private eventPrev() {
         this.iteration--;
-        if(this.iteration < 0) this.iteration=0;
+        if (this.iteration < 0) this.iteration = 0;
         this.loadMoreQuestions();
     }
 
@@ -149,8 +159,8 @@ export class Right extends Component<props, state>{
                     </div>
                     <div className="questionList">
                         {
-                            this.questionList.length==0?<p>No recommended questions found</p>:
-                            this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
+                            this.questionList.length == 0 ? <p>No recommended questions found</p> :
+                                this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
                         }
                     </div>
 
@@ -166,5 +176,5 @@ export class Right extends Component<props, state>{
             </div>
         )
     }
- 
+
 }

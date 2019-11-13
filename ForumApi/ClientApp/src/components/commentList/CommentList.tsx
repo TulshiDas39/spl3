@@ -117,6 +117,4 @@ export class CommentList extends React.Component<ICommentsProps, state>{
             </div>
         )
     }
-
-
 }

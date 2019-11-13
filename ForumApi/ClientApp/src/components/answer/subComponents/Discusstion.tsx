@@ -9,6 +9,7 @@ import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
 import { discussionProps } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
+import { Utility } from "../../../utils/Utility";
 
 interface state {
     isLoading: boolean;
@@ -176,8 +177,6 @@ export class Discussion extends Component<discussionProps, state>{
 
     }
 
-
-
     private getEditor() {
         if (this.displayEditor) return this.editor();
     }
@@ -198,7 +197,7 @@ export class Discussion extends Component<discussionProps, state>{
         return (
             <div id="discussion_flow">
                 <Post data={this.props.questionData} onEdit={this.editQuestion.bind(this)} onDelete={this.deleteQuestion.bind(this)} />
-                <h1 style={{ marginBottom: '2px' }}>উত্তর {this.answerData.length} টি</h1>
+                <h1 style={{ marginBottom: '2px' }}>উত্তর {Utility.convertToBengaliText(this.answerData.length)} টি</h1>
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
                     {

@@ -29,3 +29,9 @@ export interface IUserCredential{
     sub: string;
     updated_at: string;
 }
+
+export interface IAppState{
+    appState:{
+        targetUrl:string;
+    }
+}
