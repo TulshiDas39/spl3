@@ -6,8 +6,10 @@ To Do
     -blocking question based on user reaction
     -footer
     -tag follow option in tag page
+    -document(answer page) updating
     -uploading image in question
     -user profile
+    -error page
     -hosting
     -search engine optimization
 

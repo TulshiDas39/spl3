@@ -5,6 +5,7 @@ import { Auth0Context } from "../../utils/Contexts";
 import "./styles/comment.css";
 import { updateComment } from "../commentList/Services";
 import { IComment } from "../../utils/Models";
+import { IAuth0Context } from "../../utils/Structures";
 
 interface state {
     isEditing: boolean;
@@ -61,16 +62,24 @@ export class Comment extends Component<ICommentProps, state>{
                 </span>
                 <span className="commentDiv">
                     <span className="user-comment-text">{this.props.data.text}</span>
-                    {this.context.isAuthenticated ?
-                        <span className="commentOptions">
-                            <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
-                            <span className="user-comment-delete" onClick={this.props.onDelete}>মুছুন</span>
-                        </span> : null
+                    {
+                        this.getCommentActions()
                     }
-
                 </span>
             </span>
         )
+    }
+
+    private getCommentActions() {
+        let context = this.context as IAuth0Context;
+        if (context.isAuthenticated) {
+            if (context.user.sub == this.props.data.userId) return (
+                <span className="commentOptions">
+                    <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
+                    <span className="user-comment-delete" onClick={this.props.onDelete}>মুছুন</span>
+                </span>
+            )
+        }
     }
 
 

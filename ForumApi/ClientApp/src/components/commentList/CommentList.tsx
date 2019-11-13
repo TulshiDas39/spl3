@@ -32,7 +32,6 @@ export class CommentList extends React.Component<ICommentsProps, state>{
             this.comments = data;
             this.performCashedActions();
             this.setState({ isLoading: false });
-           
         });
     }
 
