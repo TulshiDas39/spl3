@@ -11,17 +11,6 @@
     display: flex;
 }
 
-.vote_system{
-    display: flex;
-    flex-direction: column;
-    font-size: 2rem;
-    margin-left: 5px;
-}
-
-.vote_icon:hover{
-    cursor: pointer;
-}
-
 #question_description{
     border: 1px soid #07c;
     display: flex;

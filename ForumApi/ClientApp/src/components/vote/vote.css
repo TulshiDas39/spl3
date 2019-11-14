@@ -1,0 +1,10 @@
+.vote_system{
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    margin-left: 5px;
+}
+
+.vote_icon:hover{
+    cursor: pointer;
+}

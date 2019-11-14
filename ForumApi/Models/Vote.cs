@@ -13,5 +13,9 @@ namespace ForumApi.Models
 
         public bool isUpvote { get; set;}
 
+        public string postId {get; set;}
+
+        public string postType {get; set;}
+
     }
 }

@@ -1,3 +1,5 @@
+import { PostType } from "./Enums";
+
 export interface IQuestion {
     id: string;
     userId: string;
@@ -10,30 +12,38 @@ export interface IQuestion {
     isAccepted: boolean;
 }
 
-export interface IAnswer{
-    id:string;
-    userId:string;
-    questionId:string;
-    description:string;
-    ratings:number;
-    datetime:number;
+export interface IAnswer {
+    id: string;
+    userId: string;
+    questionId: string;
+    description: string;
+    ratings: number;
+    datetime: number;
 }
 
-export interface IUser{
-    id:string;
-    userId:string;
-    name:string;
-    tags:string;
-    reputation:string;
-    location:string;
+export interface IUser {
+    id: string;
+    userId: string;
+    name: string;
+    tags: string;
+    reputation: string;
+    location: string;
 }
 
-export interface IComment{
+export interface IComment {
+    id: string;
+    userId: string;
+    target: string;
+    targetId: string;
+    text: string;
+    ratings: number;
+    datetime: number;
+}
+
+export interface IVote {
     id:string;
     userId:string;
-    target:string;
-    targetId:string;
-    text:string;
-    ratings:number;
-    datetime:number;
-}
+    isUpvote:boolean;
+    postId:string;
+    postType:PostType;
+} 

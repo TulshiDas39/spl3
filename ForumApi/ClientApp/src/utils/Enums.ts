@@ -4,7 +4,8 @@ export enum HomePageTab{
 
 export enum PostType{
     QUESTION="Q",
-    ANSWER="A"
+    ANSWER="A",
+    COMMENT="C"
 }
 
 export enum CashedItem{

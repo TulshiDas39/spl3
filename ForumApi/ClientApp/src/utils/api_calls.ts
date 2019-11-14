@@ -1,4 +1,5 @@
 export const API_CALLS={
+    questions:"api/questions/",
     answerlessQuestions:"api/questions/answerless/",
     latestQuestions:"api/questions/latest/",
     recommendedQuestions:"api/questions/recommend/",
@@ -8,10 +9,13 @@ export const API_CALLS={
     deleteQuestion:"api/questions/",
     viewQuestionCount:"api/questions/view/",
     
+    answers:"api/answers/",
     createAnswer:"api/answers/create",
     updateAnswer:"api/answers/update",
     deleteAnswer:"api/answers/delete/",
     users:"api/users/",
+
+    vote:"api/votes/",
 
     comment:"api/comment/",
     commentList:"api/comment/list/"

@@ -9,6 +9,7 @@ import { PostType } from "../../../utils/Enums";
 import { CommentList } from "../../commentList/CommentList";
 import { Utility } from "../../../utils/Utility";
 import { PostProps } from "../Types";
+import { Vote } from "../../vote/Vote";
 
 
 export class Post extends Component<PostProps, any>{
@@ -28,11 +29,7 @@ export class Post extends Component<PostProps, any>{
     public render() {
         return (
             <div id="postDiv">
-                <div id="question_vote" className="vote_system">
-                    <span className="fa fa-sort-asc vote_icon"></span>
-                    <span>{Utility.convertToBengaliText(this.props.data.ratings)}</span>
-                    <span className="fa fa-sort-desc vote_icon"></span>
-                </div>
+                <Vote ratings={12} postId = {this.props.data.id} postType = {this.postType}/>
                 <div id="question_description">
                     <span className="question_description_text" dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {this.getEdit_DeleteOptions()}

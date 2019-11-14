@@ -13,6 +13,7 @@ namespace ForumApi.Models
         public string TagItemsCollectionName { get; set; }
 
         public string RecommendationCollectionName { get; set; }
+        public string VotesCollectionName { get; set; }
 
         public string ConnectionString { get; set; }
 
@@ -31,6 +32,7 @@ namespace ForumApi.Models
 
         string TagItemsCollectionName { get; set; }
         string RecommendationCollectionName { get; set; }
+        string VotesCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }
