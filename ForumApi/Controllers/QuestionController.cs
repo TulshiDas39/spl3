@@ -47,16 +47,18 @@ namespace ForumApi.Controllers
         }
 
         [HttpPost("similarity")]
-        public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity ,[FromBody] string questionData){
+        public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity, [FromBody] string questionData)
+        {
             _logger.LogDebug("question data:");
             _logger.LogDebug(questionData);
             return similarity.getSimilarQuestions(questionData);
         }
 
         [HttpGet("answerless/{iteration}")]
-         public ActionResult<List<Question>> GetAnswerless(int iteration){
+        public ActionResult<List<Question>> GetAnswerless(int iteration)
+        {
             _logger.LogDebug("in answerless data:");
-            return _questionService.getAnswerLessQuestions(iteration* questionCount, questionCount);
+            return _questionService.getAnswerLessQuestions(iteration * questionCount, questionCount);
         }
 
         [Authorize]
@@ -68,8 +70,9 @@ namespace ForumApi.Controllers
 
         [Authorize]
         [HttpPost("recommend/{userId}/{iteration}")]
-        public ActionResult<List<Question>> RecommendQuestions(string userId, int iteration){
-            return _questionService.Recommend(userId,iteration);
+        public ActionResult<List<Question>> RecommendQuestions(string userId, int iteration)
+        {
+            return _questionService.Recommend(userId, iteration);
         }
 
         private void createUser(UserCredential user)
@@ -84,16 +87,46 @@ namespace ForumApi.Controllers
         }
 
         [HttpPut("view/{id:length(24)}")]
-        public ActionResult CountView(string id){
-            _logger.LogDebug("question id to count view:"+id);
+        public ActionResult CountView(string id)
+        {
+            _logger.LogDebug("question id to count view:" + id);
             Question question = _questionService.Get(id);
-            if(question == null) return NotFound();
+            if (question == null) return NotFound();
             _logger.LogDebug("updating views");
             question.views += 1;
-            _questionService.Update(id,question);
+            _questionService.Update(id, question);
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpPut("upvote/{id:length(24)}")]
+        public ActionResult UpVote(string id)
+        {
+            _logger.LogDebug("question id to count view:" + id);
+            Question question = _questionService.Get(id);
+            if (question == null) return NotFound();
+            _logger.LogDebug("increamenting vote");
+            question.ratings += 1;
+            _questionService.Update(id, question);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPut("downvote/{id:length(24)}")]
+        public ActionResult DownVote(string id)
+        {
+            _logger.LogDebug("question id to count view:" + id);
+            Question question = _questionService.Get(id);
+            if (question == null) return NotFound();
+            _logger.LogDebug("decreamenting vote");
+            question.ratings -= 1;
+            _questionService.Update(id, question);
+
+            return Ok();
+        }
+
 
         [Authorize]
         [HttpPost]
@@ -111,7 +144,7 @@ namespace ForumApi.Controllers
         {
             //var question = _questionService.Get(id);
 
-            if (! _questionService.Exist(question))
+            if (!_questionService.Exist(question))
             {
                 return NotFound();
             }

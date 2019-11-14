@@ -44,7 +44,9 @@ export function deleteEntity(url: string, header: Headers) {
     return fetch(url, {
         method: 'DELETE',
         headers: header
-    }).then(response => { });
+    }).then(res => { 
+        if(!res.ok) throw res;
+    });
 
 }
 

@@ -5,7 +5,7 @@ import "./comments.css";
 import { Comment } from "../comment/Comment";
 import { CommentBox } from "../comment/CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
-import { postComment, fetchCommentList } from "./Services";
+import { postComment, fetchCommentList, deleteComment } from "./Services";
 import { IAuth0Context } from "../../utils/Structures";
 import { CashedItem } from "../../utils/Enums";
 
@@ -102,9 +102,16 @@ export class CommentList extends React.Component<ICommentsProps, state>{
         });
     }
 
-    deleteComment(index: number) {
-        this.comments.splice(index, 1);
-        this.updateComponent();
+    async deleteComment(index: number) {
+        let context = this.context as IAuth0Context;
+        let id = this.comments[index].id;
+
+        let token = await context.getTokenSilently();
+        deleteComment(id,token).then(()=>{
+            this.comments.splice(index, 1);
+            this.updateComponent();
+        });
+        
     }
 
     render() {
