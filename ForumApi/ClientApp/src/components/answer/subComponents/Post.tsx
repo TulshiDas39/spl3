@@ -29,7 +29,7 @@ export class Post extends Component<PostProps, any>{
     public render() {
         return (
             <div id="postDiv">
-                <Vote ratings={12} postId = {this.props.data.id} postType = {this.postType}/>
+                <Vote ratings={this.props.data.ratings} postId = {this.props.data.id} postType = {this.postType}/>
                 <div id="question_description">
                     <span className="question_description_text" dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {this.getEdit_DeleteOptions()}
