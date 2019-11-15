@@ -1,9 +1,7 @@
 import React, { Component, RefObject } from "react";
 import "./inputEditor.css";
-import { Editor } from "../answer/editor";
-import { Auth0Context } from "../../utils/Contexts";
+import { Editor } from "./editor";
 import { editorProps } from "./Types";
-import { ActionType } from "../answer/Types";
 
 interface state {
     input: string;

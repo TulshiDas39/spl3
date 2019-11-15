@@ -1,15 +1,10 @@
 import { IQuestion } from "../../utils/Models";
-import { post } from "../../services/HttpService";
+import { httpService } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 
-export function postQuestion(data:IQuestion, token:string){
+export function postQuestion(data: IQuestion, token: string) {
     let url = 'api/questions';
     let headers = createHeader(token);
-    return new Promise((resolve, reject)=>{
-        post(url,data,headers).then(data=>{
-            resolve(data);
-        },err=>{
-            reject(err);
-        });
-    })
+
+    return httpService.post(url, data, headers);
 }

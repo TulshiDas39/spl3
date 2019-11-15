@@ -46,6 +46,7 @@ namespace ForumApi.Controllers
             return question;
         }
 
+        
         [HttpPost("similarity")]
         public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity, [FromBody] string questionData)
         {
@@ -69,7 +70,7 @@ namespace ForumApi.Controllers
         }
 
         [Authorize]
-        [HttpPost("recommend/{userId}/{iteration}")]
+        [HttpGet("recommend/{userId}/{iteration}")]
         public ActionResult<List<Question>> RecommendQuestions(string userId, int iteration)
         {
             return _questionService.Recommend(userId, iteration);

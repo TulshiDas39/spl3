@@ -4,7 +4,7 @@ import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
 import { StatusBar } from "../statusBar/StatusBar";
 import { Head } from "./subComponents/Head";
-import { getQuestion, countView } from "./Services";
+import { services } from "./Services";
 import { IQuestion } from "../../utils/Models";
 import { AnswerProps } from "./Types";
 
@@ -28,13 +28,12 @@ export class Answer extends Component<AnswerProps, AnswerState>{
     private fetchData() {
         const { handle } = this.props.match.params;
         console.log('fetching question data');
-        getQuestion(handle).then(data=>{
+        services.getQuestion(handle).then(data=>{
             this.questionData = data as IQuestion;
             console.log('counting views');
-            countView(handle);
+            services.countView(handle);
             this.setState({ isloading: false });
         });
-       
 
     }
 

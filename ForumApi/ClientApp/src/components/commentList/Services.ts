@@ -1,27 +1,30 @@
 import { IComment } from "../../utils/Models";
-import { post, get, put, deleteEntity } from "../../services/HttpService";
+import { httpService } from "../../services/HttpService";
 import { API_CALLS } from "../../utils/api_calls";
 import { createHeader } from "../../services/UtilityServices";
 
-export function postComment(comment:IComment, token:string){
-    let headeers = createHeader(token);
+export const service = {
+    postComment(comment:IComment, token:string){
+        let headeers = createHeader(token);
+        
+        return httpService.post(API_CALLS.comment,comment,headeers);
+    },
     
-    return post(API_CALLS.comment,comment,headeers);
+    fetchCommentList(postId:string){
+        return httpService.get(API_CALLS.commentList+postId);
+    },
+    
+    updateComment(comment:IComment, token:string){
+        let headeers = createHeader(token);
+        
+        return httpService.put(API_CALLS.comment,comment,headeers);
+    },
+    
+    deleteComment(id:string, token:string){
+        let url = API_CALLS.comment+"/"+id;
+        let headers = createHeader(token);
+        
+        return httpService.deleteEntity(API_CALLS.comment+id,headers);
+    }
 }
 
-export function fetchCommentList(postId:string){
-    return get(API_CALLS.commentList+postId);
-}
-
-export function updateComment(comment:IComment, token:string){
-    let headeers = createHeader(token);
-    
-    return put(API_CALLS.comment,comment,headeers);
-}
-
-export function deleteComment(id:string, token:string){
-    let url = API_CALLS.comment+"/"+id;
-    let headers = createHeader(token);
-    
-    return deleteEntity(API_CALLS.comment+id,headers);
-}

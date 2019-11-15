@@ -1,132 +1,84 @@
-import { get, post, put, deleteEntity } from "../../services/HttpService";
+import { httpService } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
 import { IAnswer, IQuestion } from "../../utils/Models";
 import { CashedItem } from "../../utils/Enums";
 
-export function getQuestion(questionId: string) {
-    let url = 'api/questions/' + questionId;
+export const services = {
 
-    return new Promise((resolve, reject) => {
-        get(url).then(data => {
-            resolve(data);
-        }, err => {
-            reject(err);
-        })
-    })
+    getQuestion(questionId: string) {
 
+        let url = API_CALLS.questions + questionId;
+
+        return httpService.get(url);
+    },
+
+    getAnswer(answerId: string) {
+        let url = API_CALLS.answers + answerId;
+
+        return httpService.get(url);
+    },
+
+    updateQuestion(question: IQuestion, token: string) {
+        let url = API_CALLS.updateQuestion;
+        let headers = createHeader(token);
+
+        return httpService.put(url, question, headers);
+
+    },
+
+    deleteQuestion(id: string, token: string) {
+        let url = API_CALLS.deleteQuestion + id;
+        let headers = createHeader(token);
+
+        return httpService.deleteEntity(url, headers);
+
+    },
+    getAnswers(questionId: string) {
+        let url = API_CALLS.answerList + questionId;
+        let headers = createHeader("");
+
+        return httpService.get(url,headers);
+
+    },
+    postAnswer(data: object, token: string) {
+        let url = API_CALLS.answers;
+        let headers = createHeader(token);
+
+        console.log('posing answer');
+
+        return httpService.post(url, data, headers);
+    },
+    updateAnswer(data: IAnswer, token: string) {
+        let url = API_CALLS.answers;
+        let headers = createHeader(token);
+
+        console.log('posing answer');
+
+        return httpService.put(url, data, headers);
+
+    },
+    deleteAnswer(id: string, token: string) {
+        let url = API_CALLS.answers + id;
+        let headers = createHeader(token);
+
+        return  httpService.deleteEntity(url, headers);
+    },
+    countView(id: string) {
+        let url = API_CALLS.viewQuestionCount + id;
+        console.log('counting view:');
+
+        let data = localStorage.getItem(CashedItem.VIEWS);
+        if (!data) {
+            localStorage.setItem(CashedItem.VIEWS, JSON.stringify([]));
+            data = "[]";
+        };
+
+        let views: string[] = JSON.parse(data);
+        if (views.indexOf(id) != -1) return;
+
+        return httpService.put(url, {});
+    }
 }
 
-export function updateQuestion(question: IQuestion, token:string) {
-    let url = API_CALLS.updateQuestion;
-    let headers = createHeader(token);
 
-    return new Promise<void>((resolve, reject) => {
-        put(url,question,headers).then(() => {
-            resolve();
-        }, err => {
-            reject(err);
-        })
-    })
-
-}
-
-export function deleteQuestion(id:string, token:string){
-    let url = API_CALLS.deleteQuestion+id;
-    let headers = createHeader(token);
-
-    return new Promise<void>((resolve,reject)=>{
-        deleteEntity(url,headers).then(()=>{
-            resolve();
-        }, err=>{
-            reject(err);
-        })
-    })
-
-    
-
-}
-
-export function getAnswers(questionId: string) {
-    let url = 'api/answers/get/' + questionId;
-    let headers = createHeader("");
-
-    return new Promise((resolve, reject) => {
-        post(url, {}, headers).then(data => {
-            resolve(data);
-        }, err => {
-            reject(err);
-        })
-    })
-
-}
-
-export function postAnswer(data: object, token: string) {
-    let url = API_CALLS.createAnswer;
-    let headers = createHeader(token);
-
-    console.log('posing answer');
-
-    return new Promise<IAnswer>((resolve, reject) => {
-        post(url, data, headers).then(data => {
-            resolve(data);
-        }, err => {
-            reject(err);
-        })
-    })
-
-
-}
-
-export function updateAnswer(data: IAnswer, token: string) {
-    let url = API_CALLS.updateAnswer;
-    let headers = createHeader(token);
-
-    console.log('posing answer');
-
-    return new Promise<void>((resolve, reject) => {
-        put(url, data, headers).then(() => {
-            resolve();
-        }, err => {
-            reject(err);
-        })
-    })
-
-}
-
-export function deleteAnswer(id: string, token: string) {
-    let url = API_CALLS.deleteAnswer + id;
-    let headers = createHeader(token);
-
-    return new Promise<void>((resolve, reject) => {
-        deleteEntity(url, headers).then(data => {
-            resolve();
-        }, err => {
-            reject(err);
-        })
-    })
-
-
-}
-
-export function countView(id:string){
-    let url = API_CALLS.viewQuestionCount+id;
-    console.log('counting view:');
-
-    let data= localStorage.getItem(CashedItem.VIEWS);
-    if(!data) {
-        localStorage.setItem(CashedItem.VIEWS,JSON.stringify([]));
-        data="[]";
-    };
-    
-    let views:string[] = JSON.parse(data);
-    if(views.indexOf(id) != -1) return;
-
-    put(url,{}).then(()=>{
-        views.push(id);
-        localStorage.setItem(CashedItem.VIEWS,JSON.stringify(views));
-        console.log('counted view');
-    },err=>{
-        console.error(err);
-    })
-}

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Utility } from "../../utils/Utility";
+import { utilityService } from "../../utils/Utility";
 import { voteProps } from "./Types";
 import "./vote.css";
 import { IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
-import { postVote, getVoteStatus } from "./Service";
+import { service } from "./Service";
 
 interface state {
     isLoading:boolean;
@@ -31,13 +31,15 @@ export class Vote extends Component<voteProps, state>{
     private async init(){
 
         let context = this.context as IAuth0Context;
+        if(!context.isAuthenticated) return;
+
         let token = await context.getTokenSilently();
 
-        getVoteStatus(this.props.postId, this.context.user.sub, this.props.postType,token).then(data=>{
+        service.getVoteStatus(this.props.postId, this.context.user.sub, this.props.postType,token).then(data=>{
             console.log('ata:');
             console.log(data);
-            if(data) this.isUpvoted = data.isUpvote;
-            this.setState({isLoading:false})
+            if(data.id) this.isUpvoted = data.isUpvote;
+            this.setState({isLoading:false});
         });
     }
 
@@ -64,7 +66,7 @@ export class Vote extends Component<voteProps, state>{
             isUpvote: isUpvote
         }
 
-        postVote(token,vote).then((data)=>{
+        service.postVote(token,vote).then((data)=>{
             if(isUpvote){
                 if( this.isUpvoted == false) this.ratings+=2;
                 else this.ratings++;
@@ -75,6 +77,7 @@ export class Vote extends Component<voteProps, state>{
             } 
             this.isUpvoted = isUpvote;
             this.updateComponent();
+            this.props.onVote();
         });
     }
 
@@ -85,13 +88,15 @@ export class Vote extends Component<voteProps, state>{
         let downVoteBtnColor = 'black';
         
         if(this.isUpvoted) upVoteBtnColor = 'blue';
-        else if(this.isUpvoted == false) downVoteBtnColor = 'blue';
+        else if(this.isUpvoted == false){ 
+            downVoteBtnColor = 'blue';
+        }
 
 
         return (
             <div id="question_vote" className="vote_system">
                 <span className="fa fa-sort-asc vote_icon" style={{color:upVoteBtnColor}} onClick={()=> this.vote(true)}></span>
-                <span>{Utility.convertToBengaliText(this.ratings)}</span>
+                <span>{utilityService.convertToBengaliText(this.ratings)}</span>
                 <span className="fa fa-sort-desc vote_icon" style={{color:downVoteBtnColor}} onClick={()=> this.vote(false)}></span>
             </div>
 

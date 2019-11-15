@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Layout } from './components/layout/Layout';
 import { Home } from './components/home/Home';
-import { FetchData } from './components/FetchData';
 import { Counter } from './components/counter/Counter';
 import { Tags } from './components/tags/Tags';
 import { Users } from './components/users/Users';
@@ -63,7 +62,6 @@ export default class App extends Component<props, any> {
             <Route path='/user' component={UserActivity} />
             <PrivateRoute path='/ask' component={Ask} />
             <Route path='/counter' component={Counter} />
-            <Route path='/fetch-data' component={FetchData} />
           </Switch>
         </Layout>
       </BrowserRouter>

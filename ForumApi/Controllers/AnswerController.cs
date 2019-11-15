@@ -26,11 +26,17 @@ namespace ForumApi.Controllers
         public ActionResult<List<Answer>> Get() =>
             _answerService.Get();
 
-        [HttpPost("get/{questionId}")]
+        [HttpGet("list/{questionId:length(24)}")]
         public ActionResult<List<Answer>> GetByQuestion(string questionId) =>
             _answerService.GetByQuestion(questionId);
 
-        [HttpPost("{id}", Name = "GetAnswer")]
+        [HttpGet("count/{questionId:length(24)}")]
+        public ActionResult<int> GetAnswerCount(string questionId)
+        {
+            return _answerService.GetByQuestion(questionId).Count;
+        }
+
+        [HttpGet("{id}", Name = "GetAnswer")]
         public ActionResult<Answer> Get(string id)
         {
             var answer = _answerService.Get(id);
@@ -44,18 +50,18 @@ namespace ForumApi.Controllers
         }
 
         [Authorize]
-        [HttpPost("create")]
+        [HttpPost]
         public ActionResult<Answer> Create(Answer answer)
         {
-            
-            if(answer.id != null) return BadRequest();
+
+            if (answer.id != null) return BadRequest();
             _answerService.Create(answer);
 
             return CreatedAtRoute("GetAnswer", new { id = answer.id.ToString() }, answer);
         }
 
         [Authorize]
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult Update(Answer answer)
         {
 
@@ -77,7 +83,7 @@ namespace ForumApi.Controllers
 
             if (answer == null)
             {
-                
+
                 return NotFound();
             }
 

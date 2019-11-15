@@ -13,6 +13,7 @@ To Do
     -error page
     -hosting
     -search engine optimization
+    -unused ager component file gula delete kora
 
 
 Done

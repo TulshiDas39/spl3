@@ -5,7 +5,7 @@ import "./comments.css";
 import { Comment } from "../comment/Comment";
 import { CommentBox } from "../comment/CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
-import { postComment, fetchCommentList, deleteComment } from "./Services";
+import { service } from "./Services";
 import { IAuth0Context } from "../../utils/Structures";
 import { CashedItem } from "../../utils/Enums";
 
@@ -28,7 +28,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
     }
 
     private fetchComments() {
-        fetchCommentList(this.props.postId).then(data => {
+        service.fetchCommentList(this.props.postId).then(data => {
             this.comments = data;
             this.performCashedActions();
             this.setState({ isLoading: false });
@@ -43,7 +43,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
         let comment = localStorage.getItem(CashedItem.USER_COMMENT);
         if (comment) {
             let commentJson = JSON.parse(comment) as ICashedComment;
-            if(commentJson.targetId == this.props.postId){
+            if (commentJson.targetId == this.props.postId) {
                 this.saveComment(commentJson.text as string);
                 localStorage.removeItem(CashedItem.USER_COMMENT);
             }
@@ -72,12 +72,12 @@ export class CommentList extends React.Component<ICommentsProps, state>{
 
         if (!context.isAuthenticated) {
             let data = {
-                text:text,
-                targetId:this.props.postId
+                text: text,
+                targetId: this.props.postId
             } as ICashedComment;
 
             localStorage.setItem(CashedItem.USER_COMMENT, JSON.stringify(data));
-            
+
             context.loginWithRedirect({ appState: { targetUrl: window.location.pathname } });
             return;
         }
@@ -93,7 +93,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
             ratings: 0,
             datetime: new Date().getTime()
         }
-        postComment(comment, token).then(data => {
+        service.postComment(comment, token).then(data => {
             this.comments.push(data);
             this.isCommenting = false;
             this.updateComponent();
@@ -107,11 +107,11 @@ export class CommentList extends React.Component<ICommentsProps, state>{
         let id = this.comments[index].id;
 
         let token = await context.getTokenSilently();
-        deleteComment(id,token).then(()=>{
+        service.deleteComment(id, token).then(() => {
             this.comments.splice(index, 1);
             this.updateComponent();
         });
-        
+
     }
 
     render() {

@@ -10,9 +10,9 @@ export const API_CALLS={
     viewQuestionCount:"api/questions/view/",
     
     answers:"api/answers/",
-    createAnswer:"api/answers/create",
-    updateAnswer:"api/answers/update",
-    deleteAnswer:"api/answers/delete/",
+    answerList:"api/answers/list/",
+    answerCount:"api/answers/count/",
+    
     users:"api/users/",
 
     vote:"api/votes/",

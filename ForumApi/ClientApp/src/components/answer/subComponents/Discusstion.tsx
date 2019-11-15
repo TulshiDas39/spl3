@@ -3,13 +3,13 @@ import "./styles/discussion.css";
 import { Post } from "./Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
-import { getAnswers, postAnswer, updateAnswer, deleteAnswer, updateQuestion, deleteQuestion } from "../Services";
+import { services } from "../Services";
 import { IAuth0Context } from "../../../utils/Structures";
 import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
 import { discussionProps } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
-import { Utility } from "../../../utils/Utility";
+import { utilityService } from "../../../utils/Utility";
 
 interface state {
     isLoading: boolean;
@@ -42,7 +42,7 @@ export class Discussion extends Component<discussionProps, state>{
 
     private init() {
 
-        getAnswers(this.props.questionData.id).then(data => {
+        services.getAnswers(this.props.questionData.id).then(data => {
             this.answerData = data as IAnswer[];
             this.setUserAnswerIndex();
             this.setDisplayEditor();
@@ -52,7 +52,7 @@ export class Discussion extends Component<discussionProps, state>{
     }
 
     fetchPostedAnswers() {
-        getAnswers(this.props.questionData.id).then(data => {
+        services.getAnswers(this.props.questionData.id).then(data => {
             this.answerData = data as IAnswer[];
             this.setUserAnswerIndex();
             this.updateComponent();
@@ -73,7 +73,7 @@ export class Discussion extends Component<discussionProps, state>{
 
         let token = await this.context.getTokenSilently();
 
-        postAnswer(data, token).then(data => {
+        services.postAnswer(data, token).then(data => {
             this.displayEditor = false;
             this.editorInnerHtml = "";
             this.fetchPostedAnswers();
@@ -88,7 +88,7 @@ export class Discussion extends Component<discussionProps, state>{
         answer.description = text;
         let token = await this.context.getTokenSilently();
 
-        updateAnswer(answer, token).then(() => {
+        services.updateAnswer(answer, token).then(() => {
             this.displayEditor = false;
             this.editorInnerHtml = "";
             this.fetchPostedAnswers();
@@ -109,7 +109,7 @@ export class Discussion extends Component<discussionProps, state>{
     private async deleteAnswer() {
         let token = await this.context.getTokenSilently();
         let id = this.answerData[this.userAnswerIndex].id as string;
-        deleteAnswer(id, token).then(() => {
+        services.deleteAnswer(id, token).then(() => {
             this.displayEditor = true;
             this.fetchPostedAnswers();
         }, err => {
@@ -131,7 +131,7 @@ export class Discussion extends Component<discussionProps, state>{
         question.description = text;
         let token = await this.context.getTokenSilently();
 
-        updateQuestion(question, token).then(() => {
+        services.updateQuestion(question, token).then(() => {
             this.editorInnerHtml = "";
             this.setDisplayEditor();
             this.fetchPostedAnswers();
@@ -143,7 +143,7 @@ export class Discussion extends Component<discussionProps, state>{
     private async deleteQuestion() {
         let token = await this.context.getTokenSilently();
         let id = this.props.questionData.id as string;
-        deleteQuestion(id, token).then(() => {
+        services.deleteQuestion(id, token).then(() => {
             this.props.onDeleteQuestion();
         }, err => {
             console.error(err);
@@ -197,7 +197,7 @@ export class Discussion extends Component<discussionProps, state>{
         return (
             <div id="discussion_flow">
                 <Post data={this.props.questionData} onEdit={this.editQuestion.bind(this)} onDelete={this.deleteQuestion.bind(this)} />
-                <h1 style={{ marginBottom: '2px' }}>উত্তর {Utility.convertToBengaliText(this.answerData.length)} টি</h1>
+                <h1 style={{ marginBottom: '2px' }}>উত্তর {utilityService.convertToBengaliText(this.answerData.length)} টি</h1>
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
                     {

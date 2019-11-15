@@ -3,7 +3,7 @@ import { ICommentProps } from "./Types";
 import { CommentBox } from "./CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
 import "./styles/comment.css";
-import { updateComment } from "../commentList/Services";
+import { service } from "../commentList/Services";
 import { IComment } from "../../utils/Models";
 import { IAuth0Context } from "../../utils/Structures";
 
@@ -30,7 +30,7 @@ export class Comment extends Component<ICommentProps, state>{
         let token = await this.context.getTokenSilently();
         let comment = this.props.data;
         comment.text = text;
-        updateComment(comment, token).then(() => {
+        service.updateComment(comment, token).then(() => {
             this.setState({ isEditing: false });
         }, err => {
             console.error(err);
