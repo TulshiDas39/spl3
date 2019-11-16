@@ -20,12 +20,6 @@ export interface AnswerProps {
     }
 }
 
-export interface PostProps {
-    data: IQuestion | IAnswer;
-    onEdit(): void;
-    onDelete(): void;
-}
-
 export enum ActionType {
     Edit, Delete, None
 }

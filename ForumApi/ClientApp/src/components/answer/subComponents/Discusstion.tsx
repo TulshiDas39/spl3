@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./styles/discussion.css";
-import { Post } from "./Post";
+import { Post } from "../../post/Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
 import { services } from "../Services";

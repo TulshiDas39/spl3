@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { User } from "./User";
-import "./styles/post.css";
-import {IAnswer, IQuestion } from "../../../utils/Models";
-import { Auth0Context } from "../../../utils/Contexts";
-import { IAuth0Context } from "../../../utils/Structures";
-import { ConfirmationDialog } from "../../popups/ConfirmationDialog";
-import { PostType } from "../../../utils/Enums";
-import { CommentList } from "../../commentList/CommentList";
-import { PostProps } from "../Types";
-import { Vote } from "../../vote/Vote";
-import { services } from "../Services";
+import { User } from "../answer/subComponents/User";
+import "./post.css";
+import {IAnswer, IQuestion } from "../../utils/Models";
+import { Auth0Context } from "../../utils/Contexts";
+import { IAuth0Context } from "../../utils/Structures";
+import { ConfirmationDialog } from "../popups/ConfirmationDialog";
+import { PostType } from "../../utils/Enums";
+import { CommentList } from "../commentList/CommentList";
+import { PostProps } from "./Types";
+import { Vote } from "../vote/Vote";
+import { rootService } from "../../services/RootService.";
 
 
 export class Post extends Component<PostProps, any>{
@@ -34,7 +34,7 @@ export class Post extends Component<PostProps, any>{
 
     private fetchUpdates(){
         if(this.postType == PostType.QUESTION) {
-            services.getQuestion(this.props.data.id).then(data=>{
+            rootService.getQuestion(this.props.data.id).then(data=>{
                 this.post = data;
                 this.updateComponent();
             }, err=>{

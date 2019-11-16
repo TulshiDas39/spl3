@@ -6,13 +6,6 @@ import { CashedItem } from "../../utils/Enums";
 
 export const services = {
 
-    getQuestion(questionId: string) {
-
-        let url = API_CALLS.questions + questionId;
-
-        return httpService.get(url);
-    },
-
     getAnswer(answerId: string) {
         let url = API_CALLS.answers + answerId;
 

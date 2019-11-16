@@ -7,6 +7,7 @@ import { Head } from "./subComponents/Head";
 import { services } from "./Services";
 import { IQuestion } from "../../utils/Models";
 import { AnswerProps } from "./Types";
+import { rootService } from "../../services/RootService.";
 
 export interface AnswerState {
     isloading: boolean;
@@ -28,7 +29,7 @@ export class Answer extends Component<AnswerProps, AnswerState>{
     private fetchData() {
         const { handle } = this.props.match.params;
         console.log('fetching question data');
-        services.getQuestion(handle).then(data=>{
+        rootService.getQuestion(handle).then(data=>{
             this.questionData = data as IQuestion;
             console.log('counting views');
             services.countView(handle);
