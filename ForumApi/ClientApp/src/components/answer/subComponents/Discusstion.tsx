@@ -3,7 +3,7 @@ import "./styles/discussion.css";
 import { Post } from "../../post/Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
-import { services } from "../Services";
+import { answerService } from "../AnswerServices";
 import { IAuth0Context } from "../../../utils/Structures";
 import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
@@ -42,7 +42,7 @@ export class Discussion extends Component<discussionProps, state>{
 
     private init() {
 
-        services.getAnswers(this.props.questionData.id).then(data => {
+        answerService.getAnswers(this.props.questionData.id).then(data => {
             this.answerData = data as IAnswer[];
             this.setUserAnswerIndex();
             this.setDisplayEditor();
@@ -52,7 +52,7 @@ export class Discussion extends Component<discussionProps, state>{
     }
 
     fetchPostedAnswers() {
-        services.getAnswers(this.props.questionData.id).then(data => {
+        answerService.getAnswers(this.props.questionData.id).then(data => {
             this.answerData = data as IAnswer[];
             this.setUserAnswerIndex();
             this.updateComponent();
@@ -73,7 +73,7 @@ export class Discussion extends Component<discussionProps, state>{
 
         let token = await this.context.getTokenSilently();
 
-        services.postAnswer(data, token).then(data => {
+        answerService.postAnswer(data, token).then(data => {
             this.displayEditor = false;
             this.editorInnerHtml = "";
             this.fetchPostedAnswers();
@@ -88,7 +88,7 @@ export class Discussion extends Component<discussionProps, state>{
         answer.description = text;
         let token = await this.context.getTokenSilently();
 
-        services.updateAnswer(answer, token).then(() => {
+        answerService.updateAnswer(answer, token).then(() => {
             this.displayEditor = false;
             this.editorInnerHtml = "";
             this.fetchPostedAnswers();
@@ -109,7 +109,7 @@ export class Discussion extends Component<discussionProps, state>{
     private async deleteAnswer() {
         let token = await this.context.getTokenSilently();
         let id = this.answerData[this.userAnswerIndex].id as string;
-        services.deleteAnswer(id, token).then(() => {
+        answerService.deleteAnswer(id, token).then(() => {
             this.displayEditor = true;
             this.fetchPostedAnswers();
         }, err => {
@@ -131,7 +131,7 @@ export class Discussion extends Component<discussionProps, state>{
         question.description = text;
         let token = await this.context.getTokenSilently();
 
-        services.updateQuestion(question, token).then(() => {
+        answerService.updateQuestion(question, token).then(() => {
             this.editorInnerHtml = "";
             this.setDisplayEditor();
             this.fetchPostedAnswers();
@@ -143,7 +143,7 @@ export class Discussion extends Component<discussionProps, state>{
     private async deleteQuestion() {
         let token = await this.context.getTokenSilently();
         let id = this.props.questionData.id as string;
-        services.deleteQuestion(id, token).then(() => {
+        answerService.deleteQuestion(id, token).then(() => {
             this.props.onDeleteQuestion();
         }, err => {
             console.error(err);

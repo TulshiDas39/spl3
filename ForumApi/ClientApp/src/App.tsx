@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Layout } from './components/layout/Layout';
 import { Home } from './components/home/Home';
-import { Counter } from './components/counter/Counter';
 import { Tags } from './components/tags/Tags';
 import { Users } from './components/users/Users';
 import { Answer } from './components/answer/Answer';
@@ -61,7 +60,6 @@ export default class App extends Component<props, any> {
             <ProtectedRoute path='/answer/:handle' component={Answer} />
             <Route path='/user' component={UserActivity} />
             <PrivateRoute path='/ask' component={Ask} />
-            <Route path='/counter' component={Counter} />
           </Switch>
         </Layout>
       </BrowserRouter>

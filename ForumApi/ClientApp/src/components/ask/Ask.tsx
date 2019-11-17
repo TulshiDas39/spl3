@@ -8,7 +8,7 @@ import { IAuth0Context } from "../../utils/Structures";
 import { IQuestion, IAnswer } from "../../utils/Models";
 import Loading from "../loader/Loading";
 import { Question } from "../question/Question";
-import { postQuestion } from "./Services";
+import { postQuestion } from "./AskServices";
 
 interface state {
     tags: {

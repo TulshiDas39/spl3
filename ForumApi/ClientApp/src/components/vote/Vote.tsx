@@ -5,7 +5,8 @@ import "./vote.css";
 import { IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
-import { service } from "./Service";
+import { voteService } from "./VoteService";
+import { VoteStatus } from "../../utils/Enums";
 
 interface state {
     isLoading:boolean;
@@ -13,10 +14,9 @@ interface state {
 
 export class Vote extends Component<voteProps, state>{
 
-
     static contextType = Auth0Context;
     private ratings:number;
-    private isUpvoted?:boolean;
+    private voteStatus = VoteStatus.NOTVOTED;
 
     constructor(props: voteProps) {
         super(props);
@@ -35,11 +35,12 @@ export class Vote extends Component<voteProps, state>{
 
         let token = await context.getTokenSilently();
 
-        service.getVoteStatus(this.props.postId, this.context.user.sub, this.props.postType,token).then(data=>{
+        voteService.getVoteStatus(this.props.postId, this.context.user.sub, this.props.postType,token).then(data=>{
             console.log('ata:');
             console.log(data);
-            if(data.id) this.isUpvoted = data.isUpvote;
+            this.voteStatus = data;
             this.setState({isLoading:false});
+
         });
     }
 
@@ -47,37 +48,30 @@ export class Vote extends Component<voteProps, state>{
         this.setState(this.state);
     }
 
-    private async vote(isUpvote:boolean) {
-        let vote: IVote;
+    private async vote(type:VoteStatus) {
+        
         let context = this.context as IAuth0Context;
 
         if(!context.isAuthenticated) return;
-
         let token = await context.getTokenSilently();
+        if(type == this.voteStatus) return;
 
-        if(this.isUpvoted && isUpvote) return;
-        if(this.isUpvoted == false && isUpvote == false) return;
-
-        vote = {
+        let vote: IVote  = {
             id: undefined as any,
             postId: this.props.postId,
             postType: this.props.postType,
             userId: context.user.sub,
-            isUpvote: isUpvote
+            isUpvote: type == VoteStatus.UPVOTED?true:false
         }
 
-        service.postVote(token,vote).then((data)=>{
-            if(isUpvote){
-                if( this.isUpvoted == false) this.ratings+=2;
-                else this.ratings++;
+        voteService.postVote(token,vote).then((data)=>{
+
+            if(this.voteStatus == VoteStatus.NOTVOTED){
+                type == VoteStatus.DOWNVOTED? this.ratings--:this.ratings++;
             }
-            else{
-                if(this.isUpvoted) this.ratings-=2;
-                else this.ratings--;
-            } 
-            this.isUpvoted = isUpvote;
+            else this.voteStatus == VoteStatus.UPVOTED?this.ratings -=2:this.ratings+=2;
+            this.voteStatus = type;
             this.updateComponent();
-            this.props.onVote();
         });
     }
 
@@ -87,17 +81,14 @@ export class Vote extends Component<voteProps, state>{
         let upVoteBtnColor = 'black';
         let downVoteBtnColor = 'black';
         
-        if(this.isUpvoted) upVoteBtnColor = 'blue';
-        else if(this.isUpvoted == false){ 
-            downVoteBtnColor = 'blue';
-        }
-
+        if(this.voteStatus == VoteStatus.UPVOTED) upVoteBtnColor = 'blue';
+        else if(this.voteStatus == VoteStatus.DOWNVOTED) downVoteBtnColor = 'blue';
 
         return (
             <div id="question_vote" className="vote_system">
-                <span className="fa fa-sort-asc vote_icon" style={{color:upVoteBtnColor}} onClick={()=> this.vote(true)}></span>
+                <span className="fa fa-sort-asc vote_icon" style={{color:upVoteBtnColor}} onClick={()=> this.vote(VoteStatus.UPVOTED)}></span>
                 <span>{utilityService.convertToBengaliText(this.ratings)}</span>
-                <span className="fa fa-sort-desc vote_icon" style={{color:downVoteBtnColor}} onClick={()=> this.vote(false)}></span>
+                <span className="fa fa-sort-desc vote_icon" style={{color:downVoteBtnColor}} onClick={()=> this.vote(VoteStatus.DOWNVOTED)}></span>
             </div>
 
         );

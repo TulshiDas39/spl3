@@ -2,7 +2,7 @@ import { httpService } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
 
-export const service = {
+export const questionService = {
     getAnswerCount(questionId:string){
         let url = API_CALLS.answerCount+questionId;
 

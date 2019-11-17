@@ -5,7 +5,7 @@ import { IQuestion } from "../../utils/Models";
 import { API_CALLS } from "../../utils/api_calls";
 
 
-export const service = {
+export const homeService = {
     fetchRecommendedQuestions(token:string, userId:string, iteration: number) {
         let headers = createHeader(token);
         let url = API_CALLS.recommendedQuestions + userId + "/" + iteration;

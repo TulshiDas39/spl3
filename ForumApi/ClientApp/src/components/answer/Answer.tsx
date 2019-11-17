@@ -4,7 +4,7 @@ import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
 import { StatusBar } from "../statusBar/StatusBar";
 import { Head } from "./subComponents/Head";
-import { services } from "./Services";
+import { answerService } from "./AnswerServices";
 import { IQuestion } from "../../utils/Models";
 import { AnswerProps } from "./Types";
 import { rootService } from "../../services/RootService.";
@@ -32,7 +32,7 @@ export class Answer extends Component<AnswerProps, AnswerState>{
         rootService.getQuestion(handle).then(data=>{
             this.questionData = data as IQuestion;
             console.log('counting views');
-            services.countView(handle);
+            answerService.countView(handle);
             this.setState({ isloading: false });
         });
 

@@ -5,7 +5,7 @@ import "./comments.css";
 import { Comment } from "../comment/Comment";
 import { CommentBox } from "../comment/CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
-import { service } from "./Services";
+import { commentListService } from "./CommentListServices";
 import { IAuth0Context } from "../../utils/Structures";
 import { CashedItem } from "../../utils/Enums";
 
@@ -28,7 +28,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
     }
 
     private fetchComments() {
-        service.fetchCommentList(this.props.postId).then(data => {
+        commentListService.fetchCommentList(this.props.postId).then(data => {
             this.comments = data;
             this.performCashedActions();
             this.setState({ isLoading: false });
@@ -93,7 +93,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
             ratings: 0,
             datetime: new Date().getTime()
         }
-        service.postComment(comment, token).then(data => {
+        commentListService.postComment(comment, token).then(data => {
             this.comments.push(data);
             this.isCommenting = false;
             this.updateComponent();
@@ -107,7 +107,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
         let id = this.comments[index].id;
 
         let token = await context.getTokenSilently();
-        service.deleteComment(id, token).then(() => {
+        commentListService.deleteComment(id, token).then(() => {
             this.comments.splice(index, 1);
             this.updateComponent();
         });

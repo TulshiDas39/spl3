@@ -1,5 +1,7 @@
 export enum HomePageTab{
-    RECOMMENDED,ALL,UNANSWERED
+    RECOMMENDED,
+    ALL,
+    UNANSWERED
 }
 
 export enum PostType{
@@ -11,4 +13,10 @@ export enum PostType{
 export enum CashedItem{
     USER_COMMENT="userComment",
     VIEWS="views"
+}
+
+export enum VoteStatus{
+    UPVOTED = 1,
+    DOWNVOTED = -1,
+    NOTVOTED = 0
 }

@@ -4,7 +4,7 @@ import { API_CALLS } from "../../utils/api_calls";
 import { IAnswer, IQuestion } from "../../utils/Models";
 import { CashedItem } from "../../utils/Enums";
 
-export const services = {
+export const answerService = {
 
     getAnswer(answerId: string) {
         let url = API_CALLS.answers + answerId;

@@ -77,12 +77,19 @@ namespace ForumApi.Services
                 else question.ratings -= iterator;
                 _questionService.Update(question.id, question);
             }
-            else
+            else if(vote.postType == "A")
             {
                 var answer = _answerService.Get(vote.postId);
                 if (vote.isUpvote) answer.ratings += iterator;
                 else answer.ratings -= iterator;
                 _answerService.Update(answer.id, answer);
+            }
+
+            else{
+                var comment = _commentService.Get(vote.postId);
+                if (vote.isUpvote) comment.ratings += iterator;
+                else comment.ratings -= iterator;
+                _commentService.Update(comment.id, comment);
             }
         }
 

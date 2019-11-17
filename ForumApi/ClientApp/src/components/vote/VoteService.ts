@@ -4,7 +4,7 @@ import { PostType } from "../../utils/Enums";
 import { httpService } from "../../services/HttpService";
 import { createHeader } from "../../services/UtilityServices";
 
-export const service={
+export const voteService={
 
     postVote(token: string, vote: IVote){
         console.log('voting');

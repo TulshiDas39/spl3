@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IQuestion, IUser } from "../../utils/Models";
 import { utilityService } from "../../utils/Utility";
 import { QuestionProps } from "./Types";
-import { service } from "./services";
+import { questionService } from "./QuestionServices";
 import { Auth0Context } from "../../utils/Contexts";
 
 interface state {
@@ -31,8 +31,8 @@ export class Question extends Component<QuestionProps, state>{
         this.tags = this.props.data.tags.trim().split(/\s+/);
         console.log(this.tags);
         try {
-            this.user = await service.getUser(this.props.data.userId);
-            this.answerCount = await service.getAnswerCount(this.props.data.id);
+            this.user = await questionService.getUser(this.props.data.userId);
+            this.answerCount = await questionService.getAnswerCount(this.props.data.id);
             this.setState({ isLoading: false });
         }catch(err){
             console.error(err);
@@ -42,7 +42,7 @@ export class Question extends Component<QuestionProps, state>{
 
 
     private async loadUserInfo() {
-        service.getUser(this.props.data.userId).then(data => {
+        questionService.getUser(this.props.data.userId).then(data => {
             console.log('user info:');
             console.log(data);
             this.user = data;

@@ -22,11 +22,12 @@ namespace ForumApi.Controllers
 
         [Authorize]
         [HttpGet("{postId:length(24)}/{userId}/{postType}")]
-        public ActionResult<Vote> Get(string postId, string userId, string postType)
+        public ActionResult<int> Get(string postId, string userId, string postType)
         {
             Vote vote = _voteSurvice.Get(postId, userId, postType);
-            if(vote == null) vote = new Vote();
-            return vote;
+            if(vote == null) return 0;
+            else if(vote.isUpvote) return 1;
+            return -1;
         }
 
         [Authorize]
@@ -45,17 +46,6 @@ namespace ForumApi.Controllers
 
             _logger.LogDebug("inside method:");
 
-            // if (vote.id != null)
-            // {
-            //     _logger.LogDebug("bad requstion for id");
-            //     _logger.LogDebug(vote.id);
-            //     return BadRequest();
-            // }
-            // if (_voteSurvice.Get(vote.postId, vote.userId, vote.postType) != null)
-            // {
-            //     _logger.LogDebug("vote exist");
-            //     return BadRequest();
-            // }
             var insertedVote = _voteSurvice.InsertOne(vote);
             if(insertedVote == null) return BadRequest();
 

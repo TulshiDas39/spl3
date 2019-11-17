@@ -8,7 +8,7 @@ import { IQuestion } from "../../../../utils/Models";
 import { Question } from "../../../question/Question";
 import { Auth0Context } from "../../../../utils/Contexts"
 import { IAuth0Context, IAppState } from "../../../../utils/Structures";
-import { service } from "../../Service";
+import { homeService } from "../../HomeService";
 import { HomePageTab } from "../../../../utils/Enums";
 import { colors } from "../../../../utils/colors";
 
@@ -67,7 +67,7 @@ export class Right extends Component<props, state>{
 
         let token = await context.getTokenSilently();
         let userId = context.user.sub;
-        service.fetchRecommendedQuestions(token, userId, this.iteration).then(data => {
+        homeService.fetchRecommendedQuestions(token, userId, this.iteration).then(data => {
             this.tab = HomePageTab.RECOMMENDED;
             this.questionList = data;
             this.setState({ isLoading: false });
@@ -80,7 +80,7 @@ export class Right extends Component<props, state>{
     }
 
     private getLatestQuestions() {
-        service.fetchLatestQuestion(this.iteration).then(data => {
+        homeService.fetchLatestQuestion(this.iteration).then(data => {
             this.tab = HomePageTab.ALL;
             this.questionList = data;
             this.setState({ isLoading: false });
@@ -93,7 +93,7 @@ export class Right extends Component<props, state>{
     }
 
     private getAnswerLessQuestions(): void {
-        service.fetchAnswerLessQuestions(this.iteration).then(data => {
+        homeService.fetchAnswerLessQuestions(this.iteration).then(data => {
             this.questionList = data;
             this.tab = HomePageTab.UNANSWERED;
             this.setState({ isLoading: false });
@@ -125,7 +125,7 @@ export class Right extends Component<props, state>{
         let context = this.context as IAuth0Context;
         let token = await context.getTokenSilently();
         let userId = context.user.sub;
-        service.fetchRecommendedQuestions(token, userId, this.iteration).then(data => {
+        homeService.fetchRecommendedQuestions(token, userId, this.iteration).then(data => {
             if (data.length == 0) {
                 this.getLatestQuestions();
             }
