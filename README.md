@@ -20,11 +20,11 @@ The project will solve two technical challenges:
   * [Cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) - for question similarity checking
 
 
-### Probable Tech
+### Technologies
 
 This project possible will use the following technology:
 * [dotnet core](https://dotnet.microsoft.com/) - As a backend Framework.
-* [TypeScript](https://www.typescriptlang.org/index.html) - As a frontend programming language which will be compiled to javascript
+* [TypeScript](https://www.typescriptlang.org/index.html) - As a frontend programming which will be compiled to javascript
 * [React](https://reactjs.org/docs/introducing-jsx.html) - As a front end framework
 * [MongDb Database](https://www.mongodb.com/) - As a Database service
 
