@@ -1,4 +1,5 @@
 import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client";
+import { ITag } from "./Models";
 
 export interface IAuth0Context {
     loginWithPopup(params?: {}):Promise<void>;
@@ -34,4 +35,10 @@ export interface IAppState{
     appState:{
         targetUrl:string;
     }
+}
+
+export interface ITagInfo{
+    tag:ITag;
+    questionsInthisWeek:number;
+    questionsToday:number;
 }

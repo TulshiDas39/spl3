@@ -48,3 +48,10 @@ export interface IVote {
     postId:string;
     postType:PostType;
 } 
+
+export interface ITag{
+    id:string;
+    name:string;
+    description:string;
+    users:number;
+}

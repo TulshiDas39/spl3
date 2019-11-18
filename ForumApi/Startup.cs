@@ -85,7 +85,7 @@ namespace ForumApi
             services.AddSingleton<TagItemService>();
             services.AddSingleton<RecommendationService>();
             services.AddSingleton<VoteSurvice>();
-                        
+            services.AddSingleton<TagSurvice>();
         }
 
 

@@ -13,7 +13,7 @@ namespace ForumApi.Models
 
         public string description { get; set; }
 
-        public int Users { get; set; }
+        public int users { get; set; }
 
     }
 }

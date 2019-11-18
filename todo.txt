@@ -1,10 +1,10 @@
 In progress
-    -refering user in Question,Answer,Comment
+    -tag follow option in tag page
+
 To Do
     -question search
     -blocking question based on user reaction
     -footer
-    -tag follow option in tag page
     -document(answer page) updating
     -uploading image in question
     -user profile
@@ -16,6 +16,7 @@ To Do
 
 
 Done
+    -refering user in Question,Answer,Comment
     -rating system(in question, answer, post, comment)
     -comment system
     -editing question list

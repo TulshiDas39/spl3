@@ -16,6 +16,7 @@ export const API_CALLS={
     vote:"api/votes/",
 
     comment:"api/comment/",
-    commentList:"api/comment/list/"
+    commentList:"api/comment/list/",
+    tagList:"/api/tag/"
 
 }

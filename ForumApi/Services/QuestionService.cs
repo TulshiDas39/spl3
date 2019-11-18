@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using System.Text.RegularExpressions;
+
 //using Serilog;
 
 namespace ForumApi.Services
@@ -30,6 +32,28 @@ namespace ForumApi.Services
             _userService = userService;
             _recommendationService = recommendationService;
             _logger = logger;
+        }
+
+        public int GetQuestionsCountThisWeek(string name, long timeInterval)
+        {
+            return CountQuestionsAtTimeInterval(name, timeInterval);
+        }
+
+        private int CountQuestionsAtTimeInterval(string name, long timeInterval)
+        {
+            
+
+
+            //Regex.Split(item.tags.Trim(), "\\s+").Contains(name) 
+            //_questions.Find<Question>(item => true).ToList().Count;
+            var list = _questions.Find<Question>(item => item.datetime > timeInterval).ToList();
+            int count = 0;
+            foreach (var item in list)
+            {
+                if (Utility.Tokenize(item.tags).Contains(name)) count++;
+            }
+
+            return count;
         }
 
         public Question Get(string questionId) =>
