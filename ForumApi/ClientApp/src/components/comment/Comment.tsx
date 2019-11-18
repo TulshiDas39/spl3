@@ -3,16 +3,17 @@ import { ICommentProps } from "./Types";
 import { CommentBox } from "./CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
 import "./styles/comment.css";
-import { IComment } from "../../utils/Models";
+import { IComment, IUser } from "../../utils/Models";
 import { IAuth0Context } from "../../utils/Structures";
 import { commentService } from "./CommentService";
 import { utilityService } from "../../utils/Utility";
 import { voteService } from "../vote/VoteService";
 import { PostType, VoteStatus } from "../../utils/Enums";
+import { Link } from "react-router-dom";
+import { answerService } from "../answer/AnswerServices";
 
 interface state {
     isEditing: boolean;
-    isLoading: boolean;
 }
 
 export class Comment extends Component<ICommentProps, state>{
@@ -21,24 +22,33 @@ export class Comment extends Component<ICommentProps, state>{
     private editingComment = {} as IComment;
     private ratings: number = 0;
     private voteStatus = VoteStatus.NOTVOTED;
+    private userOfComment = {} as IUser;
 
     constructor(props: ICommentProps) {
         super(props);
-        this.state = { isEditing: false, isLoading: true };
+        this.state = { isEditing: false };
         this.ratings = props.data.ratings;
     }
 
     componentDidMount() {
-        if(this.context.isAuthenticated) this.updateVoteStatus();
+        if (this.context.isAuthenticated) this.updateVoteStatus();
+        this.showUserOfComment();
     }
 
     private updateComponent() {
         this.setState(this.state);
     }
 
+    private showUserOfComment() {
+        answerService.getUser(this.props.data.userId).then(data => {
+            this.userOfComment = data;
+            this.updateComponent();
+        })
+    }
+
     private async updateVoteStatus() {
         let token = await this.context.getTokenSilently();
-        voteService.getVoteStatus(this.props.data.id, this.context.user.sub,PostType.COMMENT,token).then(data=>{
+        voteService.getVoteStatus(this.props.data.id, this.context.user.sub, PostType.COMMENT, token).then(data => {
             this.voteStatus = data;
             this.updateComponent();
         });
@@ -68,11 +78,11 @@ export class Comment extends Component<ICommentProps, state>{
         if (!context.isAuthenticated) return;
         if (this.voteStatus == type) return;
         let token = await context.getTokenSilently();
-        commentService.postRate(token, context.user.sub, this.props.data.id, type).then(data => { 
-            if(this.voteStatus == VoteStatus.NOTVOTED){
-                type == VoteStatus.DOWNVOTED? this.ratings--:this.ratings++;
+        commentService.postRate(token, context.user.sub, this.props.data.id, type).then(data => {
+            if (this.voteStatus == VoteStatus.NOTVOTED) {
+                type == VoteStatus.DOWNVOTED ? this.ratings-- : this.ratings++;
             }
-            else this.voteStatus == VoteStatus.UPVOTED?this.ratings -=2:this.ratings+=2;
+            else this.voteStatus == VoteStatus.UPVOTED ? this.ratings -= 2 : this.ratings += 2;
             this.voteStatus = type;
             this.updateComponent();
         });
@@ -93,7 +103,7 @@ export class Comment extends Component<ICommentProps, state>{
 
         return (
             <span key={this.props.data.id} className="user-comment">
-               {this.getRatings()}
+                {this.getRatings()}
                 <span className="user-comment-vote">
                     <span className="useful-comment">
                         <span className="vote-count"></span>
@@ -108,15 +118,23 @@ export class Comment extends Component<ICommentProps, state>{
                 <span className="commentDiv">
                     <span className="user-comment-text">{this.props.data.text}</span>
                     {
-                        this.getCommentActions()
+                        this.getCommentFooter()
                     }
+
                 </span>
             </span>
         )
     }
 
-    private getRatings(){
-        if(this.ratings !=0) return <span className="comment-reaction">{utilityService.convertToBengaliText(this.ratings)}</span>;
+    private getRatings() {
+        if (this.ratings != 0) return <span className="comment-reaction">{utilityService.convertToBengaliText(this.ratings)}</span>;
+    }
+
+    private getCommentFooter() {
+        return (<span className="commentFooter">
+            {this.getCommentActions()}
+            <Link to="" style={{ textDecoration: 'none' ,marginLeft:'auto'}}>{"- "+this.userOfComment.name}</Link>
+        </span>);
     }
 
     private getCommentActions() {

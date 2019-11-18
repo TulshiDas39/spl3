@@ -48,6 +48,7 @@
 .commentDiv{
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }
 
 .commentOptions{
@@ -55,4 +56,9 @@
 }
 .comment-reaction{
     padding: 0 5px;
+}
+
+.commentFooter{
+    display: flex;
+    flex-wrap: wrap;
 }
