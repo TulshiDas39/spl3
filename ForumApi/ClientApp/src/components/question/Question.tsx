@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./question.css";
 import { Link } from "react-router-dom";
 import { IQuestion, IUser } from "../../utils/Models";
-import { utilityService } from "../../utils/Utility";
+import { utilityService } from "../../services/UtilityService";
 import { QuestionProps } from "./Types";
 import { questionService } from "./QuestionServices";
 import { Auth0Context } from "../../utils/Contexts";

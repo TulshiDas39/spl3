@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { utilityService } from "../../utils/Utility";
+import { utilityService } from "../../services/UtilityService";
 import { voteProps } from "./Types";
 import "./vote.css";
 import { IVote } from "../../utils/Models";

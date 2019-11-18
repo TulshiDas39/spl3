@@ -3,7 +3,8 @@ import "./styles/user.css";
 import { UserProps } from "../Types";
 import { IUser } from "../../../utils/Models";
 import { answerService } from "../AnswerServices";
-import { utilityService } from "../../../utils/Utility";
+import { utilityService } from "../../../services/UtilityService";
+import { rootService } from "../../../services/RootService";
 
 interface state {
     isLoading: boolean;
@@ -19,7 +20,7 @@ export class User extends Component<UserProps, state>{
     }
 
     componentDidMount() {
-        answerService.getUser(this.props.userId).then(data => {
+        rootService.getUser(this.props.userId).then(data => {
             this.user = data;
             this.postDuration = this.getDurationString();
             this.setState({ isLoading: false });

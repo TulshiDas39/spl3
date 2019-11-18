@@ -7,4 +7,7 @@ export const rootService = {
 
         return httpService.get(url);
     },
+    getUser(id:string){
+        return httpService.get(API_CALLS.users+id);
+    }
 }

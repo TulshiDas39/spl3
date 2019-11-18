@@ -1,12 +1,12 @@
 import { IComment, IVote } from "../../utils/Models";
-import { createHeader } from "../../services/UtilityServices";
 import { httpService } from "../../services/HttpService";
 import { API_CALLS } from "../../utils/api_calls";
 import { PostType, VoteStatus } from "../../utils/Enums";
+import { utilityService } from "../../services/UtilityService";
 
 export const commentService = {
     postRate(token: string, userId: string, commentId: string, rateType:VoteStatus) {
-        let headers = createHeader(token);
+        let headers = utilityService.createHeader(token);
         let data:IVote = {
             id:undefined as any,
             isUpvote:rateType == VoteStatus.UPVOTED?true:false,
@@ -20,7 +20,7 @@ export const commentService = {
 
     
     updateComment(comment:IComment, token:string){
-        let headeers = createHeader(token);
+        let headeers = utilityService.createHeader(token);
         
         return httpService.put(API_CALLS.comment,comment,headeers);
     },

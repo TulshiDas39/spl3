@@ -9,7 +9,7 @@ import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
 import { discussionProps } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
-import { utilityService } from "../../../utils/Utility";
+import { utilityService } from "../../../services/UtilityService";
 
 interface state {
     isLoading: boolean;

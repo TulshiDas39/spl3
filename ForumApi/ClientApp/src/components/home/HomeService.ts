@@ -1,13 +1,13 @@
 import { IAuth0Context, IUserCredential } from "../../utils/Structures";
 import { httpService } from "../../services/HttpService";
-import { createHeader } from "../../services/UtilityServices";
 import { IQuestion } from "../../utils/Models";
 import { API_CALLS } from "../../utils/api_calls";
+import { utilityService } from "../../services/UtilityService";
 
 
 export const homeService = {
     fetchRecommendedQuestions(token:string, userId:string, iteration: number) {
-        let headers = createHeader(token);
+        let headers = utilityService.createHeader(token);
         let url = API_CALLS.recommendedQuestions + userId + "/" + iteration;
         console.log("fetching recommended questions:");
         return httpService.get(url, headers);

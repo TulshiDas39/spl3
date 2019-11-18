@@ -10,9 +10,22 @@
     border:1px solid #66bfff;
     margin: 5px;
 }
+
 .tag{
     padding: 10px 10px;
     margin-right: auto;
     background: #E1ECF4;
     margin-bottom: 4px;
+}
+
+.tagHead{
+    display: flex;
+}
+
+.followIcon{
+    font-size: 16px !important;
+}
+
+.followIcon:hover{
+    cursor: pointer;
 }

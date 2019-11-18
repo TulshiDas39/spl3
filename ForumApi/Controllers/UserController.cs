@@ -41,6 +41,24 @@ namespace ForumApi.Controllers
         }
 
         [Authorize]
+        [HttpPut("follow/{tagId:length(24)}/{userId}")]
+        public ActionResult FollowTag(string tagId, string userId){
+            _logger.LogDebug("has come");
+            var isDone = _userService.follow(tagId,userId);
+            if(!isDone) return NotFound();
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPut("unfollow/{tagId:length(24)}/{userId}")]
+        public ActionResult UnFollowTag(string tagId, string userId){
+            _logger.LogDebug("has come");
+            var isDone = _userService.Unfollow(tagId,userId);
+            if(!isDone) return NotFound();
+            return Ok();
+        }
+
+        [Authorize]
         [HttpPost("create")]
         public ActionResult<User> Create(UserCredential userCred)
         {

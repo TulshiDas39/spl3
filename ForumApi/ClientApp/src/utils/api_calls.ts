@@ -12,11 +12,13 @@ export const API_CALLS={
     answerCount:"api/answers/count/",
     
     users:"api/users/",
-
+    followTag:"api/users/follow/",
+    unFollowTag:"api/users/unfollow/",
     vote:"api/votes/",
 
     comment:"api/comment/",
     commentList:"api/comment/list/",
-    tagList:"/api/tag/"
+
+    tagList:"/api/tag/",
 
 }

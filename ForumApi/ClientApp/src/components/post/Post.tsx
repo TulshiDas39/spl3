@@ -9,7 +9,7 @@ import { PostType } from "../../utils/Enums";
 import { CommentList } from "../commentList/CommentList";
 import { PostProps } from "./Types";
 import { Vote } from "../vote/Vote";
-import { rootService } from "../../services/RootService.";
+import { rootService } from "../../services/RootService";
 
 
 export class Post extends Component<PostProps, any>{

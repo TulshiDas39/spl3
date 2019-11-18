@@ -1,8 +1,8 @@
 import { httpService } from "../../services/HttpService";
-import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
 import { IAnswer, IQuestion } from "../../utils/Models";
 import { CashedItem } from "../../utils/Enums";
+import { utilityService } from "../../services/UtilityService";
 
 export const answerService = {
 
@@ -14,28 +14,28 @@ export const answerService = {
 
     updateQuestion(question: IQuestion, token: string) {
         let url = API_CALLS.updateQuestion;
-        let headers = createHeader(token);
+        let headers =utilityService.createHeader(token);
 
         return httpService.put(url, question, headers);
     },
 
     deleteQuestion(id: string, token: string) {
         let url = API_CALLS.deleteQuestion + id;
-        let headers = createHeader(token);
+        let headers = utilityService.createHeader(token);
 
         return httpService.deleteEntity(url, headers);
 
     },
     getAnswers(questionId: string) {
         let url = API_CALLS.answerList + questionId;
-        let headers = createHeader("");
+        let headers = utilityService.createHeader("");
 
         return httpService.get(url,headers);
 
     },
     postAnswer(data: object, token: string) {
         let url = API_CALLS.answers;
-        let headers = createHeader(token);
+        let headers = utilityService.createHeader(token);
 
         console.log('posing answer');
 
@@ -43,7 +43,7 @@ export const answerService = {
     },
     updateAnswer(data: IAnswer, token: string) {
         let url = API_CALLS.answers;
-        let headers = createHeader(token);
+        let headers = utilityService.createHeader(token);
 
         console.log('posing answer');
 
@@ -52,7 +52,7 @@ export const answerService = {
     },
     deleteAnswer(id: string, token: string) {
         let url = API_CALLS.answers + id;
-        let headers = createHeader(token);
+        let headers = utilityService.createHeader(token);
 
         return  httpService.deleteEntity(url, headers);
     },
@@ -70,10 +70,6 @@ export const answerService = {
         if (views.indexOf(id) != -1) return;
 
         return httpService.put(url, {});
-    },
-
-    getUser(id:string){
-        return httpService.get(API_CALLS.users+id);
     }
 }
 

@@ -26,5 +26,16 @@ export const utilityService = {
         let minutes = Math.floor(duration/60000);
         
         return minutes;
+    },
+    tokenize(text:string){
+        let regex = /\s+/ ;
+        return text.trim().split(regex);
+    },
+    createHeader(token:string, contentType?:string){
+        return new Headers({
+            "Authorization": "Bearer " + token,
+            'Content-Type': contentType? contentType: 'application/json',
+            'Accept': 'application/json'
+        });
     }
 }

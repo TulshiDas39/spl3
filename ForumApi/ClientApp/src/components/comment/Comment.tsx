@@ -6,11 +6,12 @@ import "./styles/comment.css";
 import { IComment, IUser } from "../../utils/Models";
 import { IAuth0Context } from "../../utils/Structures";
 import { commentService } from "./CommentService";
-import { utilityService } from "../../utils/Utility";
+import { utilityService } from "../../services/UtilityService";
 import { voteService } from "../vote/VoteService";
 import { PostType, VoteStatus } from "../../utils/Enums";
 import { Link } from "react-router-dom";
 import { answerService } from "../answer/AnswerServices";
+import { rootService } from "../../services/RootService";
 
 interface state {
     isEditing: boolean;
@@ -40,7 +41,7 @@ export class Comment extends Component<ICommentProps, state>{
     }
 
     private showUserOfComment() {
-        answerService.getUser(this.props.data.userId).then(data => {
+        rootService.getUser(this.props.data.userId).then(data => {
             this.userOfComment = data;
             this.updateComponent();
         })

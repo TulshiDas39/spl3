@@ -1,5 +1,4 @@
 import { httpService } from "../../services/HttpService";
-import { createHeader } from "../../services/UtilityServices";
 import { API_CALLS } from "../../utils/api_calls";
 
 export const questionService = {

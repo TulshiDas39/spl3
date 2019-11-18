@@ -7,12 +7,11 @@ import { Head } from "./subComponents/Head";
 import { answerService } from "./AnswerServices";
 import { IQuestion } from "../../utils/Models";
 import { AnswerProps } from "./Types";
-import { rootService } from "../../services/RootService.";
+import { rootService } from "../../services/RootService";
 
 export interface AnswerState {
     isloading: boolean;
 }
-
 export class Answer extends Component<AnswerProps, AnswerState>{
     public static answerState: AnswerState;
     public static setAnswerState: any;
