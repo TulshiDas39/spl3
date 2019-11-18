@@ -19,5 +19,12 @@ export const utilityService = {
         console.log('done');
         if (isNegative) sBn = "-" + sBn;
         return sBn;
+    },
+    getDurationMinute(time:number){
+        let duration = new Date().getTime() - time;
+
+        let minutes = Math.floor(duration/60000);
+        
+        return minutes;
     }
 }

@@ -17,7 +17,6 @@ export const answerService = {
         let headers = createHeader(token);
 
         return httpService.put(url, question, headers);
-
     },
 
     deleteQuestion(id: string, token: string) {
@@ -71,6 +70,10 @@ export const answerService = {
         if (views.indexOf(id) != -1) return;
 
         return httpService.put(url, {});
+    },
+
+    getUser(id:string){
+        return httpService.get(API_CALLS.users+id);
     }
 }
 

@@ -73,7 +73,7 @@ export class Ask extends Component<props, state>{
         //this.data.description = this.description;
         //this.data.title = this.questionTitle;
         this.data.tags = this.getTagsAsString();
-        this.data.dateTime = new Date().getTime();
+        this.data.datetime = new Date().getTime();
         this.data.ratings = 0;
         this.data.userId = context.user.sub;
         this.data.isAccepted = false;

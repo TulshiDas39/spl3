@@ -18,5 +18,7 @@ namespace ForumApi.Models
         public int reputation { get; set; }
 
         public string location { get; set; }
+
+        public string image { get; set; }
     }
 }

@@ -77,7 +77,7 @@ export class Question extends Component<QuestionProps, state>{
                         {this.tags.map((tag, index) => <a key={"tagKey" + index} className="tagItem" href="#">{tag}</a>)}
                     </div>
                     <div className="question_time">
-                        <a className="question_time_tex" href="">{new Date(this.props.data.dateTime).toLocaleString()}</a>
+                        <a className="question_time_tex" href="">{new Date(this.props.data.datetime).toLocaleString()}</a>
                         <a className="question_time_user" href="">{this.user.name}</a>
                         <span className="question_time_user_rating">{this.user.reputation}</span>
                     </div>

@@ -1,6 +1,7 @@
 import { IQuestion, IAnswer } from "../../utils/Models";
 import { RouteProps } from "react-router";
 import { PostType } from "../../utils/Enums";
+import { IUserCredential } from "../../utils/Structures";
 
 export interface discussionProps {
     questionData: IQuestion;
@@ -26,4 +27,9 @@ export enum ActionType {
 
 export enum ActionEntity {
     Answer, Question, None
+}
+
+export interface UserProps{
+    userId:string;
+    postTime:number;
 }

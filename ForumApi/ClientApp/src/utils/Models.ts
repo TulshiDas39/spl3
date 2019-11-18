@@ -7,7 +7,7 @@ export interface IQuestion {
     description: string;
     tags: string;
     ratings: number;
-    dateTime: number;
+    datetime: number;
     views: number;
     isAccepted: boolean;
 }
@@ -28,6 +28,7 @@ export interface IUser {
     tags: string;
     reputation: string;
     location: string;
+    image:string;
 }
 
 export interface IComment {

@@ -53,6 +53,7 @@ namespace ForumApi.Controllers
                 user.userId = userCred.sub;
                 user.tags = "";
                 user.reputation = 0;
+                user.image = userCred.picture;
                 _userService.Create(user);
 
                 return CreatedAtRoute("GetUser", new { id = user.id.ToString() }, user);

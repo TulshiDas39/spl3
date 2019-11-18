@@ -51,7 +51,7 @@ export class Post extends Component<PostProps, any>{
                     <span className="question_description_text" dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {this.getEdit_DeleteOptions()}
 
-                    <User />
+                    <User userId = {this.props.data.userId} postTime = {this.props.data.datetime}/>
 
                     <CommentList postId= {this.props.data.id} postType = {this.postType} />
                 </div>

@@ -19,7 +19,7 @@ namespace ForumApi.Models
 
         public int ratings { get; set; }
 
-        public long dateTime { get; set; }
+        public long datetime { get; set; }
 
         public int views { get; set; }
 

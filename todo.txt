@@ -1,8 +1,6 @@
 In progress
-    -rating system(in question, answer, post, comment)
-
-To Do
     -refering user in Question,Answer,Comment
+To Do
     -question search
     -blocking question based on user reaction
     -footer
@@ -14,9 +12,11 @@ To Do
     -hosting
     -search engine optimization
     -unused ager component file gula delete kora
+    -snackbar notification for logout actions..
 
 
 Done
+    -rating system(in question, answer, post, comment)
     -comment system
     -editing question list
     -condition editor view, question/answer edit, delete options.
