@@ -44,8 +44,9 @@ export class Head extends Component<any, state>{
                         </form>
                     </div>
 
-                    {new TagInput().build(this.handleAddition, this.handleDelete,
-                        { tags: this.state.tags, suggestions: this.state.suggestions })}
+                    {/* {new TagInput().build(this.handleAddition, this.handleDelete,
+                        { tags: this.state.tags, suggestions: this.state.suggestions })} */}
+                        <TagInput additionHandler={this.handleAddition} deleteHandler={this.handleDelete} />
 
                 </div>
 

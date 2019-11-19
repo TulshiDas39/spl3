@@ -1,6 +1,5 @@
 In progress
-    -tag follow option in tag page
-
+    -tag creation at question time
 To Do
     -question search
     -blocking question based on user reaction
@@ -16,6 +15,7 @@ To Do
 
 
 Done
+    -tag follow option in tag page
     -refering user in Question,Answer,Comment
     -rating system(in question, answer, post, comment)
     -comment system

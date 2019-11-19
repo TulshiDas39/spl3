@@ -1,33 +1,36 @@
 import React, { Component } from 'react';
-import {COUNTRIES} from './countries';
+import { COUNTRIES } from './countries';
 import './style.css';
 import { WithContext as ReactTags } from 'react-tag-input';
+import { ITagInputProps, ITagInput } from './Types';
 
-interface tag{
-  id:string,
-  text:string
+interface tag {
+  id: string,
+  text: string
 }
 
-interface state{
-  tags:tag[],
-  suggestions:string[]
+interface state {
+  isLoading: boolean;
 }
 
-export class TagInput {
+export class TagInput extends React.Component<ITagInputProps, state>{
 
-  private state:state = {
-    tags: [{ id: '1', text: "Thailand" }, { id: '2', text: "India" }],
+  private inputState: ITagInput = {
+    tags: [],
     suggestions: COUNTRIES
   };
 
-   constructor() {
-  
-    this.handleDrag = this.handleDrag.bind(this);
-    this.handleTagClick = this.handleTagClick.bind(this);
+  constructor(props: ITagInputProps) {
+    super(props);
+    this.state = { isLoading: false };
   }
 
-  private handleDrag(tag:tag, currPos:number, newPos:number) {
-    const tags = [...this.state.tags];
+  private updateComponent(){
+    this.setState(this.state);
+  }
+
+  private handleDrag(tag: tag, currPos: number, newPos: number) {
+    const tags = [...this.inputState.tags];
 
     // mutate array
     tags.splice(currPos, 1);
@@ -37,25 +40,52 @@ export class TagInput {
     // this.setState({ tags });
   }
 
-  private handleTagClick(index:number) {
+  private isExistTag(tagText:string){
+    for(let i=0;i<this.inputState.tags.length;i++){
+      if(this.inputState.tags[i].text === tagText) return true;
+    }
+    return false;
+  }
+
+  private handleAddition(tag:string){
+    if(this.isExistTag(tag)) return;
+
+    let length = this.inputState.tags.length;
+    let data = {id:length+"",text:tag};
+    this.props.additionHandler(tag);
+    this.inputState.tags.push(data);
+    this.updateComponent();
+  }
+
+  private handleDelete(index: number) {
+    this.inputState.tags.splice(index, 1);
+    this.props.deleteHandler(index);
+    this.updateComponent();
+
+  }
+
+  private handleTagClick(index: number) {
     console.log('The tag at index ' + index + ' was clicked');
   }
 
-  public build(additionHandler:(tag:string)=>any, deleteHandler:(i:number)=>any, tagState:state) {
-    const { tags, suggestions } = tagState;
+  render() {
     return (
       <div id="app">
         <ReactTags
-          tags={tags}
-          suggestions={suggestions as any}
-          handleDelete={deleteHandler}
-          handleAddition={additionHandler as any}
+          {...this.inputState}
+          handleDelete={this.handleDelete.bind(this)}
+          handleAddition={this.handleAddition.bind(this) as any}
           handleDrag={this.handleDrag}
           handleTagClick={this.handleTagClick}
         />
       </div>
     );
   }
+
+  // public build(additionHandler:(tag:string)=>any, deleteHandler:(i:number)=>any, tagState:state) {
+  //   const { tags, suggestions } = tagState;
+
+  // }
 }
 
 //render(<App />, document.getElementById('root'));

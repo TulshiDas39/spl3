@@ -11,11 +11,6 @@ import { Question } from "../question/Question";
 import { postQuestion } from "./AskServices";
 
 interface state {
-    tags: {
-        id: string;
-        text: string;
-    }[];
-    suggestions: string[];
     currentStep: number;
     loadSimilarities: boolean;
 }
@@ -37,14 +32,13 @@ export class Ask extends Component<props, state>{
     private data: IQuestion = {} as IQuestion;
     private similarQuestions: IQuestion[] = [];
     static contextType = Auth0Context;
+    private tags:string[] = [];
 
     constructor(props: props) {
         super(props);
-        this.handleAddition = this.handleAddition.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
+        // this.handleAddition = this.handleAddition.bind(this);
+        // this.handleDelete = this.handleDelete.bind(this);
         this.state = {
-            tags: [],
-            suggestions: COUNTRIES,
             currentStep: 0,
             loadSimilarities: false
         }
@@ -92,7 +86,7 @@ export class Ask extends Component<props, state>{
 
     private fetchSimilarQuestions() {
         let questionData = this.data.title;
-        this.state.tags.forEach(val => questionData += " " + val.text);
+        this.tags.forEach(val => questionData += " " + val);
         questionData = questionData.trim().replace(/[.,\/#!\^&]/g,"");
         console.log('tags are pushed: ' + questionData);
 
@@ -157,10 +151,11 @@ export class Ask extends Component<props, state>{
                 <span style={{ fontWeight: 'bold', display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5], marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
 
                 <div className="ask_tags review" style={{ display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5] }}>
-                    {new TagInput().build(this.handleAddition, this.handleDelete, {
+                    {/* {new TagInput().build(this.handleAddition, this.handleDelete, {
                         tags: this.state.tags,
                         suggestions: this.state.suggestions
-                    })}
+                    })} */}
+                    <TagInput additionHandler={this.handleAddition.bind(this)} deleteHandler={this.handleDelete.bind(this)}/>
                 </div>
 
 
@@ -195,10 +190,10 @@ export class Ask extends Component<props, state>{
 
 
     private getTagsAsString() {
-        let tags = this.state.tags;
+        let tags = this.tags;
         let tagStr = "";
         tags.forEach(element => {
-            tagStr += " "+element.text
+            tagStr += " "+element
         });
         console.log('tagStr:' + tagStr);
         return tagStr;
@@ -215,7 +210,6 @@ export class Ask extends Component<props, state>{
         if (!this.stepCompleted(nexStep) && nexStep > this.state.currentStep) return;
         this.displayOfSteps[this.state.currentStep] = 'none';
         this.displayOfSteps[nexStep] = '';
-        //this.prevStep = this.state.currentStep;
         this.setState({
             currentStep: nexStep,
             loadSimilarities: nexStep === 3 ? true : false
@@ -227,32 +221,38 @@ export class Ask extends Component<props, state>{
         for (let i = this.state.currentStep; i < nexStep; i++) {
             if (this.stepsCompleted[i] === false) return false;
         }
-
         return true;
-
     }
 
     public handleDelete(i: number) {
-        this.setState({
-            tags: this.state.tags.filter((tag, index) => index !== i),
-        });
-        this.stepsCompleted[1] = this.state.tags.length === 0 ? false : true;
+        // this.setState({
+        //     tags: this.state.tags.filter((tag, index) => index !== i),
+        // });
         console.log('delete ' + i);
+        console.log('before delete:');
+        console.log(this.tags);
+        this.tags.splice(i,1);
+        console.log('after delete:');
+        console.log(this.tags);
+        this.stepsCompleted[1] = this.tags.length === 0 ? false : true;
+        
     }
 
     public handleAddition(tag: string) {
 
-        let { tags } = this.state;
-        if (tags.map(val => val.text).indexOf(tag) === -1) {
-            this.setState({ tags: [...tags, { id: (tags.length + 1) + "", text: tag }] });
-            console.log('added ' + tag);
-            this.stepsCompleted[1] = true;
-        }
+        // let { tags } = this.state;
+        // if (tags.map(val => val.text).indexOf(tag) === -1) {
+        //     this.setState({ tags: [...tags, { id: (tags.length + 1) + "", text: tag }] });
+        //     console.log('added ' + tag);
+        //     this.stepsCompleted[1] = true;
+        // }
+        this.tags.push(tag);
+
+        console.log('tag added:'+tag);
     }
 
     private handleTypeChange(event: any) {
         console.log(event.target.value);
-        // this.questionType = event.target.value;
         this.stepsCompleted[0] = true;
     }
 
@@ -316,15 +316,11 @@ export class Ask extends Component<props, state>{
                 </div>
             </div>
 
-
         )
     }
 
     private saveDescription(event: any) {
         console.log('saved description');
-        //let description = event.target.value;
-        //console.log(description);
-        //this.description = event.target.value;
         this.data.description = event.target.value;
         this.stepsCompleted[4] = this.data.description ? true : false;
     }
