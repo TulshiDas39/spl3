@@ -19,11 +19,12 @@ namespace ForumApi.Services
 
         private readonly ILogger _logger;
         private readonly UserService _userService;
+        private readonly TagItemService _tagService;
 
         private readonly RecommendationService _recommendationService;
 
         public QuestionService(IDatabaseSettings settings, ILogger<QuestionService> logger, UserService userService,
-            RecommendationService recommendationService)
+            RecommendationService recommendationService, TagItemService tagItemService)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
@@ -31,6 +32,7 @@ namespace ForumApi.Services
             _questions = database.GetCollection<Question>(settings.QuestionsCollectionName);
             _userService = userService;
             _recommendationService = recommendationService;
+            _tagService = tagItemService;
             _logger = logger;
         }
 
@@ -41,7 +43,7 @@ namespace ForumApi.Services
 
         private int CountQuestionsAtTimeInterval(string name, long timeInterval)
         {
-            
+
 
 
             //Regex.Split(item.tags.Trim(), "\\s+").Contains(name) 
@@ -74,6 +76,7 @@ namespace ForumApi.Services
         public Question Create(Question question)
         {
             _questions.InsertOne(question);
+            _tagService.InsertIfNotExist(question.tags);
             return question;
         }
 
@@ -92,8 +95,11 @@ namespace ForumApi.Services
             return list;
         }
 
-        public void Update(string id, Question questionIn) =>
+        public void Update(string id, Question questionIn)
+        {
             _questions.ReplaceOne(question => question.id == id, questionIn);
+            _tagService.InsertIfNotExist(questionIn.tags);
+        }
 
         internal ActionResult<List<Question>> GetByUser(string userId)
         {
@@ -181,7 +187,7 @@ namespace ForumApi.Services
             _questions.DeleteOne(question => question.id == questionIn.id);
 
         public void Remove(string id)
-        {        
+        {
             _questions.DeleteOne(question => question.id == id);
         }
     }

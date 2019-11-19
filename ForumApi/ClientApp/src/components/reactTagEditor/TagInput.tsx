@@ -53,8 +53,8 @@ export class TagInput extends React.Component<ITagInputProps, state>{
     if(this.isExistTag(tag)) return;
 
     let length = this.inputState.tags.length;
-    let data = {id:length+"",text:tag};
-    this.props.additionHandler(tag);
+    let data = {id:length+"",text:tag.toLowerCase()};
+    this.props.additionHandler(tag.toLowerCase());
     this.inputState.tags.push(data);
     this.updateComponent();
   }
@@ -72,7 +72,7 @@ export class TagInput extends React.Component<ITagInputProps, state>{
 
   private handleInputChange(tag:string){
     console.log('input:'+tag);
-    httpService.get(API_CALLS.tagSuggestion+tag).then(data=>{
+    httpService.get(API_CALLS.tagSuggestion+tag.toLowerCase()).then(data=>{
       this.inputState.suggestions = data;
       this.updateComponent();
     })

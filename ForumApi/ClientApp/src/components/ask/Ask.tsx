@@ -247,7 +247,7 @@ export class Ask extends Component<props, state>{
         //     this.stepsCompleted[1] = true;
         // }
         this.tags.push(tag);
-
+        this.stepsCompleted[1] = true;
         console.log('tag added:'+tag);
     }
 

@@ -134,6 +134,7 @@ namespace ForumApi.Controllers
         public ActionResult<Question> Create(Question question)
         {
             _logger.LogDebug("in create question");
+            if(question.id != null) return BadRequest();
             _questionService.Create(question);
 
             return CreatedAtRoute("GetQuestion", new { id = question.id.ToString() }, question);
