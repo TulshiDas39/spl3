@@ -22,6 +22,11 @@ namespace ForumApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet("suggest/{match}")]
+        public ActionResult<List<string>> GetSuggested(string match){
+            return _tagSurvice.GetSuggestedTags(match);
+        }
+
 
         [HttpGet("{iteration?}")]
         public ActionResult<List<TagInfo>> Get(int iteration=0)

@@ -19,6 +19,7 @@ export const API_CALLS={
     comment:"api/comment/",
     commentList:"api/comment/list/",
 
-    tagList:"/api/tag/",
+    tagList:"api/tag/",
+    tagSuggestion:"api/tag/suggest/"
 
 }

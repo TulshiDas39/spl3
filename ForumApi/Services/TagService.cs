@@ -3,6 +3,7 @@ using ForumApi.Models;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ForumApi.Services
 {
@@ -40,6 +41,31 @@ namespace ForumApi.Services
             }
 
             return list;
+        }
+
+        internal ActionResult<List<string>> GetSuggestedTags(string match)
+        {
+            List<string> tags = new List<string>();
+            int i =0;
+            int chunk = 60;
+            List<TagItem> list;
+            do{
+                list = _tags.Find(item=>true).Skip(i*chunk).Limit(chunk).ToList();
+                Push(tags,list,match);
+                if(tags.Count > 10) return tags;
+            }while(list.Count == chunk);
+
+            return tags;
+        }
+
+        private void Push(List<string> tags, List<TagItem> items, string match)
+        {
+            foreach(var item in items){
+                if(item.name.ToLower().StartsWith(match)){
+                    tags.Add(item.name);
+                    if(tags.Count > 10) return;
+                } 
+            }
         }
 
         public TagItem InsertOne(TagItem vote)

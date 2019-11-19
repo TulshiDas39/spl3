@@ -3,6 +3,8 @@ import { COUNTRIES } from './countries';
 import './style.css';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { ITagInputProps, ITagInput } from './Types';
+import { httpService } from '../../services/HttpService';
+import { API_CALLS } from '../../utils/api_calls';
 
 interface tag {
   id: string,
@@ -68,6 +70,14 @@ export class TagInput extends React.Component<ITagInputProps, state>{
     console.log('The tag at index ' + index + ' was clicked');
   }
 
+  private handleInputChange(tag:string){
+    console.log('input:'+tag);
+    httpService.get(API_CALLS.tagSuggestion+tag).then(data=>{
+      this.inputState.suggestions = data;
+      this.updateComponent();
+    })
+  }
+
   render() {
     return (
       <div id="app">
@@ -77,6 +87,7 @@ export class TagInput extends React.Component<ITagInputProps, state>{
           handleAddition={this.handleAddition.bind(this) as any}
           handleDrag={this.handleDrag}
           handleTagClick={this.handleTagClick}
+          handleInputChange ={this.handleInputChange.bind(this)}
         />
       </div>
     );
