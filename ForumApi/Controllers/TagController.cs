@@ -24,7 +24,7 @@ namespace ForumApi.Controllers
 
         [HttpGet("suggest/{match}")]
         public ActionResult<List<string>> GetSuggested(string match){
-            return _tagSurvice.GetSuggestedTags(match);
+            return _tagSurvice.GetSuggestedTags(match.ToLower());
         }
 
 
