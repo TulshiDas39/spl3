@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { TagInput } from "../reactTagEditor/TagInput";
-import { COUNTRIES } from "../reactTagEditor/countries";
 import "./ask.css";
 import "./question_list.css";
 import { Auth0Context } from "../../utils/Contexts";
@@ -8,7 +7,7 @@ import { IAuth0Context } from "../../utils/Structures";
 import { IQuestion, IAnswer } from "../../utils/Models";
 import Loading from "../loader/Loading";
 import { Question } from "../question/Question";
-import { postQuestion } from "./AskServices";
+import { askServices } from "./AskServices";
 
 interface state {
     currentStep: number;
@@ -32,7 +31,7 @@ export class Ask extends Component<props, state>{
     private data: IQuestion = {} as IQuestion;
     private similarQuestions: IQuestion[] = [];
     static contextType = Auth0Context;
-    private tags:string[] = [];
+    private tags: string[] = [];
 
     constructor(props: props) {
         super(props);
@@ -75,42 +74,29 @@ export class Ask extends Component<props, state>{
 
         console.log('token:');
         console.log(token);
-        postQuestion(this.data,token).then(response=>{
+        askServices.postQuestion(this.data, token).then(response => {
             let data = response as IQuestion;
             this.props.history.push('/answer/' + data.id);
-        }, err=>{
+        }, err => {
             console.error(err);
         })
 
     }
 
-    private fetchSimilarQuestions() {
+    private async fetchSimilarQuestions() {
         let questionData = this.data.title;
         this.tags.forEach(val => questionData += " " + val);
-        questionData = questionData.trim().replace(/[.,\/#!\^&]/g,"");
+        questionData = questionData.trim().replace(/[.,\/#!\^&]/g, "");
         console.log('tags are pushed: ' + questionData);
+        let token = await this.context.getTokenSilently();
 
-        fetch('api/questions/similarity', {
-            method: 'POST',
-            body: JSON.stringify(questionData),
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Authorization': 'Bearer ' + token
-            }
-        }).then((res: Response) => {
-            console.log(res);
-            return res.json();
-        }).then(data => {
-            console.log('retrieved similar questions:');
-            console.log(data);
+        askServices.getSimilarQuestion(questionData, token).then(data => {
             this.similarQuestions = data;
             this.setState({
                 loadSimilarities: false
-            })
-            //this.props.history.push('/answer/' + data.id);
-        }).catch(err => {
-            console.log('error happened');
-            console.log(err);
+            });
+        }, err => {
+            console.error(err);
         });
     }
 
@@ -151,11 +137,7 @@ export class Ask extends Component<props, state>{
                 <span style={{ fontWeight: 'bold', display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5], marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
 
                 <div className="ask_tags review" style={{ display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5] }}>
-                    {/* {new TagInput().build(this.handleAddition, this.handleDelete, {
-                        tags: this.state.tags,
-                        suggestions: this.state.suggestions
-                    })} */}
-                    <TagInput additionHandler={this.handleAddition.bind(this)} deleteHandler={this.handleDelete.bind(this)}/>
+                    <TagInput additionHandler={this.handleAddition.bind(this)} deleteHandler={this.handleDelete.bind(this)} />
                 </div>
 
 
@@ -193,7 +175,7 @@ export class Ask extends Component<props, state>{
         let tags = this.tags;
         let tagStr = "";
         tags.forEach(element => {
-            tagStr += " "+element
+            tagStr += " " + element
         });
         console.log('tagStr:' + tagStr);
         return tagStr;
@@ -225,30 +207,21 @@ export class Ask extends Component<props, state>{
     }
 
     public handleDelete(i: number) {
-        // this.setState({
-        //     tags: this.state.tags.filter((tag, index) => index !== i),
-        // });
         console.log('delete ' + i);
         console.log('before delete:');
         console.log(this.tags);
-        this.tags.splice(i,1);
+        this.tags.splice(i, 1);
         console.log('after delete:');
         console.log(this.tags);
         this.stepsCompleted[1] = this.tags.length === 0 ? false : true;
-        
+
     }
 
     public handleAddition(tag: string) {
 
-        // let { tags } = this.state;
-        // if (tags.map(val => val.text).indexOf(tag) === -1) {
-        //     this.setState({ tags: [...tags, { id: (tags.length + 1) + "", text: tag }] });
-        //     console.log('added ' + tag);
-        //     this.stepsCompleted[1] = true;
-        // }
         this.tags.push(tag);
         this.stepsCompleted[1] = true;
-        console.log('tag added:'+tag);
+        console.log('tag added:' + tag);
     }
 
     private handleTypeChange(event: any) {

@@ -46,9 +46,9 @@ namespace ForumApi.Controllers
             return question;
         }
 
-        
-        [HttpPost("similarity")]
-        public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity, [FromBody] string questionData)
+        [Authorize]
+        [HttpGet("similarity/{questionData}")]
+        public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity, string questionData)
         {
             _logger.LogDebug("question data:");
             _logger.LogDebug(questionData);

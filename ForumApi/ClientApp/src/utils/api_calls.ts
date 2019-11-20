@@ -6,6 +6,7 @@ export const API_CALLS={
     updateQuestion:"api/questions",
     deleteQuestion:"api/questions/",
     viewQuestionCount:"api/questions/view/",
+    similarQuestions:"api/questions/similarity/",
     
     answers:"api/answers/",
     answerList:"api/answers/list/",
