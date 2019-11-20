@@ -11,12 +11,12 @@ namespace ForumApi.Controllers
     [ApiController]
     public class TagController : ControllerBase
     {
-        private TagSurvice _tagSurvice;
+        private TagService _tagSurvice;
         private readonly ILogger _logger;
 
         private readonly int chunkSize = 20;
 
-        public TagController(TagSurvice tagSurvice, ILogger<TagController> logger)
+        public TagController(TagService tagSurvice, ILogger<TagController> logger)
         {
             _tagSurvice = tagSurvice;
             _logger = logger;
@@ -34,7 +34,7 @@ namespace ForumApi.Controllers
 
         [HttpGet("{id:length(24)}", Name="GetTag")]
         public ActionResult<TagItem> Get(string id){
-            var item = _tagSurvice.GetItem(id);
+            var item = _tagSurvice.Get(id);
             if(item == null) return NotFound();
             return item;
         }

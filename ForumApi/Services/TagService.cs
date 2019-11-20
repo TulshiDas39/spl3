@@ -4,30 +4,40 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace ForumApi.Services
 {
-    public class TagSurvice
+    public class TagService
     {
-
         QuestionService _questionService;
         private readonly IMongoCollection<TagItem> _tags;
 
-        public TagSurvice(IDatabaseSettings settings,
+        private readonly ILogger _logger;
+        public TagService(IDatabaseSettings settings,
         QuestionService questionService, AnswerService answerService,
-        CommentService commentService)
+        CommentService commentService, ILogger<TagService> logger)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _tags = database.GetCollection<TagItem>(settings.TagItemsCollectionName);
-
             _questionService = questionService;
+            _logger = logger;
+        }
+        public List<TagItem> Get() =>
+            _tags.Find(TagItem => true).ToList();
+
+        public TagItem Get(string id) =>
+            _tags.Find<TagItem>(item => item.id == id).FirstOrDefault();
+
+        public TagItem Create(TagItem tag)
+        {
+            _tags.InsertOne(tag);
+            return tag;
         }
 
-        public TagItem GetItem(string id)
-        {
-            return _tags.Find(item => item.id == id).FirstOrDefault();
-        }
+        public void Update(string id, TagItem tagIn) =>
+            _tags.ReplaceOne(tag => tag.id == id, tagIn);
 
         public List<TagInfo> GetTagInfoList(int skip, int limit)
         {
@@ -103,8 +113,8 @@ namespace ForumApi.Services
                     int weekMiliSecond = 7 * 24 * 60 * 60 * 1000;
                     int oneDayMiliSecond = 1 * 24 * 60 * 60 * 1000;
                     TagInfo tagInfo = new TagInfo();
-                    tagInfo.questionsInthisWeek = _questionService.CountQuestionsAtTimeInterval(item.name,weekMiliSecond);
-                    tagInfo.questionsToday = _questionService.CountQuestionsAtTimeInterval(item.name,oneDayMiliSecond);
+                    tagInfo.questionsInthisWeek = _questionService.CountQuestionsAtTimeInterval(item.name, weekMiliSecond);
+                    tagInfo.questionsToday = _questionService.CountQuestionsAtTimeInterval(item.name, oneDayMiliSecond);
                     tagInfo.tag = item;
                     tags.Add(tagInfo);
                     if (tags.Count > 10) return;
@@ -116,6 +126,29 @@ namespace ForumApi.Services
         {
             _tags.InsertOne(tagItem);
             return tagItem;
+        }
+
+        public TagItem GetByName(string tagname) =>
+                _tags.Find<TagItem>(TagItem => TagItem.name == tagname).FirstOrDefault();
+
+
+        internal void InsertIfNotExist(string tags)
+        {
+            List<string> tagList = Utility.Tokenize(tags).ToList();
+            foreach (var item in tagList)
+            {
+                _logger.LogDebug("checking "+item);
+                if (GetByName(item.ToLower()) == null)
+                {
+                    _logger.LogDebug("not exist "+item);
+                    TagItem tagItem = new TagItem();
+                    tagItem.description = "";
+                    tagItem.name = item.ToLower();
+                    tagItem.users = 0;
+
+                    Create(tagItem);
+                }
+            }
         }
 
     }

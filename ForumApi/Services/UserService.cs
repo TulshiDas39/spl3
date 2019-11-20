@@ -11,11 +11,11 @@ namespace ForumApi.Services
     public class UserService
     {
         private readonly IMongoCollection<User> _users;
-        private readonly TagItemService _tagService;
+        private readonly TagService _tagService;
 
         private ILogger _logger;
 
-        public UserService(IDatabaseSettings settings, TagItemService tagItemService,ILogger<UserService> logger)
+        public UserService(IDatabaseSettings settings, TagService tagItemService,ILogger<UserService> logger)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);

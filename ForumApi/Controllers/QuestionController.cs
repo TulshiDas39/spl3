@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace ForumApi.Controllers
 {
@@ -14,15 +15,18 @@ namespace ForumApi.Controllers
 
         private readonly QuestionService _questionService;
         private readonly UserService _userService;
+        private readonly TagService _tagService;
 
         private readonly int questionCount = 20;
 
         private readonly ILogger _logger;
 
-        public QuestionsController(QuestionService questionService, UserService userService, ILogger<QuestionsController> logger)
+        public QuestionsController(QuestionService questionService, UserService userService, TagService tagService,
+         ILogger<QuestionsController> logger)
         {
             _questionService = questionService;
             _userService = userService;
+            _tagService = tagService;
             _logger = logger;
         }
 
@@ -73,7 +77,9 @@ namespace ForumApi.Controllers
         [HttpGet("recommend/{userId}/{iteration}")]
         public ActionResult<List<Question>> RecommendQuestions(string userId, int iteration)
         {
-            return _questionService.Recommend(userId, iteration);
+            List<string> tags = Utility.Tokenize(_userService.Get(userId).tags).ToList();
+
+            return _questionService.Recommend(userId, tags, iteration);
         }
 
         private void createUser(UserCredential user)
@@ -134,8 +140,9 @@ namespace ForumApi.Controllers
         public ActionResult<Question> Create(Question question)
         {
             _logger.LogDebug("in create question");
-            if(question.id != null) return BadRequest();
+            if (question.id != null) return BadRequest();
             _questionService.Create(question);
+            _tagService.InsertIfNotExist(question.tags);
 
             return CreatedAtRoute("GetQuestion", new { id = question.id.ToString() }, question);
         }
@@ -152,6 +159,7 @@ namespace ForumApi.Controllers
             }
 
             _questionService.Update(question.id, question);
+            _tagService.InsertIfNotExist(question.tags);
 
             return Ok();
         }

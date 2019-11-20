@@ -53,11 +53,15 @@ export class Tags extends Component<any, state>{
     }
 
     private eventNext() {
-
+        if(this.tagInofList.length === 0) return;
+        this.iteration++;
+        this.fetchData();
     }
 
     private eventPrev() {
-
+        if(this.iteration === 0) return;
+        this.iteration--;
+        this.fetchData();
     }
 
     private insertNewTag(newTag: ITagInfo) {

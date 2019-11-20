@@ -18,21 +18,18 @@ namespace ForumApi.Services
         private readonly IMongoCollection<Question> _questions;
 
         private readonly ILogger _logger;
-        private readonly UserService _userService;
-        private readonly TagItemService _tagService;
+//        private readonly TagService _tagService;
 
         private readonly RecommendationService _recommendationService;
 
-        public QuestionService(IDatabaseSettings settings, ILogger<QuestionService> logger, UserService userService,
-            RecommendationService recommendationService, TagItemService tagItemService)
+        public QuestionService(IDatabaseSettings settings, ILogger<QuestionService> logger,
+            RecommendationService recommendationService)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
             _questions = database.GetCollection<Question>(settings.QuestionsCollectionName);
-            _userService = userService;
             _recommendationService = recommendationService;
-            _tagService = tagItemService;
             _logger = logger;
         }
 
@@ -72,7 +69,7 @@ namespace ForumApi.Services
         public Question Create(Question question)
         {
             _questions.InsertOne(question);
-            _tagService.InsertIfNotExist(question.tags);
+            //_tagService.InsertIfNotExist(question.tags);
             return question;
         }
 
@@ -94,7 +91,7 @@ namespace ForumApi.Services
         public void Update(string id, Question questionIn)
         {
             _questions.ReplaceOne(question => question.id == id, questionIn);
-            _tagService.InsertIfNotExist(questionIn.tags);
+            //_tagService.InsertIfNotExist(questionIn.tags);
         }
 
         internal ActionResult<List<Question>> GetByUser(string userId)
@@ -103,10 +100,10 @@ namespace ForumApi.Services
             throw new NotImplementedException();
         }
 
-        public List<Question> Recommend(string userId, int iteration)
+        public List<Question> Recommend(string userId, List<string> tags, int iteration)
         {
             List<Question> list = new List<Question>();
-            List<string> tags = Utility.Tokenize(_userService.Get(userId).tags).ToList();
+           // List<string> tags = Utility.Tokenize(_userService.Get(userId).tags).ToList();
             _logger.LogDebug("\ntags:");
             PrintDictionary(tags);
             List<Question> questions;
