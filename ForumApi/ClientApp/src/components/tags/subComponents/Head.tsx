@@ -2,25 +2,30 @@ import React, { Component } from "react";
 import "./head.css";
 import { InputDialog } from "../../popups/InputDialog";
 import { Auth0Context } from "../../../utils/Contexts";
-import { tagService } from "./TagService";
+import { tagService } from "../TagService";
 import { ITagListHeadProps } from "../Types";
+import { ITagInfo } from "../../../utils/Structures";
 
 export class Head extends Component<ITagListHeadProps, any>{
 
     static contextType = Auth0Context;
 
-    constructor(props:ITagListHeadProps){
+    constructor(props: ITagListHeadProps) {
         super(props);
     }
 
     private async postNewTag(newTag: string) {
-        console.log('has come');
-        console.log("new tag:" + newTag);
+        if (!newTag) return;
         let token = await this.context.getTokenSilently();
-        tagService.postNewTag(newTag,token).then(data=>{
-            console.log('new tag created:');
-            console.log(data);
-            this.props.onNewTagCreated(data);
+        tagService.postNewTag(newTag, token).then(data => {
+            let tagInfo: ITagInfo = {
+                questionsInthisWeek: 0,
+                questionsToday: 0,
+                tag: data
+            }
+            this.props.onNewTagCreated(tagInfo);
+        }, err => {
+            console.error(err);
         })
     }
 
@@ -33,7 +38,7 @@ export class Head extends Component<ITagListHeadProps, any>{
                     <div id="filter-search">
                         <form action="/search">
                             <span className="fa fa-search"></span>
-                            <input type="text" placeholder="খুজুন..." />
+                            <input type="text" placeholder="খুজুন..." onChange={this.props.onSearch}/>
                         </form>
                     </div>
                     {this.getNewTagBtn()}

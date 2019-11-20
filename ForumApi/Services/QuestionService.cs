@@ -41,13 +41,9 @@ namespace ForumApi.Services
             return CountQuestionsAtTimeInterval(name, timeInterval);
         }
 
-        private int CountQuestionsAtTimeInterval(string name, long timeInterval)
+        public int CountQuestionsAtTimeInterval(string name, long timeInterval)
         {
 
-
-
-            //Regex.Split(item.tags.Trim(), "\\s+").Contains(name) 
-            //_questions.Find<Question>(item => true).ToList().Count;
             var list = _questions.Find<Question>(item => item.datetime > timeInterval).ToList();
             int count = 0;
             foreach (var item in list)

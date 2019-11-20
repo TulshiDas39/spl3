@@ -21,6 +21,7 @@ export const API_CALLS={
     commentList:"api/comment/list/",
 
     tagList:"api/tag/",
-    tagSuggestion:"api/tag/suggest/"
+    tagSuggestion:"api/tag/suggest/",
+    searchTags:"api/tag/search/"
 
 }

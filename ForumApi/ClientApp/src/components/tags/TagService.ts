@@ -1,7 +1,7 @@
-import { httpService } from "../../../services/HttpService"
-import { API_CALLS } from "../../../utils/api_calls"
-import { utilityService } from "../../../services/UtilityService";
-import { ITag } from "../../../utils/Models";
+import { httpService } from "../../services/HttpService"
+import { API_CALLS } from "../../utils/api_calls"
+import { utilityService } from "../../services/UtilityService";
+import { ITag } from "../../utils/Models";
 
 export const tagService = {
     getTagInfoList(iteration: number) {
@@ -27,7 +27,10 @@ export const tagService = {
             name: tag,
             users: 0
         };
-
         return httpService.post(API_CALLS.tagList, tagItem, headers);
+    },
+    getSearchResult(searchVal:string){
+        let url = API_CALLS.searchTags+searchVal;
+        return httpService.get(url);
     }
 }

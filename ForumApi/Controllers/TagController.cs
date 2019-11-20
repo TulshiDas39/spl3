@@ -27,6 +27,11 @@ namespace ForumApi.Controllers
             return _tagSurvice.GetSuggestedTags(match.ToLower());
         }
 
+        [HttpGet("search/{match}")]
+        public ActionResult<List<TagInfo>> Search(string match){
+            return _tagSurvice.GetSearchedTags(match.ToLower());
+        }
+
         [HttpGet("{id:length(24)}", Name="GetTag")]
         public ActionResult<TagItem> Get(string id){
             var item = _tagSurvice.GetItem(id);
