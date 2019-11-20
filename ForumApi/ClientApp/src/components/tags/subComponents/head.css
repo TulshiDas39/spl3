@@ -3,6 +3,7 @@
 }
 #tagFilterContainer{
     display: flex;
+    flex-wrap: wrap;
 }
 
 #filter-search{
@@ -31,4 +32,18 @@
     position: absolute;
     color: #bbc0c4;
     left: 10px;
+}
+.newTagBtn{
+    margin-left: auto;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #bbc0c4;
+    border-radius: 3px;
+    padding: 0 5px;
+    background:#E1ECF4;
+}
+
+.newTagBtn:hover{
+    cursor: pointer;
 }

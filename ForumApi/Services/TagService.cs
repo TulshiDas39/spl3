@@ -24,6 +24,10 @@ namespace ForumApi.Services
             _questionService = questionService;
         }
 
+        public TagItem GetItem(string id){
+            return _tags.Find(item=> item.id == id).FirstOrDefault();
+        }
+
         public List<TagInfo> GetTagInfoList(int skip, int limit)
         {
             List<TagInfo>list = new List<TagInfo>();
@@ -68,9 +72,10 @@ namespace ForumApi.Services
             }
         }
 
-        public TagItem InsertOne(TagItem vote)
+        public TagItem InsertOne(TagItem tagItem)
         {   
-            throw new NotImplementedException();
+            _tags.InsertOne(tagItem);
+            return tagItem;
         }
 
     }

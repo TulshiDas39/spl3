@@ -7,18 +7,20 @@ import { utilityService } from "../../../services/UtilityService";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { Auth0Context } from "../../../utils/Contexts";
-import { IUser } from "../../../utils/Models";
+import { IUser, ITag } from "../../../utils/Models";
 import { rootService } from "../../../services/RootService";
+import { ITagContainer } from "../Types";
 
 interface state {
     isLoading: boolean;
 }
 
-export class TagContainer extends Component<any, state>{
+export class TagContainer extends Component<ITagContainer, state>{
 
     private tagInofList: ITagInfo[] = [];
     private iteration = 0;
     private userInfo = {} as IUser;
+    private newTag = {} as ITag;
 
     static contextType = Auth0Context;
     constructor(props: any) {
@@ -28,6 +30,20 @@ export class TagContainer extends Component<any, state>{
 
     componentDidMount() {
         this.fetchData();
+    }
+
+    pushNewTag() {
+        if (!this.props.newTag) return;
+        if (this.props.newTag.id == this.newTag.id) return;
+
+        console.log('pushing the new data:');
+        let newTagInfo: ITagInfo = {
+            questionsInthisWeek: 0,
+            questionsToday: 0,
+            tag: this.props.newTag
+        }
+        this.tagInofList.push(newTagInfo);
+        this.newTag = this.props.newTag;
     }
 
     async fetchData() {
@@ -50,32 +66,29 @@ export class TagContainer extends Component<any, state>{
     }
 
     private isFollowing(tagName: string) {
-        console.log('user tags:'+this.userInfo.tags);
         let userTags = utilityService.tokenize(this.userInfo.tags);
-        console.log(userTags);
-        console.log("tagname:"+tagName);
         let index = userTags.indexOf(tagName);
-        console.log('index:'+index);
         if (index == -1) return false;
         return true;
     }
 
-    private async followTag(tagInfo:ITagInfo){
+    private async followTag(tagInfo: ITagInfo) {
         let token = await this.context.getTokenSilently();
-        tagService.followTag(tagInfo.tag.id, this.context.user.sub, token).then(data=>{
+        tagService.followTag(tagInfo.tag.id, this.context.user.sub, token).then(data => {
             this.fetchData();
         });
     }
 
-    private async unFollowTag(tagInfo:ITagInfo){
+    private async unFollowTag(tagInfo: ITagInfo) {
         let token = await this.context.getTokenSilently();
-        tagService.unFollowTag(tagInfo.tag.id, this.context.user.sub,token).then(data=>{
+        tagService.unFollowTag(tagInfo.tag.id, this.context.user.sub, token).then(data => {
             this.fetchData();
         });
     }
 
     public render() {
         if (this.state.isLoading) return <Loader />;
+        this.pushNewTag();
         return (
             <div id="tagsContainer">
                 {
@@ -88,7 +101,6 @@ export class TagContainer extends Component<any, state>{
 
 
     private getTag(tagInfo: ITagInfo) {
-
         return (
             <div className="tagItem" key={"tag" + tagInfo.tag.id}>
                 <div className="tagHead">
@@ -108,8 +120,8 @@ export class TagContainer extends Component<any, state>{
     private getFollowIcon(tagInfo: ITagInfo) {
         if (!this.context.isAuthenticated) return;
 
-        if (this.isFollowing(tagInfo.tag.name)) return <VisibilityIcon titleAccess="un follow this tag" className="followIcon" onClick={()=>this.unFollowTag(tagInfo)}></ VisibilityIcon>
-        return <VisibilityOffIcon  titleAccess="follow this tag" className="followIcon" onClick={()=>this.followTag(tagInfo)}></VisibilityOffIcon>
+        if (this.isFollowing(tagInfo.tag.name)) return <VisibilityIcon titleAccess="un follow this tag" className="followIcon" onClick={() => this.unFollowTag(tagInfo)}></ VisibilityIcon>
+        return <VisibilityOffIcon titleAccess="follow this tag" className="followIcon" onClick={() => this.followTag(tagInfo)}></VisibilityOffIcon>
     }
 
 }
