@@ -6,13 +6,19 @@ import { StatusBar } from "../statusBar/StatusBar";
 import { Question } from "../question/Question";
 import { IQuestion } from "../../utils/Models";
 import { searchResultService } from "./SearchResutlService";
+import { Loader } from "../loader/loader";
 
-export class SearchResult extends Component<ISearchResult, any> {
+interface state{
+    isLoading:boolean;
+}
+
+export class SearchResult extends Component<ISearchResult, state> {
     static displayName = SearchResult.name;
     private questionList: IQuestion[] = [];
 
     constructor(props: ISearchResult) {
         super(props);
+        this.state = {isLoading:true}
         console.log('serach value');
     }
 
@@ -30,12 +36,13 @@ export class SearchResult extends Component<ISearchResult, any> {
         searchResultService.fetchSearchedQuestions(search).then(data => {
             this.questionList = data;
             console.log('counting views');
-            this.setState({ isloading: false });
+            this.setState({ isLoading: false });
         });
 
     }
 
     public render(): JSX.Element {
+        if(this.state.isLoading) return <Loader/>
         return (
             <div id="parentDiv">
                 <Leftbar />

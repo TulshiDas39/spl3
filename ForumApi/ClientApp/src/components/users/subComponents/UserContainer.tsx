@@ -1,23 +1,14 @@
 import React, { Component } from "react";
 import "./userContainer.css";
 import { User } from "./User";
+import { IUserContainerProps } from "../Types";
 
-export class UserContainer extends Component<any, any>{
+export class UserContainer extends Component<IUserContainerProps, any>{
 
     public render() {
         return (
             <div id="userInfoContainer">
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
+                {this.props.users.map(user=> <User data={user} key={user.id}/>)}
             </div>
         );
     }

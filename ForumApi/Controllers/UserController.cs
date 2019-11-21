@@ -16,7 +16,7 @@ namespace ForumApi.Controllers
         private readonly UserService _userService;
         private ILogger _logger;
 
-        public UsersController(UserService userService,ILogger<UsersController> logger)
+        public UsersController(UserService userService, ILogger<UsersController> logger)
         {
             _userService = userService;
             _logger = logger;
@@ -25,6 +25,13 @@ namespace ForumApi.Controllers
         [HttpGet]
         public ActionResult<List<User>> Get() =>
             _userService.Get();
+
+        [HttpGet("multiple/{iteration}")]
+        public ActionResult<List<User>> Get(int iteration)
+        {
+            int chunkSize = 50;
+            return _userService.Get(iteration*chunkSize ,chunkSize);
+        }
 
 
         [HttpGet("{id}", Name = "GetUser")]
@@ -35,26 +42,28 @@ namespace ForumApi.Controllers
             if (user == null)
             {
                 return NotFound();
-            } 
+            }
 
             return user;
         }
 
         [Authorize]
         [HttpPut("follow/{tagId:length(24)}/{userId}")]
-        public ActionResult FollowTag(string tagId, string userId){
+        public ActionResult FollowTag(string tagId, string userId)
+        {
             _logger.LogDebug("has come");
-            var isDone = _userService.follow(tagId,userId);
-            if(!isDone) return NotFound();
+            var isDone = _userService.follow(tagId, userId);
+            if (!isDone) return NotFound();
             return Ok();
         }
 
         [Authorize]
         [HttpPut("unfollow/{tagId:length(24)}/{userId}")]
-        public ActionResult UnFollowTag(string tagId, string userId){
+        public ActionResult UnFollowTag(string tagId, string userId)
+        {
             _logger.LogDebug("has come");
-            var isDone = _userService.Unfollow(tagId,userId);
-            if(!isDone) return NotFound();
+            var isDone = _userService.Unfollow(tagId, userId);
+            if (!isDone) return NotFound();
             return Ok();
         }
 

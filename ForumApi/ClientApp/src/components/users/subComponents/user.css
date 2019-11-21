@@ -2,6 +2,8 @@
     display: flex;
     border:1px solid #bbc0c4;
     margin: 5px 5px;
+    padding: 5px;
+    background: #E1ECF4;
 }
 
 .user:hover{
@@ -21,8 +23,7 @@
 }
 
 .user > .user-info > .user-info-name{
-    color: #836ab6;
-
+    color: black;
 }
 
 .user > .user-info > .user-info-place {
@@ -31,7 +32,7 @@
 
 .user > .user-info > .user-info-rating{
     font-size: 12px;
-    font-weight: bold;
+    color: #3b4045;
 }
 
 .user > .user-info > .user-info-tags{

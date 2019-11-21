@@ -20,4 +20,5 @@
     display:flex;
     flex-direction: column;
     padding: 10px;
+    flex-grow: 1;
 }
