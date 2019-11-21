@@ -17,14 +17,20 @@
     height: 30px;
 }
 
-.filter-search > form{
+/* .filter-search > form{
     height: 100%;
     position: relative;
     display: flex;
     align-items: center;
-}
+} */
+.searchDiv{
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
 
-.filter-search > form > input{
+}
+.searchDiv > input{
     height: 100%;
     width: 100%;
     padding-left: 30px;
@@ -32,12 +38,12 @@
     border-radius: 4px;
 }
 
-.filter-search > form > input:focus{
+.searchDiv> input:focus{
     border-color: #66bfff;
     box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
 }
 
-.filter-search > form > span{
+.searchDiv > span{
     position: absolute;
     color: #bbc0c4;
     left: 10px;

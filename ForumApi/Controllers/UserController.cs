@@ -30,7 +30,13 @@ namespace ForumApi.Controllers
         public ActionResult<List<User>> Get(int iteration)
         {
             int chunkSize = 50;
-            return _userService.Get(iteration*chunkSize ,chunkSize);
+            return _userService.Get(iteration * chunkSize, chunkSize);
+        }
+
+        [HttpGet("search/{match}")]
+        public ActionResult<List<User>> Search(string match)
+        {
+            return _userService.GetSearchedUsers(match.ToLower());
         }
 
 

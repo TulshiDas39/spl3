@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./head.css";
 import { TagInput } from "../../reactTagEditor/TagInput";
 import { COUNTRIES } from "../../reactTagEditor/countries";
+import { IUserHead } from "../Types";
 
 interface state {
     tags: {
@@ -11,7 +12,7 @@ interface state {
     suggestions: string[]
 }
 
-export class Head extends Component<any, state>{
+export class Head extends Component<IUserHead, state>{
 
     constructor(props: any) {
         super(props);
@@ -32,21 +33,19 @@ export class Head extends Component<any, state>{
                 <div className="searchAndFilters">
 
                     <div className="filter-search filter-item">
-                        <form >
+                        <div className="searchDiv">
                             <span className="fa fa-search"></span>
-                            <input type="text" placeholder="নাম..." />
-                        </form>
+                            <input type="text" placeholder="নাম..." onChange={this.props.handleSearchUser} />
+                        </div>
                     </div>
 
                     <div id="filterByPlaceContainer" className="filter-search filter-item">
-                        <form>
+                        <div className="searchDiv">
                             <input type="text" placeholder="স্থান..." />
-                        </form>
+                        </div>
                     </div>
 
-                    {/* {new TagInput().build(this.handleAddition, this.handleDelete,
-                        { tags: this.state.tags, suggestions: this.state.suggestions })} */}
-                        <TagInput additionHandler={this.handleAddition} deleteHandler={this.handleDelete} />
+                    <TagInput additionHandler={this.handleAddition} deleteHandler={this.handleDelete} />
 
                 </div>
 
@@ -64,7 +63,7 @@ export class Head extends Component<any, state>{
     public handleAddition(tag: string) {
 
         let { tags } = this.state;
-        if (tags.map(val=> val.text).indexOf(tag) === -1) {
+        if (tags.map(val => val.text).indexOf(tag) === -1) {
             this.setState({ tags: [...tags, { id: (tags.length + 1) + "", text: tag }] });
             console.log('added ' + tag);
         }

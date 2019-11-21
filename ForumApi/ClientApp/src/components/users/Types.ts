@@ -7,3 +7,7 @@ export interface IUserContainerProps{
 export interface IUserProps{
     data:IUser;
 }
+
+export interface IUserHead{
+    handleSearchUser(event: React.ChangeEvent<HTMLInputElement>):void;
+}

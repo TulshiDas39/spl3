@@ -14,11 +14,11 @@ namespace ForumApi.Controllers
         private TagService _tagSurvice;
         private readonly ILogger _logger;
 
-        private readonly int chunkSize = 20;
+        private readonly int chunkSize = 40;
 
-        public TagController(TagService tagSurvice, ILogger<TagController> logger)
+        public TagController(TagService tagService, ILogger<TagController> logger)
         {
-            _tagSurvice = tagSurvice;
+            _tagSurvice = tagService;
             _logger = logger;
         }
 

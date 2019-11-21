@@ -38,7 +38,7 @@ export class User extends Component<IUserProps, any>{
                     <img src={this.props.data.image} alt="" />
                 </div>
                 <div className="user-info">
-                    <span className="user-info-name">{this.compressUserName(this.props.data.name)}</span>
+                    <span title={this.props.data.name} className="user-info-name">{this.compressUserName(this.props.data.name)}</span>
                     {/* <span className="user-info-place">New york, united states</span> */}
                     <span title="reputation" className="user-info-rating">{this.props.data.reputation}</span>
                     <span className="user-info-tags">{this.getTagStr(this.props.data.tags)}</span>

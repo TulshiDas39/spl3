@@ -17,6 +17,8 @@ export const API_CALLS={
     multipleUsers:"api/users/multiple/",
     followTag:"api/users/follow/",
     unFollowTag:"api/users/unfollow/",
+    searchUsers:"api/users/search/",
+
     vote:"api/votes/",
 
     comment:"api/comment/",

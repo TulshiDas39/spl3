@@ -7,6 +7,8 @@ import "./users.css";
 import { Loader } from '../loader/loader';
 import { IUser } from '../../utils/Models';
 import { userService } from './UserService';
+import { httpService } from '../../services/HttpService';
+import { API_CALLS } from '../../utils/api_calls';
 
 interface state {
     isLoading: boolean;
@@ -46,6 +48,19 @@ export class Users extends Component<any, state> {
 
     }
 
+    private searchUser(event: React.ChangeEvent<HTMLInputElement>){
+        let searchVal = event.target.value;
+        if(!searchVal) {
+            this.fetchData();
+            return;
+        }
+        
+        httpService.get(API_CALLS.searchUsers+searchVal).then(data=>{
+            this.users = data;
+            this.setState(this.state);
+        })
+    }
+
     public render(): JSX.Element {
         if (this.state.isLoading) return (
             <div style={{textAlign:'center',marginTop:'10px'}}>
@@ -56,7 +71,7 @@ export class Users extends Component<any, state> {
             <div id="parentDiv">
                 <Leftbar />
                 <div id="users-right">
-                    <Head />
+                    <Head handleSearchUser={this.searchUser.bind(this)}/>
                     <UserContainer users = {this.users}/>
                     <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />
                 </div>

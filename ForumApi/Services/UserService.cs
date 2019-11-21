@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace ForumApi.Services
 {
@@ -33,6 +33,34 @@ namespace ForumApi.Services
 
         public List<User> Get(int skip, int limit){
             return _users.Find(User=>true).SortByDescending(user=>user.reputation).Skip(skip).Limit(limit).ToList();
+        }
+
+        internal List<User> GetSearchedUsers(string match)
+        {
+            List<User> users = new List<User>();
+            int i = 0;
+            int chunk = 60;
+            List<User> list;
+            do
+            {
+                list = _users.Find(item => true).Skip(i * chunk).Limit(chunk).ToList();
+                Push(users, list, match);
+                if (users.Count > 20) return users;
+            } while (list.Count == chunk);
+
+            return users;
+        }
+
+        private void Push(List<User> users, List<User> items, string match)
+        {
+            foreach (var item in items)
+            {
+                if (item.name.ToLower().StartsWith(match))
+                {
+                    users.Add(item);
+                    if (users.Count > 20) return;
+                }
+            }
         }
 
         public User Create(User user)
