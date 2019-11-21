@@ -1,7 +1,7 @@
 In progress
-    -tag creation at question time
-To Do
     -question search
+
+To Do
     -blocking question based on user reaction
     -footer
     -document(answer page) updating
@@ -15,6 +15,7 @@ To Do
 
 
 Done
+    -tag creation at question time
     -tag follow option in tag page
     -refering user in Question,Answer,Comment
     -rating system(in question, answer, post, comment)

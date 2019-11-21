@@ -7,6 +7,7 @@ export const API_CALLS={
     deleteQuestion:"api/questions/",
     viewQuestionCount:"api/questions/view/",
     similarQuestions:"api/questions/similarity/",
+    searchQuestions:"api/questions/search/",
     
     answers:"api/answers/",
     answerList:"api/answers/list/",

@@ -50,6 +50,11 @@ namespace ForumApi.Controllers
             return question;
         }
 
+        [HttpGet("search/{query}")]
+        public ActionResult<List<Question>> Search([FromServices] QuestionSimilarity similarity, string query){
+            return similarity.getSimilarQuestions(query);
+        }
+
         [Authorize]
         [HttpGet("similarity/{questionData}")]
         public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity, string questionData)

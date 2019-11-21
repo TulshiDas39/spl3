@@ -54,7 +54,7 @@ export default class App extends Component<props, any> {
       <BrowserRouter basename={this.props.basename}>
         <Layout>
           <Switch>
-            <ProtectedRoute exact path='/' component={Home} />
+            <ProtectedRoute exact path='/:search?' component={Home} />
             <Route path='/tags' component={Tags} />
             <Route path='/users' component={Users} />
             <ProtectedRoute path='/answer/:handle' component={Answer} />
