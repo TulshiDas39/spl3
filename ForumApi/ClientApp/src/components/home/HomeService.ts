@@ -19,9 +19,6 @@ export const homeService = {
 
     fetchAnswerLessQuestions(iteration: number) {
         return httpService.get(API_CALLS.answerlessQuestions + iteration);
-    },
-    fetchSearchedQuestions(query:string){
-        return httpService.get(API_CALLS.searchQuestions+query)
     }
 }
 

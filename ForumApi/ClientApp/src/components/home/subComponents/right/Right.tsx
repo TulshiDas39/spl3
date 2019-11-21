@@ -11,20 +11,19 @@ import { IAuth0Context, IAppState } from "../../../../utils/Structures";
 import { homeService } from "../../HomeService";
 import { HomePageTab } from "../../../../utils/Enums";
 import { colors } from "../../../../utils/colors";
-import { IRightProps } from "../../Types";
 
 interface state {
     isLoading: boolean;
 }
 
-export class Right extends Component<IRightProps, state>{
+export class Right extends Component<any, state>{
     private iteration = 0;
     private questionList: IQuestion[] = [];
     static contextType = Auth0Context;
     private tab = HomePageTab.RECOMMENDED;
     //private search?: string;
 
-    constructor(props: IRightProps) {
+    constructor(props: any) {
         super(props);
         this.state = { isLoading: true };
     }
@@ -34,19 +33,7 @@ export class Right extends Component<IRightProps, state>{
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps: IRightProps) {
-        console.log('prev props:');
-        console.log(prevProps);
-        console.log('current props:');
-        console.log(this.props);
-        if (prevProps.search != this.props.search) this.fetchData();
-    }
-
     private fetchData() {
-        if (this.props.search) {
-            this.getSearchedQuestions();
-            return;
-        }
         if (this.context.isAuthenticated) {
             this.getInitialQuestions();
         }
@@ -59,13 +46,6 @@ export class Right extends Component<IRightProps, state>{
     private showRecommendedQuestions() {
         this.iteration = 0;
         this.getRecommendedQuestions();
-    }
-
-    private getSearchedQuestions() {
-        homeService.fetchSearchedQuestions(this.props.search as any).then(data => {
-            this.questionList = data;
-            this.setState({ isLoading: false });
-        })
     }
 
     private async getRecommendedQuestions() {
@@ -166,7 +146,7 @@ export class Right extends Component<IRightProps, state>{
                 <div id="questionDiv">
                     <div id="question_heading">
                         <div className="main-questions-text">
-                            {this.props.search ? "প্রত্যাশিত প্রশ্নসমুহ" : "প্রধান প্রশ্নসমূহ"}
+                            প্রধান প্রশ্নসমূহ
                         </div>
                         <Link to="/ask" id="ask">
                             প্রশ্ন করুন
@@ -193,25 +173,21 @@ export class Right extends Component<IRightProps, state>{
         )
     }
 
-    private getPagination(){
-        if(!this.props.search){
-            return <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />;
-        }
+    private getPagination() {
+        return <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />;
     }
 
     private getTabs() {
-        if (!this.props.search) {
-            return (
-                <div className="question_filter">
-                    <div style={{ background: this.tab == HomePageTab.RECOMMENDED ? colors.tagBackground : '' }}
-                        onClick={() => this.showRecommendedQuestions()}>উপযোগী</div>
-                    <div style={{ background: this.tab == HomePageTab.UNANSWERED ? colors.tagBackground : '' }}
-                        onClick={() => this.showAnswerlessQuestions()}>উত্তরহীন</div>
-                    <div style={{ background: this.tab == HomePageTab.ALL ? colors.tagBackground : '' }}
-                        onClick={() => this.showLatestQuestions()}>সকল প্রশ্ন</div>
-                </div>
-            )
-        }
+        return (
+            <div className="question_filter">
+                <div style={{ background: this.tab == HomePageTab.RECOMMENDED ? colors.tagBackground : '' }}
+                    onClick={() => this.showRecommendedQuestions()}>উপযোগী</div>
+                <div style={{ background: this.tab == HomePageTab.UNANSWERED ? colors.tagBackground : '' }}
+                    onClick={() => this.showAnswerlessQuestions()}>উত্তরহীন</div>
+                <div style={{ background: this.tab == HomePageTab.ALL ? colors.tagBackground : '' }}
+                    onClick={() => this.showLatestQuestions()}>সকল প্রশ্ন</div>
+            </div>
+        )
     }
 
 }

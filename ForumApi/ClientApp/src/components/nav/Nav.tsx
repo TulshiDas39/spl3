@@ -51,7 +51,7 @@ class Nav extends Component<INavProps, state> {
             console.log('enter pressed');
             console.log(event.target);
             if (this.searchValue) {
-                this.props.history.push('/' + this.searchValue);
+                this.props.history.push('/search/' + this.searchValue);
             }
         }
         else console.log('other key pressed');

@@ -1,20 +1,20 @@
 In progress
-    -question search
+    -user profile
 
 To Do
     -blocking question based on user reaction
     -footer
     -document(answer page) updating
     -uploading image in question
-    -user profile
-    -error page
-    -hosting
-    -search engine optimization
-    -unused ager component file gula delete kora
-    -snackbar notification for logout actions..
+    -error page(optional)
+    -hosting(optional)
+    -search engine optimization(optional)
+    -unused ager component file gula delete kora(optional)
+    -snackbar notification for logout actions..(optional)
 
 
 Done
+    -question search
     -tag creation at question time
     -tag follow option in tag page
     -refering user in Question,Answer,Comment

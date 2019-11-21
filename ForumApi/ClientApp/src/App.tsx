@@ -14,6 +14,7 @@ import { IAuth0Context } from './utils/Structures';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PrivateRoute from './components/auth/PrivateRoute';
 import { ConfirmationDialog } from './components/popups/ConfirmationDialog';
+import { SearchResult } from './components/searchResult/SearchResult';
 
 interface props {
   basename: string;
@@ -54,9 +55,10 @@ export default class App extends Component<props, any> {
       <BrowserRouter basename={this.props.basename}>
         <Layout>
           <Switch>
-            <ProtectedRoute exact path='/:search?' component={Home} />
+            <ProtectedRoute exact path='/' component={Home} />
             <Route path='/tags' component={Tags} />
             <Route path='/users' component={Users} />
+            <Route path='/search/:search' component={SearchResult} />
             <ProtectedRoute path='/answer/:handle' component={Answer} />
             <Route path='/user' component={UserActivity} />
             <PrivateRoute path='/ask' component={Ask} />
