@@ -20,6 +20,10 @@ export class SearchResult extends Component<ISearchResult, any> {
         this.fetchData();
     }
 
+    componentDidUpdate(prevProps:ISearchResult){
+        if(prevProps != this.props) this.fetchData();
+    }
+
     private fetchData() {
         const { search } = this.props.match.params as any;
         console.log('fetching question data');

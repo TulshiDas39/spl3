@@ -1,7 +1,6 @@
 import React, { PureComponent, Component } from "react";
 import "./nav.css";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
-import { Auth0Context } from "../../utils/Contexts"
 import { IAuth0Context } from "../../utils/Structures";
 import { INavProps } from "./Types";
 
@@ -13,7 +12,6 @@ class Nav extends Component<INavProps, state> {
 
     static displayName = Nav.name;
     private searchSmPoped = false;
-    //static contextType = Auth0Context;
     private contextValues: IAuth0Context;
     private searchValue = "";
 
