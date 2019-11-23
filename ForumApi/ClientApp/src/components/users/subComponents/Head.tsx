@@ -39,12 +39,6 @@ export class Head extends Component<IUserHead, state>{
                         </div>
                     </div>
 
-                    <div id="filterByPlaceContainer" className="filter-search filter-item">
-                        <div className="searchDiv">
-                            <input type="text" placeholder="স্থান..." />
-                        </div>
-                    </div>
-
                     <TagInput additionHandler={this.handleAddition} deleteHandler={this.handleDelete} />
 
                 </div>

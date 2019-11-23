@@ -40,6 +40,19 @@ namespace ForumApi.Controllers
         }
 
 
+        [HttpGet("profile/{id}")]
+        public ActionResult<User> GetProfile(string id)
+        {
+            var user = _userService.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
         [HttpGet("{id}", Name = "GetUser")]
         public ActionResult<User> Get(string id)
         {

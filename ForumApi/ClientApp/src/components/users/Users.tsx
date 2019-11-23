@@ -41,11 +41,17 @@ export class Users extends Component<any, state> {
 
 
     private eventNext() {
-
+        if(this.users.length > 0) {
+            this.iteration++;
+            this.fetchData();
+        }
     }
 
     private eventPrev() {
-
+        if(this.iteration>0){
+            this.iteration--;
+            this.fetchData();
+        }
     }
 
     private searchUser(event: React.ChangeEvent<HTMLInputElement>){

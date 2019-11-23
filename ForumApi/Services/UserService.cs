@@ -30,6 +30,8 @@ namespace ForumApi.Services
 
         public User Get(string id) =>
             _users.Find<User>(User => User.userId == id).FirstOrDefault();
+        public User GetById(string id) =>
+            _users.Find<User>(User => User.id == id).FirstOrDefault();
 
         public List<User> Get(int skip, int limit){
             return _users.Find(User=>true).SortByDescending(user=>user.reputation).Skip(skip).Limit(limit).ToList();

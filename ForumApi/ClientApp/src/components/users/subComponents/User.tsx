@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./user.css";
 import { IUserProps } from "../Types";
 import { utilityService } from "../../../services/UtilityService";
+import { Link } from "react-router-dom";
 
 export class User extends Component<IUserProps, any>{
 
@@ -38,8 +39,7 @@ export class User extends Component<IUserProps, any>{
                     <img src={this.props.data.image} alt="" />
                 </div>
                 <div className="user-info">
-                    <span title={this.props.data.name} className="user-info-name">{this.compressUserName(this.props.data.name)}</span>
-                    {/* <span className="user-info-place">New york, united states</span> */}
+                    <Link to={"/profile/"+this.props.data.id} title={this.props.data.name} className="user-info-name">{this.compressUserName(this.props.data.name)}</Link>
                     <span title="reputation" className="user-info-rating">{this.props.data.reputation}</span>
                     <span className="user-info-tags">{this.getTagStr(this.props.data.tags)}</span>
                 </div>
