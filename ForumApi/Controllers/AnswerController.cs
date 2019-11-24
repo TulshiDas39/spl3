@@ -26,6 +26,11 @@ namespace ForumApi.Controllers
         public ActionResult<List<Answer>> Get() =>
             _answerService.Get();
 
+        [HttpGet("countForUser/{userId}")]
+        public ActionResult<int> GetCountForUser(string userId){
+            return _answerService.GetByQuestion(userId).Count;
+        }
+
         [HttpGet("list/{questionId:length(24)}")]
         public ActionResult<List<Answer>> GetByQuestion(string questionId) =>
             _answerService.GetByQuestion(questionId);

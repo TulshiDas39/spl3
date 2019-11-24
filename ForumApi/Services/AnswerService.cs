@@ -26,6 +26,8 @@ namespace ForumApi.Services
         public List<Answer> GetByQuestion(string questionId) =>
             _answers.Find(Answer => Answer.questionId == questionId).ToList();
 
+        public List<Answer> GetByUser(string userId) =>
+            _answers.Find(Answer=>Answer.userId == userId).SortByDescending(Answer=>Answer.ratings).ToList();
         public Answer Create(Answer answer)
         {
             _answers.InsertOne(answer);

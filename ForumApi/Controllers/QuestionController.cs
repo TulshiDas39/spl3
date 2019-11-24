@@ -71,6 +71,11 @@ namespace ForumApi.Controllers
             return _questionService.getAnswerLessQuestions(iteration * questionCount, questionCount);
         }
 
+        [HttpGet("countOfUser/{id}")]
+        public ActionResult<int> GetQuestionCountByUser(string id){
+            return _questionService.GetByUser(id).Count;
+        }
+
         [Authorize]
         [HttpPost("get/{userId}")]
         public ActionResult<List<Question>> GetByUser(string userId)

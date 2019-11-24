@@ -62,6 +62,10 @@ namespace ForumApi.Services
             return _questions.Find(Question => true).SortByDescending(question => question.id).Skip(skip).Limit(limit).ToList();
         }
 
+        public List<Question> GetByUser(string userId){
+            return _questions.Find(Question => Question.userId == userId).SortByDescending(question => question.ratings).ToList();
+        }
+
         public List<Question> GetByUser(string userId, int skip, int limit) =>
             _questions.Find(Question => Question.userId == userId).SortByDescending(question => question.id).Skip(skip).Limit(limit).ToList();
 
@@ -92,12 +96,6 @@ namespace ForumApi.Services
         {
             _questions.ReplaceOne(question => question.id == id, questionIn);
             //_tagService.InsertIfNotExist(questionIn.tags);
-        }
-
-        internal ActionResult<List<Question>> GetByUser(string userId)
-        {
-
-            throw new NotImplementedException();
         }
 
         public List<Question> Recommend(string userId, List<string> tags, int iteration)

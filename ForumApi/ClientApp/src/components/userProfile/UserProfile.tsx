@@ -8,6 +8,8 @@ import { utilityService } from "../../services/UtilityService";
 import { UserTab } from "./Types";
 import { Leftbar } from "../leftbar/Leftbar";
 import { UserInfo } from "./UserInfo";
+import { httpService } from "../../services/HttpService";
+import { API_CALLS } from "../../utils/api_calls";
 
 interface state {
     isLoading: boolean;
@@ -18,6 +20,8 @@ export class UserProfile extends Component<RouteComponentProps, state>{
     private tab = UserTab.PROFile;
     private user = {} as IUser;
     private userId: string;
+    private questionCount = 0;
+    private answerCount = 0;
     constructor(props: RouteComponentProps) {
         super(props);
         this.state = { isLoading: true }
@@ -34,11 +38,39 @@ export class UserProfile extends Component<RouteComponentProps, state>{
             this.user = data;
             console.log('user profile:');
             console.log(data);
-            this.setState({ isLoading: false });
+            //this.setState({ isLoading: false });
+            this.getQuestionCount();
         })
     }
 
-    render() {
+    private getTags() {
+        let tagStr = "";
+        if (this.user.tags === "") return "No tags are followed";
+        let splited = utilityService.tokenize(this.user.tags);
+        for (let i = 0; i < splited.length - 1; i++) {
+            tagStr += splited[i] + ",";
+        }
+
+        tagStr += splited[splited.length - 1];
+        return tagStr;
+    }
+
+    private getQuestionCount(){
+        httpService.get(API_CALLS.countUserQuestions+this.user.userId).then(data=>{
+            console.log('question count:'+this.questionCount);
+            this.questionCount = data;
+            this.getAnswerCount();
+        })
+    }
+
+    private getAnswerCount(){
+        httpService.get(API_CALLS.answerCountForUser+this.user.userId).then(data=>{
+            this.answerCount = data;
+            this.setState({isLoading:false});
+        })
+    }
+
+    renderAdvance() {
         return (
             <div className="mainContainer">
                 <Leftbar key="leftBar" /> ,
@@ -48,14 +80,14 @@ export class UserProfile extends Component<RouteComponentProps, state>{
                         <span className="user-activity">সক্রিয়তা</span>
                         <span className="user-story">ব্যবহারকারী বিবরণ</span>
                     </div>
-                    <UserInfo/>
+                    <UserInfo />
                 </div>,
             </div>
         )
     }
 
 
-    renderBasic() {
+    render() {
         if (this.state.isLoading) return <Loader />;
 
         return (
@@ -66,6 +98,9 @@ export class UserProfile extends Component<RouteComponentProps, state>{
 
                 <h3>{this.user.name}</h3>
                 <p style={{ textAlign: 'center' }}>জনপ্রিয়তাঃ {utilityService.convertToBengaliText(this.user.reputation)}</p>
+                <p>ট্যাগসমুহঃ {this.getTags()}</p>
+                <p>প্রশ্ন করেছেনঃ {utilityService.convertToBengaliText(this.questionCount)} টি</p>
+                <p>উত্তর দিয়েছেনঃ {utilityService.convertToBengaliText(this.answerCount)} টি</p>
             </div>
         )
     }

@@ -8,10 +8,12 @@ export const API_CALLS={
     viewQuestionCount:"api/questions/view/",
     similarQuestions:"api/questions/similarity/",
     searchQuestions:"api/questions/search/",
+    countUserQuestions:"api/questions/countOfUser/",
     
     answers:"api/answers/",
     answerList:"api/answers/list/",
     answerCount:"api/answers/count/",
+    answerCountForUser:"api/answers/countForUser/",
     
     users:"api/users/",
     multipleUsers:"api/users/multiple/",
