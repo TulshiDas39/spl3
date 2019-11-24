@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { PUBLIC_URL } from "../../../utils/data";
+import "./styles/userInfo.css"
 
 export class UserInfo extends Component<any, any>{
     public render() {

@@ -26,7 +26,7 @@ export interface IUser {
     userId: string;
     name: string;
     tags: string;
-    reputation: string;
+    reputation: number;
     location: string;
     image:string;
 }
