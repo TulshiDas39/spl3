@@ -73,17 +73,14 @@ export class TagContainer extends Component<ITagContainer, state>{
     }
 
     private async followTag(tagInfo: ITagInfo) {
-        let token = await this.context.getTokenSilently();
-        tagService.followTag(tagInfo.tag.id, this.context.user.sub, token).then(data => {
+        tagService.followTag(tagInfo.tag.id, this.context.user.sub, this.context.token).then(data => {
             //this.fetchData();
             this.props.onUpdate();
         });
     }
 
     private async unFollowTag(tagInfo: ITagInfo) {
-        let token = await this.context.getTokenSilently();
-        tagService.unFollowTag(tagInfo.tag.id, this.context.user.sub, token).then(data => {
-            //this.fetchData();
+        tagService.unFollowTag(tagInfo.tag.id, this.context.user.sub, this.context.token).then(data => {
             this.props.onUpdate();
         });
     }

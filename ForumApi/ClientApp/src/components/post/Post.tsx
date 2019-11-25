@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { User } from "../answer/subComponents/User";
 import "./post.css";
-import {IAnswer, IQuestion, IUser, IVote } from "../../utils/Models";
+import {IAnswer, IQuestion, IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
 import { ConfirmationDialog } from "../popups/ConfirmationDialog";
@@ -56,8 +56,7 @@ export class Post extends Component<PostProps, state>{
         console.log(this.userProps.user);
 
         if(this.context.isAuthenticated){
-            let token = await this.context.getTokenSilently();
-            this.voteInfo.voteStatus = await postService.getVoteStatus(this.post.id,this.post.userId,this.postType,token);
+            this.voteInfo.voteStatus = await postService.getVoteStatus(this.post.id,this.post.userId,this.postType,this.context.token);
         }
 
         this.setState({isLoading:false});
@@ -68,7 +67,6 @@ export class Post extends Component<PostProps, state>{
         let context = this.context as IAuth0Context;
 
         if (!context.isAuthenticated) return;
-        let token = await this.context.getTokenSilently();
         if (this.voteInfo.voteStatus == type) return;
 
         let vote: IVote = {
@@ -79,7 +77,7 @@ export class Post extends Component<PostProps, state>{
             isUpvote: type
         }
 
-        postService.postVote(token,vote).then(data=>{
+        postService.postVote(context.token,vote).then(data=>{
             this.voteInfo.voteStatus = type;
             this.fetchAllData();
         })

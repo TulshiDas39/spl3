@@ -18,6 +18,7 @@ export const Auth0Provider = ({
 }) => {
   console.log('in Auth0Provider');
   const [isAuthenticated, setIsAuthenticated] = useState();
+  const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [auth0Client, setAuth0] = useState();
   const [loading, setLoading] = useState(true);
@@ -48,6 +49,7 @@ export const Auth0Provider = ({
         const user = await auth0FromHook.getUser();
         accessToken = await auth0FromHook.getTokenSilently();
         createUserIfNotExist(user,accessToken);
+        setToken(accessToken);
         setUser(user);
 
       }
@@ -108,7 +110,7 @@ export const Auth0Provider = ({
         isAuthenticated,
         user,
         loading,
-        accessToken,
+        token,
         popupOpen,
         loginWithPopup,
         handleRedirectCallback,

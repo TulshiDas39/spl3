@@ -62,9 +62,8 @@ export class Right extends Component<any, state>{
             context.loginWithRedirect(appState);
         }
 
-        let token = await context.getTokenSilently();
         let userId = context.user.sub;
-        homeService.fetchRecommendedQuestions(token, userId, this.iteration).then(data => {
+        homeService.fetchRecommendedQuestions(context.token, userId, this.iteration).then(data => {
             this.tab = HomePageTab.RECOMMENDED;
             this.questionList = data;
             this.setState({ isLoading: false });
@@ -120,9 +119,8 @@ export class Right extends Component<any, state>{
 
     private async getInitialQuestions() {
         let context = this.context as IAuth0Context;
-        let token = await context.getTokenSilently();
         let userId = context.user.sub;
-        homeService.fetchRecommendedQuestions(token, userId, this.iteration).then(data => {
+        homeService.fetchRecommendedQuestions(context.token, userId, this.iteration).then(data => {
             if (data.length == 0) {
                 this.getLatestQuestions();
             }

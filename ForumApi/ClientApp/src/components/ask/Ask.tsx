@@ -61,7 +61,6 @@ export class Ask extends Component<props, state>{
 
     private async post() {
         let context = this.context as IAuth0Context;
-        let token = await context.getTokenSilently();
 
         //this.data.description = this.description;
         //this.data.title = this.questionTitle;
@@ -72,9 +71,7 @@ export class Ask extends Component<props, state>{
         this.data.isAccepted = false;
         this.data.views = 0;
 
-        console.log('token:');
-        console.log(token);
-        askServices.postQuestion(this.data, token).then(response => {
+        askServices.postQuestion(this.data, context.token).then(response => {
             let data = response as IQuestion;
             this.props.history.push('/answer/' + data.id);
         }, err => {
@@ -88,9 +85,8 @@ export class Ask extends Component<props, state>{
         this.tags.forEach(val => questionData += " " + val);
         questionData = questionData.trim().replace(/[.,\/#!\^&]/g, "");
         console.log('tags are pushed: ' + questionData);
-        let token = await this.context.getTokenSilently();
 
-        askServices.getSimilarQuestion(questionData, token).then(data => {
+        askServices.getSimilarQuestion(questionData, this.context.token).then(data => {
             this.similarQuestions = data;
             this.setState({
                 loadSimilarities: false

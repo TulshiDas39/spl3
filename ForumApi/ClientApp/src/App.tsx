@@ -38,7 +38,7 @@ export default class App extends Component<props, any> {
 
     if (context && context.isAuthenticated) {
       console.log('authenticated');
-      let accessToken = await context.getTokenSilently();
+      let accessToken = context.token;
       console.log('accessToken:');
       console.log(accessToken);
     }

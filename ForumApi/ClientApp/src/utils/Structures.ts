@@ -13,7 +13,7 @@ export interface IAuth0Context {
     user: any;
     auth0Client?: Auth0Client;
     loading: boolean;
-    accessToken:string;
+    token:string;
     popupOpen: boolean;
 }   
 

@@ -16,8 +16,7 @@ export class Head extends Component<ITagListHeadProps, any>{
 
     private async postNewTag(newTag: string) {
         if (!newTag) return;
-        let token = await this.context.getTokenSilently();
-        tagService.postNewTag(newTag, token).then(data => {
+        tagService.postNewTag(newTag, this.context.token).then(data => {
             let tagInfo: ITagInfo = {
                 questionsInthisWeek: 0,
                 questionsToday: 0,

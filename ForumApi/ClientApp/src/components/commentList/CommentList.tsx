@@ -82,7 +82,6 @@ export class CommentList extends React.Component<ICommentsProps, state>{
             return;
         }
 
-        let token = await this.context.getTokenSilently();
         let comment: IComment;
         comment = {
             id: undefined as any,
@@ -93,7 +92,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
             ratings: 0,
             datetime: new Date().getTime()
         }
-        commentListService.postComment(comment, token).then(data => {
+        commentListService.postComment(comment, context.token).then(data => {
             this.comments.push(data);
             this.isCommenting = false;
             this.updateComponent();
@@ -106,8 +105,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
         let context = this.context as IAuth0Context;
         let id = this.comments[index].id;
 
-        let token = await context.getTokenSilently();
-        commentListService.deleteComment(id, token).then(() => {
+        commentListService.deleteComment(id, context.token).then(() => {
             this.comments.splice(index, 1);
             this.updateComponent();
         });

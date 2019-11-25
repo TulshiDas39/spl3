@@ -71,9 +71,7 @@ export class Discussion extends Component<IDiscussionProps, state>{
             userId: this.context.user.sub
         };
 
-        let token = await this.context.getTokenSilently();
-
-        answerService.postAnswer(data, token).then(data => {
+        answerService.postAnswer(data, this.context.token).then(data => {
             this.displayEditor = false;
             this.editorInnerHtml = "";
             this.fetchPostedAnswers();
@@ -86,9 +84,8 @@ export class Discussion extends Component<IDiscussionProps, state>{
     private async updateAnswer(text: string) {
         let answer = this.answerData[this.userAnswerIndex];
         answer.description = text;
-        let token = await this.context.getTokenSilently();
 
-        answerService.updateAnswer(answer, token).then(() => {
+        answerService.updateAnswer(answer, this.context.token).then(() => {
             this.displayEditor = false;
             this.editorInnerHtml = "";
             this.fetchPostedAnswers();
@@ -107,9 +104,8 @@ export class Discussion extends Component<IDiscussionProps, state>{
     }
 
     private async deleteAnswer() {
-        let token = await this.context.getTokenSilently();
         let id = this.answerData[this.userAnswerIndex].id as string;
-        answerService.deleteAnswer(id, token).then(() => {
+        answerService.deleteAnswer(id, this.context.token).then(() => {
             this.displayEditor = true;
             this.fetchPostedAnswers();
         }, err => {
@@ -129,9 +125,8 @@ export class Discussion extends Component<IDiscussionProps, state>{
     private async updateQuestion(text:string) {
         let question = this.props.questionData;
         question.description = text;
-        let token = await this.context.getTokenSilently();
 
-        answerService.updateQuestion(question, token).then(() => {
+        answerService.updateQuestion(question, this.context.token).then(() => {
             this.editorInnerHtml = "";
             this.setDisplayEditor();
             this.fetchPostedAnswers();
@@ -141,9 +136,8 @@ export class Discussion extends Component<IDiscussionProps, state>{
     }
 
     private async deleteQuestion() {
-        let token = await this.context.getTokenSilently();
         let id = this.props.questionData.id as string;
-        answerService.deleteQuestion(id, token).then(() => {
+        answerService.deleteQuestion(id, this.context.token).then(() => {
             this.props.onDeleteQuestion();
         }, err => {
             console.error(err);

@@ -50,8 +50,7 @@ export class Comment extends Component<ICommentProps, state>{
     }
 
     private async updateVoteStatus() {
-        let token = await this.context.getTokenSilently();
-        postService.getVoteStatus(this.props.data.id, this.context.user.sub, PostType.COMMENT, token).then(data => {
+        postService.getVoteStatus(this.props.data.id, this.context.user.sub, PostType.COMMENT, this.context.token).then(data => {
             this.voteStatus = data;
             this.updateComponent();
         });
@@ -62,10 +61,9 @@ export class Comment extends Component<ICommentProps, state>{
     }
 
     async onEditSave(text: string) {
-        let token = await this.context.getTokenSilently();
         let comment = this.props.data;
         comment.text = text;
-        commentService.updateComment(comment, token).then(() => {
+        commentService.updateComment(comment, this.context.token).then(() => {
             this.setState({ isEditing: false });
         }, err => {
             console.error(err);
@@ -80,8 +78,7 @@ export class Comment extends Component<ICommentProps, state>{
         let context = this.context as IAuth0Context;
         if (!context.isAuthenticated) return;
         if (this.voteStatus == type) return;
-        let token = await context.getTokenSilently();
-        commentService.postRate(token, context.user.sub, this.props.data.id, type).then(data => {
+        commentService.postRate(context.token, context.user.sub, this.props.data.id, type).then(data => {
             if (this.voteStatus == undefined) {
                 type == VoteStatus.DOWNVOTED ? this.ratings-- : this.ratings++;
             }
