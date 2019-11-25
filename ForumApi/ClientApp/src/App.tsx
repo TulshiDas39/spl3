@@ -41,6 +41,8 @@ export default class App extends Component<props, any> {
       let accessToken = context.token;
       console.log('accessToken:');
       console.log(accessToken);
+      console.log('userInfo');
+      console.log(context.userInfo);
     }
     else console.log('not authenticated');
   }

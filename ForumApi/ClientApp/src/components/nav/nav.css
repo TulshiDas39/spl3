@@ -119,8 +119,8 @@
     cursor: pointer;
 }
 
-#user span:nth-child(3) {
-    font-size: 0.2em;
+#reputation{
+    font-size: 1em;
     padding: 0px 3px;
 }
 

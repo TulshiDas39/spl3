@@ -35,8 +35,6 @@ export class Ask extends Component<props, state>{
 
     constructor(props: props) {
         super(props);
-        // this.handleAddition = this.handleAddition.bind(this);
-        // this.handleDelete = this.handleDelete.bind(this);
         this.state = {
             currentStep: 0,
             loadSimilarities: false
@@ -61,9 +59,6 @@ export class Ask extends Component<props, state>{
 
     private async post() {
         let context = this.context as IAuth0Context;
-
-        //this.data.description = this.description;
-        //this.data.title = this.questionTitle;
         this.data.tags = this.getTagsAsString();
         this.data.datetime = new Date().getTime();
         this.data.ratings = 0;
@@ -81,7 +76,7 @@ export class Ask extends Component<props, state>{
     }
 
     private async fetchSimilarQuestions() {
-        let questionData = this.data.title;
+        let questionData = this.data.title+"|";
         this.tags.forEach(val => questionData += " " + val);
         questionData = questionData.trim().replace(/[.,\/#!\^&]/g, "");
         console.log('tags are pushed: ' + questionData);

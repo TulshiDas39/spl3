@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 //@ts-ignore
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { Auth0Context } from "../../utils/Contexts";
+import { httpService } from "../../services/HttpService";
+import { API_CALLS } from "../../utils/api_calls";
 
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
@@ -20,6 +22,7 @@ export const Auth0Provider = ({
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [token, setToken] = useState();
   const [user, setUser] = useState();
+  const [userInfo, setUserInfo] = useState();
   const [auth0Client, setAuth0] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -48,6 +51,8 @@ export const Auth0Provider = ({
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
         accessToken = await auth0FromHook.getTokenSilently();
+        const userInfo = await httpService.get(API_CALLS.users+user.sub);
+        setUserInfo(userInfo);
         createUserIfNotExist(user,accessToken);
         setToken(accessToken);
         setUser(user);
@@ -109,6 +114,7 @@ export const Auth0Provider = ({
       value={{
         isAuthenticated,
         user,
+        userInfo,
         loading,
         token,
         popupOpen,

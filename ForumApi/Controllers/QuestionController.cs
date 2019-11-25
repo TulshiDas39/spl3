@@ -61,7 +61,7 @@ namespace ForumApi.Controllers
         {
             _logger.LogDebug("question data:");
             _logger.LogDebug(questionData);
-            return similarity.getSimilarQuestions(questionData);
+            return similarity.getSimilarQuestions(questionData, true);
         }
 
         [HttpGet("answerless/{iteration}")]

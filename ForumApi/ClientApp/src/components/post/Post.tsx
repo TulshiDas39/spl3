@@ -43,6 +43,8 @@ export class Post extends Component<PostProps, state>{
 
     componentDidMount(){
         this.fetchAllData();
+        let twoMinute = 2000*60;
+        setInterval(()=>this.fetchAllData, twoMinute);
     }
 
     async fetchAllData(){
@@ -62,6 +64,7 @@ export class Post extends Component<PostProps, state>{
         this.setState({isLoading:false});
 
     }
+
 
     private async vote(type:boolean){
         let context = this.context as IAuth0Context;

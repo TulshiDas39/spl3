@@ -1,5 +1,5 @@
 import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client";
-import { ITag } from "./Models";
+import { ITag, IUser } from "./Models";
 
 export interface IAuth0Context {
     loginWithPopup(params?: {}):Promise<void>;
@@ -10,7 +10,8 @@ export interface IAuth0Context {
     getTokenWithPopup(...p: any[]):Promise<string>;
     logout(...p: any[]):void;
     isAuthenticated: boolean;
-    user: any;
+    user: IUserCredential;
+    userInfo:IUser;
     auth0Client?: Auth0Client;
     loading: boolean;
     token:string;

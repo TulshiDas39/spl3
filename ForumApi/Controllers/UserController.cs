@@ -40,7 +40,7 @@ namespace ForumApi.Controllers
         }
 
 
-        [HttpGet("profile/{id}")]
+        [HttpGet("profile/{id:length(24)}")]
         public ActionResult<User> GetProfile(string id)
         {
             var user = _userService.GetById(id);
@@ -112,7 +112,7 @@ namespace ForumApi.Controllers
 
         }
 
-        [HttpPut("{id:length(24)}")]
+        [HttpPut("{id}")]
         public IActionResult Update(string id, User userIn)
         {
             var user = _userService.Get(id);

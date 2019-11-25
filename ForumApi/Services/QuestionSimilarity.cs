@@ -3,6 +3,7 @@ using System.Linq;
 using ForumApi.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ForumApi.Services
 {
@@ -17,17 +18,27 @@ namespace ForumApi.Services
             _logger = logger;
         }
 
-        public List<Question> getSimilarQuestions(string askedQuestionData)
+        public List<Question> getSimilarQuestions(string askedQuestionData, bool considerTags = false)
         {
             int iteration = 0;
             int chunkSize = 50;
             List<Question> questionList;
+            int seperatorIndex = askedQuestionData.LastIndexOf('|');
+            List<string> tags = new List<string>();
+            if (considerTags)
+            {
+                string tagStr = askedQuestionData.Substring(seperatorIndex, askedQuestionData.Length - seperatorIndex - 1);
+                tags = Utility.Tokenize(tagStr).ToList();
+                askedQuestionData = askedQuestionData.Substring(0, seperatorIndex);
+            }
+
             SortedList<double, Question> sortedQuestionList = new SortedList<double, Question>();
             init(sortedQuestionList);
             do
             {
                 questionList = _questionService.Get(iteration * chunkSize, chunkSize);
-                extractSimilarQuestions(sortedQuestionList, questionList, askedQuestionData);
+                if(considerTags) extractSimilarQuestions(sortedQuestionList, questionList, askedQuestionData,tags);
+                else extractSimilarQuestions(sortedQuestionList, questionList, askedQuestionData);
                 iteration++;
                 _logger.LogDebug("questionList size:" + questionList.Count);
             } while (questionList.Count == chunkSize);
@@ -35,17 +46,41 @@ namespace ForumApi.Services
             similarQuestions.Reverse();
             //return _questionService.Get(0, 15);
             removeNullObjects(similarQuestions);
-            
+
             return similarQuestions;
         }
 
-        private void removeNullObjects(List<Question> similarQuestions){
-            List<Question> nullObjects = new List<Question>();
-            foreach( Question q in similarQuestions){
-                if(q.id == null) nullObjects.Add(q);
+        private void extractSimilarQuestions(SortedList<double, Question> sortedQuestionList, List<Question> questionList, string askedQuestionData, List<string> tags)
+        {
+             _logger.LogDebug("extracting similar question");
+            for (int i = 0; i < questionList.Count; i++)
+            {
+                double lowestSimilarity = sortedQuestionList.Keys.First();
+                _logger.LogDebug("lowestSimilarity:" + lowestSimilarity);
+
+                string existingQuestionData = questionList[i].title;
+                List<string> existingTags = Utility.Tokenize(questionList[i].tags).ToList();
+                if(existingTags.Intersect(tags).Count() == 0) continue;
+                double cosineSimilarity = getCosineSimilarity(askedQuestionData, existingQuestionData);
+                _logger.LogDebug("cosine similarity:" + cosineSimilarity);
+
+                insertSimilarQuestion(cosineSimilarity, questionList[i], sortedQuestionList);
+
             }
 
-            foreach(Question q in nullObjects){
+            printList(sortedQuestionList);
+        }
+
+        private void removeNullObjects(List<Question> similarQuestions)
+        {
+            List<Question> nullObjects = new List<Question>();
+            foreach (Question q in similarQuestions)
+            {
+                if (q.id == null) nullObjects.Add(q);
+            }
+
+            foreach (Question q in nullObjects)
+            {
                 similarQuestions.Remove(q);
             }
         }
@@ -58,16 +93,11 @@ namespace ForumApi.Services
                 double lowestSimilarity = sortedQuestionList.Keys.First();
                 _logger.LogDebug("lowestSimilarity:" + lowestSimilarity);
 
-                string existingQuestionData = questionList[i].title + " " + questionList[i].tags;
+                string existingQuestionData = questionList[i].title;
                 double cosineSimilarity = getCosineSimilarity(askedQuestionData, existingQuestionData);
                 _logger.LogDebug("cosine similarity:" + cosineSimilarity);
-                // if (cosineSimilarity > lowestSimilarity)
-                // {
-                //     sortedQuestionList.Remove(lowestSimilarity);
-                //     sortedQuestionList.Add(cosineSimilarity, questionList[i]);
-                // }
 
-                insertSimilarQuestion(cosineSimilarity,questionList[i],sortedQuestionList);
+                insertSimilarQuestion(cosineSimilarity, questionList[i], sortedQuestionList);
 
             }
 
@@ -79,15 +109,17 @@ namespace ForumApi.Services
             SortedList<double, Question> sortedQuestionList)
         {
             double lowestSimilarity = sortedQuestionList.Keys.First();
-            if(cosineSimilarity > lowestSimilarity){
+            if (cosineSimilarity > lowestSimilarity)
+            {
                 int flag = 1;
-                while(sortedQuestionList.Keys.Contains(cosineSimilarity)){
-                    cosineSimilarity+= flag/1000;
+                while (sortedQuestionList.Keys.Contains(cosineSimilarity))
+                {
+                    cosineSimilarity += flag / 1000;
                     flag++;
                 }
 
                 sortedQuestionList.Remove(lowestSimilarity);
-                sortedQuestionList.Add(cosineSimilarity,question);
+                sortedQuestionList.Add(cosineSimilarity, question);
             }
 
         }

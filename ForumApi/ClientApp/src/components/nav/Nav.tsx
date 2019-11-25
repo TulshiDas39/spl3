@@ -3,6 +3,7 @@ import "./nav.css";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { IAuth0Context } from "../../utils/Structures";
 import { INavProps } from "./Types";
+import { utilityService } from "../../services/UtilityService";
 
 interface state {
     searchSM: {}
@@ -60,8 +61,16 @@ class Nav extends Component<INavProps, state> {
         this.searchValue = event.target.value;
     }
 
+    private getReputations(){
+        let reputation = this.contextValues.userInfo.reputation;
+        if(reputation<1000) return utilityService.convertToBengaliText(reputation);
+        reputation = Math.floor(reputation/1000);
+        if(reputation <100) return utilityService.convertToBengaliText(reputation)+" হা.";
+        reputation = Math.floor(reputation/100);
+        return utilityService.convertToBengaliText(reputation)+" ল.";
+    }
+
     render() {
-        //let context = this.context as IAuth0Context;
         return (
             <div id="nav">
                 <div id="list-sm">
@@ -96,7 +105,6 @@ class Nav extends Component<INavProps, state> {
     }
 
     private getLogin() {
-        //let context = this.context as IAuth0Context;
         return (
             <button id="idNavLogin" onClick={async () => await this.contextValues.loginWithRedirect({
                 appState: { targetUrl: window.location.pathname }
@@ -106,12 +114,11 @@ class Nav extends Component<INavProps, state> {
 
     private getUser() {
         return (
-            [<a key="userIcon123" href="#" id="user">
+            [<Link to={"/profile/"+this.contextValues.userInfo.id} key="userIcon123" href="#" id="user">
                 <img src= {this.contextValues.user.picture} alt="" />
-                <span id="reputation"> ৪৪ </span>
-                <span className="fa fa-eercast"></span>
-                <span id="badge">৪</span>
-            </a>, <button key="logoutBtn123" id="logoutBtn" onClick={() => this.contextValues.logout({ returnTo: window.location.origin })}>লগআউট</button>]
+                <span style={{fontSize:'0.6em'}} className="fa fa-certificate"></span>
+                <span id="reputation"> {this.getReputations()} </span>
+            </Link>, <button key="logoutBtn123" id="logoutBtn" onClick={() => this.contextValues.logout({ returnTo: window.location.origin })}>লগআউট</button>]
         )
     }
 }

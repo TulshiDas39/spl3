@@ -34,6 +34,9 @@ export class Discussion extends Component<IDiscussionProps, state>{
 
     componentDidMount() {
         this.init();
+        let twoMinute = 2000*60;
+        setInterval(()=>this.init, twoMinute);
+
     }
 
     componentWillUpdate() {
