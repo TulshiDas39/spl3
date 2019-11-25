@@ -7,7 +7,7 @@ import { answerService } from "../AnswerServices";
 import { IAuth0Context } from "../../../utils/Structures";
 import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
-import { discussionProps } from "../Types";
+import { IDiscussionProps } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
 import { utilityService } from "../../../services/UtilityService";
 
@@ -15,7 +15,7 @@ interface state {
     isLoading: boolean;
 }
 
-export class Discussion extends Component<discussionProps, state>{
+export class Discussion extends Component<IDiscussionProps, state>{
 
     private answerData = [] as IAnswer[];
     static contextType = Auth0Context;
@@ -24,7 +24,7 @@ export class Discussion extends Component<discussionProps, state>{
     private userAnswerIndex = -1;
     private post: (text: string) => Promise<void>;
 
-    constructor(props: discussionProps) {
+    constructor(props: IDiscussionProps) {
         super(props);
         console.log('in discussion: ');
         this.state = { isLoading: true };

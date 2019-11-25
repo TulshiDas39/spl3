@@ -1,9 +1,9 @@
-import { IQuestion, IAnswer } from "../../utils/Models";
+import { IQuestion, IAnswer, IUser } from "../../utils/Models";
 import { RouteProps } from "react-router";
 import { PostType } from "../../utils/Enums";
 import { IUserCredential } from "../../utils/Structures";
 
-export interface discussionProps {
+export interface IDiscussionProps {
     questionData: IQuestion;
     onDeleteQuestion(): void;
 }
@@ -29,7 +29,8 @@ export enum ActionEntity {
     Answer, Question, None
 }
 
-export interface UserProps{
-    userId:string;
+export interface IUserProps{
+    //userId:string;
+    user:IUser;
     postTime:number;
 }

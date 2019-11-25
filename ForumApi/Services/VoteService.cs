@@ -6,26 +6,15 @@ using System.Linq;
 
 namespace ForumApi.Services
 {
-    public class VoteSurvice
+    public class VoteService
     {
 
-        QuestionService _questionService;
-        AnswerService _answerService;
-        CommentService _commentService;
-
         private readonly IMongoCollection<Vote> _votes;
-
-        public VoteSurvice(IDatabaseSettings settings,
-        QuestionService questionService, AnswerService answerService,
-        CommentService commentService)
+        public VoteService(IDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _votes = database.GetCollection<Vote>(settings.VotesCollectionName);
-
-            _questionService = questionService;
-            _answerService = answerService;
-            _commentService = commentService;
         }
 
         public Vote Get(string postId, string userId, string postType)
@@ -40,57 +29,61 @@ namespace ForumApi.Services
             return _votes.Find<Vote>(item => item.id == id).FirstOrDefault();
         }
 
+        // public Vote InsertOne(Vote vote)
+        // {
+        //     var voteItem = Get(vote.postId, vote.userId, vote.postType);
+
+        //     if (voteItem != null)
+        //     {
+        //         if (!IsSame(vote, voteItem)) return null;
+        //         UpdateRatings(vote, 2);
+        //         //voteItem.isUpvote = !voteItem.isUpvote;
+        //         vote.id = voteItem.id;
+        //         _votes.ReplaceOne(item => item.id == voteItem.id, vote);
+        //         return vote;
+        //     }
+        //     else
+        //     {
+        //         UpdateRatings(vote, 1);
+        //         _votes.InsertOne(vote);
+        //         return vote;
+        //     }
+
+        // }
+
         public Vote InsertOne(Vote vote)
         {
-            var voteItem = Get(vote.postId, vote.userId, vote.postType);
-
-            if (voteItem != null)
-            {
-                if(!IsValid(vote, voteItem)) return null;
-                UpdateRatings(vote, 2);
-                //voteItem.isUpvote = !voteItem.isUpvote;
-                vote.id = voteItem.id;
-                _votes.ReplaceOne(item => item.id == voteItem.id, vote);
-                return vote;
-            }
-            else
-            {
-                UpdateRatings(vote, 1);
-                _votes.InsertOne(vote);
-                return vote;
-            }
-
+            _votes.InsertOne(vote);
+            return vote;
         }
 
-        private bool IsValid(Vote vote, Vote existingVote)
+        internal bool Exist(Vote vote)
         {
-            if(vote.isUpvote == existingVote.isUpvote) return false;
+            var voteItem = Get(vote.postId, vote.userId, vote.postType);
+            if (voteItem == null) return false;
             return true;
         }
 
-        private void UpdateRatings(Vote vote, int iterator)
+        internal bool IsSame(Vote vote, Vote existingVote)
         {
-            if (vote.postType == "Q")
-            {
-                var question = _questionService.Get(vote.postId);
-                if (vote.isUpvote) question.ratings += iterator;
-                else question.ratings -= iterator;
-                _questionService.Update(question.id, question);
-            }
-            else if(vote.postType == "A")
-            {
-                var answer = _answerService.Get(vote.postId);
-                if (vote.isUpvote) answer.ratings += iterator;
-                else answer.ratings -= iterator;
-                _answerService.Update(answer.id, answer);
-            }
+            if (vote.isUpvote == existingVote.isUpvote) return false;
+            return true;
+        }
 
-            else{
-                var comment = _commentService.Get(vote.postId);
-                if (vote.isUpvote) comment.ratings += iterator;
-                else comment.ratings -= iterator;
-                _commentService.Update(comment.id, comment);
-            }
+        internal bool IsSameVote(Vote vote)
+        {
+            var voteItem = Get(vote.postId, vote.userId, vote.postType);
+
+            if (vote.isUpvote == voteItem.isUpvote) return true;
+            return false;
+        }
+
+        public Vote Update(Vote newVote)
+        {
+            Vote exitingVote = Get(newVote.postId, newVote.userId, newVote.postType);
+            exitingVote.isUpvote = !exitingVote.isUpvote;
+            _votes.ReplaceOne(item => item.id == exitingVote.id, exitingVote);
+            return exitingVote;
         }
 
 

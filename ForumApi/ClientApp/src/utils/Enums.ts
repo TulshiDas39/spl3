@@ -15,8 +15,8 @@ export enum CashedItem{
     VIEWS="views"
 }
 
-export enum VoteStatus{
-    UPVOTED = 1,
-    DOWNVOTED = -1,
-    NOTVOTED = 0
-}
+// export enum VoteStatus{
+//     UPVOTED = true,
+//     DOWNVOTED = false,
+//     NOTVOTED = undefined
+// }

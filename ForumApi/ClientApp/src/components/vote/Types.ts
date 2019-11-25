@@ -1,8 +1,6 @@
-import { PostType } from "../../utils/Enums";
 
-export interface voteProps{
+export interface IVoteProps{
     ratings:number;
-    postId:string;
-    postType:PostType;
-    onVote():void;
+    voteStatus?:boolean;
+    vote(vote:boolean):void;
 }

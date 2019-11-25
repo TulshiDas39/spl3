@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
-
 namespace ForumApi.Services
 {
     public class Utility
@@ -44,6 +43,8 @@ namespace ForumApi.Services
             }
             return str;
         }
+
+        
     }
 
 

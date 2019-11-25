@@ -83,8 +83,9 @@ namespace ForumApi
             services.AddSingleton<AnswerService>();
             services.AddSingleton<CommentService>();
             services.AddSingleton<RecommendationService>();
-            services.AddSingleton<VoteSurvice>();
+            services.AddSingleton<VoteService>();
             services.AddSingleton<TagService>();
+            services.AddSingleton<SharedService>();
 
         }
 

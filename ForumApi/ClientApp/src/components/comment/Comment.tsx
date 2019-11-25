@@ -8,10 +8,12 @@ import { IAuth0Context } from "../../utils/Structures";
 import { commentService } from "./CommentService";
 import { utilityService } from "../../services/UtilityService";
 import { voteService } from "../vote/VoteService";
-import { PostType, VoteStatus } from "../../utils/Enums";
+import { PostType } from "../../utils/Enums";
 import { Link } from "react-router-dom";
 import { answerService } from "../answer/AnswerServices";
 import { rootService } from "../../services/RootService";
+import { postService } from "../post/PostService";
+import { VoteStatus } from "../../utils/Constants";
 
 interface state {
     isEditing: boolean;
@@ -22,7 +24,7 @@ export class Comment extends Component<ICommentProps, state>{
     static contextType = Auth0Context;
     private editingComment = {} as IComment;
     private ratings: number = 0;
-    private voteStatus = VoteStatus.NOTVOTED;
+    private voteStatus?:boolean;
     private userOfComment = {} as IUser;
 
     constructor(props: ICommentProps) {
@@ -49,7 +51,7 @@ export class Comment extends Component<ICommentProps, state>{
 
     private async updateVoteStatus() {
         let token = await this.context.getTokenSilently();
-        voteService.getVoteStatus(this.props.data.id, this.context.user.sub, PostType.COMMENT, token).then(data => {
+        postService.getVoteStatus(this.props.data.id, this.context.user.sub, PostType.COMMENT, token).then(data => {
             this.voteStatus = data;
             this.updateComponent();
         });
@@ -74,16 +76,16 @@ export class Comment extends Component<ICommentProps, state>{
         this.setState({ isEditing: false });
     }
 
-    private async giveRate(type: VoteStatus) {
+    private async giveRate(type: boolean) {
         let context = this.context as IAuth0Context;
         if (!context.isAuthenticated) return;
         if (this.voteStatus == type) return;
         let token = await context.getTokenSilently();
         commentService.postRate(token, context.user.sub, this.props.data.id, type).then(data => {
-            if (this.voteStatus == VoteStatus.NOTVOTED) {
+            if (this.voteStatus == undefined) {
                 type == VoteStatus.DOWNVOTED ? this.ratings-- : this.ratings++;
             }
-            else this.voteStatus == VoteStatus.UPVOTED ? this.ratings -= 2 : this.ratings += 2;
+            else this.voteStatus == VoteStatus.DOWNVOTED ? this.ratings -= 2 : this.ratings += 2;
             this.voteStatus = type;
             this.updateComponent();
         });
@@ -99,8 +101,8 @@ export class Comment extends Component<ICommentProps, state>{
         let upVoteBtnColor = 'black';
         let downVoteBtnColor = 'black';
 
-        if (this.voteStatus == VoteStatus.UPVOTED) upVoteBtnColor = 'blue';
-        if (this.voteStatus == VoteStatus.DOWNVOTED) downVoteBtnColor = 'blue';
+        if (this.voteStatus) upVoteBtnColor = 'blue';
+        if (this.voteStatus == false) downVoteBtnColor = 'blue';
 
         return (
             <span key={this.props.data.id} className="user-comment">

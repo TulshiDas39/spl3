@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./styles/user.css";
-import { UserProps } from "../Types";
+import { IUserProps } from "../Types";
 import { IUser } from "../../../utils/Models";
 import { answerService } from "../AnswerServices";
 import { utilityService } from "../../../services/UtilityService";
@@ -10,22 +10,18 @@ interface state {
     isLoading: boolean;
 }
 
-export class User extends Component<UserProps, state>{
+export class User extends Component<IUserProps, state>{
 
-    private user = {} as IUser;
-    private postDuration = "";
-    constructor(props: UserProps) {
+    //private user = {} as IUser;
+   // private postDuration = "";
+    constructor(props: IUserProps) {
         super(props);
-        this.state = { isLoading: true };
+       // this.init();
     }
 
-    componentDidMount() {
-        rootService.getUser(this.props.userId).then(data => {
-            this.user = data;
-            this.postDuration = this.getDurationString();
-            this.setState({ isLoading: false });
-        })
-    }
+    // init() {
+    //     this.postDuration = this.getDurationString();
+    // }
 
     private getDurationString() {
         let text = "প্রশ্ন করেছেন";
@@ -43,17 +39,16 @@ export class User extends Component<UserProps, state>{
     }
 
     public render() {
-        if (this.state.isLoading) return <p></p>;
         return (
             <div id="user_of_question" className="user_of_discuss">
                 <span className="questionTime">{this.getDurationString()}</span>
                 <div>
-                    <img src={this.user.image} alt="" />
+                    <img src={this.props.user.image} alt="" />
                     <div>
-                        <a className="userName" href="" >{this.user.name}</a>
+                        <a className="userName" href="" >{this.props.user.name}</a>
                         <div className="rating_of_user_of_discuss">
-                        <span className="fa fa-certificate"></span>
-                            <span>{" "+this.user.reputation}</span>
+                            <span className="fa fa-certificate"></span>
+                            <span>{" " + this.props.user.reputation}</span>
                         </div>
                     </div>
                 </div>

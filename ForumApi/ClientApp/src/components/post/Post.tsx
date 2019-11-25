@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { User } from "../answer/subComponents/User";
 import "./post.css";
-import {IAnswer, IQuestion } from "../../utils/Models";
+import {IAnswer, IQuestion, IUser, IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
 import { ConfirmationDialog } from "../popups/ConfirmationDialog";
@@ -9,49 +9,93 @@ import { PostType } from "../../utils/Enums";
 import { CommentList } from "../commentList/CommentList";
 import { PostProps } from "./Types";
 import { Vote } from "../vote/Vote";
-import { rootService } from "../../services/RootService";
+import { Loader } from "../loader/loader";
+import { postService } from "./PostService";
+import { IVoteProps } from "../vote/Types";
+import { IUserProps } from "../answer/Types";
+import { httpService } from "../../services/HttpService";
+import { API_CALLS } from "../../utils/api_calls";
 
+interface state{
+    isLoading:boolean;
+}
 
-export class Post extends Component<PostProps, any>{
+export class Post extends Component<PostProps, state>{
 
     static contextType = Auth0Context;
     private postType = PostType.QUESTION;
     private post:IAnswer | IQuestion;
+    private voteInfo = {} as IVoteProps;
+    private userProps = {} as IUserProps;
 
     constructor(props:PostProps){
         super(props);
         this.post = props.data;
-        this. init();
+        this.state = {isLoading:true}
+        this.init();
     }
 
     init() {
         if((this.props.data as IAnswer).questionId) this.postType = PostType.ANSWER;
+        this.voteInfo.vote = this.vote.bind(this);
+        this.userProps.postTime = this.props.data.datetime;
     }
 
-    private updateComponent(){
-        this.setState(this.state);
+    componentDidMount(){
+        this.fetchAllData();
     }
 
-    private fetchUpdates(){
-        if(this.postType == PostType.QUESTION) {
-            rootService.getQuestion(this.props.data.id).then(data=>{
-                this.post = data;
-                this.updateComponent();
-            }, err=>{
-                console.error(err);
-            });
+    async fetchAllData(){
+        let url = API_CALLS.answers+this.post.id;
+        if(this.postType == PostType.QUESTION) url = API_CALLS.questions+this.post.id;
+        this.post = await httpService.get(url);
+        this.voteInfo.ratings = this.post.ratings;
+
+        this.userProps.user = await httpService.get(API_CALLS.users+this.post.userId);
+        console.log('user:');
+        console.log(this.userProps.user);
+
+        if(this.context.isAuthenticated){
+            let token = await this.context.getTokenSilently();
+            this.voteInfo.voteStatus = await postService.getVoteStatus(this.post.id,this.post.userId,this.postType,token);
         }
+
+        this.setState({isLoading:false});
+
+    }
+
+    private async vote(type:boolean){
+        let context = this.context as IAuth0Context;
+
+        if (!context.isAuthenticated) return;
+        let token = await this.context.getTokenSilently();
+        if (this.voteInfo.voteStatus == type) return;
+
+        let vote: IVote = {
+            id: undefined as any,
+            postId: this.props.data.id,
+            postType: this.postType,
+            userId: context.user.sub,
+            isUpvote: type
+        }
+
+        postService.postVote(token,vote).then(data=>{
+            this.voteInfo.voteStatus = type;
+            this.fetchAllData();
+        })
+
     }
 
     public render() {
+        if(this.state.isLoading) return <Loader />;
         return (
             <div id="postDiv">
-                <Vote ratings={this.props.data.ratings} postId = {this.props.data.id} postType = {this.postType} onVote={this.fetchUpdates.bind(this)}/>
+                <Vote {...this.voteInfo}/>
                 <div id="question_description">
                     <span className="question_description_text" dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {this.getEdit_DeleteOptions()}
 
-                    <User userId = {this.props.data.userId} postTime = {this.props.data.datetime}/>
+                    <User {...this.userProps} />
 
                     <CommentList postId= {this.props.data.id} postType = {this.postType} />
                 </div>

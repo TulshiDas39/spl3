@@ -1,5 +1,4 @@
 In progress
-    -user profile
 
 To Do
     -blocking question based on user reaction
@@ -14,6 +13,7 @@ To Do
 
 
 Done
+    -user profile
     -question search
     -tag creation at question time
     -tag follow option in tag page
