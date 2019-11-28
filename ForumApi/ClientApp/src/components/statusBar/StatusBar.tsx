@@ -17,9 +17,9 @@ export class StatusBar extends Component<any, any>{
                     <span>অনুসরণকৃত বিষয়</span>
                 </div>
                 <div id="tags">
-                    <a href="">অষ্টম শ্রেণী</a>
-                    <a href="">পাটীগণিত</a>
-                    <a href="">বীজগণিত</a>
+                    <span >অষ্টম শ্রেণী</span>
+                    <span >পাটীগণিত</span>
+                    <span >বীজগণিত</span>
                 </div>
             </div>
         )

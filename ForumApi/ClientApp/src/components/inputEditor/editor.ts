@@ -113,7 +113,6 @@ export class Editor {
     }
 
     private toogleTag(tags: string[]) {
-        let value = this.textArea.value;
         let startIndex = this.textArea.selectionStart;
         let endIndex = this.textArea.selectionEnd;
         if (this.isTagExist(startIndex, endIndex, tags)) {
@@ -129,7 +128,7 @@ export class Editor {
         let first_part = value.substring(0, startIndex);
         let second_part = value.substring(endIndex, value.length);
         let middle_part = value.substring(startIndex, endIndex);
-        if (middle_part == "") {
+        if (middle_part === "") {
             middle_part = "write here";
         }
         this.textArea.value = first_part + tags[0] + middle_part + tags[1] + second_part;
@@ -143,7 +142,7 @@ export class Editor {
         let first_part = value.substring(0, startIndex - tags[0].length);
         let second_part = value.substring(endIndex + tags[1].length, value.length);
         let middle_part = value.substring(startIndex, endIndex);
-        if (middle_part == "write here") middle_part = "";
+        if (middle_part === "write here") middle_part = "";
         this.textArea.value = first_part + middle_part + second_part;
         this.selectText(startIndex - tags[0].length, startIndex + middle_part.length - tags[0].length);
 
@@ -153,7 +152,7 @@ export class Editor {
         let value = this.textArea.value;
         let prefix = value.substring(startIndex - tags[0].length, startIndex);
         let suffix = value.substring(endIndex, endIndex + tags[1].length);
-        if (prefix == tags[0] && suffix == tags[1]) return true;
+        if (prefix === tags[0] && suffix === tags[1]) return true;
         return false;
     }
 
@@ -169,7 +168,7 @@ export class Editor {
 
             var reader = new FileReader();
             reader.onload = function () {
-                var output = document.getElementById('output');
+               // var output = document.getElementById('output');
                 // output.src = reader.result;
                 console.log(reader.result);
             };
@@ -179,7 +178,7 @@ export class Editor {
     }
 
     private selectText(startPos: number, endPos: number) {
-        const input = <HTMLInputElement>document.getElementById('answer_editor');
+        const input = document.getElementById('answer_editor') as HTMLInputElement;
         input.focus();
         input.setSelectionRange(startPos, endPos);
     }

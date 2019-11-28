@@ -23,8 +23,8 @@ export const postService = {
         let headers = utilityService.createHeader(token);
 
         return httpService.get(url, headers).then(data=>{
-            if(data==1) return true;
-            if(data == -1) return false;
+            if(data === 1) return true;
+            if(data === -1) return false;
             return undefined;
         });
     },

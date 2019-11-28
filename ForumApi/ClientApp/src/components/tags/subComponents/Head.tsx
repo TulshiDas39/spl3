@@ -10,10 +10,6 @@ export class Head extends Component<ITagListHeadProps, any>{
 
     static contextType = Auth0Context;
 
-    constructor(props: ITagListHeadProps) {
-        super(props);
-    }
-
     private async postNewTag(newTag: string) {
         if (!newTag) return;
         tagService.postNewTag(newTag, this.context.token).then(data => {

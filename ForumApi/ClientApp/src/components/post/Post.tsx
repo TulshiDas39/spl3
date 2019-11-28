@@ -49,7 +49,7 @@ export class Post extends Component<PostProps, state>{
 
     async fetchAllData(){
         let url = API_CALLS.answers+this.post.id;
-        if(this.postType == PostType.QUESTION) url = API_CALLS.questions+this.post.id;
+        if(this.postType === PostType.QUESTION) url = API_CALLS.questions+this.post.id;
         this.post = await httpService.get(url);
         this.voteInfo.ratings = this.post.ratings;
 
@@ -70,7 +70,7 @@ export class Post extends Component<PostProps, state>{
         let context = this.context as IAuth0Context;
 
         if (!context.isAuthenticated) return;
-        if (this.voteInfo.voteStatus == type) return;
+        if (this.voteInfo.voteStatus === type) return;
 
         let vote: IVote = {
             id: undefined as any,
@@ -120,7 +120,7 @@ export class Post extends Component<PostProps, state>{
     private isEditable() {
         let context = this.context as IAuth0Context;
         if (context.isAuthenticated) {
-            if (context.user.sub == this.props.data.userId) return true;
+            if (context.user.sub === this.props.data.userId) return true;
             return false;
         }
 

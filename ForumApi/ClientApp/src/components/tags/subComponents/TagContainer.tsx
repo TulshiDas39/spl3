@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import "./tagContainer.css";
-import { Loader } from "../../loader/loader";
-import { ITagInfo, IAuth0Context } from "../../../utils/Structures";
+import { ITagInfo} from "../../../utils/Structures";
 import { tagService } from "../TagService";
 import { utilityService } from "../../../services/UtilityService";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { Auth0Context } from "../../../utils/Contexts";
-import { IUser, ITag } from "../../../utils/Models";
-import { rootService } from "../../../services/RootService";
 import { ITagContainer } from "../Types";
 
 interface state {
@@ -68,7 +65,7 @@ export class TagContainer extends Component<ITagContainer, state>{
     private isFollowing(tagName: string) {
         let userTags = utilityService.tokenize(this.props.userInfo.tags);
         let index = userTags.indexOf(tagName);
-        if (index == -1) return false;
+        if (index === -1) return false;
         return true;
     }
 

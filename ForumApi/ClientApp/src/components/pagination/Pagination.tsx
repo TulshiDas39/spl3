@@ -8,9 +8,6 @@ interface props{
 
 export class Pagination extends Component<props, any>{
 
-    constructor(props:props){
-        super(props);
-    }
     public render() {
         return (
             <div className="pagination">

@@ -26,7 +26,6 @@ export const Auth0Provider = ({
   const [auth0Client, setAuth0] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
-  let accessToken = "";
   console.log('isAuthenticated:');
   console.log(isAuthenticated);
   console.log('user:');
@@ -50,7 +49,7 @@ export const Auth0Provider = ({
 
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
-        accessToken = await auth0FromHook.getTokenSilently();
+        const accessToken = await auth0FromHook.getTokenSilently();
         const userInfo = await httpService.get(API_CALLS.users+user.sub);
         setUserInfo(userInfo);
         createUserIfNotExist(user,accessToken);

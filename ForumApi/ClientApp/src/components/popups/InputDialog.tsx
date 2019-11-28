@@ -7,10 +7,6 @@ export class InputDialog extends Component<InputDialogProps, any>{
 
     private inputValue = "";
 
-    constructor(props: InputDialogProps) {
-        super(props);
-    }
-
     private onInput(event:any){
         this.inputValue = event.target.value;
     }
@@ -20,7 +16,7 @@ export class InputDialog extends Component<InputDialogProps, any>{
             <Popup trigger={this.props.children} modal >
                 {close => (
                     <div className="modal">
-                        <a className="close" onClick={close}>&times;</a>
+                        <span className="close" onClick={close} >&times;</span>
                         <div className="header"> {this.props.title} </div>
                         <input className="inputBoxPopup" type="text" onChange={this.onInput.bind(this)} />
                         <div className="actions">

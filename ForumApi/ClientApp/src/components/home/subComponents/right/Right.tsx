@@ -108,10 +108,10 @@ export class Right extends Component<any, state>{
     }
 
     private loadMoreQuestions() {
-        if (this.tab = HomePageTab.ALL) {
+        if (this.tab === HomePageTab.ALL) {
             this.getLatestQuestions();
         }
-        else if (this.tab == HomePageTab.UNANSWERED)
+        else if (this.tab === HomePageTab.UNANSWERED)
             this.getAnswerLessQuestions();
         else
             this.getRecommendedQuestions();
@@ -121,7 +121,7 @@ export class Right extends Component<any, state>{
         let context = this.context as IAuth0Context;
         let userId = context.user.sub;
         homeService.fetchRecommendedQuestions(context.token, userId, this.iteration).then(data => {
-            if (data.length == 0) {
+            if (data.length === 0) {
                 this.getLatestQuestions();
             }
             else {
@@ -154,15 +154,15 @@ export class Right extends Component<any, state>{
                     {this.getTabs()}
                     <div className="questionList">
                         {
-                            this.questionList.length == 0 ? <p>No recommended questions found</p> :
+                            this.questionList.length === 0 ? <p>No recommended questions found</p> :
                                 this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
                         }
                     </div>
 
-                    <p className="see-all-question">
+                    {/* <p className="see-all-question">
                         <a className="go-allquestion" href="">সকল প্রশ্ন দেখুন।</a>
                         <a className="go-unaswered" href="">উত্তরহীন প্রশ্নগুলোতে আমাদের সাহায্য করুন</a>
-                    </p>
+                    </p> */}
 
                     {this.getPagination()}
                 </div>
@@ -178,11 +178,11 @@ export class Right extends Component<any, state>{
     private getTabs() {
         return (
             <div className="question_filter">
-                <div style={{ background: this.tab == HomePageTab.RECOMMENDED ? colors.tagBackground : '' }}
+                <div style={{ background: this.tab === HomePageTab.RECOMMENDED ? colors.tagBackground : '' }}
                     onClick={() => this.showRecommendedQuestions()}>উপযোগী</div>
-                <div style={{ background: this.tab == HomePageTab.UNANSWERED ? colors.tagBackground : '' }}
+                <div style={{ background: this.tab === HomePageTab.UNANSWERED ? colors.tagBackground : '' }}
                     onClick={() => this.showAnswerlessQuestions()}>উত্তরহীন</div>
-                <div style={{ background: this.tab == HomePageTab.ALL ? colors.tagBackground : '' }}
+                <div style={{ background: this.tab === HomePageTab.ALL ? colors.tagBackground : '' }}
                     onClick={() => this.showLatestQuestions()}>সকল প্রশ্ন</div>
             </div>
         )

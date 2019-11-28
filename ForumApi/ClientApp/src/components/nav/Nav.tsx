@@ -1,6 +1,6 @@
-import React, { PureComponent, Component } from "react";
+import React, { Component } from "react";
 import "./nav.css";
-import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import { Link, withRouter} from "react-router-dom";
 import { IAuth0Context } from "../../utils/Structures";
 import { INavProps } from "./Types";
 import { utilityService } from "../../services/UtilityService";

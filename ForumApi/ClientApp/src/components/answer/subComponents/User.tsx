@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import "./styles/user.css";
 import { IUserProps } from "../Types";
-import { IUser } from "../../../utils/Models";
-import { answerService } from "../AnswerServices";
 import { utilityService } from "../../../services/UtilityService";
-import { rootService } from "../../../services/RootService";
 
 interface state {
     isLoading: boolean;
@@ -12,21 +9,10 @@ interface state {
 
 export class User extends Component<IUserProps, state>{
 
-    //private user = {} as IUser;
-   // private postDuration = "";
-    constructor(props: IUserProps) {
-        super(props);
-       // this.init();
-    }
-
-    // init() {
-    //     this.postDuration = this.getDurationString();
-    // }
-
     private getDurationString() {
         let text = "প্রশ্ন করেছেন";
         let minutes = utilityService.getDurationMinute(this.props.postTime);
-        if (minutes == 0) return "এখন " + text;
+        if (minutes === 0) return "এখন " + text;
         if (minutes < 60) return utilityService.convertToBengaliText(minutes) + " মিনিট পুর্বে " + text;
         let hours = Math.floor(minutes / 60);
         if (hours < 24) return utilityService.convertToBengaliText(hours) + " ঘন্টা পুর্বে " + text;
@@ -45,7 +31,7 @@ export class User extends Component<IUserProps, state>{
                 <div>
                     <img src={this.props.user.image} alt="" />
                     <div>
-                        <a className="userName" href="" >{this.props.user.name}</a>
+                        <a className="userName" href="#" >{this.props.user.name}</a>
                         <div className="rating_of_user_of_discuss">
                             <span className="fa fa-certificate"></span>
                             <span>{" " + this.props.user.reputation}</span>

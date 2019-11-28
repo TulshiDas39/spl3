@@ -7,10 +7,6 @@ export class Home extends Component<IHomeProps, any> {
     static displayName = Home.name;
     private search?: string;
 
-    constructor(props: IHomeProps) {
-        super(props);
-    }
-
     public render(): JSX.Element {
         console.log('search value:'+this.search);
         return (

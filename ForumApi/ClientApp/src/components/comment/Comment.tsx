@@ -7,10 +7,8 @@ import { IComment, IUser } from "../../utils/Models";
 import { IAuth0Context } from "../../utils/Structures";
 import { commentService } from "./CommentService";
 import { utilityService } from "../../services/UtilityService";
-import { voteService } from "../vote/VoteService";
 import { PostType } from "../../utils/Enums";
 import { Link } from "react-router-dom";
-import { answerService } from "../answer/AnswerServices";
 import { rootService } from "../../services/RootService";
 import { postService } from "../post/PostService";
 import { VoteStatus } from "../../utils/Constants";
@@ -77,12 +75,12 @@ export class Comment extends Component<ICommentProps, state>{
     private async giveRate(type: boolean) {
         let context = this.context as IAuth0Context;
         if (!context.isAuthenticated) return;
-        if (this.voteStatus == type) return;
+        if (this.voteStatus === type) return;
         commentService.postRate(context.token, context.user.sub, this.props.data.id, type).then(data => {
-            if (this.voteStatus == undefined) {
-                type == VoteStatus.DOWNVOTED ? this.ratings-- : this.ratings++;
+            if (this.voteStatus === undefined) {
+                type === VoteStatus.DOWNVOTED ? this.ratings-- : this.ratings++;
             }
-            else this.voteStatus == VoteStatus.DOWNVOTED ? this.ratings -= 2 : this.ratings += 2;
+            else this.voteStatus === VoteStatus.DOWNVOTED ? this.ratings -= 2 : this.ratings += 2;
             this.voteStatus = type;
             this.updateComponent();
         });
@@ -99,7 +97,7 @@ export class Comment extends Component<ICommentProps, state>{
         let downVoteBtnColor = 'black';
 
         if (this.voteStatus) upVoteBtnColor = 'blue';
-        if (this.voteStatus == false) downVoteBtnColor = 'blue';
+        if (this.voteStatus === false) downVoteBtnColor = 'blue';
 
         return (
             <span key={this.props.data.id} className="user-comment">
@@ -127,7 +125,7 @@ export class Comment extends Component<ICommentProps, state>{
     }
 
     private getRatings() {
-        if (this.ratings != 0) return <span className="comment-reaction">{utilityService.convertToBengaliText(this.ratings)}</span>;
+        if (this.ratings !== 0) return <span className="comment-reaction">{utilityService.convertToBengaliText(this.ratings)}</span>;
     }
 
     private getCommentFooter() {
@@ -140,7 +138,7 @@ export class Comment extends Component<ICommentProps, state>{
     private getCommentActions() {
         let context = this.context as IAuth0Context;
         if (context.isAuthenticated) {
-            if (context.user.sub == this.props.data.userId) return (
+            if (context.user.sub === this.props.data.userId) return (
                 <span className="commentOptions">
                     <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
                     <span className="user-comment-delete" onClick={this.props.onDelete}>মুছুন</span>

@@ -15,7 +15,6 @@ export const commentListService = {
     },
     
     deleteComment(id:string, token:string){
-        let url = API_CALLS.comment+"/"+id;
         let headers = utilityService.createHeader(token);
         
         return httpService.deleteEntity(API_CALLS.comment+id,headers);

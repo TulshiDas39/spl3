@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { COUNTRIES } from './countries';
 import './style.css';
 import { WithContext as ReactTags } from 'react-tag-input';

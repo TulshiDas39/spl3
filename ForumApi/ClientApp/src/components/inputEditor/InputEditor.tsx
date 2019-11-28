@@ -1,4 +1,4 @@
-import React, { Component, RefObject } from "react";
+import React, { Component} from "react";
 import "./inputEditor.css";
 import { Editor } from "./editor";
 import { editorProps } from "./Types";
@@ -25,6 +25,12 @@ export class InputEditor extends Component<editorProps, state>{
 
     componentDidUpdate() {
         if (this.editor) this.editor.updateEditor(this.props.innterHtml);
+    }
+
+    private post() {
+        if (this.editor) {
+            this.props.onPost(this.editor.getValue());
+        }
     }
 
     public render() {
@@ -65,10 +71,6 @@ export class InputEditor extends Component<editorProps, state>{
         );
     }
 
-    private post() {
-        if (this.editor) {
-            this.props.onPost(this.editor.getValue());
-        }
-    }
+
 
 }

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Leftbar } from "../leftbar/Leftbar";
-import { Profile } from "./subComponents/Profile";
 import "./userActivity.css";
 import { Activity } from "./subComponents/Activity";
 
@@ -38,7 +37,7 @@ export class UserActivity extends Component<any, state>{
     }
 
     private toogleView(){
-        if(this.state.display == 'none') this.setState({display:''});
+        if(this.state.display === 'none') this.setState({display:''});
         else this.setState({
             display:'none'
         })

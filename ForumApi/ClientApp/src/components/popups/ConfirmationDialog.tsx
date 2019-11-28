@@ -4,9 +4,7 @@ import { ConfirmationDialogProps } from "./Types";
 import "./popup.css";
 
 export class ConfirmationDialog extends Component<ConfirmationDialogProps, any>{
-    constructor(props: ConfirmationDialogProps) {
-        super(props);
-    }
+
     render() {
         return (
             <Popup trigger={this.props.children} modal >

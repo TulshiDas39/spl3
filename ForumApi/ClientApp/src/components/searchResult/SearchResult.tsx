@@ -27,7 +27,7 @@ export class SearchResult extends Component<ISearchResult, state> {
     }
 
     componentDidUpdate(prevProps:ISearchResult){
-        if(prevProps != this.props) this.fetchData();
+        if(prevProps !== this.props) this.fetchData();
     }
 
     private fetchData() {
@@ -58,15 +58,15 @@ export class SearchResult extends Component<ISearchResult, state> {
                         </div>
                         <div className="questionList">
                             {
-                                this.questionList.length == 0 ? <p>No recommended questions found</p> :
+                                this.questionList.length === 0 ? <p>No recommended questions found</p> :
                                     this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
                             }
                         </div>
 
-                        <p className="see-all-question">
+                        {/* <p className="see-all-question">
                             <a className="go-allquestion" href="">সকল প্রশ্ন দেখুন।</a>
                             <a className="go-unaswered" href="">উত্তরহীন প্রশ্নগুলোতে আমাদের সাহায্য করুন</a>
-                        </p>
+                        </p> */}
 
                     </div>
                     <StatusBar />

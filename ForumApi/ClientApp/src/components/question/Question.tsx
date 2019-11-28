@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./question.css";
 import { Link } from "react-router-dom";
-import { IQuestion, IUser } from "../../utils/Models";
+import { IUser } from "../../utils/Models";
 import { utilityService } from "../../services/UtilityService";
 import { QuestionProps } from "./Types";
 import { questionService } from "./QuestionServices";
@@ -74,11 +74,11 @@ export class Question extends Component<QuestionProps, state>{
                 <div className="question_text">
                     <Link to={"/answer/" + this.props.data.id} className="question_title">{this.props.data.title}</Link>
                     <div className="question_tags">
-                        {this.tags.map((tag, index) => <a key={"tagKey" + index} className="tagItem" href="#">{tag}</a>)}
+                        {this.tags.map((tag, index) => <span key={"tagKey" + index} className="tagItem">{tag}</span>)}
                     </div>
                     <div className="question_time">
-                        <a className="question_time_tex" href="">{new Date(this.props.data.datetime).toLocaleString()}</a>
-                        <a className="question_time_user" href="">{this.user.name}</a>
+                        <span className="question_time_tex">{new Date(this.props.data.datetime).toLocaleString()}</span>
+                        <span className="question_time_user">{this.user.name}</span>
                         <span className="question_time_user_rating">{this.user.reputation}</span>
                     </div>
                 </div>

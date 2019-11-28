@@ -4,12 +4,13 @@ import { Post } from "../../post/Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
 import { answerService } from "../AnswerServices";
-import { IAuth0Context } from "../../../utils/Structures";
+import { IAuth0Context, IAppState } from "../../../utils/Structures";
 import { Auth0Context } from "../../../utils/Contexts";
 import { Loader } from "../../loader/loader";
 import { IDiscussionProps } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
 import { utilityService } from "../../../services/UtilityService";
+import { Button } from "@material-ui/core";
 
 interface state {
     isLoading: boolean;
@@ -30,18 +31,19 @@ export class Discussion extends Component<IDiscussionProps, state>{
         this.state = { isLoading: true };
         console.log(this.props.questionData);
         this.post = this.answerPost.bind(this);
+
     }
 
     componentDidMount() {
         this.init();
-        let twoMinute = 2000*60;
-        setInterval(()=>this.init, twoMinute);
+        let twoMinute = 2000 * 60;
+        setInterval(() => this.init, twoMinute);
 
     }
 
-    componentWillUpdate() {
-        this.setUserAnswerIndex();
-    }
+    // componentWillUpdate() {
+    //     this.setUserAnswerIndex();
+    // }
 
     private init() {
 
@@ -66,7 +68,7 @@ export class Discussion extends Component<IDiscussionProps, state>{
     private async answerPost(text: string) {
         let data: IAnswer;
         data = {
-            id:undefined as any,
+            id: undefined as any,
             questionId: this.props.questionData.id,
             description: text,
             ratings: 0,
@@ -125,7 +127,7 @@ export class Discussion extends Component<IDiscussionProps, state>{
         this.updateComponent();
     }
 
-    private async updateQuestion(text:string) {
+    private async updateQuestion(text: string) {
         let question = this.props.questionData;
         question.description = text;
 
@@ -158,7 +160,7 @@ export class Discussion extends Component<IDiscussionProps, state>{
         }
 
         for (let i = 0; i < this.answerData.length; i++) {
-            if (this.answerData[i].userId == context.user.sub) {
+            if (this.answerData[i].userId === context.user.sub) {
                 this.userAnswerIndex = i;
                 break;
             }
@@ -168,7 +170,7 @@ export class Discussion extends Component<IDiscussionProps, state>{
 
     private setDisplayEditor() {
 
-        if (this.userAnswerIndex == -1) {
+        if (this.userAnswerIndex === -1) {
             this.displayEditor = true;
         }
 
@@ -176,17 +178,6 @@ export class Discussion extends Component<IDiscussionProps, state>{
 
     private getEditor() {
         if (this.displayEditor) return this.editor();
-    }
-
-    private editor() {
-        let props: editorProps;
-
-        props = {
-            innterHtml: this.editorInnerHtml,
-            onPost: this.post
-        }
-
-        return <InputEditor {...props} />;
     }
 
     public render() {
@@ -206,6 +197,28 @@ export class Discussion extends Component<IDiscussionProps, state>{
 
             </div>
         )
+    }
+
+    private editor() {
+        if (!this.context.isAuthenticated) return this.getLoginBtn();
+        let props: editorProps;
+
+        props = {
+            innterHtml: this.editorInnerHtml,
+            onPost: this.post
+        }
+
+        return <InputEditor {...props} />;
+    }
+
+    private getLoginBtn() {
+        let context = this.context as IAuth0Context;
+        let appState:IAppState = {
+            appState:{
+                targetUrl:window.location.pathname
+            }
+        }
+        return <Button variant="outlined" color="primary" onClick={()=> context.loginWithRedirect(appState)}>উত্তর দিতে লগ ইন করুন </Button>;
     }
 
 }

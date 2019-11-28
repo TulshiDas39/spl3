@@ -3,7 +3,6 @@ In progress
 To Do
     -blocking question based on user reaction
     -footer
-    -document(answer page) updating
     -uploading image in question
     -error page(optional)
     -hosting(optional)
@@ -13,6 +12,7 @@ To Do
 
 
 Done
+    -document(answer page) updating
     -user profile
     -question search
     -tag creation at question time

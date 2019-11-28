@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { IComment } from "../../utils/Models";
 import { ICommentsProps, ICashedComment } from "./Types";
 import "./comments.css";
@@ -43,7 +43,7 @@ export class CommentList extends React.Component<ICommentsProps, state>{
         let comment = localStorage.getItem(CashedItem.USER_COMMENT);
         if (comment) {
             let commentJson = JSON.parse(comment) as ICashedComment;
-            if (commentJson.targetId == this.props.postId) {
+            if (commentJson.targetId === this.props.postId) {
                 this.saveComment(commentJson.text as string);
                 localStorage.removeItem(CashedItem.USER_COMMENT);
             }

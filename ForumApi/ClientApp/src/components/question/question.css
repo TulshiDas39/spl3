@@ -61,18 +61,22 @@
 
 .question_time .question_time_tex{
     color: #9199a1;
+    padding: 0 3px;
 }
 
 .question_time_user{
     color:#07C;
+    padding: 0 3px;
 }
 
 .question_time_tex:hover{
     color:#07C;
+    cursor: pointer;
 }
 
 .question_time_user:hover{
     color:#3af;
+    cursor: pointer;
 }
 
 .question_time a{

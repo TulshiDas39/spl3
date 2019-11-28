@@ -67,7 +67,7 @@ export const answerService = {
         };
 
         let views: string[] = JSON.parse(data);
-        if (views.indexOf(id) != -1) return;
+        if (views.indexOf(id) !== -1) return;
 
         return httpService.put(url, {});
     }

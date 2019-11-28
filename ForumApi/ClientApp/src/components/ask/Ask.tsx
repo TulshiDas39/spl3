@@ -4,7 +4,7 @@ import "./ask.css";
 import "./question_list.css";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
-import { IQuestion, IAnswer } from "../../utils/Models";
+import { IQuestion} from "../../utils/Models";
 import Loading from "../loader/Loading";
 import { Question } from "../question/Question";
 import { askServices } from "./AskServices";

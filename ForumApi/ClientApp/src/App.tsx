@@ -13,7 +13,6 @@ import { Auth0Context } from './utils/Contexts';
 import { IAuth0Context } from './utils/Structures';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PrivateRoute from './components/auth/PrivateRoute';
-import { ConfirmationDialog } from './components/popups/ConfirmationDialog';
 import { SearchResult } from './components/searchResult/SearchResult';
 import { UserProfile } from './components/userProfile/UserProfile';
 
@@ -24,9 +23,6 @@ interface props {
 export default class App extends Component<props, any> {
   static displayName = App.name;
   static contextType = Auth0Context;
-  constructor(props: props) {
-    super(props);
-  }
 
   componentDidUpdate() {
     console.log('component did update');

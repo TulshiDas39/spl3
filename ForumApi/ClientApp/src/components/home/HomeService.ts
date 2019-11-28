@@ -1,6 +1,4 @@
-import { IAuth0Context, IUserCredential } from "../../utils/Structures";
 import { httpService } from "../../services/HttpService";
-import { IQuestion } from "../../utils/Models";
 import { API_CALLS } from "../../utils/api_calls";
 import { utilityService } from "../../services/UtilityService";
 

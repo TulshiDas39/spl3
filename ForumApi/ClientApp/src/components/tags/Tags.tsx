@@ -4,7 +4,7 @@ import { Head } from "./subComponents/Head";
 import { TagContainer } from "./subComponents/TagContainer";
 import { Pagination } from "../pagination/Pagination";
 import "./tags.css";
-import { ITag, IUser } from "../../utils/Models";
+import { IUser } from "../../utils/Models";
 import { ITagInfo } from "../../utils/Structures";
 import { tagService } from "./TagService";
 import { rootService } from "../../services/RootService";

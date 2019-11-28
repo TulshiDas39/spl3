@@ -21,7 +21,7 @@
     background: #f7f1d5;
 }
 
-#tags > a{
+#tags > span{
     border-radius: 3px;
     text-decoration: none;
     background: #E1ECF4;
