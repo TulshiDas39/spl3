@@ -10,7 +10,7 @@ export class ConfirmationDialog extends Component<ConfirmationDialogProps, any>{
             <Popup trigger={this.props.children} modal >
                 {close => (
                     <div className="modal">
-                        <a className="close" onClick={close}>&times;</a>
+                        <span className="close" onClick={close}>&times;</span>
                         <div className="header"> {this.props.title} </div>
 
                         <div className="actions">

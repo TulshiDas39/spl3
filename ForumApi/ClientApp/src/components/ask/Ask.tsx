@@ -78,7 +78,7 @@ export class Ask extends Component<props, state>{
     private async fetchSimilarQuestions() {
         let questionData = this.data.title+"|";
         this.tags.forEach(val => questionData += " " + val);
-        questionData = questionData.trim().replace(/[.,\/#!\^&]/g, "");
+        questionData = questionData.trim().replace(/[.,/#!^&]/g, "");
         console.log('tags are pushed: ' + questionData);
 
         askServices.getSimilarQuestion(questionData, this.context.token).then(data => {

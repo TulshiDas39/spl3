@@ -1,8 +1,8 @@
 In progress
-
-To Do
     -blocking question based on user reaction
     -footer
+
+To Do
     -uploading image in question
     -error page(optional)
     -hosting(optional)

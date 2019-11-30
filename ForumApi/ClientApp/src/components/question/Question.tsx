@@ -19,7 +19,6 @@ export class Question extends Component<QuestionProps, state>{
     private answerCount = 0;
     constructor(props: QuestionProps) {
         super(props);
-        console.log(props.data);
         this.state = { isLoading: true }
     }
 
@@ -29,7 +28,6 @@ export class Question extends Component<QuestionProps, state>{
 
     private async init() {
         this.tags = this.props.data.tags.trim().split(/\s+/);
-        console.log(this.tags);
         try {
             this.user = await questionService.getUser(this.props.data.userId);
             this.answerCount = await questionService.getAnswerCount(this.props.data.id);

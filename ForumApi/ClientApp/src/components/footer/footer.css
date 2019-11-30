@@ -1,0 +1,22 @@
+.footerDiv{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: small;
+    margin-top: 20px;
+    padding-top:40px ;
+    padding-bottom: 20px;
+    border-top: 1px solid #e6e9ec;
+}
+
+.optionSet{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.optionSet > a{
+    padding: 0 5px;
+    text-decoration: none;
+}

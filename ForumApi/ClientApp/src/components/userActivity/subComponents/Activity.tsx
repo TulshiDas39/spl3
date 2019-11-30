@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles/activity.css";
-import { Badge, badge } from "./Badge";
+import { Badge } from "./Badge";
 import { UserActivity } from "../UserActivity";
 
 export class Activity {
@@ -202,7 +202,7 @@ export class Activity {
     private getBadge(badgeType: string) {
 
         let badgeManager = new Badge();
-        let badge = badgeManager.badges.get(badgeType) as badge;
+        let badge = badgeManager.badges.get(badgeType) as any;
 
 
         return (

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./styles/user.css";
 import { IUserProps } from "../Types";
 import { utilityService } from "../../../services/UtilityService";
+import { Link } from "react-router-dom";
 
 interface state {
     isLoading: boolean;
@@ -31,7 +32,7 @@ export class User extends Component<IUserProps, state>{
                 <div>
                     <img src={this.props.user.image} alt="" />
                     <div>
-                        <a className="userName" href="#" >{this.props.user.name}</a>
+                        <Link to={"/profile/"+this.props.user.id} className="userName" >{this.props.user.name}</Link>
                         <div className="rating_of_user_of_discuss">
                             <span className="fa fa-certificate"></span>
                             <span>{" " + this.props.user.reputation}</span>
