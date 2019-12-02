@@ -18,5 +18,7 @@ namespace ForumApi.Models
         public int ratings { get; set; }
 
         public long datetime { get; set; }
+
+        public bool isAccepted {get; set;}
     }
 }

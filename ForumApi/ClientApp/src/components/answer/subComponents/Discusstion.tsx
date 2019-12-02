@@ -11,6 +11,7 @@ import { IDiscussionProps } from "../Types";
 import { editorProps } from "../../inputEditor/Types";
 import { utilityService } from "../../../services/UtilityService";
 import { Button } from "@material-ui/core";
+import { PostType } from "../../../utils/Enums";
 
 interface state {
     isLoading: boolean;
@@ -184,12 +185,12 @@ export class Discussion extends Component<IDiscussionProps, state>{
         if (this.state.isLoading) return <Loader />;
         return (
             <div id="discussion_flow">
-                <Post data={this.props.questionData} onEdit={this.editQuestion.bind(this)} onDelete={this.deleteQuestion.bind(this)} />
+                <Post type={PostType.QUESTION} data={this.props.questionData} onEdit={this.editQuestion.bind(this)} onDelete={this.deleteQuestion.bind(this)} />
                 <h1 style={{ marginBottom: '2px' }}>উত্তর {utilityService.convertToBengaliText(this.answerData.length)} টি</h1>
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
                     {
-                        this.answerData.map((item, index) => <Post key={index} data={item} onEdit={this.editAnswer.bind(this)} onDelete={this.deleteAnswer.bind(this)} />)
+                        this.answerData.map((item, index) => <Post key={index} type={PostType.ANSWER} data={item} onEdit={this.editAnswer.bind(this)} onDelete={this.deleteAnswer.bind(this)} />)
                     }
                 </div>
 

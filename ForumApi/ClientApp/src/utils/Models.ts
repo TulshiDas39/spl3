@@ -19,6 +19,7 @@ export interface IAnswer {
     description: string;
     ratings: number;
     datetime: number;
+    isAccepted:boolean;
 }
 
 export interface IUser {

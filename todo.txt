@@ -1,6 +1,6 @@
 In progress
+    -answer accept
     -blocking question based on user reaction
-    -footer
 
 To Do
     -uploading image in question
@@ -12,6 +12,7 @@ To Do
 
 
 Done
+    -footer
     -document(answer page) updating
     -user profile
     -question search

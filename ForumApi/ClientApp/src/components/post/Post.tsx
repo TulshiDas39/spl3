@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { User } from "../answer/subComponents/User";
 import "./post.css";
-import {IAnswer, IQuestion, IVote } from "../../utils/Models";
+import { IAnswer, IQuestion, IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
 import { ConfirmationDialog } from "../popups/ConfirmationDialog";
@@ -15,58 +15,57 @@ import { IVoteProps } from "../vote/Types";
 import { IUserProps } from "../answer/Types";
 import { httpService } from "../../services/HttpService";
 import { API_CALLS } from "../../utils/api_calls";
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 
-interface state{
-    isLoading:boolean;
+interface state {
+    isLoading: boolean;
 }
 
 export class Post extends Component<PostProps, state>{
 
     static contextType = Auth0Context;
-    private postType = PostType.QUESTION;
-    private post:IAnswer | IQuestion;
+    private post: IAnswer | IQuestion;
     private voteInfo = {} as IVoteProps;
     private userProps = {} as IUserProps;
 
-    constructor(props:PostProps){
+    constructor(props: PostProps) {
         super(props);
         this.post = props.data;
-        this.state = {isLoading:true}
+        this.state = { isLoading: true }
         this.init();
     }
 
     init() {
-        if((this.props.data as IAnswer).questionId) this.postType = PostType.ANSWER;
         this.voteInfo.vote = this.vote.bind(this);
         this.userProps.postTime = this.props.data.datetime;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchAllData();
-        let twoMinute = 2000*60;
-        setInterval(()=>this.fetchAllData, twoMinute);
+        let twoMinute = 2000 * 60;
+        setInterval(() => this.fetchAllData, twoMinute);
     }
 
-    async fetchAllData(){
-        let url = API_CALLS.answers+this.post.id;
-        if(this.postType === PostType.QUESTION) url = API_CALLS.questions+this.post.id;
+    async fetchAllData() {
+        let url = API_CALLS.answers + this.post.id;
+        if (this.props.type === PostType.QUESTION) url = API_CALLS.questions + this.post.id;
         this.post = await httpService.get(url);
         this.voteInfo.ratings = this.post.ratings;
 
-        this.userProps.user = await httpService.get(API_CALLS.users+this.post.userId);
+        this.userProps.user = await httpService.get(API_CALLS.users + this.post.userId);
         console.log('user:');
         console.log(this.userProps.user);
 
-        if(this.context.isAuthenticated){
-            this.voteInfo.voteStatus = await postService.getVoteStatus(this.post.id,this.post.userId,this.postType,this.context.token);
+        if (this.context.isAuthenticated) {
+            this.voteInfo.voteStatus = await postService.getVoteStatus(this.post.id, this.post.userId, this.props.type, this.context.token);
         }
 
-        this.setState({isLoading:false});
+        this.setState({ isLoading: false });
 
     }
 
 
-    private async vote(type:boolean){
+    private async vote(type: boolean) {
         let context = this.context as IAuth0Context;
 
         if (!context.isAuthenticated) return;
@@ -75,12 +74,12 @@ export class Post extends Component<PostProps, state>{
         let vote: IVote = {
             id: undefined as any,
             postId: this.props.data.id,
-            postType: this.postType,
+            postType: this.props.type,
             userId: context.user.sub,
             isUpvote: type
         }
 
-        postService.postVote(context.token,vote).then(data=>{
+        postService.postVote(context.token, vote).then(data => {
             this.voteInfo.voteStatus = type;
             this.fetchAllData();
         })
@@ -88,20 +87,38 @@ export class Post extends Component<PostProps, state>{
     }
 
     public render() {
-        if(this.state.isLoading) return <Loader />;
+        if (this.state.isLoading) return <Loader />;
         return (
             <div id="postDiv">
-                <Vote {...this.voteInfo}/>
+                <div className="voteAndAccept">
+                    <Vote {...this.voteInfo} />
+                    {this.getAcceptIcon()}
+                </div>
+
                 <div id="question_description">
                     <span className="question_description_text" dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {this.getEdit_DeleteOptions()}
 
                     <User {...this.userProps} />
 
-                    <CommentList postId= {this.props.data.id} postType = {this.postType} />
+                    <CommentList postId={this.props.data.id} postType={this.props.type} />
                 </div>
             </div>
         )
+    }
+
+    private getAcceptIcon() {
+        let context = this.context as IAuth0Context;
+        if (this.props.type !== PostType.ANSWER) return;
+        if (!context.isAuthenticated) return;
+        if (context.user.sub !== this.post.userId) return;
+        let post = this.post as IAnswer;
+        let color = "disabled";
+        if (post.isAccepted) color = "primary";
+
+        return (<div style={{ padding: '5px' }}>
+                    <DoneOutlineIcon color= {color as any}/>
+                </div>);
     }
 
     private getEdit_DeleteOptions() {
