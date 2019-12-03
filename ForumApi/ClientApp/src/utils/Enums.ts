@@ -15,6 +15,11 @@ export enum CashedItem{
     VIEWS="views"
 }
 
+export enum PostStatus{
+    ACCEPTED="acceptedAnswer",
+    UNACCEPTED="unacceptedAnswer"
+}
+
 // export enum VoteStatus{
 //     UPVOTED = true,
 //     DOWNVOTED = false,

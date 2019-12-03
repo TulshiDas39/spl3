@@ -6,6 +6,7 @@ export interface PostProps {
     onEdit(): void;
     onDelete(): void;
     type:PostType;
-    onAccept(status:boolean):void;
+    onAccept?(status:boolean):void;
     questionAcceptee?:boolean;
+    questionData?:IQuestion;
 }

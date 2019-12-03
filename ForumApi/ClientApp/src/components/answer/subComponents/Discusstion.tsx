@@ -74,7 +74,8 @@ export class Discussion extends Component<IDiscussionProps, state>{
             description: text,
             ratings: 0,
             datetime: new Date().getTime(),
-            userId: this.context.user.sub
+            userId: this.context.user.sub,
+            isAccepted:false
         };
 
         answerService.postAnswer(data, this.context.token).then(data => {
@@ -181,6 +182,16 @@ export class Discussion extends Component<IDiscussionProps, state>{
         if (this.displayEditor) return this.editor();
     }
 
+    private toogleAcceptanceStatus(status:boolean){
+        this.props.questionData.isAccepted = status;
+        console.log(this.props.questionData);
+        answerService.markQuestionAsAccepted(this.props.questionData, this.context.token).then(data=>{
+            this.init();
+        },err=>{
+            console.error(err);
+        });
+    }
+
     public render() {
         if (this.state.isLoading) return <Loader />;
         return (
@@ -190,7 +201,7 @@ export class Discussion extends Component<IDiscussionProps, state>{
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
                 <div className="answers">
                     {
-                        this.answerData.map((item, index) => <Post key={index} type={PostType.ANSWER} data={item} onEdit={this.editAnswer.bind(this)} onDelete={this.deleteAnswer.bind(this)} />)
+                        this.answerData.map((item, index) => <Post key={index} questionData={this.props.questionData} onAccept={this.toogleAcceptanceStatus.bind(this)} type={PostType.ANSWER} data={item} onEdit={this.editAnswer.bind(this)} onDelete={this.deleteAnswer.bind(this)} />)
                     }
                 </div>
 

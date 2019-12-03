@@ -1,5 +1,4 @@
 In progress
-    -answer accept
     -blocking question based on user reaction
 
 To Do
@@ -12,6 +11,7 @@ To Do
 
 
 Done
+    -answer accept
     -footer
     -document(answer page) updating
     -user profile

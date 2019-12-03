@@ -5,7 +5,7 @@ import { IAnswer, IQuestion, IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
 import { ConfirmationDialog } from "../popups/ConfirmationDialog";
-import { PostType } from "../../utils/Enums";
+import { PostType, PostStatus } from "../../utils/Enums";
 import { CommentList } from "../commentList/CommentList";
 import { PostProps } from "./Types";
 import { Vote } from "../vote/Vote";
@@ -16,6 +16,7 @@ import { IUserProps } from "../answer/Types";
 import { httpService } from "../../services/HttpService";
 import { API_CALLS } from "../../utils/api_calls";
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import { utilityService } from "../../services/UtilityService";
 
 interface state {
     isLoading: boolean;
@@ -44,6 +45,10 @@ export class Post extends Component<PostProps, state>{
         this.fetchAllData();
         let twoMinute = 2000 * 60;
         setInterval(() => this.fetchAllData, twoMinute);
+    }
+
+    componentDidUpdate(prevProps:PostProps){
+        if(prevProps !== this.props) this.fetchAllData();
     }
 
     async fetchAllData() {
@@ -107,18 +112,41 @@ export class Post extends Component<PostProps, state>{
         )
     }
 
+    private toogleAcceptanceStatus(){
+        this.props.data.isAccepted = !this.props.data.isAccepted;
+        let headers = utilityService.createHeader(this.context.token);
+        httpService.put(API_CALLS.answers,this.props.data,headers).then(data=>{
+            debugger;
+            if(this.props.onAccept) this.props.onAccept(this.props.data.isAccepted);
+        },err=>console.error(err));
+    }
+
     private getAcceptIcon() {
         let context = this.context as IAuth0Context;
         if (this.props.type !== PostType.ANSWER) return;
-        if (!context.isAuthenticated) return;
-        if (context.user.sub !== this.post.userId) return;
-        let post = this.post as IAnswer;
+        if(this.props.questionData){
+            if(this.props.questionData.isAccepted && !this.post.isAccepted) return;
+        }
+        if (!context.isAuthenticated || context.user.sub !== (this.props.questionData as IQuestion).userId) {
+            if (this.post.isAccepted) return this.showDisabledAcceptedIcon();
+            else return;
+        }
         let color = "disabled";
-        if (post.isAccepted) color = "primary";
+        if (this.post.isAccepted) color = "primary";
 
-        return (<div style={{ padding: '5px' }}>
-                    <DoneOutlineIcon color= {color as any}/>
-                </div>);
+        return this.showEnabledAcceptedIcon(color);
+    }
+
+    private showEnabledAcceptedIcon(color: string) {
+        return (<div className="enableabledIcon" onClick={this.toogleAcceptanceStatus.bind(this)} style={{ padding: '5px' }}>
+            <DoneOutlineIcon color={color as any} />
+        </div>);
+    }
+
+    private showDisabledAcceptedIcon(){
+        return (<div style={{ padding: '5px'}}>
+            <DoneOutlineIcon color={"primary" as any} />
+        </div>);
     }
 
     private getEdit_DeleteOptions() {

@@ -70,6 +70,10 @@ export const answerService = {
         if (views.indexOf(id) !== -1) return;
 
         return httpService.put(url, {});
+    },
+    markQuestionAsAccepted(question:IQuestion, token:string){
+        let headers = utilityService.createHeader(token);
+        return httpService.put(API_CALLS.questions,question,headers);
     }
 }
 

@@ -39,3 +39,7 @@
     cursor: pointer;
     color: #3b4045;
 }
+
+.enableabledIcon:hover{
+    cursor: pointer;
+}
