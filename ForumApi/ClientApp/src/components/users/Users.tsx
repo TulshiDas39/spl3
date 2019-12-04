@@ -3,7 +3,7 @@ import { Pagination } from '../pagination/Pagination';
 import { Leftbar } from '../leftbar/Leftbar';
 import { Head } from './subComponents/Head';
 import { UserContainer } from './subComponents/UserContainer';
-import "./users.css";
+import "./users.scss";
 import { Loader } from '../loader/loader';
 import { IUser } from '../../utils/Models';
 import { userService } from './UserService';

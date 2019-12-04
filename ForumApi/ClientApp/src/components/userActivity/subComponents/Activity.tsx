@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/activity.css";
+import "./styles/activity.scss";
 import { Badge } from "./Badge";
 import { UserActivity } from "../UserActivity";
 

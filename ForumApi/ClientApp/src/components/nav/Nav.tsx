@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./nav.css";
+import "./nav.scss";
 import { Link, withRouter} from "react-router-dom";
 import { IAuth0Context } from "../../utils/Structures";
 import { INavProps } from "./Types";

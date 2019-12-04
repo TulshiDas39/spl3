@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./tagContainer.css";
+import "./tagContainer.scss";
 import { ITagInfo} from "../../../utils/Structures";
 import { tagService } from "../TagService";
 import { utilityService } from "../../../services/UtilityService";

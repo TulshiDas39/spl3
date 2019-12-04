@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Pagination } from "../../../pagination/Pagination";
-import "./right.css";
+import "./right.scss";
 import { StatusBar } from "../../../statusBar/StatusBar";
 import { Link } from "react-router-dom";
 import { Loader } from "../../../loader/loader";

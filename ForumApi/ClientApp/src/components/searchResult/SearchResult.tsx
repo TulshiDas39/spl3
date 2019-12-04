@@ -7,6 +7,7 @@ import { Question } from "../question/Question";
 import { IQuestion } from "../../utils/Models";
 import { searchResultService } from "./SearchResutlService";
 import { Loader } from "../loader/loader";
+import "./searchResult.scss";
 
 interface state{
     isLoading:boolean;

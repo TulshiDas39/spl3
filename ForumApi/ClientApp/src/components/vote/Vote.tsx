@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { utilityService } from "../../services/UtilityService";
 import { IVoteProps } from "./Types";
-import "./vote.css";
+import "./vote.scss";
 
 export class Vote extends Component<IVoteProps, any>{
 

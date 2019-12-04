@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
-import "./popup.css";
+import "./popup.scss";
 
 export class ContextPopup extends Component<any, any>{
     render() {

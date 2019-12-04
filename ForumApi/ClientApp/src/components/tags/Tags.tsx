@@ -3,7 +3,7 @@ import { Leftbar } from "../leftbar/Leftbar";
 import { Head } from "./subComponents/Head";
 import { TagContainer } from "./subComponents/TagContainer";
 import { Pagination } from "../pagination/Pagination";
-import "./tags.css";
+import "./tags.scss";
 import { IUser } from "../../utils/Models";
 import { ITagInfo } from "../../utils/Structures";
 import { tagService } from "./TagService";

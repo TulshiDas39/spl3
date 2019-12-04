@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./head.css";
+import "./head.scss";
 import { TagInput } from "../../reactTagEditor/TagInput";
 import { COUNTRIES } from "../../reactTagEditor/countries";
 import { IUserHead } from "../Types";

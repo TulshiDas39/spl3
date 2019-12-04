@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./question.css";
+import "./question.scss";
 import { Link } from "react-router-dom";
 import { IUser } from "../../utils/Models";
 import { utilityService } from "../../services/UtilityService";

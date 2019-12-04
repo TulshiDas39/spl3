@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import "./inputEditor.css";
+import "./inputEditor.scss";
 import { Editor } from "./editor";
 import { editorProps } from "./Types";
 

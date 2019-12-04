@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TagInput } from "../reactTagEditor/TagInput";
-import "./ask.css";
-import "./question_list.css";
+import "./ask.scss";
+//import "./question_list.scss";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
 import { IQuestion} from "../../utils/Models";

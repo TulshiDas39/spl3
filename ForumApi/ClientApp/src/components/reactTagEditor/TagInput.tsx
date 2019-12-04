@@ -1,6 +1,6 @@
 import React from 'react';
 import { COUNTRIES } from './countries';
-import './style.css';
+import './style.scss';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { ITagInputProps, ITagInput } from './Types';
 import { httpService } from '../../services/HttpService';

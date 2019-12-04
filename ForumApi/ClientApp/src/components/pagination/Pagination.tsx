@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./pagination.css";
+import "./pagination.scss";
 
 interface props{
     eventNext():void;

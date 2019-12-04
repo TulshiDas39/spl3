@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import {InputDialogProps } from "./Types";
-import "./popup.css";
+import "./popup.scss";
 
 export class InputDialog extends Component<InputDialogProps, any>{
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ICommentProps } from "./Types";
 import { CommentBox } from "./CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
-import "./styles/comment.css";
+import "./styles/comment.scss";
 import { IComment, IUser } from "../../utils/Models";
 import { IAuth0Context } from "../../utils/Structures";
 import { commentService } from "./CommentService";

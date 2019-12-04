@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import { ConfirmationDialogProps } from "./Types";
-import "./popup.css";
+import "./popup.scss";
 
 export class ConfirmationDialog extends Component<ConfirmationDialogProps, any>{
 

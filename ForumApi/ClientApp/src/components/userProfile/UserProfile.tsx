@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router";
 import { IUser } from "../../utils/Models";
 import { userProfileService } from "./userProfileService";
 import { Loader } from "../loader/loader";
-import "./styles/user_profile.css";
+import "./styles/user_profile.scss";
 import { utilityService } from "../../services/UtilityService";
 import { UserTab } from "./Types";
 import { Leftbar } from "../leftbar/Leftbar";

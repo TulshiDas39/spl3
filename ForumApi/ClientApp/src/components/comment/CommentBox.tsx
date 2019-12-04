@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./styles/commentBox.css";
+import "./styles/commentBox.scss";
 import { ICommentBoxProp } from "./Types";
 
 

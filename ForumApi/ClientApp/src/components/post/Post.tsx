@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { User } from "../answer/subComponents/User";
-import "./post.css";
+import "./post.scss";
 import { IAnswer, IQuestion, IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";

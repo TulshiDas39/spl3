@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./userContainer.css";
+import "./userContainer.scss";
 import { User } from "./User";
 import { IUserContainerProps } from "../Types";
 

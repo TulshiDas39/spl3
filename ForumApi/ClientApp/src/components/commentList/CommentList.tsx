@@ -1,7 +1,7 @@
 import React from "react";
 import { IComment } from "../../utils/Models";
 import { ICommentsProps, ICashedComment } from "./Types";
-import "./comments.css";
+import "./comments.scss";
 import { Comment } from "../comment/Comment";
 import { CommentBox } from "../comment/CommentBox";
 import { Auth0Context } from "../../utils/Contexts";

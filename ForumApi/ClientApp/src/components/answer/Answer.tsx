@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./answer.css";
+import "./answer.scss";
 import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
 import { StatusBar } from "../statusBar/StatusBar";

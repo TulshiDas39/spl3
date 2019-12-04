@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./head.css";
+import "./head.scss";
 import { InputDialog } from "../../popups/InputDialog";
 import { Auth0Context } from "../../../utils/Contexts";
 import { tagService } from "../TagService";

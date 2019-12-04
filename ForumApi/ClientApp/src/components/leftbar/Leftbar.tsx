@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './leftBar.css';
+import './leftBar.scss';
 import { Link } from 'react-router-dom';
 
 export class Leftbar extends Component {

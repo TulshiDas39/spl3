@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./styles/user_info.css";
+import "./styles/user_info.scss";
 
 export class UserInfo extends Component<any, any> {
 

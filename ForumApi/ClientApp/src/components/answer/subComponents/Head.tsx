@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/head.css";
+import "./styles/head.scss";
 import { Link } from "react-router-dom";
 import { IQuestion } from "../../../utils/Models";
 export class Head{

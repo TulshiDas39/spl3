@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Leftbar } from "../leftbar/Leftbar";
-import "./userActivity.css";
+import "./userActivity.scss";
 import { Activity } from "./subComponents/Activity";
 
 interface state{
