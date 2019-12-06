@@ -9,6 +9,8 @@ import { IUser } from '../../utils/Models';
 import { userService } from './UserService';
 import { httpService } from '../../services/HttpService';
 import { API_CALLS } from '../../utils/api_calls';
+import { sideBarSubject } from '../../utils/Contexts';
+import { SideBar } from '../../utils/Enums';
 
 interface state {
     isLoading: boolean;
@@ -19,49 +21,50 @@ export class Users extends Component<any, state> {
     private iteration = 0;
     static displayName = Users.name;
 
-    private users:IUser[] =[];
+    private users: IUser[] = [];
 
     constructor(props: any) {
         super(props);
         this.state = { isLoading: true };
     }
 
-    componentDidMount(){
+    componentDidMount() {
+        sideBarSubject.next(SideBar.USERS);
         this.fetchData();
     }
-    
-    private fetchData(){
-        userService.getUsers(this.iteration).then(data=>{
+
+    private fetchData() {
+        userService.getUsers(this.iteration).then(data => {
             this.users = data;
-            this.setState({isLoading:false});
-        },err=>{
+            this.setState({ isLoading: false });
+        }, err => {
             console.error(err);
         })
     }
 
 
     private eventNext() {
-        if(this.users.length > 0) {
+        if (this.users.length > 0) {
             this.iteration++;
             this.fetchData();
         }
     }
 
     private eventPrev() {
-        if(this.iteration>0){
+        if (this.iteration > 0) {
             this.iteration--;
             this.fetchData();
         }
     }
 
-    private searchUser(event: React.ChangeEvent<HTMLInputElement>){
+    private searchUser(event: React.ChangeEvent<HTMLInputElement>) {
         let searchVal = event.target.value;
-        if(!searchVal) {
+        if (!searchVal) {
             this.fetchData();
             return;
         }
-        
-        httpService.get(API_CALLS.searchUsers+searchVal).then(data=>{
+
+        httpService.get(API_CALLS.searchUsers + searchVal).then(data => {
             this.users = data;
             this.setState(this.state);
         })
@@ -69,18 +72,15 @@ export class Users extends Component<any, state> {
 
     public render(): JSX.Element {
         if (this.state.isLoading) return (
-            <div style={{textAlign:'center',marginTop:'10px'}}>
+            <div style={{ textAlign: 'center', marginTop: '10px' }}>
                 <Loader />
             </div>
         )
         return (
-            <div id={styles.parentDiv}>
-                <Leftbar />
-                <div id={styles.users_right}>
-                    <Head handleSearchUser={this.searchUser.bind(this)}/>
-                    <UserContainer users = {this.users}/>
-                    <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />
-                </div>
+            <div id={styles.users_right}>
+                <Head handleSearchUser={this.searchUser.bind(this)} />
+                <UserContainer users={this.users} />
+                <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />
             </div>
         );
     }

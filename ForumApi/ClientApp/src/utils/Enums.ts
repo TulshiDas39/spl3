@@ -20,8 +20,10 @@ export enum PostStatus{
     UNACCEPTED="unacceptedAnswer"
 }
 
-// export enum VoteStatus{
-//     UPVOTED = true,
-//     DOWNVOTED = false,
-//     NOTVOTED = undefined
-// }
+export enum SideBar{
+    NONE=-1,
+    MAIN_PAGE=0,
+    EQUATION=1,
+    TAGS=2,
+    USERS=3
+}

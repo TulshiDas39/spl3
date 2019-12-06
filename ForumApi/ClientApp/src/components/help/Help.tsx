@@ -1,8 +1,14 @@
 import React from "react";
 import styles from "./help.module.scss";
 import { Button } from "@material-ui/core";
+import { sideBarSubject } from "../../utils/Contexts";
+import { SideBar } from "../../utils/Enums";
 export class Help extends React.Component<any, any>{
 
+    constructor(props:any){
+        super(props);
+        sideBarSubject.next(SideBar.NONE);
+    }
     render() {
         return (
             <div className={styles.container}>

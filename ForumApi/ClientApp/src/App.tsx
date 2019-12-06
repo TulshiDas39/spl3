@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
-import { Layout } from './components/layout/Layout';
+import { Layout } from './components/layouts/Layout';
 import { Home } from './components/home/Home';
 import { Tags } from './components/tags/Tags';
 import { Users } from './components/users/Users';

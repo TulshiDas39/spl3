@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { TagInput } from "../reactTagEditor/TagInput";
 import styles from "./ask.module.scss";
 //import "./question_list.scss";
-import { Auth0Context } from "../../utils/Contexts";
+import { Auth0Context, sideBarSubject } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
 import { IQuestion} from "../../utils/Models";
 import Loading from "../loader/Loading";
 import { Question } from "../question/Question";
 import { askServices } from "./AskServices";
+import { SideBar } from "../../utils/Enums";
 
 interface state {
     currentStep: number;
@@ -35,6 +36,7 @@ export class Ask extends Component<props, state>{
 
     constructor(props: props) {
         super(props);
+        sideBarSubject.next(SideBar.NONE);
         this.state = {
             currentStep: 0,
             loadSimilarities: false
@@ -93,7 +95,7 @@ export class Ask extends Component<props, state>{
 
     public render() {
         return (
-            <div>
+            <div style={{width:'100%'}}>
                 {this.getHead()}
                 <div id={styles.middle}>
                     <span id={styles.image} className="fa fa-question-circle" style={{ display: this.state.currentStep < 2 ? '' : 'none' }}> </span>
