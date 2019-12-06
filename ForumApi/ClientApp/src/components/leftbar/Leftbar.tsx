@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './leftBar.scss';
+import styles from './leftBar.module.scss';
 import { Link } from 'react-router-dom';
 
 export class Leftbar extends Component {
@@ -7,19 +7,19 @@ export class Leftbar extends Component {
 
   render () {
     return (
-        <div id="left">
-            <div className="leftLinkParent">
-                <Link to="/" className="leftBarlink">
+        <div id={styles.left}>
+            <div className={styles.leftLinkParent}>
+                <Link to="/" className={styles.leftBarlink}>
                     <span>মুল পাতা</span>
                 </Link>
-                <Link to = "/" className="leftBarlink">
+                <Link to = "/" className={styles.leftBarlink}>
                     <span className="fa fa-hand-o-up" style={{paddingRight: '5px'}}></span>
                     <span>সমীকরণ</span>
                 </Link>
-                <Link to = "/tags" className="leftBarlink">
+                <Link to = "/tags" className={styles.leftBarlink}>
                     <span style={{paddingLeft: '20px'}}>বিষয় সমুহ</span>
                 </Link>
-                <Link to ="/users" className="leftBarlink">
+                <Link to ="/users" className={styles.leftBarlink}>
                     <span style={{paddingLeft:'20px'}}>ব্যবহারকারী</span>
                 </Link>
 

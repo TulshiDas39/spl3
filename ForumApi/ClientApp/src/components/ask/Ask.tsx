@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TagInput } from "../reactTagEditor/TagInput";
-import "./ask.scss";
+import styles from "./ask.module.scss";
 //import "./question_list.scss";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
@@ -95,8 +95,8 @@ export class Ask extends Component<props, state>{
         return (
             <div>
                 {this.getHead()}
-                <div id="middle">
-                    <span id="image" className="fa fa-question-circle" style={{ display: this.state.currentStep < 2 ? '' : 'none' }}> </span>
+                <div id={styles.middle}>
+                    <span id={styles.image} className="fa fa-question-circle" style={{ display: this.state.currentStep < 2 ? '' : 'none' }}> </span>
                     {this.getSteps()}
                 </div>
             </div>
@@ -105,43 +105,43 @@ export class Ask extends Component<props, state>{
 
     private getSteps() {
         return (
-            <div id="steps">
-                <h1 id="type" className="about_question" style={{ display: this.displayOfSteps[0] }}>আপনার কী ধরনের প্রশ্ন রয়েছে?</h1>
-                <span id="suggest" className="about_question" style={{ display: this.displayOfSteps[0] }}>আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
+            <div id={styles.steps}>
+                <h1 id={styles.type} className={styles.about_question} style={{ display: this.displayOfSteps[0] }}>আপনার কী ধরনের প্রশ্ন রয়েছে?</h1>
+                <span id={styles.suggest} className={styles.about_question} style={{ display: this.displayOfSteps[0] }}>আপনাকে সঠিক উত্তর প্রদান করতে আমরা সর্বোচ্চ চেষ্টা করব</span>
 
                 {this.getQuestionType()}
-                <h1 className="review" style={{ display: this.displayOfSteps[5] }}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
-                <span className="review" style={{ display: this.displayOfSteps[5] }}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
+                <h1 className={styles.review} style={{ display: this.displayOfSteps[5] }}>আপনার প্রশ্নটি পরিদর্শন করে নিন</h1>
+                <span className={styles.review} style={{ display: this.displayOfSteps[5] }}>সবকিছু আরেকবার দেখে নিন, কোন ভুল থাকলে তা এখানে সংসোধন করে নিতে পারেন</span>
 
-                <h1 className="titleDiv" style={{ display: this.displayOfSteps[2] }}>আপনার প্রশ্নের শিরোনাম দিন</h1>
-                <span id="title_tips" className="titleDiv" style={{ display: this.displayOfSteps[2] }}>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
+                <h1 className={styles.titleDiv} style={{ display: this.displayOfSteps[2] }}>আপনার প্রশ্নের শিরোনাম দিন</h1>
+                <span id={styles.title_tips} className={styles.titleDiv} style={{ display: this.displayOfSteps[2] }}>প্রশ্নের শিরোনামের মাধ্যমে প্রশ্নের প্রাথমিক অর্থ প্রকাশ পায়,
                 ফলে উত্তর প্রদান সহজ হয়</span>
-                <h4 id="title_level" className="titleDiv review" style={{ display: this.state.currentStep === 2 ? this.displayOfSteps[2] : this.displayOfSteps[5] }}>শিরোনাম</h4>
-                <input id="title_input" type="text" name="" className="titleDiv review" style={{ display: this.state.currentStep === 2 ? this.displayOfSteps[2] : this.displayOfSteps[5] }} onChange={this.saveQuestionTitle.bind(this)} />
+                <h4 id={styles.title_level} className={styles.titleDiv+" "+ styles.review} style={{ display: this.state.currentStep === 2 ? this.displayOfSteps[2] : this.displayOfSteps[5] }}>শিরোনাম</h4>
+                <input id={styles.title_input} type="text" name="" className={styles.titleDiv+" "+ styles.review} style={{ display: this.state.currentStep === 2 ? this.displayOfSteps[2] : this.displayOfSteps[5] }} onChange={this.saveQuestionTitle.bind(this)} />
 
 
-                <h1 className="ask_tags" style={{ display: this.displayOfSteps[1], marginBottom: 0 }}>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
+                <h1 className={styles.ask_tags} style={{ display: this.displayOfSteps[1], marginBottom: 0 }}>আপনি কোন শ্রেণীর কারিকুলাম, বিষয়, অনুশীলনী বা সমস্যা নিয়ে প্রশ্ন
                 করতে চান?</h1>
-                <span className="ask_tags" style={{ display: this.displayOfSteps[1], marginTop: '20px 0' }} >
+                <span className={styles.ask_tags} style={{ display: this.displayOfSteps[1], marginTop: '20px 0' }} >
                     ট্যাগ এর মাধ্যমে সঠিক ব্যাক্তি আপনার প্রশ্নটি পেয়ে থাকেন এবং উত্তর দিয়ে থাকেন
                 </span>
-                <span style={{ fontWeight: 'bold', display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5], marginTop: '20px' }} className="ask_tags review">ট্যাগ</span>
+                <span style={{ fontWeight: 'bold', display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5], marginTop: '20px' }} className="styles.ask_tags styles.review">ট্যাগ</span>
 
-                <div className="ask_tags review" style={{ display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5] }}>
+                <div className={styles.ask_tags+" "+ styles.review} style={{ display: this.state.currentStep === 1 ? this.displayOfSteps[1] : this.displayOfSteps[5] }}>
                     <TagInput additionHandler={this.handleAddition.bind(this)} deleteHandler={this.handleDelete.bind(this)} />
                 </div>
 
 
-                <div id="similarityDiv" className="similarity_check" style={{ display: this.displayOfSteps[3] }}>
+                <div id={styles.similarityDiv} className={styles.similarity_check} style={{ display: this.displayOfSteps[3] }}>
                     <h1>আপনার প্রশ্নের উত্তর কি এখানে আছে?</h1>
                     <span>এখানে আপনার প্রশ্নের সমতুল্য প্রশ্ন থাকতে পারে</span>
                 </div>
-                <div id="guid" className="description" style={{ display: this.displayOfSteps[4] }}>
+                <div id={styles.guid} className={styles.description} style={{ display: this.displayOfSteps[4] }}>
                     <h1>প্রশ্ন সম্পর্কে বিস্তারিত তথ্য দিন</h1>
                     <span>প্রশ্নের বর্ণনা উত্তর প্রদানে প্রয়োজনীয় তথ্য সর্বরাহ করে থাকে</span>
                 </div>
-                <div className="similar_questions similarity_check" style={{ display: this.displayOfSteps[3] }}>
-                    <div className="head_space">
+                <div className={styles.similar_questions+" "+ styles.similarity_check} style={{ display: this.displayOfSteps[3] }}>
+                    <div className={styles.head_space}>
                         <span style={{ padding: '0 5px' }}>Similar question</span>
                     </div>
 
@@ -151,9 +151,9 @@ export class Ask extends Component<props, state>{
 
                 {this.getGuidDiv()}
 
-                <div id="btnDiv">
-                    <button id="prevBtn" className="btns" style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={() => { this.changeStep(this.state.currentStep - 1) }} >পুর্ববর্তী ধাপ</button>
-                    <button id="nextBtn" className="btns" onClick={() => { this.changeStep(this.state.currentStep + 1) }}>{this.state.currentStep === 5 ? "নিশ্চিত করুন" : "পরবর্তী ধাপ"} </button>
+                <div id={styles.btnDiv}>
+                    <button id={styles.prevBtn} className={styles.btns} style={{ display: this.state.currentStep === 0 ? '' : 'block' }} onClick={() => { this.changeStep(this.state.currentStep - 1) }} >পুর্ববর্তী ধাপ</button>
+                    <button id={styles.nextBtn} className={styles.btns} onClick={() => { this.changeStep(this.state.currentStep + 1) }}>{this.state.currentStep === 5 ? "নিশ্চিত করুন" : "পরবর্তী ধাপ"} </button>
                 </div>
 
             </div>
@@ -222,28 +222,28 @@ export class Ask extends Component<props, state>{
 
     private getQuestionType() {
         return (
-            <fieldset id="type_options" className="about_question" style={{ display: this.displayOfSteps[0] }} onChange={this.handleTypeChange.bind(this)} >
+            <fieldset id={styles.type_options} className={styles.about_question} style={{ display: this.displayOfSteps[0] }} onChange={this.handleTypeChange.bind(this)} >
                 <div>
-                    <input type="radio" name="option" id="first_option" value="type1" />
+                    <input type="radio" name="option" id={styles.first_option} value="type1" />
                     <label >আমার নিজস্য কারিকুলাম সম্পর্কিত সমস্যা সমাধান করতে চাই</label>
                 </div>
                 <div>
-                    <input type="radio" name="option" id="second_option" value="type2" />
+                    <input type="radio" name="option" id={styles.second_option} value="type2" />
                     <label >আমার বাড়ির কাজের সমস্যা সমাধান করতে চাই</label>
                 </div>
 
                 <div>
-                    <input type="radio" name="option" id="third_option" value="type3" />
+                    <input type="radio" name="option" id={styles.third_option} value="type3" />
                     <label >শিক্ষা সম্পর্কিত তথ্য জানতে চাই</label>
                 </div>
                 <div>
-                    <input type="radio" name="option" id="fourth_option" value="type4" />
+                    <input type="radio" name="option" id={styles.fourth_option} value="type4" />
                     <label >শিক্ষা সম্পর্কিত উপদেশ চাই</label>
                 </div>
 
                 <div>
-                    <input type="radio" name="option" id="fifth_option" value="type5" />
-                    <label >অন্যান্য</label>
+                    <input type="radio" name="option" id={styles.fifth_option} value="type5" />
+                    <label>অন্যান্য</label>
                 </div>
             </fieldset>
         );
@@ -253,28 +253,28 @@ export class Ask extends Component<props, state>{
 
     private getGuidDiv() {
         return (
-            <div className="guidDiv description review" style={{ display: this.state.currentStep === 4 ? this.displayOfSteps[4] : this.displayOfSteps[5] }}>
-                <div className="questionPart">
-                    <div className="titleField">
+            <div className={styles.guidDiv+" "+ styles.description+" "+ styles.review} style={{ display: this.state.currentStep === 4 ? this.displayOfSteps[4] : this.displayOfSteps[5] }}>
+                <div className={styles.questionPart}>
+                    <div className={styles.titleField}>
                         <span>১.প্রশ্নের বর্ণনা(আবশ্যক)</span>
                     </div>
-                    <div className="inputField" >
+                    <div className={styles.inputField}>
                         <textarea name="" id="" cols={30} rows={8} onChange={this.saveDescription.bind(this)}></textarea>
                     </div>
                 </div>
-                <div className="questionPart question_image">
-                    <div className="titleField">
+                <div className={styles.questionPart+" "+ styles.question_image}>
+                    <div className={styles.titleField}>
                         <span>২.ছবি(অনাবশ্যক)</span>
                     </div>
                     <div>
 
                     </div>
                 </div>
-                <div className="questionPart expectation">
-                    <div className="titleField">
+                <div className={styles.questionPart+" "+ styles.expectation}>
+                    <div className={styles.titleField}>
                         <span>৩.উপসংহার দিন(আবশ্যক)</span>
                     </div>
-                    <div className="inputField">
+                    <div className={styles.inputField}>
                         <textarea name="" id="" cols={30} rows={8}></textarea>
                     </div>
                 </div>
@@ -293,7 +293,7 @@ export class Ask extends Component<props, state>{
         if (this.state.loadSimilarities) return <Loading />;
         return (
 
-            <div className="similar_question_list">
+            <div className={styles.similar_question_list}>
                 {
                     this.similarQuestions.map((q, index) => <Question key={index + "similarQuestionItem"} data={q} />)
                 }
@@ -305,7 +305,7 @@ export class Ask extends Component<props, state>{
 
     private getHead() {
         return (
-            <div id="stages">
+            <div id={styles.stages}>
                 <span onClick={() => { this.changeStep(0) }} style={this.state.currentStep === 0 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>প্রশ্নের ধরণ</span>
                 <span onClick={() => { this.changeStep(1) }} style={this.state.currentStep === 1 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>ট্যাগ</span>
                 <span onClick={() => { this.changeStep(2) }} style={this.state.currentStep === 2 ? this.getActivedTabStyle() : this.getDeactivatedStyle()}>শিরোনাম</span>

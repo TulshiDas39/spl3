@@ -1,46 +1,36 @@
-.user-comment {
+.user_comment {
     border-bottom: 1px solid #bbc0c4;
     padding: 10px 0 10px 30px;
     display: flex;
 }
 
-.user-comment>.user-comment-vote {
+.user_comment>.user_comment_vote {
     display: flex;
     flex-direction: column;
     padding-right: 5px;
 }
 
-.vote-icon:hover {
+.vote_icon:hover {
     color: rgb(121, 71, 238);
     cursor: pointer;
 }
 
-.make-comment {
-    padding: 10px;
-    color: #1a0be4;
-}
-
-.make-comment:hover {
-    cursor: pointer;
-}
-
-
-.user-comment-edit {
+.user_comment_edit {
     margin-left: auto;
     color: #848d95;
 }
 
-.user-comment-edit:hover {
+.user_comment_edit:hover {
     cursor: pointer;
     color: #3b4045;
 }
 
-.user-comment-delete {
+.user_comment_delete {
     margin-left: 8px;
     color: #848d95;
 }
 
-.user-comment-delete:hover {
+.user_comment_delete:hover {
     cursor: pointer;
     color: #3b4045;
 }
@@ -54,7 +44,7 @@
 .commentOptions{
     margin-top: 5px;
 }
-.comment-reaction{
+.comment_reaction{
     padding: 0 5px;
 }
 

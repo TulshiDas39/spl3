@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { User } from "../answer/subComponents/User";
-import "./post.scss";
+import styles from "./post.module.scss";
 import { IAnswer, IQuestion, IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
@@ -94,14 +94,14 @@ export class Post extends Component<PostProps, state>{
     public render() {
         if (this.state.isLoading) return <Loader />;
         return (
-            <div id="postDiv">
-                <div className="voteAndAccept">
+            <div id={styles.postDiv}>
+                <div className={styles.voteAndAccept}>
                     <Vote {...this.voteInfo} />
                     {this.getAcceptIcon()}
                 </div>
 
-                <div id="question_description">
-                    <span className="question_description_text" dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
+                <div id={styles.question_description}>
+                    <span className={styles.question_description_text} dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {this.getEdit_DeleteOptions()}
 
                     <User {...this.userProps} />
@@ -138,7 +138,7 @@ export class Post extends Component<PostProps, state>{
     }
 
     private showEnabledAcceptedIcon(color: string) {
-        return (<div className="enableabledIcon" onClick={this.toogleAcceptanceStatus.bind(this)} style={{ padding: '5px' }}>
+        return (<div className={styles.enableabledIcon} onClick={this.toogleAcceptanceStatus.bind(this)} style={{ padding: '5px' }}>
             <DoneOutlineIcon color={color as any} />
         </div>);
     }
@@ -151,10 +151,10 @@ export class Post extends Component<PostProps, state>{
 
     private getEdit_DeleteOptions() {
         if (this.isEditable()) {
-            return (<div className="edit_delete_options">
-                <span className="edit_option" onClick={this.props.onEdit}>সম্পাদন করুন </span>
+            return (<div className={styles.edit_delete_options}>
+                <span className={styles.edit_option} onClick={this.props.onEdit}>সম্পাদন করুন </span>
                 <ConfirmationDialog title="Do you want to delete" onConfirm={this.props.onDelete} onClose={() => { console.log("closed") }}>
-                    <span className="delete_option">মুছুন</span>
+                    <span className={styles.delete_option}>মুছুন</span>
                 </ConfirmationDialog>
 
             </div>

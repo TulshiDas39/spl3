@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ICommentProps } from "./Types";
 import { CommentBox } from "./CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
-import "./styles/comment.scss";
+import styles from "./styles/comment.module.scss";
 import { IComment, IUser } from "../../utils/Models";
 import { IAuth0Context } from "../../utils/Structures";
 import { commentService } from "./CommentService";
@@ -100,21 +100,21 @@ export class Comment extends Component<ICommentProps, state>{
         if (this.voteStatus === false) downVoteBtnColor = 'blue';
 
         return (
-            <span key={this.props.data.id} className="user-comment">
+            <span key={this.props.data.id} className={styles.user_comment}>
                 {this.getRatings()}
-                <span className="user-comment-vote">
-                    <span className="useful-comment">
-                        <span className="vote-count"></span>
-                        <span className="fa fa-sort-asc vote-icon" style={{ color: upVoteBtnColor }} title="উপকারী কমেন্ট" onClick={() => this.giveRate(VoteStatus.UPVOTED)}></span>
+                <span className={styles.user_comment_vote}>
+                    <span className={styles.useful_comment}>
+                        <span className={styles.vote_count}></span>
+                        <span className={"fa fa-sort-asc "+ styles.vote_icon} style={{ color: upVoteBtnColor }} title="উপকারী কমেন্ট" onClick={() => this.giveRate(VoteStatus.UPVOTED)}></span>
                     </span>
-                    <span className="flaged-comment">
-                        <span className="vote-count"></span>
-                        <span className="fa fa-fire vote-icon" title="সমস্যামুলক" style={{ color: downVoteBtnColor }} onClick={() => this.giveRate(VoteStatus.DOWNVOTED)}></span>
+                    <span className={styles.flaged_comment}>
+                        <span className={styles.vote_count}></span>
+                        <span className={"fa fa-fire "+styles.vote_icon} title="সমস্যামুলক" style={{ color: downVoteBtnColor }} onClick={() => this.giveRate(VoteStatus.DOWNVOTED)}></span>
                     </span>
 
                 </span>
-                <span className="commentDiv">
-                    <span className="user-comment-text">{this.props.data.text}</span>
+                <span className={styles.commentDiv}>
+                    <span className={styles.user_comment_text}>{this.props.data.text}</span>
                     {
                         this.getCommentFooter()
                     }
@@ -125,13 +125,13 @@ export class Comment extends Component<ICommentProps, state>{
     }
 
     private getRatings() {
-        if (this.ratings !== 0) return <span className="comment-reaction">{utilityService.convertToBengaliText(this.ratings)}</span>;
+        if (this.ratings !== 0) return <span className={styles.comment_reaction}>{utilityService.convertToBengaliText(this.ratings)}</span>;
     }
 
     private getCommentFooter() {
-        return (<span className="commentFooter">
+        return (<span className={styles.commentFooter}>
             {this.getCommentActions()}
-            <Link to="" style={{ textDecoration: 'none' ,marginLeft:'auto'}}>{"- "+this.userOfComment.name}</Link>
+            <Link to={"/profile/"+this.userOfComment.id} style={{ textDecoration: 'none' ,marginLeft:'auto'}}>{"- "+this.userOfComment.name}</Link>
         </span>);
     }
 
@@ -139,9 +139,9 @@ export class Comment extends Component<ICommentProps, state>{
         let context = this.context as IAuth0Context;
         if (context.isAuthenticated) {
             if (context.user.sub === this.props.data.userId) return (
-                <span className="commentOptions">
-                    <span className="user-comment-edit" onClick={() => this.editComment()}>সম্পাদন</span>
-                    <span className="user-comment-delete" onClick={this.props.onDelete}>মুছুন</span>
+                <span className={styles.commentOptions}>
+                    <span className={styles.user_comment_edit} onClick={() => this.editComment()}>সম্পাদন</span>
+                    <span className={styles.user_comment_delete} onClick={this.props.onDelete}>মুছুন</span>
                 </span>
             )
         }

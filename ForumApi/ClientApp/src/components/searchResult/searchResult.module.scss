@@ -1,4 +1,4 @@
-.main-questions-text{
+.main_questions_text{
     font-size: 2em; 
     margin-left: 2rem;
 }
@@ -76,25 +76,25 @@
     cursor: pointer;
 }
 
-.see-all-question{
+.see_all_question{
     margin-top: 50px;
     margin-left: 20px;
 }
 
-.go-unaswered{
+.go_unaswered{
     text-decoration: none; 
     color:rgb(62, 62, 236);
 }
-.go-unaswered:hover{
+.go_unaswered:hover{
     color:rgb(109, 109, 243);
 }
 
-.go-allquestion{
+.go_allquestion{
     text-decoration: none;
     color:green;
 }
 
-.go-allquestion:hover{
+.go_allquestion:hover{
     color:rgb(130, 228, 130);
 }
 

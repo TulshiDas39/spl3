@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Pagination } from "../../../pagination/Pagination";
-import "./right.scss";
+import styles from "./right.module.scss";
 import { StatusBar } from "../../../statusBar/StatusBar";
 import { Link } from "react-router-dom";
 import { Loader } from "../../../loader/loader";
@@ -21,7 +21,6 @@ export class Right extends Component<any, state>{
     private questionList: IQuestion[] = [];
     static contextType = Auth0Context;
     private tab = HomePageTab.RECOMMENDED;
-    //private search?: string;
 
     constructor(props: any) {
         super(props);
@@ -140,22 +139,22 @@ export class Right extends Component<any, state>{
         }
 
         return (
-            <div id="right">
-                <div id="questionDiv">
-                    <div id="question_heading">
-                        <div className="main-questions-text">
+            <div id={styles.right}>
+                <div id={styles.questionDiv}>
+                    <div id={styles.question_heading}>
+                        <div className={styles.main_questions_text}>
                             প্রধান প্রশ্নসমূহ
                         </div>
-                        <Link to="/ask" id="ask">
+                        <Link to="/ask" id={styles.ask}>
                             প্রশ্ন করুন
                         </Link>
 
                     </div>
                     {this.getTabs()}
-                    <div className="questionList">
+                    <div className={styles.questionList}>
                         {
                             this.questionList.length === 0 ? <p>No recommended questions found</p> :
-                                this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
+                                this.questionList.map((q) => <Question key={q.id + "questionItem"} data={q} />)
                         }
                     </div>
 
@@ -177,7 +176,7 @@ export class Right extends Component<any, state>{
 
     private getTabs() {
         return (
-            <div className="question_filter">
+            <div className={styles.question_filter}>
                 <div style={{ background: this.tab === HomePageTab.RECOMMENDED ? colors.tagBackground : '' }}
                     onClick={() => this.showRecommendedQuestions()}>উপযোগী</div>
                 <div style={{ background: this.tab === HomePageTab.UNANSWERED ? colors.tagBackground : '' }}

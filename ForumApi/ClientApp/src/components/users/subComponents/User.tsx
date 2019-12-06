@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./user.scss";
+import styles from "./user.module.scss";
 import { IUserProps } from "../Types";
 import { utilityService } from "../../../services/UtilityService";
 import { Link } from "react-router-dom";
@@ -34,14 +34,14 @@ export class User extends Component<IUserProps, any>{
         console.log('userInfo:');
         console.log(this.props.data);
         return (
-            <div className="user">
-                <div className="user-img">
+            <div className={styles.user}>
+                <div className={styles.user_img}>
                     <img src={this.props.data.image} alt="" />
                 </div>
-                <div className="user-info">
-                    <Link to={"/profile/"+this.props.data.id} title={this.props.data.name} className="user-info-name">{this.compressUserName(this.props.data.name)}</Link>
-                    <span title="reputation" className="user-info-rating">{this.props.data.reputation}</span>
-                    <span className="user-info-tags">{this.getTagStr(this.props.data.tags)}</span>
+                <div className={styles.user_info}>
+                    <Link to={"/profile/"+this.props.data.id} title={this.props.data.name} className={styles.user_info_name}>{this.compressUserName(this.props.data.name)}</Link>
+                    <span title="reputation" className={styles.user_info_rating}>{this.props.data.reputation}</span>
+                    <span className={styles.user_info_tags}>{this.getTagStr(this.props.data.tags)}</span>
                 </div>
             </div>
         );

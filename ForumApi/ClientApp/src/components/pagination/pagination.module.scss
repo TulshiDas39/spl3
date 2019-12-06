@@ -5,11 +5,11 @@
     align-items: center;
 }
 
-.pagination> .pagination-btn:first-child{
+.pagination> .pagination_btn:first-child{
     margin-left: auto;
 }
 
-.pagination > .pagination-btn{
+.pagination > .pagination_btn{
     border: 1px solid #bbc0c4;
     border-radius: 3px;
     padding: 4px 9px;
@@ -17,7 +17,7 @@
     font-size: 13px;
 }
 
-.pagination > .pagination-btn:hover{
+.pagination > .pagination_btn:hover{
     background: brown;
     cursor: pointer;
 }

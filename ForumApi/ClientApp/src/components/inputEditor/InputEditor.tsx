@@ -35,7 +35,7 @@ export class InputEditor extends Component<editorProps, state>{
 
     public render() {
         return (
-            <div className="Input_editor_pane" ref={this.inputEditor}>
+            <div className="styles.Input_editor_pane" ref={this.inputEditor}>
                 <div className="answer_editor">
                     <div className="answer_editor_topbar">
                         <span id="boldBtn" className="answer_editor_topbar_bold fa fa-bold boldBtn" title="bold text">

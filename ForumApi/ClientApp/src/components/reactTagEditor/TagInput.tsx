@@ -34,12 +34,8 @@ export class TagInput extends React.Component<ITagInputProps, state>{
   private handleDrag(tag: tag, currPos: number, newPos: number) {
     const tags = [...this.inputState.tags];
 
-    // mutate array
     tags.splice(currPos, 1);
     tags.splice(newPos, 0, tag);
-
-    // re-render
-    // this.setState({ tags });
   }
 
   private isExistTag(tagText:string){
@@ -80,7 +76,7 @@ export class TagInput extends React.Component<ITagInputProps, state>{
 
   render() {
     return (
-      <div id="app">
+      <div style={{padding:'10px'}}>
         <ReactTags
           {...this.inputState}
           handleDelete={this.handleDelete.bind(this)}
@@ -93,10 +89,6 @@ export class TagInput extends React.Component<ITagInputProps, state>{
     );
   }
 
-  // public build(additionHandler:(tag:string)=>any, deleteHandler:(i:number)=>any, tagState:state) {
-  //   const { tags, suggestions } = tagState;
-
-  // }
 }
 
 //render(<App />, document.getElementById('root'));

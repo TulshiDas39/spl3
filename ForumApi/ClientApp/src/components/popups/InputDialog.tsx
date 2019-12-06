@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import {InputDialogProps } from "./Types";
-import "./popup.scss";
+import styles from "./popup.module.scss";
 
 export class InputDialog extends Component<InputDialogProps, any>{
 
@@ -15,18 +15,18 @@ export class InputDialog extends Component<InputDialogProps, any>{
         return (
             <Popup trigger={this.props.children} modal >
                 {close => (
-                    <div className="modal">
-                        <span className="close" onClick={close} >&times;</span>
-                        <div className="header"> {this.props.title} </div>
-                        <input className="inputBoxPopup" type="text" onChange={this.onInput.bind(this)} />
-                        <div className="actions">
-                            <button className="button" onClick={() => {
+                    <div className={styles.modal}>
+                        <span className={styles.close} onClick={close} >&times;</span>
+                        <div className={styles.header}> {this.props.title} </div>
+                        <input className={styles.inputBoxPopup} type="text" onChange={this.onInput.bind(this)} />
+                        <div className={styles.actions}>
+                            <button className={styles.button} onClick={() => {
                                 close();
                                 this.props.onInput(this.inputValue);
                             }} >Confirm
                                 </button>
                             <button
-                                className="button"
+                                className={styles.button}
                                 onClick={() => {
                                     console.log("modal closed ");
                                     close();

@@ -7,10 +7,10 @@ import { Question } from "../question/Question";
 import { IQuestion } from "../../utils/Models";
 import { searchResultService } from "./SearchResutlService";
 import { Loader } from "../loader/loader";
-import "./searchResult.scss";
+import styles from "./searchResult.module.scss";
 
-interface state{
-    isLoading:boolean;
+interface state {
+    isLoading: boolean;
 }
 
 export class SearchResult extends Component<ISearchResult, state> {
@@ -19,7 +19,7 @@ export class SearchResult extends Component<ISearchResult, state> {
 
     constructor(props: ISearchResult) {
         super(props);
-        this.state = {isLoading:true}
+        this.state = { isLoading: true }
         console.log('serach value');
     }
 
@@ -27,8 +27,8 @@ export class SearchResult extends Component<ISearchResult, state> {
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps:ISearchResult){
-        if(prevProps !== this.props) this.fetchData();
+    componentDidUpdate(prevProps: ISearchResult) {
+        if (prevProps !== this.props) this.fetchData();
     }
 
     private fetchData() {
@@ -43,24 +43,24 @@ export class SearchResult extends Component<ISearchResult, state> {
     }
 
     public render(): JSX.Element {
-        if(this.state.isLoading) return <Loader/>
+        if (this.state.isLoading) return <Loader />
         return (
-            <div id="parentDiv">
+            <div id={styles.parentDiv}>
                 <Leftbar />
-                <div id="right">
-                    <div id="questionDiv">
-                        <div id="question_heading">
-                            <div className="main-questions-text">
+                <div id={styles.right}>
+                    <div id={styles.questionDiv}>
+                        <div id={styles.question_heading}>
+                            <div className={styles.main_questions_text}>
                                 প্রত্যাশিত প্রশ্নসমুহ
                         </div>
-                            <Link to="/ask" id="ask">
+                            <Link to="/ask" id={styles.ask}>
                                 প্রশ্ন করুন
-                        </Link>
+                            </Link>
                         </div>
-                        <div className="questionList">
+                        <div className={styles.questionList}>
                             {
                                 this.questionList.length === 0 ? <p>No recommended questions found</p> :
-                                    this.questionList.map((q, index) => <Question key={index + "questionItem"} data={q} />)
+                                    this.questionList.map((q) => <Question key={q.id + "questionItem"} data={q} />)
                             }
                         </div>
 

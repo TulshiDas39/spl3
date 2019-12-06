@@ -6,29 +6,29 @@
     flex-wrap: wrap;
 }
 
-#filter-search{
+#filter_search{
     width: 200px;
 }
 
-#filter-search > form{
+#filter_search > .searchFilterDiv{
     height: 100%;
     position: relative;
     display: flex;
     align-items: center;
 }
 
-#filter-search > form > input{
+#filter_search > .searchFilterDiv > input{
     padding: 10px 0 10px 30px;
     border: 1px solid #bbc0c4;
     border-radius: 4px;
 }
 
-#filter-search > form > input:focus{
+#filter_search > .searchFilterDiv > input:focus{
     border-color: #66bfff;
     box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
 }
 
-#filter-search > form > span{
+#filter_search > .searchFilterDiv > span{
     position: absolute;
     color: #bbc0c4;
     left: 10px;

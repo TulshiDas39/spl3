@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import { ConfirmationDialogProps } from "./Types";
-import "./popup.scss";
+import styles from "./popup.module.scss";
 
 export class ConfirmationDialog extends Component<ConfirmationDialogProps, any>{
 
@@ -9,18 +9,18 @@ export class ConfirmationDialog extends Component<ConfirmationDialogProps, any>{
         return (
             <Popup trigger={this.props.children} modal >
                 {close => (
-                    <div className="modal">
-                        <span className="close" onClick={close}>&times;</span>
-                        <div className="header"> {this.props.title} </div>
+                    <div className={styles.modal}>
+                        <span className={styles.close} onClick={close}>&times;</span>
+                        <div className={styles.header}> {this.props.title} </div>
 
-                        <div className="actions">
-                            <button className="button" onClick={() => {
+                        <div className={styles.actions}>
+                            <button className={styles.button} onClick={() => {
                                 close();
                                 this.props.onConfirm();
                             }} >Confirm
                                 </button>
                             <button
-                                className="button"
+                                className={styles.button}
                                 onClick={() => {
                                     console.log("modal closed ");
                                     close();

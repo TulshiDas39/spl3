@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./styles/discussion.scss";
+import styles from "./styles/discussion.module.scss";
 import { Post } from "../../post/Post";
 import { InputEditor } from "../../inputEditor/InputEditor";
 import { IAnswer } from "../../../utils/Models";
@@ -195,11 +195,11 @@ export class Discussion extends Component<IDiscussionProps, state>{
     public render() {
         if (this.state.isLoading) return <Loader />;
         return (
-            <div id="discussion_flow">
+            <div id={styles.discussion_flow}>
                 <Post type={PostType.QUESTION} data={this.props.questionData} onEdit={this.editQuestion.bind(this)} onDelete={this.deleteQuestion.bind(this)} />
                 <h1 style={{ marginBottom: '2px' }}>উত্তর {utilityService.convertToBengaliText(this.answerData.length)} টি</h1>
                 <hr style={{ height: '0.05px', width: '100%', color: 'rgb(248, 247, 246)' }} />
-                <div className="answers">
+                <div className={styles.answers}>
                     {
                         this.answerData.map((item, index) => <Post key={index} questionData={this.props.questionData} onAccept={this.toogleAcceptanceStatus.bind(this)} type={PostType.ANSWER} data={item} onEdit={this.editAnswer.bind(this)} onDelete={this.deleteAnswer.bind(this)} />)
                     }

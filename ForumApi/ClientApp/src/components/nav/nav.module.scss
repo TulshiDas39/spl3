@@ -10,14 +10,14 @@
     border-top: 3px solid #F48024;
 }
 
-#list-sm{
+#list_sm{
     height: 100%;
     flex-basis: 3rem;
     display: none;
     align-items: center;
     justify-content: center;
 }
-#list-sm:hover{
+#list_sm:hover{
     cursor: pointer;
 }
 
@@ -189,7 +189,7 @@
     text-decoration: none;
 }
 
-#search-sm{
+#search_sm{
     margin-left: auto;
     padding: 0px 0.5em;
     height: 100%;
@@ -198,29 +198,29 @@
 }
 
 
-#search-sm span{
+#search_sm span{
     align-self: center;
     justify-self: center;
     font-size: 1.3rem;
     color: #bbc0c4;
 }
 
-#search-sm:hover{
+#search_sm:hover{
     background: #eff0f1;
     cursor: pointer;
 }
 
-.platinum-badge-icon{
+.platinum_badge_icon{
     font-size: 0.7em !important;
     color:paleturquoise;
 }
 
-.gold-badge-icon{
+.gold_badge_icon{
     font-size: 0.7em !important;
     color:gold;
 }
 
-.silver-badge-icon{
+.silver_badge_icon{
     font-size: 0.7em !important;
     color:silver;
 }
@@ -235,7 +235,7 @@
 }
 
 @media (max-width:790px){
-    #search-sm{
+    #search_sm{
         display: flex;
     }
     #search{
@@ -259,7 +259,7 @@
         flex-basis: 3rem;
     }
 
-    #list-sm{
+    #list_sm{
         display: flex;
     }
 }

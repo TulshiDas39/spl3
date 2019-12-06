@@ -1,7 +1,7 @@
 import React from "react";
 import { IComment } from "../../utils/Models";
 import { ICommentsProps, ICashedComment } from "./Types";
-import "./comments.scss";
+import styles from "./commentList.module.scss";
 import { Comment } from "../comment/Comment";
 import { CommentBox } from "../comment/CommentBox";
 import { Auth0Context } from "../../utils/Contexts";
@@ -115,10 +115,10 @@ export class CommentList extends React.Component<ICommentsProps, state>{
     render() {
         if (this.state.isLoading) return <span></span>;
         return (
-            <div className="comments">
+            <div className={styles.comments}>
                 {this.comments.map((item, index) => <Comment key={"commentItem_" + item.id} data={item} onDelete={() => this.deleteComment(index)} />)}
                 {this.isCommenting ? <CommentBox onCancell={this.cancellComment.bind(this)} onSave={this.saveComment.bind(this)} text="" /> :
-                    <span className="make-comment" onClick={this.comment.bind(this)}>মন্তব্য করুন</span>}
+                    <span className={styles.make_comment} onClick={this.comment.bind(this)}>মন্তব্য করুন</span>}
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./nav.scss";
+import styles from "./nav.module.scss";
 import { Link, withRouter} from "react-router-dom";
 import { IAuth0Context } from "../../utils/Structures";
 import { INavProps } from "./Types";
@@ -27,8 +27,6 @@ class Nav extends Component<INavProps, state> {
     }
 
     toogle() {
-        console.log('in toogle');
-        console.log();
         if (this.searchSmPoped) {
             this.setState({
                 searchSM: {}
@@ -72,32 +70,32 @@ class Nav extends Component<INavProps, state> {
 
     render() {
         return (
-            <div id="nav">
-                <div id="list-sm">
+            <div id={styles.nav}>
+                <div id={styles.list_sm}>
                     <span className="fa fa-list-ul"></span>
                 </div>
-                <div id="logo">
+                <div id={styles.logo}>
 
                     <Link to="/">
                         <span className="fa fa-hand-o-up" style={{ color: 'teal' }}></span>
                         <span>সমীকরণ</span>
                     </Link>
                 </div>
-                <div id="search" className="search" style={this.state.searchSM} >
-                    <div className="searchBoxContainer">
+                <div id={styles.search} className={styles.search} style={this.state.searchSM} >
+                    <div className={styles.searchBoxContainer}>
                         <span className="fa fa-search"></span>
-                        <input id="searchBox" type="text" placeholder="খুজুন..." onChange={this.onSearchValueChange.bind(this)} onKeyPress={this.search.bind(this)} />
+                        <input id={styles.searchBox} type="text" placeholder="খুজুন..." onChange={this.onSearchValueChange.bind(this)} onKeyPress={this.search.bind(this)} />
                     </div>
                 </div>
-                <div id="search-sm" onClick={this.toogle}>
-                    <span id="search-sm-icon" className="fa fa-search"></span>
+                <div id={styles.search_sm} onClick={this.toogle}>
+                    <span id={styles.search_sm_icon} className="fa fa-search"></span>
                 </div>
                 {this.contextValues.isAuthenticated ? this.getUser() : this.getLogin()}
-                <div id="nofic">
+                <div id={styles.nofic}>
                     <span className="fa fa-globe"></span>
                 </div>
 
-                <div id="help">
+                <div id={styles.help}>
                     <Link to="/help" className="fa fa-question-circle"></Link>
                 </div>
             </div>
@@ -106,7 +104,7 @@ class Nav extends Component<INavProps, state> {
 
     private getLogin() {
         return (
-            <button id="idNavLogin" onClick={async () => await this.contextValues.loginWithRedirect({
+            <button id={styles.idNavLogin} onClick={async () => await this.contextValues.loginWithRedirect({
                 appState: { targetUrl: window.location.pathname }
             })}>লগইন</button>
         );
@@ -114,11 +112,11 @@ class Nav extends Component<INavProps, state> {
 
     private getUser() {
         return (
-            [<Link to={"/profile/"+this.contextValues.userInfo.id} key="userIcon123" href="#" id="user">
+            [<Link to={"/profile/"+this.contextValues.userInfo.id} key="userIcon123" href="#" id={styles.user}>
                 <img src= {this.contextValues.user.picture} alt="" />
                 <span style={{fontSize:'0.6em'}} className="fa fa-certificate"></span>
-                <span id="reputation"> {this.getReputations()} </span>
-            </Link>, <button key="logoutBtn123" id="logoutBtn" onClick={() => this.contextValues.logout({ returnTo: window.location.origin })}>লগআউট</button>]
+                <span id={styles.reputation}> {this.getReputations()} </span>
+            </Link>, <button key="logoutBtn123" id={styles.logoutBtn} onClick={() => this.contextValues.logout({ returnTo: window.location.origin })}>লগআউট</button>]
         )
     }
 }

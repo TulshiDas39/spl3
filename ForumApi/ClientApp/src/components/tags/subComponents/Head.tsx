@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./head.scss";
+import styles from "./head.module.scss";
 import { InputDialog } from "../../popups/InputDialog";
 import { Auth0Context } from "../../../utils/Contexts";
 import { tagService } from "../TagService";
@@ -26,15 +26,15 @@ export class Head extends Component<ITagListHeadProps, any>{
 
     public render() {
         return (
-            <div id="headArea">
+            <div id={styles.headArea}>
                 <h1>বিষয়সমুহ</h1>
                 <p>বিষয় সমুহ এখানে উল্লেখ করা হল</p>
-                <div id="tagFilterContainer">
-                    <div id="filter-search">
-                        <form action="/search">
+                <div id={styles.tagFilterContainer}>
+                    <div id={styles.filter_search}>
+                        <div className={styles.searchFilterDiv}>
                             <span className="fa fa-search"></span>
                             <input type="text" placeholder="খুজুন..." onChange={this.props.onSearch}/>
-                        </form>
+                        </div>
                     </div>
                     {this.getNewTagBtn()}
                 </div>
@@ -46,7 +46,7 @@ export class Head extends Component<ITagListHeadProps, any>{
     private getNewTagBtn() {
         if (this.context.isAuthenticated) return (
             <InputDialog title="Enter new Tag name" onInput={this.postNewTag.bind(this)}>
-                <button className="newTagBtn">নতুন ট্যাগ</button>
+                <button className={styles.newTagBtn}>নতুন ট্যাগ</button>
             </InputDialog>
         )
     }

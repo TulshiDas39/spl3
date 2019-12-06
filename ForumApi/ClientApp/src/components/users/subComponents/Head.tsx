@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./head.scss";
+import styles from "./head.module.scss";
 import { TagInput } from "../../reactTagEditor/TagInput";
 import { COUNTRIES } from "../../reactTagEditor/countries";
 import { IUserHead } from "../Types";
@@ -26,14 +26,14 @@ export class Head extends Component<IUserHead, state>{
 
     public render() {
         return (
-            <div id="headArea">
+            <div id={styles.headArea}>
                 <h1>ব্যবহারকারী</h1>
                 <p>ব্যবহারকারী এখানে উল্লেখ করা হল</p>
 
-                <div className="searchAndFilters">
+                <div className={styles.searchAndFilters}>
 
-                    <div className="filter-search filter-item">
-                        <div className="searchDiv">
+                    <div className={styles.filter_search+" "+ styles.filter_item}>
+                        <div className={styles.searchDiv}>
                             <span className="fa fa-search"></span>
                             <input type="text" placeholder="নাম..." onChange={this.props.handleSearchUser} />
                         </div>

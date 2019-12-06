@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./styles/user.scss";
+import styles from "./styles/user.module.scss";
 import { IUserProps } from "../Types";
 import { utilityService } from "../../../services/UtilityService";
 import { Link } from "react-router-dom";
@@ -27,13 +27,13 @@ export class User extends Component<IUserProps, state>{
 
     public render() {
         return (
-            <div id="user_of_question" className="user_of_discuss">
-                <span className="questionTime">{this.getDurationString()}</span>
+            <div id={styles.user_of_question} className={styles.user_of_discuss}>
+                <span className={styles.questionTime}>{this.getDurationString()}</span>
                 <div>
                     <img src={this.props.user.image} alt="" />
                     <div>
-                        <Link to={"/profile/"+this.props.user.id} className="userName" >{this.props.user.name}</Link>
-                        <div className="rating_of_user_of_discuss">
+                        <Link to={"/profile/"+this.props.user.id} className={styles.userName}>{this.props.user.name}</Link>
+                        <div className={styles.rating_of_user_of_discuss}>
                             <span className="fa fa-certificate"></span>
                             <span>{" " + this.props.user.reputation}</span>
                         </div>

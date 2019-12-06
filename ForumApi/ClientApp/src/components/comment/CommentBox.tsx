@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./styles/commentBox.scss";
+import styles from "./styles/commentBox.module.scss";
 import { ICommentBoxProp } from "./Types";
 
 
@@ -22,11 +22,11 @@ export class CommentBox extends Component<ICommentBoxProp, any>{
 
     render() {
         return (
-            <div className="commentBox">
+            <div className={styles.commentBox}>
                 <input type="text" defaultValue={this.initialValue} onChange={e => this.onChange(e.target.value)} />
-                <span className="commentActions">
-                    <span className="commentActionItem" onClick={() => this.props.onSave(this.value)}>নিশ্চিত করুন</span>
-                    <span className="commentActionItem cancellComment" onClick={this.props.onCancell}>বাতিল</span>
+                <span className={styles.commentActions}>
+                    <span className={styles.commentActionItem} onClick={() => this.props.onSave(this.value)}>নিশ্চিত করুন</span>
+                    <span className={styles.commentActionItem+" "+ styles.cancellComment} onClick={this.props.onCancell}>বাতিল</span>
                 </span>
 
             </div>

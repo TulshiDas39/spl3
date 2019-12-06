@@ -3,7 +3,7 @@ import { Leftbar } from "../leftbar/Leftbar";
 import { Head } from "./subComponents/Head";
 import { TagContainer } from "./subComponents/TagContainer";
 import { Pagination } from "../pagination/Pagination";
-import "./tags.scss";
+import styles from "./tags.module.scss";
 import { IUser } from "../../utils/Models";
 import { ITagInfo } from "../../utils/Structures";
 import { tagService } from "./TagService";
@@ -73,9 +73,9 @@ export class Tags extends Component<any, state>{
     public render() {
         if(this.state.isLoading) return <Loader />;
         return (
-            <div id="tags-parentDiv">
+            <div id={styles.tags_parentDiv}>
                 <Leftbar />
-                <div id="tags-right">
+                <div id={styles.tags_right}>
                     <Head onNewTagCreated={this.insertNewTag.bind(this)} onSearch={this.searchTags.bind(this)}/>
                     <TagContainer tagsInfo={this.tagInofList} userInfo={this.userInfo} onUpdate={this.fetchData.bind(this)}/>
                     <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />

@@ -3,7 +3,7 @@ import { Pagination } from '../pagination/Pagination';
 import { Leftbar } from '../leftbar/Leftbar';
 import { Head } from './subComponents/Head';
 import { UserContainer } from './subComponents/UserContainer';
-import "./users.scss";
+import styles from "./users.module.scss";
 import { Loader } from '../loader/loader';
 import { IUser } from '../../utils/Models';
 import { userService } from './UserService';
@@ -74,9 +74,9 @@ export class Users extends Component<any, state> {
             </div>
         )
         return (
-            <div id="parentDiv">
+            <div id={styles.parentDiv}>
                 <Leftbar />
-                <div id="users-right">
+                <div id={styles.users_right}>
                     <Head handleSearchUser={this.searchUser.bind(this)}/>
                     <UserContainer users = {this.users}/>
                     <Pagination eventNext={this.eventNext.bind(this)} eventPrev={this.eventPrev.bind(this)} />

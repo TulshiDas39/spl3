@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./answer.scss";
+import styles from "./answer.module.scss";
 import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
 import { StatusBar } from "../statusBar/StatusBar";
@@ -46,11 +46,11 @@ export class Answer extends Component<AnswerProps, AnswerState>{
         if (this.state.isloading) return (<p>loading...</p>);
 
         return (
-            <div id="parentDiv">
+            <div id={styles.parentDiv}>
                 <Leftbar />
-                <div id="mainDiv">
+                <div id={styles.mainDiv}>
                     {new Head(this.questionData).getHead()}
-                    <div id="middle_Div">
+                    <div id={styles.middle_Div}>
                         <Discussion onDeleteQuestion={this.onDeleteQuestion.bind(this)} questionData={this.questionData} />
                         <StatusBar />
                     </div>

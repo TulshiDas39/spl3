@@ -11,32 +11,32 @@
     cursor: pointer;
 }
 
-.user > .user-img > img{
+.user > .user_img > img{
     width: 45px;
     height: 45px;
 }
 
-.user > .user-info{
+.user > .user_info{
     display: flex;
     flex-direction: column;
     margin-left: 5px;
 }
 
-.user > .user-info > .user-info-name{
+.user > .user_info > .user_info_name{
     color: black;
     text-decoration: none;
 }
 
-.user > .user-info > .user-info-place {
+.user > .user_info > .user_info_place {
     font-size: 12px;
 }
 
-.user > .user-info > .user-info-rating{
+.user > .user_info > .user_info_rating{
     font-size: 12px;
     color: #3b4045;
 }
 
-.user > .user-info > .user-info-tags{
+.user > .user_info > .user_info_tags{
     color: #929597;
     font-size: 13px;
 }

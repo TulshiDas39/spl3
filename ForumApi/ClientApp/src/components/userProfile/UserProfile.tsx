@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router";
 import { IUser } from "../../utils/Models";
 import { userProfileService } from "./userProfileService";
 import { Loader } from "../loader/loader";
-import "./styles/user_profile.scss";
+import styles from "./styles/user_profile.module.scss";
 import { utilityService } from "../../services/UtilityService";
 import { UserTab } from "./Types";
 import { Leftbar } from "../leftbar/Leftbar";
@@ -38,7 +38,6 @@ export class UserProfile extends Component<RouteComponentProps, state>{
             this.user = data;
             console.log('user profile:');
             console.log(data);
-            //this.setState({ isLoading: false });
             this.getQuestionCount();
         })
     }
@@ -72,13 +71,13 @@ export class UserProfile extends Component<RouteComponentProps, state>{
 
     renderAdvance() {
         return (
-            <div className="mainContainer">
+            <div className={styles.mainContainer}>
                 <Leftbar key="leftBar" /> ,
-                <div key="rightDiv" className="right">
-                    <div className="head-bar">
-                        <span className="user-profile">প্রোফাইল</span>
-                        <span className="user-activity">সক্রিয়তা</span>
-                        <span className="user-story">ব্যবহারকারী বিবরণ</span>
+                <div key="rightDiv" className={styles.right}>
+                    <div className={styles.head_bar}>
+                        <span className={styles.user_profile}>প্রোফাইল</span>
+                        <span className={styles.user_activity}>সক্রিয়তা</span>
+                        <span className={styles.user_story}>ব্যবহারকারী বিবরণ</span>
                     </div>
                     <UserInfo />
                 </div>,
@@ -91,9 +90,9 @@ export class UserProfile extends Component<RouteComponentProps, state>{
         if (this.state.isLoading) return <Loader />;
 
         return (
-            <div className="profileDiv">
-                <div className="userImageDiv">
-                    <img className="userImage" src={this.user.image} alt="" />
+            <div className={styles.profileDiv}>
+                <div className={styles.userImageDiv}>
+                    <img className={styles.userImage} src={this.user.image} alt="" />
                 </div>
 
                 <h3>{this.user.name}</h3>
