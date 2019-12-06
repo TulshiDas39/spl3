@@ -98,7 +98,7 @@ class Nav extends Component<INavProps, state> {
                 </div>
 
                 <div id="help">
-                    <span className="fa fa-question-circle"></span>
+                    <Link to="/help" className="fa fa-question-circle"></Link>
                 </div>
             </div>
         );

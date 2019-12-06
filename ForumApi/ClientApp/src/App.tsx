@@ -15,6 +15,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import PrivateRoute from './components/auth/PrivateRoute';
 import { SearchResult } from './components/searchResult/SearchResult';
 import { UserProfile } from './components/userProfile/UserProfile';
+import { Help } from './components/help/Help';
 
 interface props {
   basename: string;
@@ -62,6 +63,7 @@ export default class App extends Component<props, any> {
             <Route path='/user' component={UserActivity} />
             <PrivateRoute path='/ask' component={Ask} />
             <Route path='/profile/:userId' component={UserProfile} />
+            <Route path='/help' component={Help} />
           </Switch>
         </Layout>
       </BrowserRouter>

@@ -183,9 +183,10 @@
     cursor: pointer;
 }
 
-#help span {
+#help > a {
     font-size: 1.3rem;
     color: blue;
+    text-decoration: none;
 }
 
 #search-sm{
