@@ -26,7 +26,7 @@ export class Leftbar extends Component<any, any> {
     }
 
     render() {
-        if(this.currentTab == SideBar.NONE) return null;
+        if(this.currentTab === SideBar.NONE) return null;
         return (
             <div id={styles.left}>
                 <div className={styles.leftLinkParent}>

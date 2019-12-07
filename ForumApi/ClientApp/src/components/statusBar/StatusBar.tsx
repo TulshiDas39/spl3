@@ -7,6 +7,7 @@ import { ITag, IQuestion } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { ITagInfo } from "../../utils/Structures";
 import { Link } from "react-router-dom";
+import {StatusData } from "../../utils/data";
 
 interface state {
     isLoading: boolean;
@@ -24,7 +25,11 @@ export class StatusBar extends Component<any, state>{
     }
 
     componentDidMount() {
-        this.fetchData();
+        this.popularQuestions = StatusData.popularQuestionsThisWeek;
+        this.popularTags = StatusData.popularTags;
+        if (this.popularQuestions.length === 0) this.fetchData();
+        else this.setState({isLoading:false});
+
     }
 
     async fetchData() {
@@ -32,8 +37,9 @@ export class StatusBar extends Component<any, state>{
             this.popularTags = await httpService.get(API_CALLS.tagList);
             if (this.context.isAuthenticated) this.popularQuestions = await httpService.get(API_CALLS.popularQuestionsWeekly + this.context.user.sub);
             else this.popularQuestions = await httpService.get(API_CALLS.popularQuestionsWeekly);
-            console.log(this.popularQuestions);
+            StatusData.popularQuestionsThisWeek = this.popularQuestions;
             this.popularTags.splice(3, this.popularTags.length - 3);
+            StatusData.popularTags = this.popularTags;
             this.setState({ isLoading: false });
         } catch (err) {
             console.error(err);
@@ -63,7 +69,7 @@ export class StatusBar extends Component<any, state>{
                     <span> এই সপ্তাহের জনপ্রিয় প্রশ্নসমুহ </span>
                 </div>
                 <div id={styles.info}>
-                    {this.popularQuestions.map(item => <Link className={styles.popularQuestion} to={"/answer/"+item.id} key={item.id}>{item.title}</Link>)}
+                    {this.popularQuestions.map(item => <Link className={styles.popularQuestion} to={"/answer/" + item.id} key={item.id}>{item.title}</Link>)}
                 </div>
             </div>
         )
