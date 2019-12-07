@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Leftbar } from '../leftbar/Leftbar';
 import { Right } from './subComponents/right/Right';
 import { IHomeProps } from './Types';
-import styles from "./home.module.scss";
 import { sideBarSubject } from '../../utils/Contexts';
 import { SideBar } from '../../utils/Enums';
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Nav from '../nav/Nav';
 import { Auth0Context } from '../../utils/Contexts';
 import { Footer } from '../footer/Foter';
-import "./layout.scss";
+import styles from "./layout.module.scss";
 import { Leftbar } from '../leftbar/Leftbar';
 
 export class Layout extends Component {
@@ -15,7 +15,7 @@ export class Layout extends Component {
       <div>
         <Nav myContext={this.context} />
         <div id="secondRoot">
-          <div id="parentDiv">
+          <div id={styles.parentDiv}>
             <Leftbar />
             {this.props.children}
           </div>

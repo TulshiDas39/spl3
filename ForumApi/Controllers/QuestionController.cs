@@ -55,6 +55,21 @@ namespace ForumApi.Controllers
             return similarity.getSimilarQuestions(query);
         }
 
+        [HttpGet("popular/{userId}")]
+        public ActionResult<List<Question>> GetPopular(string userId){
+            if(!_userService.Exist(userId)) return BadRequest();
+            User user = _userService.Get(userId);
+            var tags = Utility.Tokenize(user.tags);
+            return _questionService.GetPopularQuestionsThisWeek(tags);
+
+        }
+
+        [HttpGet("popular")]
+        public ActionResult<List<Question>> GetPopular(){
+            return _questionService.GetPopularQuestionsThisWeek();
+        }
+
+
         [Authorize]
         [HttpGet("similarity/{questionData}")]
         public ActionResult<List<Question>> GetSimilarQuestions([FromServices] QuestionSimilarity similarity, string questionData)

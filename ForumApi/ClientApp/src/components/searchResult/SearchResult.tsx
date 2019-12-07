@@ -8,6 +8,8 @@ import { IQuestion } from "../../utils/Models";
 import { searchResultService } from "./SearchResutlService";
 import { Loader } from "../loader/loader";
 import styles from "./searchResult.module.scss";
+import { sideBarSubject } from "../../utils/Contexts";
+import { SideBar } from "../../utils/Enums";
 
 interface state {
     isLoading: boolean;
@@ -25,6 +27,7 @@ export class SearchResult extends Component<ISearchResult, state> {
 
     componentDidMount() {
         this.fetchData();
+        sideBarSubject.next(SideBar.EQUATION);
     }
 
     componentDidUpdate(prevProps: ISearchResult) {
@@ -45,34 +48,25 @@ export class SearchResult extends Component<ISearchResult, state> {
     public render(): JSX.Element {
         if (this.state.isLoading) return <Loader />
         return (
-            <div id={styles.parentDiv}>
-                <Leftbar />
-                <div id={styles.right}>
-                    <div id={styles.questionDiv}>
-                        <div id={styles.question_heading}>
-                            <div className={styles.main_questions_text}>
-                                প্রত্যাশিত প্রশ্নসমুহ
+            <div id={styles.right}>
+                <div id={styles.questionDiv}>
+                    <div id={styles.question_heading}>
+                        <div className={styles.main_questions_text}>
+                            প্রত্যাশিত প্রশ্নসমুহ
                         </div>
-                            <Link to="/ask" id={styles.ask}>
-                                প্রশ্ন করুন
+                        <Link to="/ask" id={styles.ask}>
+                            প্রশ্ন করুন
                             </Link>
-                        </div>
-                        <div className={styles.questionList}>
-                            {
-                                this.questionList.length === 0 ? <p>No recommended questions found</p> :
-                                    this.questionList.map((q) => <Question key={q.id + "questionItem"} data={q} />)
-                            }
-                        </div>
-
-                        {/* <p className="see-all-question">
-                            <a className="go-allquestion" href="">সকল প্রশ্ন দেখুন।</a>
-                            <a className="go-unaswered" href="">উত্তরহীন প্রশ্নগুলোতে আমাদের সাহায্য করুন</a>
-                        </p> */}
-
                     </div>
-                    <StatusBar />
-                </div>
+                    <div className={styles.questionList}>
+                        {
+                            this.questionList.length === 0 ? <p>No recommended questions found</p> :
+                                this.questionList.map((q) => <Question key={q.id + "questionItem"} data={q} />)
+                        }
+                    </div>
 
+                </div>
+                <StatusBar />
             </div>
         );
     }

@@ -18,7 +18,7 @@ namespace ForumApi.Services
         private readonly IMongoCollection<Question> _questions;
 
         private readonly ILogger _logger;
-//        private readonly TagService _tagService;
+        //        private readonly TagService _tagService;
 
         private readonly RecommendationService _recommendationService;
 
@@ -62,7 +62,61 @@ namespace ForumApi.Services
             return _questions.Find(Question => true).SortByDescending(question => question.id).Skip(skip).Limit(limit).ToList();
         }
 
-        public List<Question> GetByUser(string userId){
+        internal List<Question> GetPopularQuestionsThisWeek(string[] tags)
+        {
+            List<Question> questions = new List<Question>();
+            long timestampNow = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() * 1000;
+            long timestampPreviousWeek = timestampNow - 7 * 24 * 60 * 60 * 1000;
+            for (int i = 0; i < tags.Length; i++)
+            {
+                if (i >= 8) break;
+                var question = GetMostRated(tags[i], timestampPreviousWeek);
+                if (question != null) questions.Add(question);
+            }
+
+            if (questions.Count == 0) return GetPopularQuestionsThisWeek();
+
+            return questions;
+        }
+
+        public List<Question> GetPopularQuestionsThisWeek(){
+            long timestampNow = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() * 1000;
+            long timestampPreviousWeek = timestampNow - 7 * 24 * 60 * 60 * 1000;
+            return _questions.Find(question=>question.datetime > timestampPreviousWeek).SortByDescending(question=>question.ratings).Limit(8).ToList();
+        }
+        private Question GetMostRated(string tag, long timeLimit)
+        {
+            List<Question> list;
+            Question maxRatedQuestion = new Question();
+            maxRatedQuestion.ratings = 0;
+            int iteration = 0;
+            int chunkSize = 100;
+            do
+            {
+                list = _questions.Find(item => item.datetime > timeLimit).Skip(iteration * chunkSize).Limit(iteration).ToList();
+                maxRatedQuestion = GetMostRatedQuestion(list, maxRatedQuestion, tag);
+                iteration++;
+            } while (list.Count == chunkSize);
+
+            if (maxRatedQuestion.ratings == 0) return null;
+            return maxRatedQuestion;
+
+        }
+
+        private Question GetMostRatedQuestion(List<Question> list, Question maxRatedQuestion, string tag)
+        {
+            Question question = maxRatedQuestion;
+            foreach (var item in list)
+            {
+                if (!Utility.Tokenize(item.tags).Contains(tag)) continue;
+                if (item.ratings > maxRatedQuestion.ratings) question = item;
+            }
+
+            return question;
+        }
+
+        public List<Question> GetByUser(string userId)
+        {
             return _questions.Find(Question => Question.userId == userId).SortByDescending(question => question.ratings).ToList();
         }
 
@@ -101,7 +155,7 @@ namespace ForumApi.Services
         public List<Question> Recommend(string userId, List<string> tags, int iteration)
         {
             List<Question> list = new List<Question>();
-           // List<string> tags = Utility.Tokenize(_userService.Get(userId).tags).ToList();
+            // List<string> tags = Utility.Tokenize(_userService.Get(userId).tags).ToList();
             _logger.LogDebug("\ntags:");
             PrintDictionary(tags);
             List<Question> questions;

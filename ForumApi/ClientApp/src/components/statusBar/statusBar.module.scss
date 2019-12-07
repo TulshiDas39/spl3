@@ -12,12 +12,7 @@
     border-bottom: 1px solid #e4e6e8;
     padding: 12px 15px;
 }
-
-#info_title{
-    background: #f7f1d5;
-}
-
-#tag_title{
+.section_header{
     background: #f7f1d5;
 }
 
@@ -28,4 +23,9 @@
     padding: 4.8px 6px;
     margin:2px 2px 2px 0px;
     font-size: 14px;
+}
+
+.popularQuestion{
+    display: block;
+    text-decoration: none;
 }

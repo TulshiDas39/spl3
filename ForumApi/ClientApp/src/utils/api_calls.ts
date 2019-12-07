@@ -9,6 +9,7 @@ export const API_CALLS={
     similarQuestions:"api/questions/similarity/",
     searchQuestions:"api/questions/search/",
     countUserQuestions:"api/questions/countOfUser/",
+    popularQuestionsWeekly:"api/questions/popular/",
     
     answers:"api/answers/",
     answerList:"api/answers/list/",

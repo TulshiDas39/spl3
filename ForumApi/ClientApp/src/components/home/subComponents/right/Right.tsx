@@ -158,11 +158,6 @@ export class Right extends Component<any, state>{
                         }
                     </div>
 
-                    {/* <p className="see-all-question">
-                        <a className="go-allquestion" href="">সকল প্রশ্ন দেখুন।</a>
-                        <a className="go-unaswered" href="">উত্তরহীন প্রশ্নগুলোতে আমাদের সাহায্য করুন</a>
-                    </p> */}
-
                     {this.getPagination()}
                 </div>
                 <StatusBar />

@@ -10,6 +10,8 @@ import { Leftbar } from "../leftbar/Leftbar";
 import { UserInfo } from "./UserInfo";
 import { httpService } from "../../services/HttpService";
 import { API_CALLS } from "../../utils/api_calls";
+import { sideBarSubject } from "../../utils/Contexts";
+import { SideBar } from "../../utils/Enums";
 
 interface state {
     isLoading: boolean;
@@ -30,6 +32,7 @@ export class UserProfile extends Component<RouteComponentProps, state>{
     }
 
     componentDidMount() {
+        sideBarSubject.next(SideBar.USERS);
         this.fetchData();
     }
 
