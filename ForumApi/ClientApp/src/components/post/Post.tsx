@@ -47,8 +47,8 @@ export class Post extends Component<PostProps, state>{
         setInterval(() => this.fetchAllData, twoMinute);
     }
 
-    componentDidUpdate(prevProps:PostProps){
-        if(prevProps !== this.props) this.fetchAllData();
+    componentDidUpdate(prevProps: PostProps) {
+        if (prevProps !== this.props) this.fetchAllData();
     }
 
     async fetchAllData() {
@@ -103,6 +103,8 @@ export class Post extends Component<PostProps, state>{
                 <div id={styles.question_description}>
                     <span className={styles.question_description_text} dangerouslySetInnerHTML={{ __html: this.props.data.description }}></span>
                     {this.getEdit_DeleteOptions()}
+                    {this.getTags()}
+
 
                     <User {...this.userProps} />
 
@@ -111,21 +113,29 @@ export class Post extends Component<PostProps, state>{
             </div>
         )
     }
+    getTags(): React.ReactNode {
+        if (this.props.type !== PostType.QUESTION)return null;
+        let data = this.props.data as IQuestion;
 
-    private toogleAcceptanceStatus(){
+        return <div id={styles.tags}>
+            {utilityService.tokenize(data.tags).map(item => <span key={item}>{item}</span>)}
+        </div>
+    }
+
+    private toogleAcceptanceStatus() {
         this.props.data.isAccepted = !this.props.data.isAccepted;
         let headers = utilityService.createHeader(this.context.token);
-        httpService.put(API_CALLS.answers,this.props.data,headers).then(data=>{
+        httpService.put(API_CALLS.answers, this.props.data, headers).then(data => {
             debugger;
-            if(this.props.onAccept) this.props.onAccept(this.props.data.isAccepted);
-        },err=>console.error(err));
+            if (this.props.onAccept) this.props.onAccept(this.props.data.isAccepted);
+        }, err => console.error(err));
     }
 
     private getAcceptIcon() {
         let context = this.context as IAuth0Context;
         if (this.props.type !== PostType.ANSWER) return;
-        if(this.props.questionData){
-            if(this.props.questionData.isAccepted && !this.post.isAccepted) return;
+        if (this.props.questionData) {
+            if (this.props.questionData.isAccepted && !this.post.isAccepted) return;
         }
         if (!context.isAuthenticated || context.user.sub !== (this.props.questionData as IQuestion).userId) {
             if (this.post.isAccepted) return this.showDisabledAcceptedIcon();
@@ -143,8 +153,8 @@ export class Post extends Component<PostProps, state>{
         </div>);
     }
 
-    private showDisabledAcceptedIcon(){
-        return (<div style={{ padding: '5px'}}>
+    private showDisabledAcceptedIcon() {
+        return (<div style={{ padding: '5px' }}>
             <DoneOutlineIcon color={"primary" as any} />
         </div>);
     }
