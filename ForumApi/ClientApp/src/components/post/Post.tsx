@@ -5,7 +5,7 @@ import { IAnswer, IQuestion, IVote } from "../../utils/Models";
 import { Auth0Context } from "../../utils/Contexts";
 import { IAuth0Context } from "../../utils/Structures";
 import { ConfirmationDialog } from "../popups/ConfirmationDialog";
-import { PostType, PostStatus } from "../../utils/Enums";
+import { PostType } from "../../utils/Enums";
 import { CommentList } from "../commentList/CommentList";
 import { PostProps } from "./Types";
 import { Vote } from "../vote/Vote";
@@ -106,7 +106,7 @@ export class Post extends Component<PostProps, state>{
                     {this.getTags()}
 
 
-                    <User {...this.userProps} />
+                    <User type={this.props.type} {...this.userProps} />
 
                     <CommentList postId={this.props.data.id} postType={this.props.type} />
                 </div>

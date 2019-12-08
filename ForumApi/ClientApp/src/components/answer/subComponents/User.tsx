@@ -3,6 +3,7 @@ import styles from "./styles/user.module.scss";
 import { IUserProps } from "../Types";
 import { utilityService } from "../../../services/UtilityService";
 import { Link } from "react-router-dom";
+import { PostType } from "../../../utils/Enums";
 
 interface state {
     isLoading: boolean;
@@ -11,7 +12,8 @@ interface state {
 export class User extends Component<IUserProps, state>{
 
     private getDurationString() {
-        let text = "প্রশ্ন করেছেন";
+        let text = "উত্তর করেছেন";
+        if(this.props.type === PostType.QUESTION)text = "প্রশ্ন করেছেন";
         let minutes = utilityService.getDurationMinute(this.props.postTime);
         if (minutes === 0) return "এখন " + text;
         if (minutes < 60) return utilityService.convertToBengaliText(minutes) + " মিনিট পুর্বে " + text;

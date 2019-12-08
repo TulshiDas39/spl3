@@ -33,4 +33,5 @@ export interface IUserProps{
     //userId:string;
     user:IUser;
     postTime:number;
+    type:PostType;
 }
