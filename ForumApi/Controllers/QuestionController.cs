@@ -91,8 +91,7 @@ namespace ForumApi.Controllers
             return _questionService.GetByUser(id).Count;
         }
 
-        [Authorize]
-        [HttpPost("get/{userId}")]
+        [HttpGet("get/{userId}")]
         public ActionResult<List<Question>> GetByUser(string userId)
         {
             return _questionService.GetByUser(userId);
@@ -176,7 +175,6 @@ namespace ForumApi.Controllers
         [HttpPut]
         public IActionResult Update(Question question)
         {
-            //var question = _questionService.Get(id);
 
             if (!_questionService.Exist(question))
             {

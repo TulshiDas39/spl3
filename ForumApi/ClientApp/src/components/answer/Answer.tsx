@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styles from "./answer.module.scss";
-import { Leftbar } from "../leftbar/Leftbar";
 import { Discussion } from "./subComponents/Discusstion";
 import { StatusBar } from "../statusBar/StatusBar";
 import { Head } from "./subComponents/Head";

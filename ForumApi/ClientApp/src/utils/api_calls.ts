@@ -10,11 +10,15 @@ export const API_CALLS={
     searchQuestions:"api/questions/search/",
     countUserQuestions:"api/questions/countOfUser/",
     popularQuestionsWeekly:"api/questions/popular/",
+    userQuestions:"api/questions/get/",
+
     
     answers:"api/answers/",
     answerList:"api/answers/list/",
     answerCount:"api/answers/count/",
     answerCountForUser:"api/answers/countForUser/",
+    answersOfUser:"api/answers/ofUser/",
+    questionsOfUserAnswer:"api/answers/questionsOfUserAnswers/",
     
     users:"api/users/",
     multipleUsers:"api/users/multiple/",

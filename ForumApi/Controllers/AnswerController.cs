@@ -12,12 +12,15 @@ namespace ForumApi.Controllers
     public class AnswersController : ControllerBase
     {
         private readonly AnswerService _answerService;
+        private readonly QuestionService _questionService;
+
 
         private readonly ILogger _logger;
 
-        public AnswersController(AnswerService answerService, ILogger<AnswersController> logger)
+        public AnswersController(AnswerService answerService,QuestionService questionService, ILogger<AnswersController> logger)
         {
             _answerService = answerService;
+            _questionService = questionService;
             _logger = logger;
         }
 
@@ -27,8 +30,27 @@ namespace ForumApi.Controllers
             _answerService.Get();
 
         [HttpGet("countForUser/{userId}")]
-        public ActionResult<int> GetCountForUser(string userId){
+        public ActionResult<int> GetCountForUser(string userId)
+        {
             return _answerService.GetByQuestion(userId).Count;
+        }
+
+        [HttpGet("ofUser/{userId}")]
+        public ActionResult<List<Answer>> GetUserAnswers(string userId)
+        {
+            return _answerService.GetByUser(userId);
+        }
+
+        [HttpGet("questionsOfUserAnswers/{userId}")]
+        public ActionResult<List<Question>> GetQuestionOfUserAnswers(string userId)
+        {
+            List<Answer> answers = _answerService.GetByUser(userId);
+            List<Question> questions = new List<Question>();
+            foreach(var item in answers){
+                var q = _questionService.Get(item.questionId);
+                if(q!= null) questions.Add(q);
+            }
+            return questions;
         }
 
         [HttpGet("list/{questionId:length(24)}")]

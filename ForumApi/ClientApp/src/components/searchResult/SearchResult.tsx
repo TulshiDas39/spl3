@@ -1,6 +1,5 @@
 import { ISearchResult } from "./Types";
 import React, { Component } from "react";
-import { Leftbar } from "../leftbar/Leftbar";
 import { Link } from "react-router-dom";
 import { StatusBar } from "../statusBar/StatusBar";
 import { Question } from "../question/Question";

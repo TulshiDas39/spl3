@@ -27,3 +27,9 @@ export enum SideBar{
     TAGS=2,
     USERS=3
 }
+
+export enum Badge{
+    PLATINUM=200,
+    GOLD=100,
+    SILVER=50
+}

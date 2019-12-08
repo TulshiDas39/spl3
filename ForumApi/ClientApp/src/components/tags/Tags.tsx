@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Leftbar } from "../leftbar/Leftbar";
 import { Head } from "./subComponents/Head";
 import { TagContainer } from "./subComponents/TagContainer";
 import { Pagination } from "../pagination/Pagination";

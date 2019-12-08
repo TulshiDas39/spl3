@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Leftbar } from '../leftbar/Leftbar';
 import { Right } from './subComponents/right/Right';
 import { IHomeProps } from './Types';
 import { sideBarSubject } from '../../utils/Contexts';
