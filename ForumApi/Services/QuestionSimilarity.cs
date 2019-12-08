@@ -27,7 +27,7 @@ namespace ForumApi.Services
             List<string> tags = new List<string>();
             if (considerTags)
             {
-                string tagStr = askedQuestionData.Substring(seperatorIndex, askedQuestionData.Length - seperatorIndex - 1);
+                string tagStr = askedQuestionData.Substring(seperatorIndex+1, askedQuestionData.Length - seperatorIndex - 1);
                 tags = Utility.Tokenize(tagStr).ToList();
                 askedQuestionData = askedQuestionData.Substring(0, seperatorIndex);
             }

@@ -10,12 +10,10 @@ import { rootService } from "../../services/RootService";
 import { sideBarSubject } from "../../utils/Contexts";
 import { SideBar } from "../../utils/Enums";
 
-export interface AnswerState {
+interface state {
     isloading: boolean;
 }
-export class Answer extends Component<AnswerProps, AnswerState>{
-    public static answerState: AnswerState;
-    public static setAnswerState: any;
+export class Answer extends Component<AnswerProps, state>{
     private questionData: IQuestion = {} as IQuestion;
     constructor(props: AnswerProps) {
         super(props);

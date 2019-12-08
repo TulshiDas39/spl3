@@ -37,17 +37,20 @@ export class Discussion extends Component<IDiscussionProps, state>{
 
     componentDidMount() {
         this.init();
-        let twoMinute = 2000 * 60;
-        setInterval(() => this.init, twoMinute);
+        //let fifteenSecond = 1000 * 15;
+        //setInterval(this.updateData.bind(this), fifteenSecond);
 
     }
 
-    // componentWillUpdate() {
-    //     this.setUserAnswerIndex();
-    // }
+    private updateData(){
+        answerService.getAnswers(this.props.questionData.id).then(data => {
+            this.answerData = data as IAnswer[];
+            //this.setUserAnswerIndex();
+            this.setState({ isLoading: false });
+        })
+    }
 
     private init() {
-
         answerService.getAnswers(this.props.questionData.id).then(data => {
             this.answerData = data as IAnswer[];
             this.setUserAnswerIndex();

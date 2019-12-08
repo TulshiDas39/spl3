@@ -82,7 +82,6 @@ export class Ask extends Component<props, state>{
         this.tags.forEach(val => questionData += " " + val);
         questionData = questionData.trim().replace(/[.,/#!^&]/g, "");
         console.log('tags are pushed: ' + questionData);
-
         askServices.getSimilarQuestion(questionData, this.context.token).then(data => {
             this.similarQuestions = data;
             this.setState({
@@ -262,22 +261,6 @@ export class Ask extends Component<props, state>{
                     </div>
                     <div className={styles.inputField}>
                         <textarea name="" id="" cols={30} rows={8} onChange={this.saveDescription.bind(this)}></textarea>
-                    </div>
-                </div>
-                <div className={styles.questionPart+" "+ styles.question_image}>
-                    <div className={styles.titleField}>
-                        <span>২.ছবি(অনাবশ্যক)</span>
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-                <div className={styles.questionPart+" "+ styles.expectation}>
-                    <div className={styles.titleField}>
-                        <span>৩.উপসংহার দিন(আবশ্যক)</span>
-                    </div>
-                    <div className={styles.inputField}>
-                        <textarea name="" id="" cols={30} rows={8}></textarea>
                     </div>
                 </div>
             </div>

@@ -186,7 +186,7 @@ export class Editor {
     public updateEditor(value:string){
         this.textArea.value = value;
         this.displayChanges();
-        this.scrollToView();
+        if(value) this.scrollToView();
     }
 
     public getValue(){
