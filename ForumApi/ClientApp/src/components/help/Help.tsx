@@ -1,13 +1,18 @@
 import React from "react";
 import styles from "./help.module.scss";
 import { Button } from "@material-ui/core";
-import { sideBarSubject } from "../../utils/Contexts";
-import { SideBar } from "../../utils/Enums";
+import {SideBarMode, SidebarDisplay } from "../../utils/Enums";
+import { navService } from "../nav/NavService";
+import { sideBarService } from "../leftbar/LeftBarService";
 export class Help extends React.Component<any, any>{
 
     constructor(props:any){
         super(props);
-        sideBarSubject.next(SideBar.NONE);
+        navService.sideBarModeSubject.next(SideBarMode.POPUP);
+        sideBarService.sideBarDisplay.next(SidebarDisplay.NONE);
+    }
+    componentWillUnmount(){
+        navService.sideBarModeSubject.next(SideBarMode.NORMAL);
     }
     render() {
         return (

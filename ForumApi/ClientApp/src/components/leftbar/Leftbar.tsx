@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import styles from './leftBar.module.scss';
 import { Link } from 'react-router-dom';
-import { sideBarSubject } from '../../utils/Contexts';
-import { SideBar } from '../../utils/Enums';
+import { sideBarSubject} from '../../utils/Contexts';
+import { SideBar, SideBarMode,SidebarDisplay } from '../../utils/Enums';
+import { navService } from '../nav/NavService';
+import { sideBarService } from './LeftBarService';
+
 
 
 export class Leftbar extends Component<any, any> {
     static displayName = Leftbar.name;
     private currentTab = SideBar.NONE;
+    private sideBarDisplay = SidebarDisplay.NORMAL;
 
     constructor(props: any) {
         super(props);
@@ -19,6 +23,16 @@ export class Leftbar extends Component<any, any> {
             this.currentTab = value;
             this.setState(this.state);
         })
+
+        sideBarService.sideBarDisplay.subscribe(value=>{
+            this.sideBarDisplay = value;
+            this.setState(this.state);
+
+        })
+
+        navService.sideBarModeSubject.subscribe(value=>{
+            this.setState(this.state);
+        })
     }
 
     componentWillUnmount(){
@@ -26,9 +40,8 @@ export class Leftbar extends Component<any, any> {
     }
 
     render() {
-        if(this.currentTab === SideBar.NONE) return null;
         return (
-            <div id={styles.left}>
+            <div id={styles.left} style={this.getDivStyle()}>
                 <div className={styles.leftLinkParent}>
                     <Link to="/" className={styles.leftBarlink} style={this.getBorderRight(SideBar.MAIN_PAGE)}>
                         <span>মুল পাতা</span>
@@ -47,6 +60,18 @@ export class Leftbar extends Component<any, any> {
                 </div>
             </div>
         );
+    }
+    
+    getDivStyle(): React.CSSProperties | undefined {
+        let style = {} as React.CSSProperties;
+        if(navService.sideBarModeSubject.value === SideBarMode.POPUP) style = {
+            position:'absolute',
+            zIndex:10,
+            border:'1px solid green'
+        }
+        if(this.sideBarDisplay === SidebarDisplay.NONE) style.display = 'none';
+
+        return style;
     }
 
     private getBorderRight(tab: SideBar): React.CSSProperties | undefined {

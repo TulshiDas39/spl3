@@ -7,6 +7,7 @@
     box-shadow: 0 0 0 rgba(12,13,14,0.05);
     transition: box-shadow ease-in-out .1s,transform ease-in-out .1s;
     box-sizing: border-box;
+    background: white;
 }
 
 .leftLinkParent{
@@ -33,15 +34,15 @@
 }
 
 @media (max-width:640px){
-    #left > div{
-        position: absolute;
-        display: none;
-        top: 5px;
-        left: 5px;
-        z-index: 1000;
-    }
+    // #left{
+    //     position: absolute;
+    //     display: none;
+    //     top: 5px;
+    //     left: 5px;
+    //     z-index: 1000;
+    // }
 
-    #left{
-        display: none;
-    }
+    // #left{
+    //     display: none;
+    // }
 }
