@@ -132,9 +132,9 @@ class Nav extends Component<INavProps, state> {
                     <span id={styles.search_sm_icon} className="fa fa-search"></span>
                 </div>
                 {this.contextValues.isAuthenticated ? this.getUser() : this.getLogin()}
-                <div id={styles.nofic}>
+                {/* <div id={styles.nofic}>
                     <span className="fa fa-globe"></span>
-                </div>
+                </div> */}
 
                 <div id={styles.help}>
                     <Link to="/help" className="fa fa-question-circle"></Link>
