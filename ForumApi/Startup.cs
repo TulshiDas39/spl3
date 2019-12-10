@@ -82,10 +82,11 @@ namespace ForumApi
             services.AddSingleton<QuestionService>();
             services.AddSingleton<AnswerService>();
             services.AddSingleton<CommentService>();
-            services.AddSingleton<RecommendationService>();
             services.AddSingleton<VoteService>();
             services.AddSingleton<TagService>();
             services.AddSingleton<SharedService>();
+            services.AddSingleton<RecommendationService>();
+
 
         }
 

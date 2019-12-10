@@ -46,24 +46,6 @@ namespace ForumApi.Services
             Apriori(tags);
         }
 
-        private void Init(List<string> s)
-        {
-            s.Add("math physics");
-            s.Add("javascript html css");
-            s.Add("javascript html");
-            s.Add("javascript html");
-            s.Add("javascript html");
-            s.Add("javascript html");
-            s.Add("javascript html");
-            s.Add("javascript html");
-            s.Add("javascript css");
-            s.Add("javascript");
-            s.Add("typescript");
-            s.Add("typescript html css");
-            s.Add("photosop elastrator");
-            s.Add("html css");
-        }
-
         private void Apriori(List<string> tags)
         {
             _minSupportCount = (int)(_minSupport * tags.Count);
@@ -75,32 +57,43 @@ namespace ForumApi.Services
             Dictionary<string, int> frequentItemSets = new Dictionary<string, int>();
             Dictionary<string, double> associations = new Dictionary<string, double>();
             Dictionary<string, int> newCandidates = GenerateCandidates(tags);
+            _logger.LogDebug("\nnew candidates:\n");
+            printDictionary(newCandidates);
             Filter(newCandidates);
+            _logger.LogDebug("\nafter filter candidates:\n");
+            printDictionary(newCandidates);
+
             mergeCandidates(frequentItemSets, newCandidates);
             Dictionary<string, int> oldCandidates = newCandidates;
 
-            while (oldCandidates.Count() > 0)
+            int iteration = 0;
+
+            while (oldCandidates.Count() > 0 )
             {
+                if(iteration > 4 ) break;
                 newCandidates = GenerateCandidates(oldCandidates, tags);
-                _logger.LogDebug("\nnew candidates:");
+                _logger.LogDebug("\nnew candidates:\n");
                 printDictionary(newCandidates);
                 Filter(newCandidates);
-                _logger.LogDebug("after filter:");
+                _logger.LogDebug("\nafter filter candidates:\n");
                 printDictionary(newCandidates);
                 GenerateAssociations(newCandidates, frequentItemSets, associations);
-                _logger.LogDebug("associations:");
+                _logger.LogDebug("\nassociations:\n");
                 printDictionary(associations);
                 mergeCandidates(frequentItemSets, newCandidates);
                 oldCandidates = newCandidates;
             }
+            _logger.LogDebug("out of loop");
 
             string[] associationRules = associations.Keys.ToArray();
             Recommendation recommendation = new Recommendation();
             recommendation.recommendations = associationRules;
-            
+
             _recommendationService.UpdateFirst(recommendation);
 
         }
+
+
 
         private void GenerateAssociations(Dictionary<string, int> newCandidates, Dictionary<string, int> frequentItemSets, Dictionary<string, double> associations)
         {
@@ -209,8 +202,8 @@ namespace ForumApi.Services
         {
             Dictionary<string, int> newCandidates = new Dictionary<string, int>();
             int interSectCount = Utility.Tokenize(previousCandidates.Keys.ElementAt(0)).Length - 1;
-           // _logger.LogDebug("preveous candidates:");
-            printDictionary(previousCandidates);
+            // _logger.LogDebug("preveous candidates:");
+            //printDictionary(previousCandidates);
             for (int i = 0; i < previousCandidates.Keys.Count; i++)
             {
                 string key = previousCandidates.Keys.ElementAt(i);
@@ -234,9 +227,9 @@ namespace ForumApi.Services
             {
                 IEnumerable<string> newCandidate = tags.Union(tags2);
                 string newCandidateStr = Utility.ArrayToString(newCandidate);
-                _logger.LogDebug("newCandidateStr:" + newCandidateStr);
+                //_logger.LogDebug("newCandidateStr:" + newCandidateStr);
                 int support = MeasureSupport(newCandidate, allTags);
-                if(!Exist(newCandidateStr,newCandidates))
+                if (!Exist(newCandidateStr, newCandidates))
                     newCandidates.Add(newCandidateStr, support);
             }
         }
@@ -244,9 +237,10 @@ namespace ForumApi.Services
         private bool Exist(string newCandidateStr, Dictionary<string, int> newCandidates)
         {
             var candidateTokens = Utility.Tokenize(newCandidateStr);
-            foreach(var item in newCandidates){
+            foreach (var item in newCandidates)
+            {
                 var tokens = Utility.Tokenize(item.Key);
-                if(tokens.Intersect(candidateTokens).Count() == candidateTokens.Count()) return true;
+                if (tokens.Intersect(candidateTokens).Count() == candidateTokens.Count()) return true;
             }
             return false;
         }
