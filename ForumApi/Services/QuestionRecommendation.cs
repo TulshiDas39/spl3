@@ -82,6 +82,7 @@ namespace ForumApi.Services
                 printDictionary(associations);
                 mergeCandidates(frequentItemSets, newCandidates);
                 oldCandidates = newCandidates;
+                iteration++;
             }
             _logger.LogDebug("out of loop");
 
