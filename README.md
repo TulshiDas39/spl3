@@ -31,5 +31,4 @@ This project possible will use the following technology:
 * [Html,CSS] - for building the GUI.
 
 
-And this project will be published within 30 November, 2019 on GitHub.
 
