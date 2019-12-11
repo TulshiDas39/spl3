@@ -76,7 +76,7 @@ export class Leftbar extends Component<any, any> {
 
     private getBorderRight(tab: SideBar): React.CSSProperties | undefined {
         if (this.currentTab == tab) return {
-            borderRight: '4px solid #F48024',
+            borderRight: '4px solid rgb(106, 8, 235)',
             background: 'rgba(12,13,14,0.05)',
             fontWeight: 'bold',
             padding: '8px 6px 8px 8px'
