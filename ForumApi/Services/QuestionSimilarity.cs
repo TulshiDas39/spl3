@@ -196,10 +196,18 @@ namespace ForumApi.Services
                 sum += vec1[i] * vec2[i];
             }
 
-            double cosine = sum / Math.Sqrt(vec1.Sum() * vec2.Sum());
+            double cosine = sum / (RMS(vec1) * RMS(vec2));
             _logger.LogDebug("cosine:" + cosine);
 
             return cosine;
+        }
+
+        private double RMS(List<int> list){
+            var rms = 0.0;
+            foreach(var item in list){
+                rms+= item*item;
+            }
+            return Math.Sqrt(rms);
         }
 
         private void removeStopWords(List<string> list)
