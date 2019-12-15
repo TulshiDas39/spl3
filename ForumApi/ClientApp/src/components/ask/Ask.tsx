@@ -9,6 +9,7 @@ import Loading from "../loader/Loading";
 import { Question } from "../question/Question";
 import { askServices } from "./AskServices";
 import { SideBar } from "../../utils/Enums";
+import { Loader } from "../loader/loader";
 
 interface state {
     currentStep: number;
@@ -80,7 +81,7 @@ export class Ask extends Component<props, state>{
     private async fetchSimilarQuestions() {
         let questionData = this.data.title+"|";
         this.tags.forEach(val => questionData += " " + val);
-        questionData = questionData.trim().replace(/[.,/#!^&]/g, "");
+        questionData = questionData.trim().replace(/[.?,/#!^&]/g, "");
         console.log('tags are pushed: ' + questionData);
         askServices.getSimilarQuestion(questionData, this.context.token).then(data => {
             this.similarQuestions = data;
@@ -275,7 +276,7 @@ export class Ask extends Component<props, state>{
     }
 
     private getSimilarQuestion() {
-        if (this.state.loadSimilarities) return <Loading />;
+        if (this.state.loadSimilarities) return <Loader/>;
         return (
 
             <div className={styles.similar_question_list}>
