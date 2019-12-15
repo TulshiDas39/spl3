@@ -62,7 +62,7 @@ export class Post extends Component<PostProps, state>{
         console.log(this.userProps.user);
 
         if (this.context.isAuthenticated) {
-            this.voteInfo.voteStatus = await postService.getVoteStatus(this.post.id, this.post.userId, this.props.type, this.context.token);
+            this.voteInfo.voteStatus = await postService.getVoteStatus(this.post.id, this.context.user.sub, this.props.type, this.context.token);
         }
 
         this.setState({ isLoading: false });

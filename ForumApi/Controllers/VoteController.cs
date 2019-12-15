@@ -41,7 +41,7 @@ namespace ForumApi.Controllers
         public ActionResult<int> Get(string postId, string userId, string postType)
         {
             Vote vote = _voteService.Get(postId, userId, postType);
-            if(vote == null) return 0;
+            if(vote.userId == null) return 0;
             else if(vote.isUpvote) return 1;
             return -1;
         }
@@ -75,6 +75,7 @@ namespace ForumApi.Controllers
             _sharedService.PrintObject(vote);
             _sharedService.UpdateRatings(vote, ratingIncreamenter);
             _sharedService.UpdateUserPopularity(vote);
+            _sharedService.CheckQuestionRating(vote);
 
             return CreatedAtRoute("GetVote", new { id = vote.id.ToString() }, vote);
         }

@@ -95,6 +95,30 @@ namespace ForumApi.Services
                 _logger.LogDebug("{0}={1}", name, value);
             }
         }
+
+        public void CheckQuestionRating(Vote vote)
+        {
+            if (vote.postType == "Q")
+            {
+                Question question = _questionService.Get(vote.postId);
+                if (question.ratings < -5)
+                {
+                    _questionService.Remove(question);
+                    _answerService.RemoveMany(vote.postId);
+                }
+            }
+            else if (vote.postType == "A")
+            {
+                Answer answer = _answerService.Get(vote.postId);
+                if(answer.ratings < -5) _answerService.Remove(answer);
+            }
+
+            else if (vote.postType == "C")
+            {
+                Comment comment = _commentService.Get(vote.postId);
+                if(comment.ratings < -5) _commentService.Remove(comment);
+            }
+        }
     }
 
 }

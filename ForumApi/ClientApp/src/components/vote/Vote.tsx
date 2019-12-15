@@ -9,7 +9,6 @@ export class Vote extends Component<IVoteProps, any>{
 
         let upVoteBtnColor = 'black';
         let downVoteBtnColor = 'black';
-
         if(this.props.voteStatus) upVoteBtnColor = 'blue';
         else if(this.props.voteStatus === false) downVoteBtnColor = 'blue';
         return (
