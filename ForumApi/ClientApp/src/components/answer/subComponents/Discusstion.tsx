@@ -42,6 +42,10 @@ export class Discussion extends Component<IDiscussionProps, state>{
 
     }
 
+    componentDidUpdate(prevProps:IDiscussionProps){
+        if(this.props !== prevProps)this.init();
+    }
+
     private updateData(){
         answerService.getAnswers(this.props.questionData.id).then(data => {
             this.answerData = data as IAnswer[];

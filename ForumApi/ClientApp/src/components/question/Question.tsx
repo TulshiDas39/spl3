@@ -50,23 +50,30 @@ export class Question extends Component<QuestionProps, state>{
         })
     }
 
+    private getStyle(){
+        if(!this.props.data.isAccepted) return {};
+        return {
+            border:'1px solid #d6d9dc'
+        }
+    }
+
     public render() {
         if (this.state.isLoading) return <p></p>;
         return (
             <div className={styles.questions}>
                 <div className={styles.question_status}>
-                    <Link to="/answer" className={styles.votes + " " + styles.statusItem}>
+                    <span className={styles.votes + " " + styles.statusItem}>
                         <span className={styles.vote_number}>{utilityService.convertToBengaliText(this.props.data.ratings)}</span>
                         <span className={styles.vote_text}>ভোট</span>
-                    </Link>
-                    <Link to="/answer" className={styles.answered + " " + styles.statusItem}>
+                    </span>
+                    <span className={styles.answered + " " + styles.statusItem} style={this.getStyle()}>
                         <span className={styles.answer_number}>{utilityService.convertToBengaliText(this.answerCount)}</span>
                         <span className={styles.answer_text}>উত্তর</span>
-                    </Link>
-                    <Link to="/answer" className={styles.views + " " + styles.statusItem}>
+                    </span>
+                    <span className={styles.views + " " + styles.statusItem}>
                         <span className={styles.view_number}>{utilityService.convertToBengaliText(this.props.data.views)}</span>
                         <span className={styles.view_text}>দেখা</span>
-                    </Link>
+                    </span>
                 </div>
 
                 <div className={styles.question_text}>
