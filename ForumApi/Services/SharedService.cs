@@ -56,7 +56,7 @@ namespace ForumApi.Services
 
         }
 
-        internal void UpdateUserPopularity(Vote vote)
+        internal void UpdateUserPopularity(Vote vote, int increament)
         {
             User user;
             if (vote.postType == "C")
@@ -64,23 +64,23 @@ namespace ForumApi.Services
                 string userId = _commentService.Get(vote.postId).userId;
                 user = _userService.Get(userId);
 
-                if (vote.isUpvote) user.reputation += 1;
-                else user.reputation -= 1;
+                if (vote.isUpvote) user.reputation += increament;
+                else user.reputation -= increament;
             }
             else if (vote.postType == "A")
             {
                 string userId = _answerService.Get(vote.postId).userId;
                 user = _userService.Get(userId);
-                if (vote.isUpvote) user.reputation += 2;
-                else user.reputation -= 2;
+                if (vote.isUpvote) user.reputation += increament;
+                else user.reputation -= increament;
             }
 
             else
             {
                 string userId = _questionService.Get(vote.postId).userId;
                 user = _userService.Get(userId);
-                if (vote.isUpvote) user.reputation += 2;
-                else user.reputation -= 2;
+                if (vote.isUpvote) user.reputation += increament;
+                else user.reputation -= increament;
             }
 
             _userService.Update(user.id, user);

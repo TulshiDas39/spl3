@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import { rootService } from "../../services/RootService";
 import { postService } from "../post/PostService";
 import { VoteStatus } from "../../utils/Constants";
+import { httpService } from "../../services/HttpService";
+import { API_CALLS } from "../../utils/api_calls";
 
 interface state {
     isEditing: boolean;
@@ -20,15 +22,14 @@ interface state {
 export class Comment extends Component<ICommentProps, state>{
 
     static contextType = Auth0Context;
-    private editingComment = {} as IComment;
-    private ratings: number = 0;
     private voteStatus?:boolean;
     private userOfComment = {} as IUser;
+    private comment = {} as IComment;
 
     constructor(props: ICommentProps) {
         super(props);
         this.state = { isEditing: false };
-        this.ratings = props.data.ratings;
+        this.comment = props.data;
     }
 
     componentDidMount() {
@@ -36,19 +37,26 @@ export class Comment extends Component<ICommentProps, state>{
         this.showUserOfComment();
     }
 
+    private updateCommentInfo(){
+        httpService.get(API_CALLS.comment+this.comment.id).then(data=>{
+            this.comment = data;
+            this.setState(this.state);
+        })
+    }
+
     private updateComponent() {
         this.setState(this.state);
     }
 
     private showUserOfComment() {
-        rootService.getUser(this.props.data.userId).then(data => {
+        rootService.getUser(this.comment.userId).then(data => {
             this.userOfComment = data;
             this.updateComponent();
         })
     }
 
     private async updateVoteStatus() {
-        postService.getVoteStatus(this.props.data.id, this.context.user.sub, PostType.COMMENT, this.context.token).then(data => {
+        postService.getVoteStatus(this.comment.id, this.context.user.sub, PostType.COMMENT, this.context.token).then(data => {
             this.voteStatus = data;
             this.updateComponent();
         });
@@ -59,7 +67,7 @@ export class Comment extends Component<ICommentProps, state>{
     }
 
     async onEditSave(text: string) {
-        let comment = this.props.data;
+        let comment = this.comment;
         comment.text = text;
         commentService.updateComment(comment, this.context.token).then(() => {
             this.setState({ isEditing: false });
@@ -76,13 +84,9 @@ export class Comment extends Component<ICommentProps, state>{
         let context = this.context as IAuth0Context;
         if (!context.isAuthenticated) return;
         if (this.voteStatus === type) return;
-        commentService.postRate(context.token, context.user.sub, this.props.data.id, type).then(data => {
-            if (this.voteStatus === undefined) {
-                type === VoteStatus.DOWNVOTED ? this.ratings-- : this.ratings++;
-            }
-            else this.voteStatus === VoteStatus.DOWNVOTED ? this.ratings -= 2 : this.ratings += 2;
+        commentService.postRate(context.token, context.user.sub, this.comment.id, type).then(data => {
             this.voteStatus = type;
-            this.updateComponent();
+            this.updateCommentInfo();
         });
 
     }
@@ -90,7 +94,7 @@ export class Comment extends Component<ICommentProps, state>{
     render() {
         if (this.state.isEditing)
             return (
-                <CommentBox text={this.props.data.text} onSave={this.onEditSave.bind(this)} onCancell={this.onCancell.bind(this)} />
+                <CommentBox text={this.comment.text} onSave={this.onEditSave.bind(this)} onCancell={this.onCancell.bind(this)} />
             );
 
         let upVoteBtnColor = 'black';
@@ -100,7 +104,7 @@ export class Comment extends Component<ICommentProps, state>{
         if (this.voteStatus === false) downVoteBtnColor = 'blue';
 
         return (
-            <span key={this.props.data.id} className={styles.user_comment}>
+            <span key={this.comment.id} className={styles.user_comment}>
                 {this.getRatings()}
                 <span className={styles.user_comment_vote}>
                     <span className={styles.useful_comment}>
@@ -114,7 +118,7 @@ export class Comment extends Component<ICommentProps, state>{
 
                 </span>
                 <span className={styles.commentDiv}>
-                    <span className={styles.user_comment_text}>{this.props.data.text}</span>
+                    <span className={styles.user_comment_text}>{this.comment.text}</span>
                     {
                         this.getCommentFooter()
                     }
@@ -125,7 +129,7 @@ export class Comment extends Component<ICommentProps, state>{
     }
 
     private getRatings() {
-        if (this.ratings !== 0) return <span className={styles.comment_reaction}>{utilityService.convertToBengaliText(this.ratings)}</span>;
+        if (this.comment.ratings !== 0) return <span className={styles.comment_reaction}>{utilityService.convertToBengaliText(this.comment.ratings)}</span>;
     }
 
     private getCommentFooter() {
@@ -138,7 +142,7 @@ export class Comment extends Component<ICommentProps, state>{
     private getCommentActions() {
         let context = this.context as IAuth0Context;
         if (context.isAuthenticated) {
-            if (context.user.sub === this.props.data.userId) return (
+            if (context.user.sub === this.comment.userId) return (
                 <span className={styles.commentOptions}>
                     <span className={styles.user_comment_edit} onClick={() => this.editComment()}>সম্পাদন</span>
                     <span className={styles.user_comment_delete} onClick={this.props.onDelete}>মুছুন</span>
