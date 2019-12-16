@@ -24,6 +24,10 @@ export class Answer extends Component<AnswerProps, state>{
         this.fetchData();
     }
 
+    componentDidUpdate(prevProps:AnswerProps){
+        if(this.props !== prevProps) this.fetchData();
+    }
+
     private fetchData() {
         const { handle } = this.props.match.params;
         console.log('fetching question data');

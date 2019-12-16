@@ -51,9 +51,9 @@ export class InputEditor extends Component<editorProps, state>{
                         </span>
                         <span id="unorderListBtn" className="fa fa-list-ul unorderListBtn" title="unorder list">
                         </span>
-                        <span id="imageUpload" className="fa fa-photo imageUpload" title="upload image">
+                        {/* <span id="imageUpload" className="fa fa-photo imageUpload" title="upload image">
                             <input id="imageUploader" className="imageUploader" style={{ display: 'none' }} type="file" accept="image/*" />
-                        </span>
+                        </span> */}
                         <span id="headingBtn" className="fa fa-align-center headingBtn" title="heading text">
                         </span>
                         <span id="newLineBtn" className="fa fa-level-down newLineBtn" title="new line">

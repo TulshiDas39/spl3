@@ -39,7 +39,7 @@ export class Head extends Component<IUserHead, state>{
                         </div>
                     </div>
 
-                    <TagInput additionHandler={this.handleAddition} deleteHandler={this.handleDelete} />
+                    {/* <TagInput additionHandler={this.handleAddition} deleteHandler={this.handleDelete} /> */}
 
                 </div>
 

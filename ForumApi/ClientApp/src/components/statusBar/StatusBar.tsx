@@ -55,7 +55,7 @@ export class StatusBar extends Component<any, state>{
                 </div>
                 <div id={styles.info}>
                     <span className="fa fa-info-circle"></span>
-                    <span>সমীকরণ এখন ডেভেলাপমেন্টের আওতাধীন</span>
+                    <span> সমীকরনে আপনাকে স্বাগতম, জ্ঞান বিস্তারে সহায়তা করাই সমীকরনের লক্ষ </span>
                 </div>
 
                 <div className={styles.section_header}>

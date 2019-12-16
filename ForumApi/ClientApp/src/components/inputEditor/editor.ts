@@ -34,7 +34,7 @@ export class Editor {
         this.addOrderListListener();
         this.addUnOrderListListener();
         this.addHeadingListener();
-        this.addImageListener();
+        //this.addImageListener();
         this.addNewLineListener();
     }
 
